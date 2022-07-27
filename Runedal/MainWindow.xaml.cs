@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Runedal
 {
@@ -24,5 +25,27 @@ namespace Runedal
         {
             InitializeComponent();
         }
+
+        string input = string.Empty;
+
+        //handling user input
+        private void inputBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && inputBox.Text != String.Empty)
+            {
+                input = inputBox.Text;
+                inputBox.Text = string.Empty;
+
+                //get rid of extra spaces
+                input = Regex.Replace(input, @"\s+", " ");
+                
+                outputBox.AppendText(input + "\n");
+                outputBox.ScrollToEnd();
+
+                input = input.ToLower();
+            }
+        }
+
+        
     }
 }

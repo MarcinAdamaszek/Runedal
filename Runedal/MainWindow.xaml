@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Runedal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="700" ResizeMode="CanMinimize" Background="Gray">
+        Title="MainWindow" MinHeight="600" MinWidth="700" ResizeMode="CanResizeWithGrip"  Background="Gray">
     <Grid FocusManager.FocusedElement="{Binding ElementName=inputBox}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="0.8*"/>
             <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <!--outputBox for displaing user input and game engine output-->
@@ -32,13 +32,14 @@
                 <!--sets the line spacing of outputBox-->
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="0.2"/>
+                        <Setter Property="Margin" Value="0.4"/>
                     </Style>
                 </RichTextBox.Resources>
             </RichTextBox>
-        
+
         <!--inputBox for user to type input commands-->
         <TextBox Name="inputBox"
+                     Height="30"
                      Grid.Row="2"
                      FontFamily="Consolas"
                      FontSize="14"
@@ -46,7 +47,29 @@
                      Margin="10"
                      Foreground="#FFC3C3C3"
                      KeyUp="inputBox_KeyUp"
-                     FontStretch="UltraExpanded"
-                     TextWrapping="Wrap"/>
+                     TextWrapping="Wrap"
+                     Padding="4"/>
+
+        <!--hp/mp/exp bars-->
+        <Grid Name="barsContainer" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--hp bar-->
+            <ProgressBar Name="hpBar" Value="100" Grid.Column="0" Margin="10, 0, 10, 5" Foreground="#FFD20D16" BorderBrush="Black" Background="Black" />
+            <TextBlock Text="HP" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 10, 5" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
+            <TextBlock Text="201/201" Grid.Column="0" Margin="10, 0, 10, 5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+
+            <!--mp bar-->
+            <ProgressBar Name="mpBar" Value="100" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" Foreground="#FF1330D2" Background="Black"/>
+            <TextBlock Text="MP" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
+            <TextBlock Text="200/200" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+        </Grid>
     </Grid>
 </Window>

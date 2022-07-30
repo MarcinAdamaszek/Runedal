@@ -12,37 +12,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Text.RegularExpressions;
+using Runedal.GameEngine;
 
 namespace Runedal
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            this.Engine = new MainEngine(this);
         }
 
-        string input = string.Empty;
+        public string Input { get; set; } = string.Empty;
+        public MainEngine Engine { get; set; }
 
-        //handling user input
+
+        //handling user input on pressing and releasing Enter key
         private void inputBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && inputBox.Text != String.Empty)
             {
-                input = inputBox.Text;
-                inputBox.Text = string.Empty;
-
-                //get rid of extra spaces
-                input = Regex.Replace(input, @"\s+", " ");
                 
-                outputBox.AppendText(input + "\n");
-                outputBox.ScrollToEnd();
-
-                input = input.ToLower();
+                this.Engine.ProcessCommand();
             }
         }
 

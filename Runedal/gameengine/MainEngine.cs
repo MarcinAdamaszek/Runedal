@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Runedal.GameData;
 using Runedal.GameData.Locations;
-
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace Runedal.GameEngine
 {
@@ -16,6 +17,13 @@ namespace Runedal.GameEngine
         { 
             this.Window = window;
             this.Data = new Data();
+        }
+
+        enum MessageType
+        {
+            Default,
+            UserCommand,
+            DunnoYet
         }
 
         public MainWindow Window { get; set; }
@@ -30,6 +38,9 @@ namespace Runedal.GameEngine
             UserCommand = Window.inputBox.Text;
             Window.inputBox.Text = string.Empty;
 
+            //print userCommand in outputBox for user to see
+            PrintMessage(UserCommand, MessageType.UserCommand);
+
             //clear the input from extra spaces
             UserCommand = Regex.Replace(UserCommand, @"\s+", " ");
 
@@ -43,11 +54,10 @@ namespace Runedal.GameEngine
                 case "e":
                 case "s":
                 case "w":
-                    PrintMessage(UserCommand);
                     ChangeLocation(UserCommand);
                     break;
                 default:
-                    PrintMessage("\"" + UserCommand + "\"" + "Nie ma takiej komendy");
+                    PrintMessage("Że co?");
                     return;
             }
         }
@@ -118,9 +128,24 @@ namespace Runedal.GameEngine
         }
 
         //method displaying communicates in outputBox of the gui
-        private void PrintMessage(string msg)
+        private void PrintMessage(string msg, MessageType type = MessageType.Default)
         {
-            Window.outputBox.AppendText("\n" + msg);
+            //color text of the message before displaying
+            TextRange tr = new TextRange(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
+            tr.Text = "\n" + msg;
+
+            switch (type) {
+                case (MessageType.Default):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
+                    break;
+                case (MessageType.UserCommand):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
+                    break;
+                case (MessageType.DunnoYet):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
+                    break;
+            }
+
             Window.outputBox.ScrollToEnd();
         }
     }

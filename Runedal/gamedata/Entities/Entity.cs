@@ -9,9 +9,6 @@ namespace Runedal.GameData.Entities
 {
     public class Entity
     {
-
-        private int _hp = 100;
-        private int _mp = 50;
         public Entity(string name, int strength, int intelligence, int agility)
         {
             Name = name;

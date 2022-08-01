@@ -9,26 +9,31 @@ namespace Runedal.GameData.Locations
 {
     public class Location
     {
-        public Location(int x, int y, string? name, string? description)
+        public Location(int x, int y, string? name, string? description, bool nOpen, bool eOpen, bool sOpen, bool wOpen)
         {
             this.X = x;
             this.Y = y; 
             this.Name = name; 
-            this.Description = description; 
+            this.Description = description;
+            NorthPassage = new Passage(nOpen);
+            EastPassage = new Passage(eOpen);
+            SouthPassage = new Passage(sOpen);
+            EastPassage = new Passage(wOpen);
+            Entities = new List<Entity>();
         }
         public int X { get; set; }
         public int Y { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public Passage NorthPassage { get; set; } = new Passage();
-        public Passage EastPassage { get; set; } = new Passage();
-        public Passage SouthPassage { get; set; } = new Passage();
-        public Passage WestPassage { get; set; } = new Passage();
-        public List<Entity> Entities { get; set; } = new List<Entity>();
+        public Passage NorthPassage { get; set; }
+        public Passage EastPassage { get; set; }
+        public Passage SouthPassage { get; set; }
+        public Passage WestPassage { get; set; }
+        public List<Entity> Entities { get; set; }
 
         public void AddEntity(Entity entity)
         {
-           this.Entities.Add(entity);
+            this.Entities.Add(entity);
         }
         public void RemoveEntity(Entity entity)
         {

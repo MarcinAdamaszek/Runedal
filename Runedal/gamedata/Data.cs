@@ -20,7 +20,7 @@ namespace Runedal.GameData
             Locations.Add(new Location(1, 2, "Główna ulica", "Przed sobą widzisz parę zaniedbanych, drewnianych chat krytych strzechą. Obok stoi studnia," +
                 "na brzegu której siedzi bury kot. Pod stopami czujesz ubitą ziemię, a w nozdrzach zapach końskich odchodów i ludzkich szczyn", true, true, true, true));
 
-            Player = new Entity("Daever", 20, 15, 35);
+            Player = new Entity("Daever", "none", 20, 15, 35);
             Player.CurrentLocation = Locations[0];
         }
 

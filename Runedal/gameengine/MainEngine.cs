@@ -27,34 +27,43 @@ namespace Runedal.GameEngine
         }
 
         public MainWindow Window { get; set; }
-        public string? UserCommand { get; set; }
         public Data Data { get; set; }
 
 
         //method processing user input commands
         public void ProcessCommand()
         {
+            string userCommand = string.Empty;
+            string command = string.Empty;
+            string argument1 = string.Empty;
+
             //get user input from inputBox
-            UserCommand = Window.inputBox.Text;
+            userCommand = Window.inputBox.Text;
             Window.inputBox.Text = string.Empty;
 
-            //print userCommand in outputBox for user to see
-            PrintMessage(UserCommand, MessageType.UserCommand);
-
             //clear the input from extra spaces
-            UserCommand = Regex.Replace(UserCommand, @"\s+", " ");
+            userCommand = Regex.Replace(userCommand, @"^\s+", "");
+            userCommand = Regex.Replace(userCommand, @"\s+", " ");
+            userCommand = Regex.Replace(userCommand, @"\s+$", "");
+
+            //print userCommand in outputBox for user to see
+            PrintMessage(userCommand, MessageType.UserCommand);
 
             //format to lowercase
-            UserCommand = UserCommand.ToLower();
+            userCommand = userCommand.ToLower();
+
+            //split user input into command and it's argument
+            command = Regex.Replace(userCommand, @"\s.+", "");
+            argument1 = Regex.Replace(userCommand, @"^.+\s", "");
 
             //match user input to proper engine command
-            switch (UserCommand)
+            switch (command)
             {
                 case "n":
                 case "e":
                 case "s":
                 case "w":
-                    ChangeLocation(UserCommand);
+                    ChangeLocation(command);
                     break;
                 default:
                     PrintMessage("Że co?");

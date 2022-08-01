@@ -9,7 +9,7 @@ namespace Runedal.GameData.Locations
 {
     public class Location
     {
-        public Location(int x, int y, string? name, string? description, bool nOpen, bool eOpen, bool sOpen, bool wOpen)
+        public Location(int x, int y, string? name, string? description, bool nOpen = true, bool eOpen = true, bool sOpen = true, bool wOpen = true)
         {
             this.X = x;
             this.Y = y; 
@@ -18,7 +18,7 @@ namespace Runedal.GameData.Locations
             NorthPassage = new Passage(nOpen);
             EastPassage = new Passage(eOpen);
             SouthPassage = new Passage(sOpen);
-            EastPassage = new Passage(wOpen);
+            WestPassage = new Passage(wOpen);
             Entities = new List<Entity>();
         }
         public int X { get; set; }

@@ -8,7 +8,7 @@ namespace Runedal.GameData.Locations
 {
     public class Passage
     {
-        public Passage(bool isOpen = true)
+        public Passage(bool isOpen)
         {
             IsOpen = isOpen;
         }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using Runedal.GameData;
-using Runedal.GameData.Locations;
 using System.Windows.Documents;
 using System.Windows.Media;
+using Runedal.GameData;
+using Runedal.GameData.Locations;
+
 
 namespace Runedal.GameEngine
 {
@@ -19,6 +20,7 @@ namespace Runedal.GameEngine
             this.Data = new Data();
         }
 
+        //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
         enum MessageType
         {
             Default,
@@ -122,7 +124,7 @@ namespace Runedal.GameEngine
                     Data.Player.CurrentLocation = Data.Locations.Find(x => x.X == destinationX && x.Y == destinationY);
 
                     //add player to the list of location entities
-                    Data.Player.CurrentLocation!.AddEntity(Data.Player);
+                    Data.Player.CurrentLocation!.AddCharacter(Data.Player);
                     PrintMessage(Data.Player.CurrentLocation.Description!);
                 }
                 else

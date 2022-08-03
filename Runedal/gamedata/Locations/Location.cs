@@ -3,41 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Runedal.GameData.Entities;
+using Runedal.GameData.Characters;
 
 namespace Runedal.GameData.Locations
 {
-    public class Location
+    public class Location : Entity
     {
-        public Location(int x, int y, string? name, string? description, bool nOpen = true, bool eOpen = true, bool sOpen = true, bool wOpen = true)
+        public Location(int x, int y, string name, string description, bool nOpen = true, bool eOpen = true, bool sOpen = true, bool wOpen = true) : base(name, description)
         {
             this.X = x;
             this.Y = y; 
-            this.Name = name; 
-            this.Description = description;
             NorthPassage = new Passage(nOpen);
             EastPassage = new Passage(eOpen);
             SouthPassage = new Passage(sOpen);
             WestPassage = new Passage(wOpen);
-            Entities = new List<Entity>();
+            Characters = new List<Character>();
         }
+
+        //location coordinates
         public int X { get; set; }
         public int Y { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
+
+        //passages to other locations
         public Passage NorthPassage { get; set; }
         public Passage EastPassage { get; set; }
         public Passage SouthPassage { get; set; }
         public Passage WestPassage { get; set; }
-        public List<Entity> Entities { get; set; }
 
-        public void AddEntity(Entity entity)
+        //list of character-entities currently present in the location
+        public List<Character> Characters { get; private set; }
+
+        //methods for adding and removing characters
+        public void AddCharacter(Character character)
         {
-            this.Entities.Add(entity);
+            this.Characters.Add(character);
         }
-        public void RemoveEntity(Entity entity)
+        public void RemoveCharacter(Character character)
         {
-            this.Entities.Remove(entity);
+            this.Characters.Remove(character);
         }
     }
 }

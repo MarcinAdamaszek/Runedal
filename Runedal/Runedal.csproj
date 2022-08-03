@@ -8,7 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="GameData\JSONData\" />
+    <Compile Remove="GameData\JSONData\**" />
+    <EmbeddedResource Remove="GameData\JSONData\**" />
+    <None Remove="GameData\JSONData\**" />
+    <Page Remove="GameData\JSONData\**" />
   </ItemGroup>
 
 </Project>

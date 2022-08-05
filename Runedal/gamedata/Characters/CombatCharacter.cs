@@ -13,21 +13,20 @@ namespace Runedal.GameData.Characters
         {
             Modifiers = new List<Modifier>();
         }
-        public CombatCharacter(string name, string description, int hp, int mp, int speed, int attack, int atkSpeed, int accuracy,
-            int critical, int defense, int evasion, int magicResistance, int gold, string[] passiveResponses, string[] aggressiveResponses)
-            : base(name, description, passiveResponses, aggressiveResponses)
+        public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses)
+            : base(descriptive, responses)
         {
-            Hp = hp;
-            Mp = mp;
-            Speed = speed;
-            Attack = attack;
-            AtkSpeed = atkSpeed;
-            Accuracy = accuracy;
-            Critical = critical;
-            Defense = defense;
-            Evasion = evasion;
-            MagicResistance = magicResistance;
-            Gold = gold;
+            Hp = combatStats[0];
+            Mp = combatStats[1];
+            Speed = combatStats[2];
+            Attack = combatStats[3];
+            AtkSpeed = combatStats[4];
+            Accuracy = combatStats[5];
+            Critical = combatStats[6];
+            Defense = combatStats[7];
+            Evasion = combatStats[8];
+            MagicResistance = combatStats[9];
+            Gold = combatStats[10];
             Modifiers = new List<Modifier>();
         }
         public enum StatType

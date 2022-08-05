@@ -13,9 +13,9 @@ namespace Runedal.GameData.Items
 
         //constructor for placeholder items worn by Player when player wears no item
         public Ranged(string placeholder) : base(placeholder) { }
-        public Ranged(string name, string description, int weight, int cost, int attack, int range) : base(name, description, weight, cost, attack)
+        public Ranged(string[] descriptive, int[] stats, int[] combatStats) : base(descriptive, stats, combatStats[0])
         {
-            Range = range;
+            Range = combatStats[1];
         }
         public int Range { get;  private set; }
     }

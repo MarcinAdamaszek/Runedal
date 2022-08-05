@@ -16,13 +16,12 @@ namespace Runedal.GameData.Characters
         {
             Inventory = new List<Item>();
         }
-        public Character(string name, string description,
-            string[] passiveResponses, string[] aggressiveResponses) : base(name, description)
+        public Character(string[] descriptive, string[][] responses) : base(descriptive)
         {
 
             Inventory = new List<Item>();
-            PassiveResponses = passiveResponses;
-            AggressiveResponses = aggressiveResponses;
+            PassiveResponses = responses[0];
+            AggressiveResponses = responses[1];
         }
 
         //Amount of gold and list of items in the characters inventory

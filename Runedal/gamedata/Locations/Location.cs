@@ -18,14 +18,14 @@ namespace Runedal.GameData.Locations
             WestPassage = new Passage(true);
             Characters = new List<Character>();
         }
-        public Location(int x, int y, string name, string description, bool nOpen = true, bool eOpen = true, bool sOpen = true, bool wOpen = true) : base(name, description)
+        public Location(int[] coordinates, string[] descriptive, bool[] openBools) : base(descriptive)
         {
-            this.X = x;
-            this.Y = y; 
-            NorthPassage = new Passage(nOpen);                
-            EastPassage = new Passage(eOpen);                   
-            SouthPassage = new Passage(sOpen);                  
-            WestPassage = new Passage(wOpen);                   
+            this.X = coordinates[0];
+            this.Y = coordinates[1]; 
+            NorthPassage = new Passage(openBools[0]);                
+            EastPassage = new Passage(openBools[1]);                   
+            SouthPassage = new Passage(openBools[2]);                  
+            WestPassage = new Passage(openBools[3]);                   
             Characters = new List<Character>();
         }
 

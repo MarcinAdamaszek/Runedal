@@ -16,8 +16,7 @@ namespace Runedal.GameData.Items
         {
             Attack = 0;
         }
-        public Weapon(string name, string description, int weight, int cost, int attack)
-            : base (name, description, weight, cost)
+        public Weapon(string[] descriptive, int[] stats, int attack) : base (descriptive, stats)
         {
             Attack = attack;
         }

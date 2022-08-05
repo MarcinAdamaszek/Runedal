@@ -14,7 +14,7 @@ namespace Runedal.GameData.Items
             Defense = 0;
             Type = type;
         }
-        public Armor (string name, string description, int weight, int cost, int defense, ArmorType type) : base(name, description, weight, cost)
+        public Armor(string[] descriptive, int[] stats, int defense, ArmorType type) : base(descriptive, stats)
         {
             Defense = defense;
             Type = type;

@@ -21,10 +21,10 @@ namespace Runedal.GameData.Items
             Cost = 0;
             Modifiers = new List<Modifier>();
         }
-        public Item(string name, string description, int weight, int cost) : base(name, description)
+        public Item(string[] descriptive, int[] stats) : base(descriptive)
         {
-            Weight = weight;
-            Cost = cost;
+            Weight = stats[0];
+            Cost = stats[1];
             Modifiers = new List<Modifier>();
         }
 

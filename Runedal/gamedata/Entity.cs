@@ -19,10 +19,10 @@ namespace Runedal.GameData
             Name = placeholder;
             Description = "none";
         }
-        public Entity(string name, string description)
+        public Entity(string[] descriptiveParameters)
         {
-            Name = name;
-            Description = description;
+            Name = descriptiveParameters[0];
+            Description = descriptiveParameters[1];
         }
 
         public string? Name { get; private set; }

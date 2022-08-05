@@ -13,8 +13,7 @@ namespace Runedal.GameData.Characters
         {
 
         }
-        public Trader(string name, string description, string[] passiveResponses, string[] aggressiveResponses) 
-            : base(name, description, passiveResponses, aggressiveResponses)
+        public Trader(string[] descriptive, string[][] responses) : base(descriptive, responses)
         {
 
         }

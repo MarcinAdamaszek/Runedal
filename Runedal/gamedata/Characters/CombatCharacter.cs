@@ -8,6 +8,11 @@ namespace Runedal.GameData.Characters
 {
     public class CombatCharacter : Character
     {
+        //default constructor for json deserialization
+        public CombatCharacter() : base()
+        {
+            Modifiers = new List<Modifier>();
+        }
         public CombatCharacter(string name, string description, int hp, int mp, int speed, int attack, int atkSpeed, int accuracy,
             int critical, int defense, int evasion, int magicResistance, int gold, string[] passiveResponses, string[] aggressiveResponses)
             : base(name, description, passiveResponses, aggressiveResponses)

@@ -8,7 +8,11 @@ namespace Runedal.GameData.Items
 {
     public class Weapon : Item
     {
-        public Weapon() : base()
+        //default constructor for json deserializer
+        public Weapon() : base() { }
+
+        //constructor for placeholder items worn by Player when player wears no item
+        public Weapon(string placeholder) : base(placeholder)
         {
             Attack = 0;
         }

@@ -11,6 +11,11 @@ namespace Runedal.GameData.Characters
     //base class for all characters (player, npcs, creatures)
     public class Character : Entity
     {
+        //default constructor for json deserialization
+        public Character() : base()
+        {
+            Inventory = new List<Item>();
+        }
         public Character(string name, string description,
             string[] passiveResponses, string[] aggressiveResponses) : base(name, description)
         {
@@ -28,10 +33,10 @@ namespace Runedal.GameData.Characters
         public Location? CurrentLocation { get; set; }
 
         //array of characters passive responses
-        public string[] PassiveResponses { get; private set; }
+        public string[]? PassiveResponses { get; private set; }
         
         //array of character's aggressive responses
-        public string[] AggressiveResponses { get; private set; }
+        public string[]? AggressiveResponses { get; private set; }
 
     }
 }

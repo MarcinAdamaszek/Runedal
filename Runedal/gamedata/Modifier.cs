@@ -9,7 +9,9 @@ namespace Runedal.GameData
 {
     public class Modifier
     {
-        public Modifier(Character.StatType type, int value)
+        //default constructor for json deserialization
+        public Modifier() { }
+        public Modifier(CombatCharacter.StatType type, int value)
         {
             Type = type;
             Value = value;
@@ -17,7 +19,7 @@ namespace Runedal.GameData
 
         //enum for type of modifier (which statistic it modifies)
         
-        public Character.StatType Type { get; private set; }
+        public CombatCharacter.StatType Type { get; private set; }
 
         //value of how much is statistic going to be modified
         public int Value { get; private set; }

@@ -8,8 +8,12 @@ namespace Runedal.GameData.Items
 {
     public class Ranged : Weapon
     {
-        public Ranged(string name, string description, int weight, int cost, int attack, int atkSpeed,
-            int accuracy, int range) : base(name, description, weight, cost, attack, atkSpeed, accuracy)
+        //default constructor for json deserializer
+        public Ranged() : base() { }
+
+        //constructor for placeholder items worn by Player when player wears no item
+        public Ranged(string placeholder) : base(placeholder) { }
+        public Ranged(string name, string description, int weight, int cost, int attack, int range) : base(name, description, weight, cost, attack)
         {
             Range = range;
         }

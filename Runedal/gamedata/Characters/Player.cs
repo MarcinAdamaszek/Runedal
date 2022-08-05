@@ -10,6 +10,16 @@ namespace Runedal.GameData.Characters
 {
     public class Player : CombatCharacter
     {
+        //default constructor for json deserialization
+        public Player() : base()
+        {
+            //initialize items worn with placeholders to avoid null exception
+            FullBody = new Armor(Armor.ArmorType.FullBody, "placeholder");
+            Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
+            Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
+            Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
+            Weapon = new Weapon("placeholder");
+        }
         public Player(string name, string description, int hp, int mp, int speed, int attack, int atkSpeed, int accuracy, int critical,
             int defense, int evasion, int magicResistance, int gold, int strength, int intelligence, int agility, string[] passiveResponses, string[] aggressiveResponses) 
             : base(name, description, hp, mp, speed, attack, atkSpeed, 
@@ -22,11 +32,11 @@ namespace Runedal.GameData.Characters
             Experience = 0;
 
             //initialize items worn with placeholders to avoid null exception
-            FullBody = new Armor(Armor.ArmorType.FullBody);
-            Helmet = new Armor(Armor.ArmorType.Helmet);
-            Gloves = new Armor(Armor.ArmorType.Gloves);
-            Shoes = new Armor(Armor.ArmorType.Shoes);
-            Weapon = new Weapon();
+            FullBody = new Armor(Armor.ArmorType.FullBody, "placeholder");
+            Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
+            Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
+            Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
+            Weapon = new Weapon("placeholder");
         }
 
         //player's level and amount of experience

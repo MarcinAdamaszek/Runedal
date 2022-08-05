@@ -8,7 +8,8 @@ namespace Runedal.GameData.Items
 {
     public class Armor : Item
     {
-        public Armor(ArmorType type) : base()
+        //constructor for placeholder for empty Player's item slots
+        public Armor(ArmorType type, string placeholder) : base(placeholder)
         {
             Defense = 0;
             Type = type;

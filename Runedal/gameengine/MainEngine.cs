@@ -18,6 +18,11 @@ namespace Runedal.GameEngine
         { 
             this.Window = window;
             this.Data = new Data();
+            Data.LoadCharacters();
+            Data.LoadLocations();
+
+            Data.Player!.CurrentLocation = Data.Locations!.ElementAt(0);
+            Data.Locations!.ElementAt(0).AddCharacter(Data.Player);
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -76,47 +81,47 @@ namespace Runedal.GameEngine
         //methods taking actions depending on user input command
         private void ChangeLocation(string direction)
         {
-            int currentX = Data.Player.CurrentLocation!.X;
+            int currentX = Data.Player!.CurrentLocation!.X;
             int currentY = Data.Player.CurrentLocation!.Y;
             int destinationX = 0;
             int destinationY = 0;
             string directionString = string.Empty;
-            Passage passage;
+            bool passage;
 
             switch (direction)
             {
                 case "n":
                     destinationX = currentX;
                     destinationY = currentY + 1;
-                    passage = Data.Player.CurrentLocation.NorthPassage;
+                    passage = Data.Player.CurrentLocation.NorthPassage!;
                     directionString = "północ";
                     break;
                 case "e":
                     destinationX = currentX + 1;
                     destinationY = currentY;
-                    passage = Data.Player.CurrentLocation.EastPassage;
+                    passage = Data.Player.CurrentLocation.EastPassage!;
                     directionString = "wschód";
                     break;
                 case "s":
                     destinationX = currentX;
                     destinationY = currentY - 1;
-                    passage = Data.Player.CurrentLocation.SouthPassage;
+                    passage = Data.Player.CurrentLocation.SouthPassage!;
                     directionString = "południe";
                     break;
                 case "w":
                     destinationX = currentX - 1;
                     destinationY = currentY;
-                    passage = Data.Player.CurrentLocation.WestPassage;
+                    passage = Data.Player.CurrentLocation.WestPassage!;
                     directionString = "zachód";
                     break;
             }
 
 
-            //if there exists location in north direction to players current one
-            if (Data.Locations.Exists(x => x.X == destinationX && x.Y == destinationY))
+            //if there exists location in specific direction to players current one
+            if (Data.Locations!.Exists(x => x.X == destinationX && x.Y == destinationY))
             {
                 //if the passage is open
-                if (Data.Player.CurrentLocation.NorthPassage.IsOpen)
+                if (Data.Player.CurrentLocation.NorthPassage!)
                 {
                     PrintMessage("Idziesz na " + directionString);
 

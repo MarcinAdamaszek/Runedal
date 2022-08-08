@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.IO;
 using Runedal.GameData.Characters;
 
 namespace Runedal.GameData
@@ -13,20 +14,46 @@ namespace Runedal.GameData
     {
         public Data() 
         {
-
-
+            //make json deserializer ignore letter cames in property names
+            Options = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            
             Locations = new List<Location>();
-            Locations.Add(new Location(1, 1, "Karczma", "Drewniane ściany, stoliki i krzesła. Zapach piwa i smażonego bekonu. Na wprost widzisz widzisz kontuar i karczmarza" +
-                "przecierającego szmatą brudną szklanicę", true, true, true, true));
-            Locations.Add(new Location(1, 2, "Główna ulica", "Przed sobą widzisz parę zaniedbanych, drewnianych chat krytych strzechą. Obok stoi studnia," +
-                "na brzegu której siedzi bury kot. Pod stopami czujesz ubitą ziemię, a w nozdrzach zapach końskich odchodów i ludzkich szczyn", true, true, true, true));
-
-            
-            
+           
         }
+        public string? FileName { get; set; }
+        public string? JsonString { get; set; }
+        public JsonSerializerOptions Options { get; set; }
+        public List<Location>? Locations { get; set; }
+        public Player? Player { get; set; }
+      
+        
 
-        public List<Location> Locations { get; set; }
-        //public Character Player { get; set; }
 
+        //method loading player from json file
+        public void LoadCharacters()
+        {
+            FileName = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Player.json";
+            JsonString = File.ReadAllText(FileName);
+            Player = JsonSerializer.Deserialize<Player>(JsonString, Options)!;
+
+            //put player in his starting location
+            Locations!.Find(loc => loc.Name == Player.Start)!.Characters!.Add(Player);
+        } 
+
+        //method loading locations from json file
+        public void LoadLocations()
+        {
+            FileName = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\locations.json";
+            JsonString = File.ReadAllText(FileName);
+            Location[] locationsArray = JsonSerializer.Deserialize<Location[]>(JsonString, Options)!;
+
+            foreach (var loc in locationsArray)
+            {
+                Locations!.Add(loc);
+            }
+        }
     }
 }

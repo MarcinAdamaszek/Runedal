@@ -22,6 +22,7 @@ namespace Runedal.GameData.Characters
             Inventory = new List<Item>();
             PassiveResponses = responses[0];
             AggressiveResponses = responses[1];
+            Start = descriptive[2];
         }
 
         //Amount of gold and list of items in the characters inventory
@@ -32,10 +33,12 @@ namespace Runedal.GameData.Characters
         public Location? CurrentLocation { get; set; }
 
         //array of characters passive responses
-        public string[]? PassiveResponses { get; private set; }
+        public string[]? PassiveResponses { get; set; }
         
         //array of character's aggressive responses
-        public string[]? AggressiveResponses { get; private set; }
+        public string[]? AggressiveResponses { get; set; }
+        //character's starting location
+        public string Start { get; set; }
 
     }
 }

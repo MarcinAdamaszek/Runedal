@@ -12,20 +12,20 @@ namespace Runedal.GameData.Locations
         //default constructor for json deserializer
         public Location() : base()
         {
-            NorthPassage = new Passage(true);
-            EastPassage = new Passage(true);
-            SouthPassage = new Passage(true);
-            WestPassage = new Passage(true);
+            NorthPassage = true;
+            EastPassage = true;
+            SouthPassage = true;
+            WestPassage = true;
             Characters = new List<Character>();
         }
         public Location(int[] coordinates, string[] descriptive, bool[] openBools) : base(descriptive)
         {
             this.X = coordinates[0];
             this.Y = coordinates[1]; 
-            NorthPassage = new Passage(openBools[0]);                
-            EastPassage = new Passage(openBools[1]);                   
-            SouthPassage = new Passage(openBools[2]);                  
-            WestPassage = new Passage(openBools[3]);                   
+            NorthPassage = openBools[0];                
+            EastPassage = openBools[1];                   
+            SouthPassage = openBools[2];                  
+            WestPassage = openBools[3];                   
             Characters = new List<Character>();
         }
 
@@ -34,13 +34,13 @@ namespace Runedal.GameData.Locations
         public int Y { get; set; }
 
         //passages to other locations
-        public Passage? NorthPassage { get; set; }
-        public Passage? EastPassage { get; set; }
-        public Passage? SouthPassage { get; set; }
-        public Passage? WestPassage { get; set; }
+        public bool NorthPassage { get; set; }
+        public bool EastPassage { get; set; }
+        public bool SouthPassage { get; set; }
+        public bool WestPassage { get; set; }
 
         //list of character-entities currently present in the location
-        public List<Character>? Characters { get; private set; }
+        public List<Character>? Characters { get; set; }
 
         //methods for adding and removing characters
         public void AddCharacter(Character character)

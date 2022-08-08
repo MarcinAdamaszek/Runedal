@@ -38,20 +38,20 @@ namespace Runedal.GameData.Characters
         }
 
         //player's level and amount of experience
-        public int Level { get; private set; }
-        public int Experience { get; private set; }
+        public int Level { get; set; }
+        public int Experience { get; set; }
         
         //player character attributes influencing other statistics
-        public int Strength { get; private set; }
-        public int Intelligence {  get; private set; }
-        public int Agility { get; private set; }
+        public int Strength { get; set; }
+        public int Intelligence { get; set; }
+        public int Agility { get; set; }
 
         //items worn by player
-        public Armor? FullBody { get; private set; }
-        public Armor? Helmet { get; private set; }
-        public Armor? Gloves { get; private set; }
-        public Armor? Shoes { get; private set; }
-        public Weapon? Weapon { get; private set; }
+        public Armor? FullBody { get; set; }
+        public Armor? Helmet { get; set; }
+        public Armor? Gloves { get; set; }
+        public Armor? Shoes { get; set; }
+        public Weapon? Weapon { get; set; }
 
         //methods for getting effective statistics (after applying all modifiers)
         public override double GetEffectiveSpeed()

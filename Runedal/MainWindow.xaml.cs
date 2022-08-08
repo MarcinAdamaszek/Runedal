@@ -35,6 +35,7 @@ namespace Runedal
 
         //handling user input on pressing and releasing Enter key
         private void inputBox_KeyUp(object sender, KeyEventArgs e)
+        
         {
             if (e.Key == Key.Enter && inputBox.Text != String.Empty)
             {

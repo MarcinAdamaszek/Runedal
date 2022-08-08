@@ -47,20 +47,20 @@ namespace Runedal.GameData.Characters
         }
 
         //health and mana points
-        public double Hp { get; private set; }
-        public double HpAmount { get; private set; }
-        public double Mp { get; private set; }
-        public double MpAmount { get; private set; }
+        public double Hp { get;set; }
+        public double HpAmount { get;set; }
+        public double Mp { get;set; }
+        public double MpAmount { get; set; }
 
         //base combat statistics
-        public double Speed { get; private set; }
-        public double Attack { get; private set; }
-        public double AtkSpeed { get; private set; }
-        public double Accuracy { get; private set; }
-        public double Defense { get; private set; }
-        public double Evasion { get; private set; }
-        public double MagicResistance { get; private set; }
-        public double Critical { get; private set; }
+        public double Speed { get; set; }
+        public double Attack { get; set; }
+        public double AtkSpeed { get; set; }
+        public double Accuracy { get; set; }
+        public double Defense { get; set; }
+        public double Evasion { get; set; }
+        public double MagicResistance { get; set; }
+        public double Critical { get; set; }
 
 
         //list of modifiers currently affecting character

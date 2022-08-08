@@ -17,6 +17,6 @@ namespace Runedal.GameData.Items
         {
             Range = combatStats[1];
         }
-        public int Range { get;  private set; }
+        public int Range { get; set; }
     }
 }

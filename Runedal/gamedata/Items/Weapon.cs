@@ -21,7 +21,7 @@ namespace Runedal.GameData.Items
             Attack = attack;
         }
 
-        public int Attack { get; private set; }
+        public int Attack { get; set; }
         
     }
 }

@@ -28,8 +28,8 @@ namespace Runedal.GameData.Items
             Modifiers = new List<Modifier>();
         }
 
-        public int Weight { get; private set; }
-        public int Cost { get; private set; }
+        public int Weight { get; set; }
+        public int Cost { get; set; }
 
         //list of modifiers which change player's statistics and/or attributes
         public List<Modifier>? Modifiers { get; set; }

@@ -28,8 +28,8 @@ namespace Runedal.GameData.Items
             Gloves,
             Shoes,
         }
-        public int Defense { get; private set; }
-        public ArmorType Type { get; private set; }
+        public int Defense { get; set; }
+        public ArmorType Type { get; set; }
 
     }
 }

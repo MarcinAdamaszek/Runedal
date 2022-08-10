@@ -8,6 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Runedal.GameData;
 using Runedal.GameData.Locations;
+using Runedal.GameData.Characters;
 
 
 namespace Runedal.GameEngine
@@ -18,11 +19,8 @@ namespace Runedal.GameEngine
         { 
             this.Window = window;
             this.Data = new Data();
-            Data.LoadCharacters();
             Data.LoadLocations();
-
-            Data.Player!.CurrentLocation = Data.Locations!.ElementAt(0);
-            Data.Locations!.ElementAt(0).AddCharacter(Data.Player);
+            Data.LoadCharacters();
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -30,7 +28,7 @@ namespace Runedal.GameEngine
         {
             Default,
             UserCommand,
-            DunnoYet
+            Characters
         }
 
         public MainWindow Window { get; set; }
@@ -63,6 +61,11 @@ namespace Runedal.GameEngine
             command = Regex.Replace(userCommand, @"\s.+", "");
             argument1 = Regex.Replace(userCommand, @"^.+\s", "");
 
+            //clear argument1 if there was none
+            if (argument1 == command)
+            {
+                argument1 = string.Empty;
+            }
             //match user input to proper engine command
             switch (command)
             {
@@ -71,6 +74,10 @@ namespace Runedal.GameEngine
                 case "s":
                 case "w":
                     ChangeLocation(command);
+                    break;
+                case "look":
+                case "l":
+                    DescribeEntity(argument1);
                     break;
                 default:
                     PrintMessage("Że co?");
@@ -128,9 +135,12 @@ namespace Runedal.GameEngine
                     //change player's current location
                     Data.Player.CurrentLocation = Data.Locations.Find(x => x.X == destinationX && x.Y == destinationY);
 
-                    //add player to the list of location entities
+                    //remove player from previous location
+                    Data.Player.CurrentLocation!.Characters!.Remove(Data.Player);
+
+                    //add player to the list of new location entities
                     Data.Player.CurrentLocation!.AddCharacter(Data.Player);
-                    PrintMessage(Data.Player.CurrentLocation.Description!);
+                    LocationInfo();
                 }
                 else
                 {
@@ -147,7 +157,7 @@ namespace Runedal.GameEngine
         private void PrintMessage(string msg, MessageType type = MessageType.Default)
         {
             //color text of the message before displaying
-            TextRange tr = new TextRange(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
+            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
             tr.Text = "\n" + msg;
 
             switch (type) {
@@ -157,12 +167,97 @@ namespace Runedal.GameEngine
                 case (MessageType.UserCommand):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
                     break;
-                case (MessageType.DunnoYet):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
+                case (MessageType.Characters):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGreen);
                     break;
             }
 
             Window.outputBox.ScrollToEnd();
+        }
+
+        //method describing location to user
+        private void LocationInfo()
+        {
+            PrintMessage(Data.Player!.CurrentLocation!.Description!);
+            string tradersInfo = "Handlarze: ";
+            string heroesInfo = "Postacie: ";
+            string monstersInfo = "Istoty: ";
+            
+            //add character names to their info strings for each character of specific type present in player's current location
+            Data.Player.CurrentLocation.Characters!.ForEach((character) =>
+            {
+                if (character.GetType() == typeof(Trader))
+                {
+                    tradersInfo += " " + character.Name + ",";
+                }
+            });
+            Data.Player.CurrentLocation.Characters!.ForEach((character) =>
+            {
+                if (character.GetType() == typeof(Hero))
+                {
+                    heroesInfo += " " + character.Name + ",";
+                }
+            });
+            Data.Player.CurrentLocation.Characters!.ForEach((character) =>
+            {
+                if (character.GetType() == typeof(Monster))
+                {
+                    monstersInfo += " " + character.Name + ",";
+                }
+            });
+
+            //remove the last comma
+            tradersInfo = Regex.Replace(tradersInfo, @",$", "");
+            heroesInfo = Regex.Replace(heroesInfo, @",$", "");
+            monstersInfo = Regex.Replace(monstersInfo, @",$", "");
+
+            PrintMessage(tradersInfo, MessageType.Characters);
+            PrintMessage(heroesInfo, MessageType.Characters);
+            PrintMessage(monstersInfo, MessageType.Characters);
+        }
+
+        //method describing game entities to user (look command)
+        private void DescribeEntity(string entityName) 
+        {
+            int index = -1;
+            string description = string.Empty;
+            entityName = entityName.ToLower();
+
+            if (entityName == string.Empty || entityName == "around")
+            {
+
+                //if command "look" was used without argument, print location description
+                PrintMessage(Data.Player!.CurrentLocation!.Description!);
+                return;
+            }
+            else
+            {
+                //else search characters of current location and player's inventory for entity with name matching the argument
+                index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
+                if (index != -1)
+                {
+                    description = Data.Player!.CurrentLocation!.Characters[index].Description!;
+                }
+                else
+                {
+                    if (index != -1)
+                    {
+                        Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName);
+                        description = Data.Player!.Inventory[index].Description!;
+                    }
+                }
+
+            }
+
+            //if any entity matched the argument, print it's description to user
+            if (description != string.Empty)
+            {
+                PrintMessage(description);
+            }
+            else
+            {
+                PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"");
+            }
         }
     }
 }

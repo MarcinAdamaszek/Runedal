@@ -13,8 +13,8 @@ namespace Runedal.GameData.Characters
         {
             Modifiers = new List<Modifier>();
         }
-        public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses)
-            : base(descriptive, responses)
+        public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
+            : base(descriptive, responses, gold)
         {
             Hp = combatStats[0];
             Mp = combatStats[1];

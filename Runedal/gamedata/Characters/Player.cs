@@ -20,8 +20,8 @@ namespace Runedal.GameData.Characters
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
             Weapon = new Weapon("placeholder");
         }
-        public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses) 
-            : base(descriptive, combatStats, responses)
+        public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold) 
+            : base(descriptive, combatStats, responses, gold)
         {
             Strength = attributeStats[0];
             Intelligence = attributeStats[1];

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Karczmarz",
+    "description": "Barczysty mężczyzna średniego wzrostu, łysy, z rudą brodą. Ubrany w brudną, lnianą koszulę i (prawdopodobnie) jakieś spodnie, niewidoczne przez kontuar",
+    "passiveresponses": [ "Witaj wędrowcze", "Co podać?" ],
+    "aggressiveresponses": [],
+    "gold": 500,
+    "start": "Karczma"
+  }
+]

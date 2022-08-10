@@ -1,19 +1,21 @@
-{
-  "name": "Czesiek",
-  "description": "",
-  "hp": 100,
-  "mp": 100,
-  "speed": 100,
-  "attack": 100,
-  "atkspeed": 100,
-  "accuracy": 100,
-  "critical": 100,
-  "defense": 100,
-  "evasion": 100,
-  "magicresistance": 100,
-  "gold": 0,
-  "strength": 30,
-  "agility": 30,
-  "inteligence": 30,
-  "start": "Karczma"
-}
+[
+  {
+    "name": "Czesiek",
+    "description": "",
+    "hp": 100,
+    "mp": 100,
+    "speed": 100,
+    "attack": 100,
+    "atkspeed": 100,
+    "accuracy": 100,
+    "critical": 100,
+    "defense": 100,
+    "evasion": 100,
+    "magicresistance": 100,
+    "gold": 0,
+    "strength": 30,
+    "agility": 30,
+    "inteligence": 30,
+    "start": "Karczma"
+  }
+]

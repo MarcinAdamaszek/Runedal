@@ -19,6 +19,7 @@ namespace Runedal.GameEngine
         { 
             this.Window = window;
             this.Data = new Data();
+
             Data.LoadLocations();
             Data.LoadCharacters();
         }
@@ -88,58 +89,44 @@ namespace Runedal.GameEngine
         //methods taking actions depending on user input command
         private void ChangeLocation(string direction)
         {
-            int currentX = Data.Player!.CurrentLocation!.X;
-            int currentY = Data.Player.CurrentLocation!.Y;
-            int destinationX = 0;
-            int destinationY = 0;
             string directionString = string.Empty;
-            bool passage;
+            bool passage = Data.Player!.CurrentLocation!.GetPassage(direction);
+            Location nextLocation = new Location();
 
             switch (direction)
             {
                 case "n":
-                    destinationX = currentX;
-                    destinationY = currentY + 1;
-                    passage = Data.Player.CurrentLocation.NorthPassage!;
                     directionString = "północ";
                     break;
                 case "e":
-                    destinationX = currentX + 1;
-                    destinationY = currentY;
-                    passage = Data.Player.CurrentLocation.EastPassage!;
                     directionString = "wschód";
                     break;
                 case "s":
-                    destinationX = currentX;
-                    destinationY = currentY - 1;
-                    passage = Data.Player.CurrentLocation.SouthPassage!;
                     directionString = "południe";
                     break;
                 case "w":
-                    destinationX = currentX - 1;
-                    destinationY = currentY;
-                    passage = Data.Player.CurrentLocation.WestPassage!;
                     directionString = "zachód";
                     break;
             }
 
-
-            //if there exists location in specific direction to players current one
-            if (Data.Locations!.Exists(x => x.X == destinationX && x.Y == destinationY))
+            if (GetNextLocation(direction, out nextLocation))
             {
+
                 //if the passage is open
-                if (Data.Player.CurrentLocation.NorthPassage!)
+                if (passage)
                 {
                     PrintMessage("Idziesz na " + directionString);
 
                     //change player's current location
-                    Data.Player.CurrentLocation = Data.Locations.Find(x => x.X == destinationX && x.Y == destinationY);
+                    Data.Player!.CurrentLocation = nextLocation;
 
                     //remove player from previous location
                     Data.Player.CurrentLocation!.Characters!.Remove(Data.Player);
 
                     //add player to the list of new location entities
                     Data.Player.CurrentLocation!.AddCharacter(Data.Player);
+
+                    //display location info to user
                     LocationInfo();
                 }
                 else
@@ -178,11 +165,43 @@ namespace Runedal.GameEngine
         //method describing location to user
         private void LocationInfo()
         {
-            PrintMessage(Data.Player!.CurrentLocation!.Description!);
+            Location nextLocation = new Location();
             string tradersInfo = "Handlarze: ";
             string heroesInfo = "Postacie: ";
             string monstersInfo = "Istoty: ";
-            
+            string exitsInfo = "Wyjścia:";
+            string[] directionsLetters = { "n", "e", "s", "w" };
+            string[] directionsStrings = { "\nPółnoc: ", "\nWschód: ", "\nPołudnie: ", "\nZachód: " };
+            int currentX = Data.Player!.CurrentLocation!.X;
+            int currentY = Data.Player!.CurrentLocation!.Y;
+
+            //print location description
+            //PrintMessage(delimeter);
+            PrintMessage(Data.Player!.CurrentLocation!.Description!);
+
+            //describe exits for each direction
+            for (int i = 0; i < 4; i++)
+            {
+
+                //if the location exists
+                if (GetNextLocation(directionsLetters[i], out nextLocation))
+                {
+
+                    //if the passage in specific direction is open add proper strings to exitsInfo
+                    if (Data.Player!.CurrentLocation.GetPassage(directionsLetters[i]))
+                    {
+                        exitsInfo += directionsStrings[i] + nextLocation.Name;
+                    }
+                    else
+                    {
+                        exitsInfo += directionsStrings[i] + "Przejście zamknięte";
+                    }
+                }
+            }
+
+            //PrintMessage(delimeter);
+            PrintMessage(exitsInfo);
+
             //add character names to their info strings for each character of specific type present in player's current location
             Data.Player.CurrentLocation.Characters!.ForEach((character) =>
             {
@@ -211,9 +230,10 @@ namespace Runedal.GameEngine
             heroesInfo = Regex.Replace(heroesInfo, @",$", "");
             monstersInfo = Regex.Replace(monstersInfo, @",$", "");
 
-            PrintMessage(tradersInfo, MessageType.Characters);
-            PrintMessage(heroesInfo, MessageType.Characters);
-            PrintMessage(monstersInfo, MessageType.Characters);
+            //PrintMessage(delimeter);
+            PrintMessage(tradersInfo);
+            PrintMessage(heroesInfo);
+            PrintMessage(monstersInfo);
         }
 
         //method describing game entities to user (look command)
@@ -227,7 +247,7 @@ namespace Runedal.GameEngine
             {
 
                 //if command "look" was used without argument, print location description
-                PrintMessage(Data.Player!.CurrentLocation!.Description!);
+                LocationInfo();
                 return;
             }
             else
@@ -258,6 +278,58 @@ namespace Runedal.GameEngine
             {
                 PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"");
             }
+        }
+
+        /// <summary>
+        /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        public bool GetNextLocation(string direction, out Location nextLocation)
+        {
+            nextLocation = Data.Player!.CurrentLocation!;
+            int currentX = nextLocation.X;
+            int currentY = nextLocation.Y;
+            int locationIndex = -1;
+            bool isFound = false;
+
+            switch (direction)
+            {
+                case "n":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "e":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "s":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "w":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+            }
+
+            return isFound;
         }
     }
 }

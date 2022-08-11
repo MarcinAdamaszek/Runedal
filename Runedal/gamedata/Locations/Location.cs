@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Runedal.GameData.Characters;
+using Runedal.GameData;
 
 namespace Runedal.GameData.Locations
 {
@@ -50,6 +51,22 @@ namespace Runedal.GameData.Locations
         public void RemoveCharacter(Character character)
         {
             this.Characters!.Remove(character);
+        }
+        public bool GetPassage(string direction)
+        {
+            switch (direction)
+            {
+                case "n":
+                    return NorthPassage;
+                case "e":
+                    return EastPassage;
+                case "s":
+                    return SouthPassage;
+                case "w":
+                    return WestPassage;
+            }
+
+            return false;
         }
     }
 }

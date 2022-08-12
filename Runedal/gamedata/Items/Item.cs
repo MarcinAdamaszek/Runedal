@@ -6,30 +6,48 @@ using System.Threading.Tasks;
 
 namespace Runedal.GameData.Items
 {
-    public abstract class Item : Entity
+    public class Item : Entity
     {
         //default constructor for json deserialization
         public Item() : base()
         {
             Modifiers = new List<Modifier>();
+            Quantity = 1;
         }
 
         //constructor for placeholder for empty Player's item slots
         public Item(string placeholder) : base(placeholder)
         {
+            Quantity = 1;
             Weight = 0;
-            Cost = 0;
+            Price = 0;
             Modifiers = new List<Modifier>();
         }
         public Item(string[] descriptive, int[] stats) : base(descriptive)
         {
+            Quantity = 1;
             Weight = stats[0];
-            Cost = stats[1];
+            Price = stats[1];
             Modifiers = new List<Modifier>();
         }
 
+        //copy constructor
+        public Item(Item it, int quantity)
+        {
+            Quantity = quantity;
+            Name = it.Name;
+            Description = it.Description;
+            Weight = it.Weight;
+            Price = it.Price;
+            Modifiers = new List<Modifier>();
+
+            //create deep copy of modifiers collection
+            Modifiers = it.Modifiers!.ConvertAll(mod => new Modifier(mod));
+        }
+
         public int Weight { get; set; }
-        public int Cost { get; set; }
+        public int Price { get; set; }
+        public int Quantity { get; set; }
 
         //list of modifiers which change player's statistics and/or attributes
         public List<Modifier>? Modifiers { get; set; }

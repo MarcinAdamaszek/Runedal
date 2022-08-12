@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Runedal.GameData;
 using Runedal.GameData.Locations;
 using Runedal.GameData.Characters;
+using Runedal.GameData.Items;
 
 
 namespace Runedal.GameEngine
@@ -22,6 +23,8 @@ namespace Runedal.GameEngine
 
             Data.LoadLocations();
             Data.LoadCharacters();
+            Data.LoadItems();
+                
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -67,7 +70,7 @@ namespace Runedal.GameEngine
             {
                 argument1 = string.Empty;
             }
-            //match user input to proper engine command
+            //match user input to proper engine action
             switch (command)
             {
                 case "n":
@@ -81,7 +84,7 @@ namespace Runedal.GameEngine
                     DescribeEntity(argument1);
                     break;
                 default:
-                    PrintMessage("Że co?");
+                    PrintMessage("Ogarnij się..");
                     return;
             }
         }
@@ -260,9 +263,10 @@ namespace Runedal.GameEngine
                 }
                 else
                 {
+
+                    index = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName);
                     if (index != -1)
                     {
-                        Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName);
                         description = Data.Player!.Inventory[index].Description!;
                     }
                 }
@@ -285,7 +289,7 @@ namespace Runedal.GameEngine
         /// </summary>
         /// <param name="direction"></param>
         /// <returns></returns>
-        public bool GetNextLocation(string direction, out Location nextLocation)
+        private bool GetNextLocation(string direction, out Location nextLocation)
         {
             nextLocation = Data.Player!.CurrentLocation!;
             int currentX = nextLocation.X;
@@ -330,6 +334,95 @@ namespace Runedal.GameEngine
             }
 
             return isFound;
+        }
+
+        //method printing character's inventory
+        private void InventoryInfo(Character character)
+        {
+            string spaceAfterName = string.Empty;
+            string spaceAfterQuantity = string.Empty;
+            string spaceAfterPrice = string.Empty;
+            string descriptionTable = string.Empty;
+            string tableRow = string.Empty;
+            string horizontalBorder = string.Empty;
+            string delimeter = "||-----------------------------------------------------------||";
+            string descriptionRow = "|| Przedmiot:                              | Ilość: || Cena: ||\n" + delimeter;
+            int nameColumnSize = 0;
+            int quantityColumnSize = 0;
+            int priceColumnSize = 0;
+            int price = 0;
+            const int borderSize = 63;
+
+            //create string representing top/bottom table borders
+            for (int i = 0; i < borderSize; i++)
+            {
+                horizontalBorder += "=";
+            }
+
+            if (character.GetType() == typeof(Player))
+            {
+                descriptionTable = "********************** TWÓJ EKWIPUNEK *************************";
+            }
+            else
+            {
+                descriptionTable = "********************* EKWIPUNEK HANDLARZA *********************";
+            }
+
+            //print talbe description and top table border
+            PrintMessage(descriptionTable);
+            PrintMessage(horizontalBorder);
+            PrintMessage(descriptionRow);
+
+            foreach (var item in character.Inventory!)
+            {
+                //calculate sizes of spaces in table rows to mantain neat table layout
+                nameColumnSize = 40 - item.Name!.Length;
+                quantityColumnSize = 7 - Convert.ToString(item.Quantity).Length;
+                priceColumnSize = 7 - Convert.ToString(item.Price).Length;
+                spaceAfterName = string.Empty;
+                spaceAfterQuantity = string.Empty;
+                spaceAfterPrice = string.Empty;
+
+                //create strings representing spaces with calculated lenghts
+                for (int i = 0; i < nameColumnSize; i++)
+                {
+                    spaceAfterName += " ";
+                }
+                for (int i = 0; i < quantityColumnSize; i++)
+                {
+                    spaceAfterQuantity += " ";
+                }
+                for (int i = 0; i < priceColumnSize; i++)
+                {
+                    spaceAfterPrice += " ";
+                }
+
+                //set the price depending on character type (higher price for traders)
+                if (character.GetType() == typeof(Player))
+                {
+                    price = item.Price;
+                }
+                else
+                {
+                    price = CalculateTraderPrice(item);
+                }
+
+                //create and print a string representing table row
+                tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "| "
+                    + price + spaceAfterPrice + "||";
+                PrintMessage(tableRow);
+            }
+
+            //print bottom table border
+            PrintMessage(horizontalBorder);
+        }
+
+        //helper method for calculating selling price (trader price) of the item
+        private int CalculateTraderPrice(Item item)
+        {
+            double basePrice = Convert.ToDouble(item.Price);
+            int price = Convert.ToInt32(Math.Round(basePrice * Data!.PriceMultiplier));
+            return price;
         }
     }
 }

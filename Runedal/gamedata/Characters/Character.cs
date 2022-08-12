@@ -41,5 +41,56 @@ namespace Runedal.GameData.Characters
         //character's starting location
         public string? Start { get; set; }
 
+        //method for adding items into character's inventory
+        public void AddItem(Item newItem, int quantity)
+        {
+            int itemIndex = -1;
+
+            itemIndex = Inventory!.FindIndex(item => item.Name == newItem.Name);
+
+            //if there is already another item with the same name in character's inventory, add to it's quantity 
+            if (itemIndex != -1)
+            {
+                Inventory![itemIndex].Quantity += newItem.Quantity;
+            }
+            else
+            {
+                   Inventory!.Add(new Item(newItem, quantity));
+            }
+        }
+
+        /// <summary>
+        /// method for removing items from character's inventory
+        /// </summary>
+        /// <param name="oldItem"></param>
+        /// <returns>true if the item is removed successfully, false if it didn't exist in character's 
+        /// inventory in the first place</returns>
+        public bool RemoveItem(Item oldItem)
+        {
+            int itemIndex = -1;
+
+            itemIndex = Inventory!.FindIndex(item => item.Name == oldItem.Name);
+
+            //if the item exists in character's inventory
+            if (itemIndex == -1)
+            {
+                //if the item quantity is more than 1, subtract 1 from quantity
+                if (Inventory[itemIndex].Quantity > 1)
+                {
+                    Inventory[itemIndex].Quantity -= oldItem.Quantity;
+                    return true;
+                }
+                else
+                {
+                    Inventory.RemoveAt(itemIndex);
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

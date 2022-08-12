@@ -17,6 +17,13 @@ namespace Runedal.GameData
             Value = value;
         }
 
+        //copy constructor 
+        public Modifier(Modifier mod)
+        {
+            Type = mod.Type;
+            Value = mod.Value;
+        }
+
         //enum for type of modifier (which statistic it modifies)
         
         public CombatCharacter.StatType Type { get; private set; }

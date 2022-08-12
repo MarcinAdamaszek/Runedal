@@ -5,6 +5,10 @@
     "passiveresponses": [ "Witaj wędrowcze", "Co podać?" ],
     "aggressiveresponses": [],
     "gold": 500,
-    "start": "Karczma"
+    "start": "Karczma",
+    "items": {
+      "Chlebek": 10,
+      "Piwo": 20
+    }
   }
 ]

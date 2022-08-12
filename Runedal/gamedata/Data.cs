@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.IO;
 using Runedal.GameData.Characters;
+using Runedal.GameData.Items;
 
 namespace Runedal.GameData
 {
@@ -22,13 +23,16 @@ namespace Runedal.GameData
             
             Locations = new List<Location>();
             Characters = new List<Character>();
-           
+            Items = new List<Item>();
+            PriceMultiplier = 1.2;
         }
+        public double PriceMultiplier { get; set; }
         public string? FileName { get; set; }
         public string? JsonString { get; set; }
         public JsonSerializerOptions Options { get; set; }
         public List<Location>? Locations { get; set; }
         public List<Character>? Characters { get; set; }
+        public List<Item>? Items { get; set; }
         public Player? Player { get; set; }
       
         
@@ -77,6 +81,19 @@ namespace Runedal.GameData
             }
         }
 
+        //method loading items from json
+        public void LoadItems()
+        {
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Consumables.json");
+            Item[] consumablesArray = JsonSerializer.Deserialize<Consumable[]>(JsonString, Options)!;
+
+            PopulateItems(consumablesArray);
+
+
+            //Fill characters inventories with items
+            Characters!.ForEach(character => FillInventory(character));
+        }
+
         //helper method for pushing loaded characters objects into Characters list and assigning them into their starting location
         private void PopulateLocations(Character[] charactersArray)
         {
@@ -92,5 +109,29 @@ namespace Runedal.GameData
                 character.CurrentLocation = startingLocation;
             }
         }
+
+        //helper method for pushing loaded items objects into Items list
+        private void PopulateItems(Item[] itemsArray)
+        {
+            foreach (var item in itemsArray)
+            {
+                Items!.Add(item);
+            }
+        }
+
+        //method for filling trader inventories with proper items
+        private void FillInventory(Character character)
+        {
+            Item itemToAdd;
+
+            if (character.GetType() == typeof(Trader))
+            {
+                foreach(KeyValuePair<string, int> kvp in (character as Trader)!.Items!)
+                {
+                    itemToAdd = Items!.Find(item => item.Name == kvp.Key)!;
+                    character.AddItem(itemToAdd, kvp.Value);
+                }
+            }
+        } 
     }
 }

@@ -24,7 +24,9 @@ namespace Runedal.GameEngine
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
-                
+
+            InventoryInfo(Data.Characters.Find(character => character.Name == "Czesiek"));
+            InventoryInfo(Data.Characters.Find(character => character.Name == "Czesiek"), false);
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -337,7 +339,7 @@ namespace Runedal.GameEngine
         }
 
         //method printing character's inventory
-        private void InventoryInfo(Character character)
+        private void InventoryInfo(Character character, bool withPrice = true)
         {
             string spaceAfterName = string.Empty;
             string spaceAfterQuantity = string.Empty;
@@ -351,7 +353,21 @@ namespace Runedal.GameEngine
             int quantityColumnSize = 0;
             int priceColumnSize = 0;
             int price = 0;
-            const int borderSize = 63;
+            int borderSize = 0;
+
+            //set delimeter, borderSize and descriptionRow depending on withPrice parameter
+            if (withPrice)
+            {
+                delimeter = "||-----------------------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                              | Ilość: || Cena: ||\n" + delimeter;
+                borderSize = 63;
+            }
+            else
+            {
+                delimeter = "||--------------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                              | Ilość: ||\n" + delimeter;
+                borderSize = 54;
+            }
 
             //create string representing top/bottom table borders
             for (int i = 0; i < borderSize; i++)
@@ -359,9 +375,13 @@ namespace Runedal.GameEngine
                 horizontalBorder += "=";
             }
 
-            if (character.GetType() == typeof(Player))
+            if (!withPrice)
             {
-                descriptionTable = "********************** TWÓJ EKWIPUNEK *************************";
+                descriptionTable = "********************** EKWIPUNEK *********************";
+            }
+            else if (character.GetType() == typeof(Player))
+            {
+                descriptionTable = "*********************** TWÓJ EKWIPUNEK ************************";
             }
             else
             {
@@ -370,7 +390,6 @@ namespace Runedal.GameEngine
 
             //print talbe description and top table border
             PrintMessage(descriptionTable);
-            PrintMessage(horizontalBorder);
             PrintMessage(descriptionRow);
 
             foreach (var item in character.Inventory!)
@@ -378,10 +397,19 @@ namespace Runedal.GameEngine
                 //calculate sizes of spaces in table rows to mantain neat table layout
                 nameColumnSize = 40 - item.Name!.Length;
                 quantityColumnSize = 7 - Convert.ToString(item.Quantity).Length;
-                priceColumnSize = 7 - Convert.ToString(item.Price).Length;
                 spaceAfterName = string.Empty;
                 spaceAfterQuantity = string.Empty;
-                spaceAfterPrice = string.Empty;
+
+                //only if it's trade mode and price is needed
+                if (withPrice)
+                {
+                    priceColumnSize = 7 - Convert.ToString(item.Price).Length;
+                    spaceAfterPrice = string.Empty;
+                    for (int i = 0; i < priceColumnSize; i++)
+                    {
+                        spaceAfterPrice += " ";
+                    }
+                }
 
                 //create strings representing spaces with calculated lenghts
                 for (int i = 0; i < nameColumnSize; i++)
@@ -392,30 +420,41 @@ namespace Runedal.GameEngine
                 {
                     spaceAfterQuantity += " ";
                 }
-                for (int i = 0; i < priceColumnSize; i++)
-                {
-                    spaceAfterPrice += " ";
-                }
+
 
                 //set the price depending on character type (higher price for traders)
-                if (character.GetType() == typeof(Player))
+                //only if it's in trade mode
+                if (withPrice)
                 {
-                    price = item.Price;
+                    if (character.GetType() == typeof(Player))
+                    {
+                        price = item.Price;
+                    }
+                    else
+                    {
+                        price = CalculateTraderPrice(item);
+                    }
+                }
+
+                //create a string representing table row (with price or without depending on withPrice parameter)
+                if (withPrice)
+                {
+                    tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "| "
+                        + price + spaceAfterPrice + "||";
                 }
                 else
                 {
-                    price = CalculateTraderPrice(item);
+                    tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "||";
                 }
 
-                //create and print a string representing table row
-                tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "| "
-                    + price + spaceAfterPrice + "||";
                 PrintMessage(tableRow);
             }
 
             //print bottom table border
             PrintMessage(horizontalBorder);
         }
+
+        //method printing players inventory
 
         //helper method for calculating selling price (trader price) of the item
         private int CalculateTraderPrice(Item item)

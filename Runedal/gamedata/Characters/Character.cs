@@ -14,11 +14,12 @@ namespace Runedal.GameData.Characters
         //default constructor for json deserialization
         public Character() : base()
         {
+            Items = new Dictionary<string, int>();
             Inventory = new List<Item>();
         }
         public Character(string[] descriptive, string[][] responses, int gold) : base(descriptive)
         {
-
+            Items = new Dictionary<string, int>();
             Inventory = new List<Item>();
             PassiveResponses = responses[0];
             AggressiveResponses = responses[1];
@@ -38,8 +39,12 @@ namespace Runedal.GameData.Characters
         
         //array of character's aggressive responses
         public string[]? AggressiveResponses { get; set; }
+
         //character's starting location
         public string? Start { get; set; }
+        
+        //set and quantity of items to load into character's inventory on game launch
+        public Dictionary<string, int>? Items { get; set; }
 
         //method for adding items into character's inventory
         public void AddItem(Item newItem, int quantity)

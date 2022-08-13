@@ -24,9 +24,6 @@ namespace Runedal.GameEngine
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
-
-            InventoryInfo(Data.Characters.Find(character => character.Name == "Czesiek"));
-            InventoryInfo(Data.Characters.Find(character => character.Name == "Czesiek"), false);
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors

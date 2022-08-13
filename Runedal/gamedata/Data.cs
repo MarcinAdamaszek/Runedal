@@ -124,13 +124,10 @@ namespace Runedal.GameData
         {
             Item itemToAdd;
 
-            if (character.GetType() == typeof(Trader))
+            foreach(KeyValuePair<string, int> kvp in character.Items!)
             {
-                foreach(KeyValuePair<string, int> kvp in (character as Trader)!.Items!)
-                {
-                    itemToAdd = Items!.Find(item => item.Name == kvp.Key)!;
-                    character.AddItem(itemToAdd, kvp.Value);
-                }
+                itemToAdd = Items!.Find(item => item.Name == kvp.Key)!;
+                character.AddItem(itemToAdd, kvp.Value);
             }
         } 
     }

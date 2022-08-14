@@ -31,7 +31,10 @@ namespace Runedal.GameEngine
         {
             Default,
             UserCommand,
-            Characters
+            Exit,
+            Trader,
+            Hero,
+            Monster
         }
 
         public MainWindow Window { get; set; }
@@ -69,6 +72,7 @@ namespace Runedal.GameEngine
             {
                 argument1 = string.Empty;
             }
+
             //match user input to proper engine action
             switch (command)
             {
@@ -81,6 +85,10 @@ namespace Runedal.GameEngine
                 case "look":
                 case "l":
                     DescribeEntity(argument1);
+                    break;
+                case "inventory":
+                case "i":
+                    InventoryInfo(Data.Player!, false);
                     break;
                 default:
                     PrintMessage("Ogarnij się..");
@@ -156,8 +164,17 @@ namespace Runedal.GameEngine
                 case (MessageType.UserCommand):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
                     break;
-                case (MessageType.Characters):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGreen);
+                case (MessageType.Exit):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.PaleGreen);
+                    break;
+                case (MessageType.Trader):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                    break;
+                case (MessageType.Hero):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Ivory);
+                    break;
+                case (MessageType.Monster):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Pink);
                     break;
             }
 
@@ -170,15 +187,14 @@ namespace Runedal.GameEngine
             Location nextLocation = new Location();
             string tradersInfo = "Handlarze: ";
             string heroesInfo = "Postacie: ";
-            string monstersInfo = "Istoty: ";
+            string monstersInfo = "Istoty:";
             string exitsInfo = "Wyjścia:";
             string[] directionsLetters = { "n", "e", "s", "w" };
-            string[] directionsStrings = { "\nPółnoc: ", "\nWschód: ", "\nPołudnie: ", "\nZachód: " };
+            string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód," };
             int currentX = Data.Player!.CurrentLocation!.X;
             int currentY = Data.Player!.CurrentLocation!.Y;
 
             //print location description
-            //PrintMessage(delimeter);
             PrintMessage(Data.Player!.CurrentLocation!.Description!);
 
             //describe exits for each direction
@@ -188,21 +204,15 @@ namespace Runedal.GameEngine
                 //if the location exists
                 if (GetNextLocation(directionsLetters[i], out nextLocation))
                 {
-
-                    //if the passage in specific direction is open add proper strings to exitsInfo
-                    if (Data.Player!.CurrentLocation.GetPassage(directionsLetters[i]))
-                    {
-                        exitsInfo += directionsStrings[i] + nextLocation.Name;
-                    }
-                    else
-                    {
-                        exitsInfo += directionsStrings[i] + "Przejście zamknięte";
-                    }
+                    exitsInfo += directionsStrings[i];
                 }
             }
 
+            //remove the last comma 
+            exitsInfo = Regex.Replace(exitsInfo, @",$", "");
+
             //PrintMessage(delimeter);
-            PrintMessage(exitsInfo);
+            PrintMessage(exitsInfo, MessageType.Exit);
 
             //add character names to their info strings for each character of specific type present in player's current location
             Data.Player.CurrentLocation.Characters!.ForEach((character) =>
@@ -232,10 +242,19 @@ namespace Runedal.GameEngine
             heroesInfo = Regex.Replace(heroesInfo, @",$", "");
             monstersInfo = Regex.Replace(monstersInfo, @",$", "");
 
-            //PrintMessage(delimeter);
-            PrintMessage(tradersInfo);
-            PrintMessage(heroesInfo);
-            PrintMessage(monstersInfo);
+            //if any characters found, print them to outputBox
+            if (tradersInfo.Length > 11)
+            {
+                PrintMessage(tradersInfo, MessageType.Trader);
+            }
+            if (heroesInfo.Length > 10)
+            {
+                PrintMessage(heroesInfo, MessageType.Hero);
+            }
+            if (monstersInfo.Length > 8)
+            {
+                PrintMessage(monstersInfo, MessageType.Monster);
+            }
         }
 
         //method describing game entities to user (look command)

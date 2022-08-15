@@ -20,7 +20,7 @@ namespace Runedal.GameData.Characters
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
             Weapon = new Weapon("placeholder");
         }
-        public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold) 
+        public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold)
             : base(descriptive, combatStats, responses, gold)
         {
             Strength = attributeStats[0];
@@ -36,6 +36,13 @@ namespace Runedal.GameData.Characters
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
             Weapon = new Weapon("placeholder");
         }
+        public enum State
+        {
+            Idle,
+            Trade,
+            Combat
+        }
+        public State CurrentState { get; set; }
 
         //player's level and amount of experience
         public int Level { get; set; }
@@ -52,6 +59,9 @@ namespace Runedal.GameData.Characters
         public Armor? Gloves { get; set; }
         public Armor? Shoes { get; set; }
         public Weapon? Weapon { get; set; }
+
+        //character with whom player currently interacts
+        public Character? InteractsWith { get; set; }
 
         //methods for getting effective statistics (after applying all modifiers)
         public override double GetEffectiveSpeed()

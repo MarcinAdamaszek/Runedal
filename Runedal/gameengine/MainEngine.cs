@@ -24,6 +24,7 @@ namespace Runedal.GameEngine
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
+            
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -31,10 +32,11 @@ namespace Runedal.GameEngine
         {
             Default,
             UserCommand,
+            SystemFeedback,
             Exit,
             Trader,
             Hero,
-            Monster
+            Monster,
         }
 
         public MainWindow Window { get; set; }
@@ -82,21 +84,29 @@ namespace Runedal.GameEngine
                 case "w":
                     ChangeLocation(command);
                     break;
+                case "t":
+                case "trade":
+                    HandleTrade(argument1);
+                    break;
                 case "look":
                 case "l":
-                    DescribeEntity(argument1);
+                    HandleLook(argument1);
                     break;
                 case "inventory":
                 case "i":
                     InventoryInfo(Data.Player!, false);
                     break;
                 default:
-                    PrintMessage("Ogarnij się..");
+                    PrintMessage("Pier%#$isz jak potłuczony..", MessageType.SystemFeedback);
                     return;
             }
         }
 
-        //methods taking actions depending on user input command
+
+
+        //==============================================COMMAND HANDLERS=============================================
+
+        //method moving player to next location
         private void ChangeLocation(string direction)
         {
             string directionString = string.Empty;
@@ -125,7 +135,7 @@ namespace Runedal.GameEngine
                 //if the passage is open
                 if (passage)
                 {
-                    PrintMessage("Idziesz na " + directionString);
+                    PrintMessage("Idziesz na " + directionString, MessageType.SystemFeedback);
 
                     //change player's current location
                     Data.Player!.CurrentLocation = nextLocation;
@@ -150,36 +160,89 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method displaying communicates in outputBox of the gui
-        private void PrintMessage(string msg, MessageType type = MessageType.Default)
+        //method handling 'look' command
+        private void HandleLook(string entityName)
         {
-            //color text of the message before displaying
-            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
-            tr.Text = "\n" + msg;
+            int index = -1;
+            string description = string.Empty;
+            entityName = entityName.ToLower();
 
-            switch (type) {
-                case (MessageType.Default):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
-                    break;
-                case (MessageType.UserCommand):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
-                    break;
-                case (MessageType.Exit):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.PaleGreen);
-                    break;
-                case (MessageType.Trader):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-                    break;
-                case (MessageType.Hero):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Ivory);
-                    break;
-                case (MessageType.Monster):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Pink);
-                    break;
+            if (entityName == string.Empty || entityName == "around")
+            {
+
+                //if command "look" was used without argument, print location description
+                LocationInfo();
+                return;
+            }
+            else
+            {
+                //else search characters of current location and player's inventory for entity with name matching the argument
+                index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
+                if (index != -1)
+                {
+                    description = Data.Player!.CurrentLocation!.Characters[index].Description!;
+                }
+                else
+                {
+
+                    index = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName);
+                    if (index != -1)
+                    {
+                        description = Data.Player!.Inventory[index].Description!;
+                    }
+                }
+
             }
 
-            Window.outputBox.ScrollToEnd();
+            //if any entity matched the argument, print it's description to user
+            if (description != string.Empty)
+            {
+                PrintMessage(description);
+            }
+            else
+            {
+                PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"");
+            }
         }
+
+        //method handling 'trade' command
+        private void HandleTrade(string characterName)
+        {
+            int index = -1;
+            Character tradingCharacter = new Character();
+
+            //check if the character of specified name exists in player's current location
+            index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
+            if (index != -1)
+            {
+                tradingCharacter = Data.Player!.CurrentLocation!.Characters![index];
+
+                //check if chosen character is trader type or not
+                if (tradingCharacter.GetType() != typeof(Trader))
+                {
+                    PrintMessage("Nie możesz handlować z tą postacią", MessageType.SystemFeedback);
+                    return;
+                }
+                //set player's interaction character
+                Data.Player!.InteractsWith = tradingCharacter;
+
+                //set player's state to trade
+                Data.Player!.CurrentState = Player.State.Trade;
+
+                PrintMessage("Handlujesz z: " + tradingCharacter.Name, MessageType.SystemFeedback);
+                InventoryInfo(tradingCharacter, true);
+                InventoryInfo(Data.Player!, true);
+            }
+            else
+            {
+                PrintMessage("Nie ma tu takiej postaci", MessageType.SystemFeedback);
+            }
+        }
+
+
+
+
+        //==============================================DESCRIPTION METHODS=============================================
 
         //method describing location to user
         private void LocationInfo()
@@ -255,103 +318,6 @@ namespace Runedal.GameEngine
             {
                 PrintMessage(monstersInfo, MessageType.Monster);
             }
-        }
-
-        //method describing game entities to user (look command)
-        private void DescribeEntity(string entityName) 
-        {
-            int index = -1;
-            string description = string.Empty;
-            entityName = entityName.ToLower();
-
-            if (entityName == string.Empty || entityName == "around")
-            {
-
-                //if command "look" was used without argument, print location description
-                LocationInfo();
-                return;
-            }
-            else
-            {
-                //else search characters of current location and player's inventory for entity with name matching the argument
-                index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
-                if (index != -1)
-                {
-                    description = Data.Player!.CurrentLocation!.Characters[index].Description!;
-                }
-                else
-                {
-
-                    index = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName);
-                    if (index != -1)
-                    {
-                        description = Data.Player!.Inventory[index].Description!;
-                    }
-                }
-
-            }
-
-            //if any entity matched the argument, print it's description to user
-            if (description != string.Empty)
-            {
-                PrintMessage(description);
-            }
-            else
-            {
-                PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"");
-            }
-        }
-
-        /// <summary>
-        /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
-        /// </summary>
-        /// <param name="direction"></param>
-        /// <returns></returns>
-        private bool GetNextLocation(string direction, out Location nextLocation)
-        {
-            nextLocation = Data.Player!.CurrentLocation!;
-            int currentX = nextLocation.X;
-            int currentY = nextLocation.Y;
-            int locationIndex = -1;
-            bool isFound = false;
-
-            switch (direction)
-            {
-                case "n":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "e":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "s":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "w":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-            }
-
-            return isFound;
         }
 
         //method printing character's inventory
@@ -470,7 +436,61 @@ namespace Runedal.GameEngine
             PrintMessage(horizontalBorder);
         }
 
-        //method printing players inventory
+
+
+        //==============================================HELPER METHODS=============================================
+
+        /// <summary>
+        /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        private bool GetNextLocation(string direction, out Location nextLocation)
+        {
+            nextLocation = Data.Player!.CurrentLocation!;
+            int currentX = nextLocation.X;
+            int currentY = nextLocation.Y;
+            int locationIndex = -1;
+            bool isFound = false;
+
+            switch (direction)
+            {
+                case "n":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "e":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "s":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "w":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+            }
+
+            return isFound;
+        }
 
         //helper method for calculating selling price (trader price) of the item
         private int CalculateTraderPrice(Item item)
@@ -478,6 +498,43 @@ namespace Runedal.GameEngine
             double basePrice = Convert.ToDouble(item.Price);
             int price = Convert.ToInt32(Math.Round(basePrice * Data!.PriceMultiplier));
             return price;
+        }
+
+
+
+        //method displaying communicates in outputBox of the gui
+        private void PrintMessage(string msg, MessageType type = MessageType.Default)
+        {
+            //color text of the message before displaying
+            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
+            tr.Text = "\n" + msg;
+
+            switch (type)
+            {
+                case (MessageType.Default):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
+                    break;
+                case (MessageType.UserCommand):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
+                    break;
+                case (MessageType.SystemFeedback):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
+                    break;
+                case (MessageType.Exit):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.PaleGreen);
+                    break;
+                case (MessageType.Trader):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                    break;
+                case (MessageType.Hero):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Ivory);
+                    break;
+                case (MessageType.Monster):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Pink);
+                    break;
+            }
+
+            Window.outputBox.ScrollToEnd();
         }
     }
 }

@@ -8,6 +8,7 @@ using Runedal.GameData.Items;
 
 namespace Runedal.GameData.Characters
 {
+
     //base class for all characters (player, npcs, creatures)
     public class Character : Entity
     {
@@ -70,24 +71,27 @@ namespace Runedal.GameData.Characters
         /// <param name="oldItem"></param>
         /// <returns>true if the item is removed successfully, false if it didn't exist in character's 
         /// inventory in the first place</returns>
-        public bool RemoveItem(Item oldItem)
+        public bool RemoveItem(string itemName, int quantity)
         {
             int itemIndex = -1;
+            Item itemToRemove = new Item();
 
-            itemIndex = Inventory!.FindIndex(item => item.Name == oldItem.Name);
+            itemIndex = Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            itemToRemove = Inventory[itemIndex];
 
-            //if the item exists in character's inventory
-            if (itemIndex == -1)
+            //if the item exists in character's inventory and desired quantity is not greater than actual quantity
+            if (itemIndex == -1 && itemToRemove.Quantity >= quantity)
             {
-                //if the item quantity is more than 1, subtract 1 from quantity
-                if (Inventory[itemIndex].Quantity > 1)
+                //if the desided quantity is exact the same as actual quantity - remove item from traders inventory,
+                //otherwise subtract quantity
+                if (itemToRemove.Quantity == quantity)
                 {
-                    Inventory[itemIndex].Quantity -= oldItem.Quantity;
+                    Inventory.Remove(itemToRemove);
                     return true;
                 }
                 else
                 {
-                    Inventory.RemoveAt(itemIndex);
+                    itemToRemove.Quantity -= quantity;
                     return true;
                 }
             }

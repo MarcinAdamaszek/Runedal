@@ -32,11 +32,10 @@ namespace Runedal.GameEngine
         {
             Default,
             UserCommand,
+            Info,
             SystemFeedback,
-            Exit,
-            Trader,
-            Hero,
-            Monster,
+            Gain,
+            Loss
         }
 
         public MainWindow Window { get; set; }
@@ -49,6 +48,8 @@ namespace Runedal.GameEngine
             string userCommand = string.Empty;
             string command = string.Empty;
             string argument1 = string.Empty;
+            string argument2 = string.Empty;
+            string[] commandParts;
 
             //get user input from inputBox
             userCommand = Window.inputBox.Text;
@@ -65,14 +66,25 @@ namespace Runedal.GameEngine
             //format to lowercase
             userCommand = userCommand.ToLower();
 
-            //split user input into command and it's argument
-            command = Regex.Replace(userCommand, @"\s.+", "");
-            argument1 = Regex.Replace(userCommand, @"^.+\s", "");
+            //split user input into command and it's arguments
+            Regex delimeter = new Regex(" ");
+            commandParts = delimeter.Split(userCommand);
 
-            //clear argument1 if there was none
-            if (argument1 == command)
+            //depending on number of arguments, assign them to proper variables
+            if (commandParts.Length == 1)
             {
-                argument1 = string.Empty;
+                command = commandParts[0];
+            }
+            else if (commandParts.Length == 2)
+            {
+                command = commandParts[0];
+                argument1 = commandParts[1];
+            }
+            else
+            {
+                command = commandParts[0];
+                argument1 = commandParts[1];
+                argument2 = commandParts[2];
             }
 
             //match user input to proper engine action
@@ -87,6 +99,10 @@ namespace Runedal.GameEngine
                 case "t":
                 case "trade":
                     HandleTrade(argument1);
+                    break;
+                case "b":
+                case "buy":
+                    HandleBuy(argument1, argument2);
                     break;
                 case "look":
                 case "l":
@@ -112,6 +128,12 @@ namespace Runedal.GameEngine
             string directionString = string.Empty;
             bool passage = Data.Player!.CurrentLocation!.GetPassage(direction);
             Location nextLocation = new Location();
+
+            //if player isn't in idle state
+            if (!IsPlayerIdle())
+            {
+                return;
+            }
 
             switch (direction)
             {
@@ -167,12 +189,17 @@ namespace Runedal.GameEngine
             string description = string.Empty;
             entityName = entityName.ToLower();
 
+            ////if player isn't in idle state
+            if (!IsPlayerIdle())
+            {
+                return;
+            }
+
             if (entityName == string.Empty || entityName == "around")
             {
 
                 //if command "look" was used without argument, print location description
                 LocationInfo();
-                return;
             }
             else
             {
@@ -184,7 +211,6 @@ namespace Runedal.GameEngine
                 }
                 else
                 {
-
                     index = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName);
                     if (index != -1)
                     {
@@ -192,16 +218,15 @@ namespace Runedal.GameEngine
                     }
                 }
 
-            }
-
-            //if any entity matched the argument, print it's description to user
-            if (description != string.Empty)
-            {
-                PrintMessage(description);
-            }
-            else
-            {
-                PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"");
+                //if any entity matched the argument, print it's description to user
+                if (description != string.Empty)
+                {
+                    PrintMessage(description);
+                }
+                else
+                {
+                    PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"");
+                }
             }
         }
 
@@ -223,6 +248,7 @@ namespace Runedal.GameEngine
                     PrintMessage("Nie możesz handlować z tą postacią", MessageType.SystemFeedback);
                     return;
                 }
+
                 //set player's interaction character
                 Data.Player!.InteractsWith = tradingCharacter;
 
@@ -239,6 +265,51 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method handling 'buy' command
+        private void HandleBuy(string itemName, string quantity)
+        {
+            Trader trader = new Trader();
+            Item boughtItem = Data.Items!.Find(item => item.Name!.ToLower() == itemName)!;
+            int itemQuantity = 1;
+            int buyingPrice = CalculateTraderPrice(boughtItem);
+
+            //set item quantity depedning on 2nd argument
+            if (quantity != string.Empty)
+            {
+                if (!int.TryParse(quantity, out itemQuantity))
+                {
+                    PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                    return;
+                }
+                if (itemQuantity == 0)
+                {
+                    PrintMessage("Nie możesz kupić Madiego", MessageType.SystemFeedback);
+                    return;
+                }
+            }
+
+            //if the player is trading with someone
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                trader = (Data.Player!.InteractsWith as Trader)!;
+
+                //if the buying price doesn't exceed player's gold pool, remove the gold from it
+                if (RemoveGoldFromPlayer(buyingPrice))
+                {
+
+                    //try to remove item from trader's inventory (will fail if the item is nonexistent)
+                    if (trader.RemoveItem(itemName, itemQuantity))
+                    {
+                        //add item to player's inventory 
+                        AddItemToPlayer(boughtItem, itemQuantity);
+                        
+                        //add gold amount to trader's pool
+                        trader.Gold += buyingPrice;
+                    }
+                }
+            }
+        }
+
 
 
 
@@ -248,16 +319,15 @@ namespace Runedal.GameEngine
         private void LocationInfo()
         {
             Location nextLocation = new Location();
-            string tradersInfo = "Handlarze: ";
-            string heroesInfo = "Postacie: ";
-            string monstersInfo = "Istoty:";
-            string exitsInfo = "Wyjścia:";
+            string charactersInfo = "Postacie: ";
+            string exitsInfo = "Wyjścia: ";
             string[] directionsLetters = { "n", "e", "s", "w" };
             string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód," };
             int currentX = Data.Player!.CurrentLocation!.X;
             int currentY = Data.Player!.CurrentLocation!.Y;
 
-            //print location description
+            //print location name and description
+            PrintMessage("[ " + Data.Player!.CurrentLocation!.Name + " ]", MessageType.Info);
             PrintMessage(Data.Player!.CurrentLocation!.Description!);
 
             //describe exits for each direction
@@ -274,50 +344,27 @@ namespace Runedal.GameEngine
             //remove the last comma 
             exitsInfo = Regex.Replace(exitsInfo, @",$", "");
 
-            //PrintMessage(delimeter);
-            PrintMessage(exitsInfo, MessageType.Exit);
+            PrintMessage(exitsInfo, MessageType.Info);
 
             //add character names to their info strings for each character of specific type present in player's current location
             Data.Player.CurrentLocation.Characters!.ForEach((character) =>
             {
-                if (character.GetType() == typeof(Trader))
+                if (character.GetType() != typeof(Player))
                 {
-                    tradersInfo += " " + character.Name + ",";
-                }
-            });
-            Data.Player.CurrentLocation.Characters!.ForEach((character) =>
-            {
-                if (character.GetType() == typeof(Hero))
-                {
-                    heroesInfo += " " + character.Name + ",";
-                }
-            });
-            Data.Player.CurrentLocation.Characters!.ForEach((character) =>
-            {
-                if (character.GetType() == typeof(Monster))
-                {
-                    monstersInfo += " " + character.Name + ",";
+                    charactersInfo += " " + character.Name + ",";
                 }
             });
 
             //remove the last comma
-            tradersInfo = Regex.Replace(tradersInfo, @",$", "");
-            heroesInfo = Regex.Replace(heroesInfo, @",$", "");
-            monstersInfo = Regex.Replace(monstersInfo, @",$", "");
+            charactersInfo = Regex.Replace(charactersInfo, @",$", "");
+
 
             //if any characters found, print them to outputBox
-            if (tradersInfo.Length > 11)
+            if (charactersInfo.Length > 13)
             {
-                PrintMessage(tradersInfo, MessageType.Trader);
+                PrintMessage(charactersInfo, MessageType.Info);
             }
-            if (heroesInfo.Length > 10)
-            {
-                PrintMessage(heroesInfo, MessageType.Hero);
-            }
-            if (monstersInfo.Length > 8)
-            {
-                PrintMessage(monstersInfo, MessageType.Monster);
-            }
+
         }
 
         //method printing character's inventory
@@ -438,7 +485,78 @@ namespace Runedal.GameEngine
 
 
 
+
         //==============================================HELPER METHODS=============================================
+
+        //method checking if player is in idle state
+        private bool IsPlayerIdle()
+        {
+            //if player isn't in idle state
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.SystemFeedback);
+                Data.Player.InteractsWith = new Character();
+                Data.Player!.CurrentState = Player.State.Idle;
+                return true;
+            }
+            
+            //or if he's in combat state
+            else if (Data.Player.CurrentState == Player.State.Combat)
+            {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return false;
+            }
+            return true;
+        }
+
+        //method handling adding items to player's inventory
+        private void AddItemToPlayer(Item item, int quantity)
+        {
+            Data.Player!.AddItem(item, quantity);
+            PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + item.Name);
+        }
+
+        //method handling removing items from player's inventory
+        private bool RemoveItemFromPlayer(Item item, int quantity)
+        {
+            bool isRemoved = false;
+            isRemoved = Data.Player!.RemoveItem(item.Name!, quantity);
+
+            if (isRemoved)
+            {
+                PrintMessage("Straciłeś " + item.Name! + "w ilości " + Convert.ToString(quantity) + " sztuk");
+                isRemoved = true;
+            }
+            else
+            {
+                PrintMessage("Nie posiadasz wymaganej ilości przedmiotu!", MessageType.SystemFeedback);
+            }
+
+            return isRemoved;
+        }
+
+        //method handling adding gold to player's pool
+        private void AddGoldToPlayer(int gold)
+        {
+            Data.Player!.Gold += gold;
+            PrintMessage("Zyskałeś " + Convert.ToString(gold) + " złota");
+        }
+
+        //method handling removing gold from player's pool
+        private bool RemoveGoldFromPlayer(int gold)
+        {
+            if (gold <= Data.Player!.Gold)
+            {
+                Data.Player!.Gold -= gold;
+                PrintMessage("Straciłeś " + Convert.ToString(gold) + " złota");
+                return true;
+            }
+            else
+            {
+                PrintMessage("Nie stać Cię..", MessageType.SystemFeedback);
+                return false;
+            }
+        }
 
         /// <summary>
         /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
@@ -500,8 +618,6 @@ namespace Runedal.GameEngine
             return price;
         }
 
-
-
         //method displaying communicates in outputBox of the gui
         private void PrintMessage(string msg, MessageType type = MessageType.Default)
         {
@@ -520,17 +636,8 @@ namespace Runedal.GameEngine
                 case (MessageType.SystemFeedback):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
                     break;
-                case (MessageType.Exit):
+                case (MessageType.Info):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.PaleGreen);
-                    break;
-                case (MessageType.Trader):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-                    break;
-                case (MessageType.Hero):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Ivory);
-                    break;
-                case (MessageType.Monster):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Pink);
                     break;
             }
 

@@ -84,11 +84,25 @@ namespace Runedal.GameData
         //method loading items from json
         public void LoadItems()
         {
+            //load consumables
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Consumables.json");
             Item[] consumablesArray = JsonSerializer.Deserialize<Consumable[]>(JsonString, Options)!;
-
             PopulateItems(consumablesArray);
 
+            //load weapons
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons.json");
+            Item[] weaponsArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
+            PopulateItems(weaponsArray);
+
+            //load armors
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors.json");
+            Item[] armorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
+            PopulateItems(armorsArray);
+
+            //load ranged
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Ranged.json");
+            Item[] rangedArray = JsonSerializer.Deserialize<Ranged[]>(JsonString, Options)!;
+            PopulateItems(rangedArray);
 
             //Fill characters inventories with items
             Characters!.ForEach(character => FillInventory(character));

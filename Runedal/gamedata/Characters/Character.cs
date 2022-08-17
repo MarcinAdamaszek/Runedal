@@ -80,7 +80,7 @@ namespace Runedal.GameData.Characters
             itemToRemove = Inventory[itemIndex];
 
             //if the item exists in character's inventory and desired quantity is not greater than actual quantity
-            if (itemIndex == -1 && itemToRemove.Quantity >= quantity)
+            if (itemIndex != -1 && itemToRemove.Quantity >= quantity)
             {
                 //if the desided quantity is exact the same as actual quantity - remove item from traders inventory,
                 //otherwise subtract quantity

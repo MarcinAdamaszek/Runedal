@@ -24,7 +24,8 @@ namespace Runedal.GameEngine
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
-            
+
+            PrintMessage("Piwo w zbiorze itemów w Data to: " + Data.Items.Find(item => item.Name == "Piwo").GetType());
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -94,23 +95,25 @@ namespace Runedal.GameEngine
                 case "e":
                 case "s":
                 case "w":
-                    ChangeLocation(command);
+                    ChangeLocationHandler(command);
                     break;
                 case "t":
                 case "trade":
-                    HandleTrade(argument1);
+                    TradeHandler(argument1);
                     break;
-                case "b":
                 case "buy":
-                    HandleBuy(argument1, argument2);
+                    BuyHandler(argument1, argument2);
+                    break;
+                case "sell":
+                    SellHandler(argument1, argument2);
                     break;
                 case "look":
                 case "l":
-                    HandleLook(argument1);
+                    LookHandler(argument1);
                     break;
                 case "inventory":
                 case "i":
-                    InventoryInfo(Data.Player!, false);
+                    InventoryHandler(Data.Player!, false);
                     break;
                 default:
                     PrintMessage("Pier%#$isz jak potłuczony..", MessageType.SystemFeedback);
@@ -120,20 +123,24 @@ namespace Runedal.GameEngine
 
 
 
+
         //==============================================COMMAND HANDLERS=============================================
 
         //method moving player to next location
-        private void ChangeLocation(string direction)
+        private void ChangeLocationHandler(string direction)
         {
             string directionString = string.Empty;
             bool passage = Data.Player!.CurrentLocation!.GetPassage(direction);
             Location nextLocation = new Location();
 
-            //if player isn't in idle state
-            if (!IsPlayerIdle())
+            //if player is in combat state
+            if (IsPlayerInCombat())
             {
                 return;
             }
+
+            //if player is in trade state
+            IsPlayerInTrade();
 
             switch (direction)
             {
@@ -173,30 +180,33 @@ namespace Runedal.GameEngine
                 }
                 else
                 {
-                    PrintMessage("Nie potrafisz otworzyć tego przejścia");
+                    PrintMessage("Nie potrafisz otworzyć tego przejścia", MessageType.SystemFeedback);
                 }
             }
             else
             {
-                PrintMessage("Nic nie ma w tamtym kierunku");
+                PrintMessage("Nic nie ma w tamtym kierunku", MessageType.SystemFeedback);
             }
         }
 
         //method handling 'look' command
-        private void HandleLook(string entityName)
+        private void LookHandler(string entityName)
         {
             int index = -1;
             string description = string.Empty;
             entityName = entityName.ToLower();
 
-            ////if player isn't in idle state
-            if (!IsPlayerIdle())
+            ////if player is in combat state
+            if (Data.Player!.CurrentState == Player.State.Combat)
             {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
                 return;
             }
 
             if (entityName == string.Empty || entityName == "around")
             {
+                //if player is in trade state, break the state and print proper message
+                IsPlayerInTrade();
 
                 //if command "look" was used without argument, print location description
                 LocationInfo();
@@ -207,34 +217,51 @@ namespace Runedal.GameEngine
                 index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
                 if (index != -1)
                 {
-                    description = Data.Player!.CurrentLocation!.Characters[index].Description!;
+
+                    //if player is in trade state, break the state and print proper message
+                    IsPlayerInTrade();
+                    CharacterInfo(Data.Player!.CurrentLocation!.Characters[index]);
                 }
                 else
                 {
-                    index = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName);
+                    //else search player's inventory for item with name matching the argument
+                    index = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName.ToLower());
                     if (index != -1)
                     {
-                        description = Data.Player!.Inventory[index].Description!;
+                        ItemInfo(Data.Player!.Inventory[index].Name!);
+                    }
+                    else if (Data.Player!.CurrentState == Player.State.Trade)
+                    {
+                        index = Data.Player!.InteractsWith!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName.ToLower());
+                        if (index != -1)
+                        {
+                            ItemInfo(Data.Player!.InteractsWith!.Inventory![index].Name!);
+                        }
                     }
                 }
 
                 //if any entity matched the argument, print it's description to user
-                if (description != string.Empty)
+                if (index == -1)
                 {
-                    PrintMessage(description);
-                }
-                else
-                {
-                    PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"");
+                    PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"", MessageType.SystemFeedback);
                 }
             }
         }
 
         //method handling 'trade' command
-        private void HandleTrade(string characterName)
+        private void TradeHandler(string characterName)
         {
             int index = -1;
             Character tradingCharacter = new Character();
+
+            ////if player isn't in idle state
+            if (IsPlayerInCombat())
+            {
+                return;
+            }
+
+            //check if player is trading with someone already
+            IsPlayerInTrade();
 
             //check if the character of specified name exists in player's current location
             index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
@@ -255,7 +282,7 @@ namespace Runedal.GameEngine
                 //set player's state to trade
                 Data.Player!.CurrentState = Player.State.Trade;
 
-                PrintMessage("Handlujesz z: " + tradingCharacter.Name, MessageType.SystemFeedback);
+                PrintMessage("[ " + tradingCharacter.Name + " ]", MessageType.Info);
                 InventoryInfo(tradingCharacter, true);
                 InventoryInfo(Data.Player!, true);
             }
@@ -265,50 +292,161 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'buy' command
-        private void HandleBuy(string itemName, string quantity)
+        //method handling 'inventory' command
+        private void InventoryHandler(Player player, bool withPrice)
         {
-            Trader trader = new Trader();
-            Item boughtItem = Data.Items!.Find(item => item.Name!.ToLower() == itemName)!;
-            int itemQuantity = 1;
-            int buyingPrice = CalculateTraderPrice(boughtItem);
+            InventoryInfo(player, withPrice);
+        }
 
-            //set item quantity depedning on 2nd argument
-            if (quantity != string.Empty)
-            {
-                if (!int.TryParse(quantity, out itemQuantity))
-                {
-                    PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
-                    return;
-                }
-                if (itemQuantity == 0)
-                {
-                    PrintMessage("Nie możesz kupić Madiego", MessageType.SystemFeedback);
-                    return;
-                }
-            }
+        //method handling 'buy' command
+        private void BuyHandler(string itemName, string quantity)
+        {
 
             //if the player is trading with someone
             if (Data.Player!.CurrentState == Player.State.Trade)
             {
-                trader = (Data.Player!.InteractsWith as Trader)!;
+                Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
+                Item itemPrototype;
+                int itemIndex = -1;
+                int itemQuantity = 1;
+                int buyingPrice;
 
-                //if the buying price doesn't exceed player's gold pool, remove the gold from it
-                if (RemoveGoldFromPlayer(buyingPrice))
+                //set item quantity depedning on 2nd argument
+                if (quantity != string.Empty)
                 {
-
-                    //try to remove item from trader's inventory (will fail if the item is nonexistent)
-                    if (trader.RemoveItem(itemName, itemQuantity))
+                    if (!int.TryParse(quantity, out itemQuantity))
                     {
-                        //add item to player's inventory 
-                        AddItemToPlayer(boughtItem, itemQuantity);
-                        
-                        //add gold amount to trader's pool
-                        trader.Gold += buyingPrice;
+                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                        return;
+                    }
+                    if (itemQuantity == 0)
+                    {
+                        PrintMessage("Nie możesz kupić Madiego", MessageType.SystemFeedback);
+                        return;
                     }
                 }
+
+                itemIndex = trader.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+
+                //check if the item exists in trader's inventory and if trader has enough of it
+                if (itemIndex == -1)
+                {
+                    PrintMessage(trader.Name + " nie posiada wybranego przedmiotu", MessageType.SystemFeedback);
+                    return;
+                }
+                else if (trader.Inventory[itemIndex].Quantity < itemQuantity)
+                {
+                    PrintMessage(trader.Name + " nie posiada wybranego przedmiotu w tej ilości", MessageType.SystemFeedback);
+                    return;
+                }
+
+                //set boughtItem variable to proper item in Items list in Data
+                itemPrototype = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+                //set buying price depending on quantity
+                buyingPrice = CalculateTraderPrice(itemPrototype) * itemQuantity;
+
+                //if total buying price of the item is lesser than amount of gold possesed by player
+                if (Data.Player!.Gold! >= buyingPrice)
+                {
+                    //remove item from traders inventory and gold from player's inventory
+                    trader.RemoveItem(itemName, itemQuantity);
+                    RemoveGoldFromPlayer(buyingPrice);
+
+                    //add item to player's inventory 
+                    AddItemToPlayer(itemPrototype, itemQuantity);
+
+                    //add gold amount to trader's pool
+                    trader.Gold += buyingPrice;
+
+                    //display trader's/player's inventories once again
+                    InventoryInfo(trader, true);
+                    InventoryInfo(Data.Player!, true);
+                }
+                else
+                {
+                    PrintMessage("Nie stać Cię", MessageType.SystemFeedback);
+                }
+            }
+            else
+            {
+                PrintMessage("Obecnie z nikim nie handlujesz", MessageType.SystemFeedback);
             }
         }
+
+        //method handling 'sell' command
+        private void SellHandler(string itemName, string quantity)
+        {
+            //if the player is trading with someone
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
+                Item itemPrototype;
+                int itemIndex = -1;
+                int itemQuantity = 1;
+                int sellingPrice = 0;
+
+                //set item quantity depedning on 2nd argument
+                if (quantity != string.Empty)
+                {
+                    if (!int.TryParse(quantity, out itemQuantity))
+                    {
+                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                        return;
+                    }
+                    if (itemQuantity == 0)
+                    {
+                        PrintMessage("Nie możesz sprzedać Madiego (chyba że studentom ;E)", MessageType.SystemFeedback);
+                        return;
+                    }
+                }
+
+                itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+
+                //check if the item exists in player's inventory and if he has enough of it
+                if (itemIndex == -1)
+                {
+                    PrintMessage("Nie posiadasz wybranego przedmiotu", MessageType.SystemFeedback);
+                    return;
+                }
+                else if (Data.Player!.Inventory[itemIndex].Quantity < itemQuantity)
+                {
+                    PrintMessage("Nie posiadasz wybranego przedmiotu w tej ilości", MessageType.SystemFeedback);
+                    return;
+                }
+
+                //set boughtItem variable to proper item in Items list in Data
+                itemPrototype = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+                //set buying price depending on quantity
+                sellingPrice = itemPrototype.Price * itemQuantity;
+
+                //if total buying price of the item is lesser than amount of gold possesed by player
+                if (trader.Gold >= sellingPrice)
+                {
+                    //remove item from player's inventory and put it into trader's inventory
+                    RemoveItemFromPlayer(itemPrototype, itemQuantity);
+                    trader.AddItem(itemPrototype, itemQuantity);
+
+                    //swap gold from player to trader 
+                    AddGoldToPlayer(sellingPrice);
+                    trader.Gold -= sellingPrice;
+   
+                    //display trader's/player's inventories once again
+                    InventoryInfo(trader, true);
+                    InventoryInfo(Data.Player!, true);
+                }
+                else
+                {
+                    PrintMessage("Handlarza nie stać na taki zakup", MessageType.SystemFeedback);
+                }
+            }
+            else
+            {
+                PrintMessage("Obecnie z nikim nie handlujesz", MessageType.SystemFeedback);
+            }
+        }
+
 
 
 
@@ -481,6 +619,38 @@ namespace Runedal.GameEngine
 
             //print bottom table border
             PrintMessage(horizontalBorder);
+
+            //print player's gold pool
+            if (character.GetType() == typeof(Player))
+            {
+                PrintMessage("Twoje złoto: " + Convert.ToString(Data.Player!.Gold!), MessageType.Info);
+            }
+        }
+
+        //method describing character
+        private void CharacterInfo(Character character)
+        {
+            PrintMessage("[ " + character.Name + " ]", MessageType.Info);
+            PrintMessage(character.Description!);
+        }
+
+        //method describing item
+        private void ItemInfo(string itemName)
+        {
+            Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            
+            //print basic item info
+            PrintMessage("[ " + itemToDescribe.Name + " ]", MessageType.Info);
+            PrintMessage(itemToDescribe.Description!);
+            string description = "Waga: " + Convert.ToString(itemToDescribe.Weight);
+
+            //depending on item type, print additional info
+            if (itemToDescribe.GetType() == typeof(Consumable))
+            {
+                description += "\nDziałanie: " + (itemToDescribe as Consumable)!.Effect;
+            }
+
+            PrintMessage(description, MessageType.Info);
         }
 
 
@@ -488,10 +658,24 @@ namespace Runedal.GameEngine
 
         //==============================================HELPER METHODS=============================================
 
-        //method checking if player is in idle state
-        private bool IsPlayerIdle()
+        //method checking if player is in combat state, and printing proper message if so
+        private bool IsPlayerInCombat()
         {
-            //if player isn't in idle state
+            if (Data.Player!.CurrentState! == Player.State.Combat)
+            {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //method breaking trade state and printing proper message
+        private bool IsPlayerInTrade()
+
+        {
             if (Data.Player!.CurrentState == Player.State.Trade)
             {
                 PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.SystemFeedback);
@@ -499,63 +683,53 @@ namespace Runedal.GameEngine
                 Data.Player!.CurrentState = Player.State.Idle;
                 return true;
             }
-            
-            //or if he's in combat state
-            else if (Data.Player.CurrentState == Player.State.Combat)
+            else
             {
-                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
                 return false;
             }
-            return true;
         }
 
         //method handling adding items to player's inventory
         private void AddItemToPlayer(Item item, int quantity)
         {
             Data.Player!.AddItem(item, quantity);
-            PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + item.Name);
+            PrintMessage("Zdobyłeś " + item.Name + " w ilości " + Convert.ToString(quantity) + " sztuk", MessageType.Gain);
         }
 
         //method handling removing items from player's inventory
-        private bool RemoveItemFromPlayer(Item item, int quantity)
+        private void RemoveItemFromPlayer(Item item, int quantity)
         {
-            bool isRemoved = false;
-            isRemoved = Data.Player!.RemoveItem(item.Name!, quantity);
-
-            if (isRemoved)
+            if (Data.Player!.RemoveItem(item.Name!, quantity))
             {
-                PrintMessage("Straciłeś " + item.Name! + "w ilości " + Convert.ToString(quantity) + " sztuk");
-                isRemoved = true;
+                PrintMessage("Straciłeś " + item.Name! + "w ilości " + Convert.ToString(quantity) + " sztuk", MessageType.Loss);
             }
             else
             {
-                PrintMessage("Nie posiadasz wymaganej ilości przedmiotu!", MessageType.SystemFeedback);
+                PrintMessage("Coś poszło nie tak..", MessageType.SystemFeedback);
             }
-
-            return isRemoved;
         }
 
         //method handling adding gold to player's pool
         private void AddGoldToPlayer(int gold)
         {
             Data.Player!.Gold += gold;
-            PrintMessage("Zyskałeś " + Convert.ToString(gold) + " złota");
+            PrintMessage("Zyskałeś " + Convert.ToString(gold) + " złota", MessageType.Gain);
         }
 
         //method handling removing gold from player's pool
-        private bool RemoveGoldFromPlayer(int gold)
+        private void RemoveGoldFromPlayer(int gold)
         {
-            if (gold <= Data.Player!.Gold)
+            if (Data.Player!.Gold >= gold)
             {
+                PrintMessage("Straciłeś " + Convert.ToString(gold) + " złota", MessageType.Loss);
                 Data.Player!.Gold -= gold;
-                PrintMessage("Straciłeś " + Convert.ToString(gold) + " złota");
-                return true;
             }
             else
             {
-                PrintMessage("Nie stać Cię..", MessageType.SystemFeedback);
-                return false;
+                PrintMessage("Straciłeś " + Convert.ToString(Data.Player!.Gold) + " złota", MessageType.Loss);
+                Data.Player!.Gold = 0;
             }
+
         }
 
         /// <summary>
@@ -638,6 +812,12 @@ namespace Runedal.GameEngine
                     break;
                 case (MessageType.Info):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.PaleGreen);
+                    break;
+                case (MessageType.Gain):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
+                    break;
+                case (MessageType.Loss):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Tan);
                     break;
             }
 

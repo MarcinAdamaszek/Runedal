@@ -642,8 +642,11 @@ namespace Runedal.GameEngine
             PrintMessage(itemToDescribe.Description!);
             string description = string.Empty;
             string itemType = string.Empty;
+            string modifiers = string.Empty;
+            string modType = string.Empty;
+            string sign = string.Empty;
 
-            //depending on item type, print additional info
+            //depending on item type, add info to description and set itemType string
             if (itemToDescribe.GetType() == typeof(Consumable))
             {
                 description += "Działanie: " + (itemToDescribe as Consumable)!.Effect;
@@ -669,11 +672,11 @@ namespace Runedal.GameEngine
                     itemType = "Rękawice";
                 }
 
-                description += "\nObrona: " + (itemToDescribe as Armor)!.Defense;
+                description += "Obrona: " + (itemToDescribe as Armor)!.Defense;
             }
             else if (itemToDescribe.GetType() == typeof(Weapon))
             {
-                description += "\nAtak: " + (itemToDescribe as Weapon)!.Attack;
+                description += "Atak: " + (itemToDescribe as Weapon)!.Attack;
                 itemType = "Broń biała";
             }
             else if (itemToDescribe.GetType() == typeof(Ranged))
@@ -683,10 +686,26 @@ namespace Runedal.GameEngine
                 itemType = "Broń dystansowa";
             }
 
+            //set modifiers string
+            itemToDescribe.Modifiers!.ForEach(mod =>
+            {
+                //translate mod type to polish
+                modType = GetPolishModType(mod.Type);
+
+                //set sign of modifier to + if its positive number (for negative, minus sign is displayed automaticly)
+                if (mod.Value >= 0) { sign = "+"; } 
+
+                modifiers += modType + "(" + sign + mod.Value + ") | ";
+            });
 
             description += "\nWaga: " + Convert.ToString(itemToDescribe.Weight);
             PrintMessage("Typ: " + itemType, MessageType.Info);
             PrintMessage(description, MessageType.Info);
+            if (modifiers != string.Empty)
+            {
+                modifiers = Regex.Replace(modifiers, @"\|\s$", "");
+                PrintMessage("Modyfikatory: " + modifiers, MessageType.Info);
+            }
         }
 
 
@@ -694,6 +713,55 @@ namespace Runedal.GameEngine
 
         //==============================================HELPER METHODS=============================================
 
+        //method returning polish string representing specified type of CombatCharacter statistic 
+        private string GetPolishModType(CombatCharacter.StatType type)
+        {
+            string modType = string.Empty;
+
+            switch (type)
+            {
+                case (CombatCharacter.StatType.Hp):
+                    modType = "Hp";
+                    break;
+                case (CombatCharacter.StatType.Mp):
+                    modType = "Mana";
+                    break;
+                case (CombatCharacter.StatType.Strength):
+                    modType = "Siła";
+                    break;
+                case (CombatCharacter.StatType.Intelligence):
+                    modType = "Inteligencja";
+                    break;
+                case (CombatCharacter.StatType.Agility):
+                    modType = "Zręczność";
+                    break;
+                case (CombatCharacter.StatType.Speed):
+                    modType = "Szybkość";
+                    break;
+                case (CombatCharacter.StatType.Attack):
+                    modType = "Atak";
+                    break;
+                case (CombatCharacter.StatType.AtkSpeed):
+                    modType = "SzybkośćAtaku";
+                    break;
+                case (CombatCharacter.StatType.Accuracy):
+                    modType = "Celność";
+                    break;
+                case (CombatCharacter.StatType.Critical):
+                    modType = "Trafienia krytyczne";
+                    break;
+                case (CombatCharacter.StatType.Defense):
+                    modType = "Obrona";
+                    break;
+                case (CombatCharacter.StatType.Evasion):
+                    modType = "Uniki";
+                    break;
+                case (CombatCharacter.StatType.MagicResistance):
+                    modType = "Odporność na magię";
+                    break;
+            }
+            return modType;
+        }
         //method checking if player is in combat state, and printing proper message if so
         private bool IsPlayerInCombat()
         {

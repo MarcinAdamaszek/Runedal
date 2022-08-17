@@ -26,7 +26,7 @@ namespace Runedal.GameData
 
         //enum for type of modifier (which statistic it modifies)
         
-        public CombatCharacter.StatType Type { get; private set; }
+        public CombatCharacter.StatType Type { get; set; }
 
         //value of how much is statistic going to be modified
         public int Value { get; private set; }

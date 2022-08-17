@@ -448,7 +448,6 @@ namespace Runedal.GameEngine
 
 
 
-
         //==============================================DESCRIPTION METHODS=============================================
 
         //method describing location to user
@@ -635,42 +634,28 @@ namespace Runedal.GameEngine
         //method describing item
         private void ItemInfo(string itemName)
         {
-            Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
-            
-            //print basic item info
-            PrintMessage("[ " + itemToDescribe.Name + " ]", MessageType.Info);
-            PrintMessage(itemToDescribe.Description!);
             string description = string.Empty;
             string itemType = string.Empty;
             string modifiers = string.Empty;
             string modType = string.Empty;
             string sign = string.Empty;
+            Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+            //print basic item info
+            PrintMessage("[ " + itemToDescribe.Name + " ]", MessageType.Info);
+            PrintMessage(itemToDescribe.Description!);
 
             //depending on item type, add info to description and set itemType string
             if (itemToDescribe.GetType() == typeof(Consumable))
             {
                 description += "Działanie: " + (itemToDescribe as Consumable)!.Effect;
-                itemType = "Zużycie";
+                itemType = "Zużywalne";
             }
             else if (itemToDescribe.GetType() == typeof(Armor))
             {
 
-                if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.Helmet) 
-                {
-                    itemType = "Hełm"; 
-                }
-                else if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.FullBody)
-                {
-                    itemType = "Korpus";
-                }
-                else if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.Shoes)
-                {
-                    itemType = "Buty";
-                }
-                else if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.Gloves)
-                {
-                    itemType = "Rękawice";
-                }
+                //set string for polish armor type
+                itemType = GetPolishArmorType((itemToDescribe as Armor)!.Type);
 
                 description += "Obrona: " + (itemToDescribe as Armor)!.Defense;
             }
@@ -712,6 +697,28 @@ namespace Runedal.GameEngine
 
 
         //==============================================HELPER METHODS=============================================
+
+        //method returning polish string representing specified type of ArmorType type
+        private string GetPolishArmorType(Armor.ArmorType type)
+        {
+            string armorType = string.Empty;
+            switch (type)
+            {
+                case Armor.ArmorType.FullBody:
+                    armorType = "Korpus";
+                    break;
+                case Armor.ArmorType.Helmet:
+                    armorType = "Hełm";
+                    break;
+                case Armor.ArmorType.Shoes:
+                    armorType = "Buty";
+                    break;
+                case Armor.ArmorType.Gloves:
+                    armorType = "Rękawice";
+                    break;
+            }
+            return armorType;
+        }
 
         //method returning polish string representing specified type of CombatCharacter statistic 
         private string GetPolishModType(CombatCharacter.StatType type)
@@ -762,6 +769,7 @@ namespace Runedal.GameEngine
             }
             return modType;
         }
+
         //method checking if player is in combat state, and printing proper message if so
         private bool IsPlayerInCombat()
         {

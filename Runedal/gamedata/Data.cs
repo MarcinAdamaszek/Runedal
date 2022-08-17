@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.IO;
 using Runedal.GameData.Characters;
 using Runedal.GameData.Items;
+using System.Text.Json.Serialization;
 
 namespace Runedal.GameData
 {
@@ -18,7 +19,11 @@ namespace Runedal.GameData
             //make json deserializer ignore letter cases in property names
             Options = new JsonSerializerOptions()
             {
-                PropertyNameCaseInsensitive = true
+                PropertyNameCaseInsensitive = true,
+                Converters =
+                {
+                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                }
             };
             
             Locations = new List<Location>();

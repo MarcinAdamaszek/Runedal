@@ -669,7 +669,6 @@ namespace Runedal.GameEngine
                     itemType = "Rękawice";
                 }
 
-                description += "Typ: " + itemType;
                 description += "\nObrona: " + (itemToDescribe as Armor)!.Defense;
             }
             else if (itemToDescribe.GetType() == typeof(Weapon))

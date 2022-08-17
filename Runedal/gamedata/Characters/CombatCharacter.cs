@@ -33,6 +33,8 @@ namespace Runedal.GameData.Characters
         {
             Hp,
             Mp,
+            HpPool,
+            MpPool,
             Strength,
             Intelligence,
             Agility,

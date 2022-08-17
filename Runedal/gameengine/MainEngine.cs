@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Runedal.GameData;
 using Runedal.GameData.Locations;
 using Runedal.GameData.Characters;
@@ -21,9 +22,16 @@ namespace Runedal.GameEngine
             this.Window = window;
             this.Data = new Data();
 
+            //set game clock for game time
+            GameClock = new DispatcherTimer(DispatcherPriority.Send);
+            GameClock.Interval = TimeSpan.FromMilliseconds(100);
+            GameClock.Tick += GameClock_Tick!;
+
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
+
+            GameClock.Start();
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -39,7 +47,7 @@ namespace Runedal.GameEngine
 
         public MainWindow Window { get; set; }
         public Data Data { get; set; }
-
+        public DispatcherTimer GameClock;
 
         //method processing user input commands
         public void ProcessCommand()
@@ -728,10 +736,16 @@ namespace Runedal.GameEngine
             switch (type)
             {
                 case (CombatCharacter.StatType.Hp):
-                    modType = "Hp";
+                    modType = "Regeneracja Hp";
                     break;
                 case (CombatCharacter.StatType.Mp):
-                    modType = "Mana";
+                    modType = "Regeneracja Mp";
+                    break;
+                case (CombatCharacter.StatType.HpPool):
+                    modType = "Maks. Hp";
+                    break;
+                case (CombatCharacter.StatType.MpPool):
+                    modType = "Maks. Mp";
                     break;
                 case (CombatCharacter.StatType.Strength):
                     modType = "Siła";
@@ -934,6 +948,26 @@ namespace Runedal.GameEngine
             }
 
             Window.outputBox.ScrollToEnd();
+        }
+
+
+
+
+        //==============================================EVENT HANDLERS=============================================
+
+        //handler for tick event of GameClock
+        private void GameClock_Tick(object sender, EventArgs e)
+        {
+            //Data.Characters!.ForEach(character =>
+            //{
+            //    if (character.GetType() != typeof(Player))
+            //    {
+            //        character.Gold += 1;
+            //    }
+            //});
+            //AddGoldToPlayer(1);
+
+
         }
     }
 }

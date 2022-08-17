@@ -640,29 +640,53 @@ namespace Runedal.GameEngine
             //print basic item info
             PrintMessage("[ " + itemToDescribe.Name + " ]", MessageType.Info);
             PrintMessage(itemToDescribe.Description!);
-            string description = "Waga: " + Convert.ToString(itemToDescribe.Weight);
+            string description = string.Empty;
+            string itemType = string.Empty;
 
             //depending on item type, print additional info
             if (itemToDescribe.GetType() == typeof(Consumable))
             {
-                description += "\nDziałanie: " + (itemToDescribe as Consumable)!.Effect;
+                description += "Działanie: " + (itemToDescribe as Consumable)!.Effect;
+                itemType = "Zużycie";
             }
             else if (itemToDescribe.GetType() == typeof(Armor))
             {
-                description += "\nTyp: " + (itemToDescribe as Armor)!.Type;
+
+                if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.Helmet) 
+                {
+                    itemType = "Hełm"; 
+                }
+                else if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.FullBody)
+                {
+                    itemType = "Korpus";
+                }
+                else if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.Shoes)
+                {
+                    itemType = "Buty";
+                }
+                else if ((itemToDescribe as Armor)!.Type == Armor.ArmorType.Gloves)
+                {
+                    itemType = "Rękawice";
+                }
+
+                description += "Typ: " + itemType;
                 description += "\nObrona: " + (itemToDescribe as Armor)!.Defense;
             }
             else if (itemToDescribe.GetType() == typeof(Weapon))
             {
                 description += "\nAtak: " + (itemToDescribe as Weapon)!.Attack;
+                itemType = "Broń biała";
             }
             else if (itemToDescribe.GetType() == typeof(Ranged))
             {
-                description += "\nAtak: " + (itemToDescribe as Ranged)!.Attack;
+                description += "Atak: " + (itemToDescribe as Ranged)!.Attack;
                 description += "\nZasięg: " + (itemToDescribe as Ranged)!.Range;
+                itemType = "Broń dystansowa";
             }
 
 
+            description += "\nWaga: " + Convert.ToString(itemToDescribe.Weight);
+            PrintMessage("Typ: " + itemType, MessageType.Info);
             PrintMessage(description, MessageType.Info);
         }
 

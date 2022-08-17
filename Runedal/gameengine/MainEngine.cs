@@ -24,8 +24,6 @@ namespace Runedal.GameEngine
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
-
-            PrintMessage("Piwo w zbiorze itemów w Data to: " + Data.Items.Find(item => item.Name == "Piwo").GetType());
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -649,6 +647,21 @@ namespace Runedal.GameEngine
             {
                 description += "\nDziałanie: " + (itemToDescribe as Consumable)!.Effect;
             }
+            else if (itemToDescribe.GetType() == typeof(Armor))
+            {
+                description += "\nTyp: " + (itemToDescribe as Armor)!.Type;
+                description += "\nObrona: " + (itemToDescribe as Armor)!.Defense;
+            }
+            else if (itemToDescribe.GetType() == typeof(Weapon))
+            {
+                description += "\nAtak: " + (itemToDescribe as Weapon)!.Attack;
+            }
+            else if (itemToDescribe.GetType() == typeof(Ranged))
+            {
+                description += "\nAtak: " + (itemToDescribe as Ranged)!.Attack;
+                description += "\nZasięg: " + (itemToDescribe as Ranged)!.Range;
+            }
+
 
             PrintMessage(description, MessageType.Info);
         }

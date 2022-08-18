@@ -16,25 +16,31 @@ namespace Runedal.GameData.Characters
         public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
             : base(descriptive, responses, gold)
         {
-            Hp = combatStats[0];
-            Mp = combatStats[1];
-            Speed = combatStats[2];
-            Attack = combatStats[3];
-            AtkSpeed = combatStats[4];
-            Accuracy = combatStats[5];
-            Critical = combatStats[6];
-            Defense = combatStats[7];
-            Evasion = combatStats[8];
-            MagicResistance = combatStats[9];
-            Gold = combatStats[10];
+            HpMax = combatStats[0];
+            MpMax = combatStats[1];
+            HpRegen = combatStats[2];
+            MpRegen = combatStats[3];
+            Speed = combatStats[4];
+            Attack = combatStats[5];
+            AtkSpeed = combatStats[6];
+            Accuracy = combatStats[7];
+            Critical = combatStats[8];
+            Defense = combatStats[9];
+            Evasion = combatStats[10];
+            MagicResistance = combatStats[11];
+            Gold = combatStats[12];
+
+            Hp = HpMax;
+            Mp = MpMax;
+
             Modifiers = new List<Modifier>();
         }
         public enum StatType
         {
-            Hp,
-            Mp,
-            HpPool,
-            MpPool,
+            HpMax,
+            MpMax,
+            HpRegen,
+            MpRegen,
             Strength,
             Intelligence,
             Agility,
@@ -48,11 +54,15 @@ namespace Runedal.GameData.Characters
             MagicResistance
         }
 
-        //health and mana points
-        public double Hp { get;set; }
-        public double HpAmount { get;set; }
-        public double Mp { get;set; }
-        public double MpAmount { get; set; }
+        //hp/mp real pools
+        public double Hp { get; set; }
+        public double Mp { get; set; }
+
+        //health and mana statistics
+        public double HpMax { get; set; }
+        public double MpMax { get; set; }
+        public double HpRegen { get; set; }
+        public double MpRegen { get; set; }
 
         //base combat statistics
         public double Speed { get; set; }

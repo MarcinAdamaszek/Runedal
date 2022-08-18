@@ -735,16 +735,16 @@ namespace Runedal.GameEngine
 
             switch (type)
             {
-                case (CombatCharacter.StatType.Hp):
+                case (CombatCharacter.StatType.HpRegen):
                     modType = "Regeneracja Hp";
                     break;
-                case (CombatCharacter.StatType.Mp):
+                case (CombatCharacter.StatType.MpRegen):
                     modType = "Regeneracja Mp";
                     break;
-                case (CombatCharacter.StatType.HpPool):
+                case (CombatCharacter.StatType.HpMax):
                     modType = "Maks. Hp";
                     break;
-                case (CombatCharacter.StatType.MpPool):
+                case (CombatCharacter.StatType.MpMax):
                     modType = "Maks. Mp";
                     break;
                 case (CombatCharacter.StatType.Strength):

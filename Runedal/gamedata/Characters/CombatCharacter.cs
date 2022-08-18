@@ -16,8 +16,8 @@ namespace Runedal.GameData.Characters
         public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
             : base(descriptive, responses, gold)
         {
-            HpMax = combatStats[0];
-            MpMax = combatStats[1];
+            MaxHp = combatStats[0];
+            MaxMp = combatStats[1];
             HpRegen = combatStats[2];
             MpRegen = combatStats[3];
             Speed = combatStats[4];
@@ -88,11 +88,8 @@ namespace Runedal.GameData.Characters
         //method regenerating character's hp/mp
         public void Regenerate()
         {
-            //if hp is lesser than max
-            if (Hp < MaxHp && Hp > 0)
-            {
-
-            }
+            RegenerateHp();
+            RegenerateMp();
         }
 
         //'getters' for effective character's statistics - calculated from base statistics and modifiers
@@ -178,7 +175,7 @@ namespace Runedal.GameData.Characters
         /// </summary>
         /// <param name="statType"></param>
         /// <returns></returns>
-        public int ApplyModifiers(StatType statType)
+        private int ApplyModifiers(StatType statType)
         {
             List<Modifier> modifiers;
             int modifiersSumValue = 0;
@@ -193,6 +190,48 @@ namespace Runedal.GameData.Characters
             }
 
             return modifiersSumValue;
+        }
+        
+        //method regenerating hp
+        private void RegenerateHp()
+        {
+            //if hp is lesser than max
+            if (Hp < MaxHp && Hp > 0)
+            {
+
+                //if HpCounter is lesser or equal to zero, regenerate 1 hp and reset the counter,
+                //otherwise decrease the counter with value of effective HpRegen
+                if (HpCounter <= 0)
+                {
+                    Hp++;
+                    HpCounter = CounterMax;
+                }
+                else
+                {
+                    HpCounter -= GetEffectiveHpRegen();
+                }
+            }
+        }
+
+        //method regenerating mp
+        private void RegenerateMp()
+        {
+            //if mp is lesser than max
+            if (Mp < MaxMp && Mp > 0)
+            {
+
+                //if MpCounter is lesser or equal to zero, regenerate 1 mp and reset the counter,
+                //otherwise decrease the counter with value of effective HpRegen
+                if (MpCounter <= 0)
+                {
+                    Mp++;
+                    MpCounter = CounterMax;
+                }
+                else
+                {
+                    MpCounter -= GetEffectiveMpRegen();
+                }
+            }
         }
     }
 }

@@ -18,6 +18,12 @@ namespace Runedal.GameData.Characters
         {
             AssignId();
         }
+
+        //destructor for releasing id number
+        ~Monster()
+        {
+            TakenIds.Remove(this.Id);
+        }
         
         //list of id's assigned to all existing monsters
         public static List<int> TakenIds { get; set; } = new List<int>();

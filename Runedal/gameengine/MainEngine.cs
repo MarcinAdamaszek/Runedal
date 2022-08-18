@@ -741,10 +741,10 @@ namespace Runedal.GameEngine
                 case (CombatCharacter.StatType.MpRegen):
                     modType = "Regeneracja Mp";
                     break;
-                case (CombatCharacter.StatType.HpMax):
+                case (CombatCharacter.StatType.MaxHp):
                     modType = "Maks. Hp";
                     break;
-                case (CombatCharacter.StatType.MpMax):
+                case (CombatCharacter.StatType.MaxMp):
                     modType = "Maks. Mp";
                     break;
                 case (CombatCharacter.StatType.Strength):

@@ -30,8 +30,8 @@ namespace Runedal.GameData.Characters
             MagicResistance = combatStats[11];
             Gold = combatStats[12];
 
-            Hp = HpMax;
-            Mp = MpMax;
+            Hp = MaxHp;
+            Mp = MaxMp;
             HpCounter = CounterMax;
             MpCounter = CounterMax;
 
@@ -39,8 +39,8 @@ namespace Runedal.GameData.Characters
         }
         public enum StatType
         {
-            HpMax,
-            MpMax,
+            MaxHp,
+            MaxMp,
             HpRegen,
             MpRegen,
             Strength,
@@ -66,8 +66,8 @@ namespace Runedal.GameData.Characters
         public double Mp { get; set; }
 
         //health and mana statistics
-        public double HpMax { get; set; }
-        public double MpMax { get; set; }
+        public double MaxHp { get; set; }
+        public double MaxMp { get; set; }
         public double HpRegen { get; set; }
         public double MpRegen { get; set; }
 
@@ -89,13 +89,33 @@ namespace Runedal.GameData.Characters
         public void Regenerate()
         {
             //if hp is lesser than max
-            if (Hp < HpMax && Hp > 0)
+            if (Hp < MaxHp && Hp > 0)
             {
 
             }
         }
 
         //'getters' for effective character's statistics - calculated from base statistics and modifiers
+        public virtual double GetEffectiveMaxHp()
+        {
+            double effectiveMaxHp = this.MaxHp + ApplyModifiers(StatType.MaxHp);
+            return effectiveMaxHp;
+        }
+        public virtual double GetEffectiveMaxMp()
+        {
+            double effectiveMaxMp = this.MaxMp + ApplyModifiers(StatType.MaxMp);
+            return effectiveMaxMp;
+        }
+        public virtual double GetEffectiveHpRegen()
+        {
+            double effectiveHpRegen = this.HpRegen + ApplyModifiers(StatType.HpRegen);
+            return effectiveHpRegen;
+        }
+        public virtual double GetEffectiveMpRegen()
+        {
+            double effectiveMpRegen = this.MpRegen + ApplyModifiers(StatType.MpRegen);
+            return effectiveMpRegen;
+        }
         public virtual double GetEffectiveSpeed()
         {
             //combine base stat value and value of all its modifiers

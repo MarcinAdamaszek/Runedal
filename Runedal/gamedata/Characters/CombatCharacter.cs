@@ -32,6 +32,8 @@ namespace Runedal.GameData.Characters
 
             Hp = HpMax;
             Mp = MpMax;
+            HpCounter = CounterMax;
+            MpCounter = CounterMax;
 
             Modifiers = new List<Modifier>();
         }
@@ -53,6 +55,11 @@ namespace Runedal.GameData.Characters
             Evasion,
             MagicResistance
         }
+
+        //hp/mp counters for regeneration
+        public const double CounterMax = 1000;
+        public double HpCounter { get; set; }
+        public double MpCounter { get; set; }
 
         //hp/mp real pools
         public double Hp { get; set; }
@@ -78,6 +85,15 @@ namespace Runedal.GameData.Characters
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
 
+        //method regenerating character's hp/mp
+        public void Regenerate()
+        {
+            //if hp is lesser than max
+            if (Hp < HpMax && Hp > 0)
+            {
+
+            }
+        }
 
         //'getters' for effective character's statistics - calculated from base statistics and modifiers
         public virtual double GetEffectiveSpeed()

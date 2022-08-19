@@ -30,5 +30,6 @@ namespace Runedal.GameData
 
         //value of how much is statistic going to be modified
         public int Value { get; set; }
+        public int Duration { get; set; }
     }
 }

@@ -8,10 +8,15 @@ namespace Runedal.GameData.Characters
 {
     public class CombatCharacter : Character
     {
+        public const double CounterMax = 1000;
+        public const int SecondCounterMax = 10;
+
         //default constructor for json deserialization
         public CombatCharacter() : base()
         {
             Modifiers = new List<Modifier>();
+            HpCounter = CounterMax;
+            MpCounter = CounterMax;
         }
         public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
             : base(descriptive, responses, gold)
@@ -57,7 +62,6 @@ namespace Runedal.GameData.Characters
         }
 
         //hp/mp counters for regeneration
-        public const double CounterMax = 1000;
         public double HpCounter { get; set; }
         public double MpCounter { get; set; }
 
@@ -85,11 +89,34 @@ namespace Runedal.GameData.Characters
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
 
-        //method regenerating character's hp/mp
-        public void Regenerate()
+        //method doing actions every tick of the game clock
+        public void HandleTick()
         {
             RegenerateHp();
             RegenerateMp();
+            DecreaseModDuration();
+        }
+
+        //method decreasing duration time for all modifiers
+        public void DecreaseModDuration()
+        {
+            int modAmount = Modifiers!.Count;
+            Modifier currentMod = new Modifier();
+
+            //for every mod that is temporary (Duration value != 0), decrease it's duration by one tick
+            //and if duration equals 1 - remove the modificator
+            for (int i = 0; i < modAmount; i++)
+            {
+                currentMod = Modifiers![i];
+                if (currentMod.DurationInTicks > 1)
+                {
+                    currentMod.DurationInTicks -= 1;
+                }
+                else if (currentMod.DurationInTicks == 1)
+                {
+                    Modifiers.Remove(currentMod);
+                }
+            }
         }
 
         //'getters' for effective character's statistics - calculated from base statistics and modifiers

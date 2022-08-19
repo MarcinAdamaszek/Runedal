@@ -11,10 +11,12 @@ namespace Runedal.GameData
     {
         //default constructor for json deserialization
         public Modifier() { }
-        public Modifier(CombatCharacter.StatType type, int value)
+        public Modifier(CombatCharacter.StatType type, int value, int duration)
         {
             Type = type;
             Value = value;
+            Duration = duration;
+            DurationInTicks = Duration * 10;
         }
 
         //copy constructor 
@@ -22,14 +24,16 @@ namespace Runedal.GameData
         {
             Type = mod.Type;
             Value = mod.Value;
+            Duration = mod.Duration;
+            DurationInTicks = Duration * 10;
         }
 
         //enum for type of modifier (which statistic it modifies)
-        
         public CombatCharacter.StatType Type { get; set; }
 
         //value of how much is statistic going to be modified
         public int Value { get; set; }
         public int Duration { get; set; }
+        public int DurationInTicks { get; set; }
     }
 }

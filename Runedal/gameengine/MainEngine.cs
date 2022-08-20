@@ -32,6 +32,8 @@ namespace Runedal.GameEngine
             Data.LoadItems();
 
             GameClock.Start();
+
+            
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -958,16 +960,15 @@ namespace Runedal.GameEngine
         //handler for tick event of GameClock
         private void GameClock_Tick(object sender, EventArgs e)
         {
-            //Data.Characters!.ForEach(character =>
-            //{
-            //    if (character.GetType() != typeof(Player))
-            //    {
-            //        character.Gold += 1;
-            //    }
-            //});
-            //AddGoldToPlayer(1);
+            Data.Characters!.ForEach(character =>
+            {
+                if (character is CombatCharacter)
+                {
+                    (character as CombatCharacter)!.HandleTick();
+                }
+            });
 
-
+            //PrintMessage("Twoje HP: *** " + Convert.ToString(Data.Player!.Hp) + " ***");
         }
     }
 }

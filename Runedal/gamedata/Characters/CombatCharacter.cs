@@ -8,8 +8,11 @@ namespace Runedal.GameData.Characters
 {
     public class CombatCharacter : Character
     {
-        public const double CounterMax = 1000;
-        public const int SecondCounterMax = 10;
+        private const double CounterMax = 1000;
+        private const int SecondCounterMax = 10;
+
+        private double _MaxHp;
+        private double _MaxMp;
 
         //default constructor for json deserialization
         public CombatCharacter() : base()
@@ -69,9 +72,26 @@ namespace Runedal.GameData.Characters
         public double Hp { get; set; }
         public double Mp { get; set; }
 
-        //health and mana statistics
-        public double MaxHp { get; set; }
-        public double MaxMp { get; set; }
+        //health and mana statistics (setters for json deserialization to automaticly set Hp/Mp values
+        //according to MaxHp/Mp values
+        public double MaxHp
+        {
+            get { return _MaxHp; }
+            set
+            {
+                _MaxHp = value;
+                Hp = value;
+            }
+        }
+        public double MaxMp
+        {
+            get { return _MaxMp; }
+            set
+            {
+                _MaxMp = value;
+                Mp = value;
+            }
+        }
         public double HpRegen { get; set; }
         public double MpRegen { get; set; }
 

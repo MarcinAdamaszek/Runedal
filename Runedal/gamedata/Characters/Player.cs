@@ -26,6 +26,8 @@ namespace Runedal.GameData.Characters
 
         //values of other multipliers
         private const double SpeedWeightMultiplier = -0.02;
+        private double _HpPercentage;
+        private double _MpPercentage;
 
         //default constructor for json deserialization
         public Player() : base()
@@ -63,31 +65,7 @@ namespace Runedal.GameData.Characters
         }
         public State CurrentState { get; set; }
 
-        //effective max hp/mp for data binding
-        public override double EffectiveMaxHp
-        {
-            get { return _EffectiveMaxHp; }
-            set
-            {
-                if (_EffectiveMaxHp != value)
-                {
-                    _EffectiveMaxHp = value;
-                    NotifyPropertyChanged("EffectiveMaxHp");
-                }
-            }
-        }
-        public override double EffectiveMaxMp
-        {
-            get { return _EffectiveMaxMp; }
-            set
-            {
-                if (_EffectiveMaxMp != value)
-                {
-                    _EffectiveMaxMp = value;
-                    NotifyPropertyChanged("EffectiveMaxMp");
-                }
-            }
-        }
+        //real hp/mp values
         public override double Hp
         {
             get { return _Hp; }
@@ -97,6 +75,7 @@ namespace Runedal.GameData.Characters
                 {
                     _Hp = value;
                     NotifyPropertyChanged("Hp");
+                    SetHpPercentage();
                 }
             }
         }
@@ -109,6 +88,61 @@ namespace Runedal.GameData.Characters
                 {
                     _Mp = value;
                     NotifyPropertyChanged("Mp");
+                    SetMpPercentage();
+                }
+            }
+        }
+
+        //hp/mp percentages for proper gui hp/mp bars display via data binding
+        public double HpPercentage
+        {
+            get { return _HpPercentage; }
+            set
+            {
+                if (_HpPercentage != value)
+                {
+                    _HpPercentage = value;
+                    NotifyPropertyChanged("HpPercentage");
+                }
+            }
+        }
+        public double MpPercentage
+        {
+            get { return _MpPercentage; }
+            set
+            {
+                if (_MpPercentage != value)
+                {
+                    _MpPercentage = value;
+                    NotifyPropertyChanged("MpPercentage");
+                }
+            }
+        }
+
+        //effective max hp/mp for data binding
+        public override double EffectiveMaxHp
+        {
+            get { return _EffectiveMaxHp; }
+            set
+            {
+                if (_EffectiveMaxHp != value)
+                {
+                    _EffectiveMaxHp = value;
+                    NotifyPropertyChanged("EffectiveMaxHp");
+                    SetHpPercentage();
+                }
+            }
+        }
+        public override double EffectiveMaxMp
+        {
+            get { return _EffectiveMaxMp; }
+            set
+            {
+                if (_EffectiveMaxMp != value)
+                {
+                    _EffectiveMaxMp = value;
+                    NotifyPropertyChanged("EffectiveMaxMp");
+                    SetMpPercentage();
                 }
             }
         }
@@ -139,7 +173,33 @@ namespace Runedal.GameData.Characters
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        //methods for getting effective statistics (after applying all modifiers)
+        //overriden methods for adding/removing modifiers, assuring effective maxhp/mp values are updated
+        public override void AddModifier(Modifier mod)
+        {
+            base.AddModifier(mod);
+            if (mod.Type == CombatCharacter.StatType.MaxHp || mod.Type == CombatCharacter.StatType.Strength)
+            {
+                EffectiveMaxHp = GetEffectiveMaxHp();
+            }
+            else if (mod.Type == CombatCharacter.StatType.MaxMp || mod.Type == CombatCharacter.StatType.Intelligence)
+            {
+                EffectiveMaxMp = GetEffectiveMaxMp();
+            }
+        }
+        public override void RemoveModifier(Modifier mod)
+        {
+            base.RemoveModifier(mod);
+            if (mod.Type == CombatCharacter.StatType.MaxHp || mod.Type == CombatCharacter.StatType.Strength)
+            {
+                EffectiveMaxHp = GetEffectiveMaxHp();
+            }
+            else if (mod.Type == CombatCharacter.StatType.MaxMp || mod.Type == CombatCharacter.StatType.Intelligence)
+            {
+                EffectiveMaxMp = GetEffectiveMaxMp();
+            }
+        }
+
+        //methods for setting effective max hp/mp
         public override double GetEffectiveMaxHp()
         {
             double effectiveMaxHp = base.GetEffectiveMaxHp();
@@ -154,6 +214,8 @@ namespace Runedal.GameData.Characters
             effectiveMaxMp += intelligenceModifier;
             return effectiveMaxMp;
         }
+
+        //methods for getting effective statistics (after applying all modifiers)
         public override double GetEffectiveHpRegen()
         {
             double effectiveHpRegen = base.GetEffectiveHpRegen();
@@ -248,6 +310,16 @@ namespace Runedal.GameData.Characters
             double intelligenceModifier = Intelligence * MagicResistanceIntMultiplier;
             effectiveMagicResistance += intelligenceModifier;
             return effectiveMagicResistance;
+        }
+
+        //methods for setting hp/mp percentages
+        private void SetHpPercentage()
+        {
+            HpPercentage = (Hp / EffectiveMaxHp) * 100;
+        }
+        private void SetMpPercentage()
+        {
+            MpPercentage = (Mp / EffectiveMaxMp) * 100;
         }
 
         //method returning sum weight of all items carried by player

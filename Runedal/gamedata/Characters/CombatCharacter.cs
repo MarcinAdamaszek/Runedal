@@ -151,7 +151,7 @@ namespace Runedal.GameData.Characters
                 }
                 else if (currentMod.DurationInTicks == 1)
                 {
-                    Modifiers.Remove(currentMod);
+                    RemoveModifier(currentMod);
                 }
             }
         }
@@ -165,11 +165,8 @@ namespace Runedal.GameData.Characters
         //method for removing modifiers
         public virtual void RemoveModifier(Modifier mod)
         {
-            Modifiers!.Remove(new Modifier(mod));
+            Modifiers!.Remove(mod);
         }
-
-        //'setters' for effective max hp/mp
-
 
         //'getters' for effective character's statistics - calculated from base statistics and modifiers
 

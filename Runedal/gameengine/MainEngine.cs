@@ -34,6 +34,7 @@ namespace Runedal.GameEngine
             GameClock.Start();
 
             Data.Player.Hp -= 100;
+            (Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -968,7 +969,7 @@ namespace Runedal.GameEngine
                 }
             });
 
-            //PrintMessage("Twoje HP: *** " + Convert.ToString(Data.Player!.Hp) + " ***");
+            PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
         }
     }
 }

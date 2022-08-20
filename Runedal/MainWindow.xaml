@@ -64,13 +64,20 @@
             <!--hp bar-->
             <ProgressBar Name="hpBar" Value="100" Grid.Column="0" Margin="10, 0, 10, 5" Foreground="#FFD20D16" BorderBrush="Black" Background="Black" />
             <TextBlock Text="HP" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 10, 5" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
-            <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Margin="10, 0, 10, 5">
-            <TextBlock Name="hpLabel" Text="{Binding Hp}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+            <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 5">
+                <TextBlock Name="hpLabel" Text="{Binding Hp}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+                <TextBlock Name="hpSlashLabel" Text=" / " Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+                <TextBlock Name="maxHpLabel" Text="{Binding EffectiveMaxHp}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
             </StackPanel>
+            
             <!--mp bar-->
             <ProgressBar Name="mpBar" Value="100" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" Foreground="#FF1330D2" Background="Black"/>
             <TextBlock Text="MP" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
-            <TextBlock Text="{Binding Mp}" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 5">
+                <TextBlock Name="mpLabel" Text="{Binding Mp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+                <TextBlock Name="mpSlashLabel" Text=" / " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+                <TextBlock Name="maxMpLabel" Text="{Binding EffectiveMaxMp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

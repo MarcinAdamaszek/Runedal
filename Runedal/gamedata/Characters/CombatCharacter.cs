@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Runedal.GameData.Characters
 {
-    public class CombatCharacter : Character/*, INotifyPropertyChanged*/
+    public class CombatCharacter : Character
     {
         private const double CounterMax = 1000;
 
+        protected double _EffectiveMaxHp;
+        protected double _EffectiveMaxMp;
         protected double _MaxHp;
         protected double _MaxMp;
         protected double _Hp;
@@ -47,8 +48,6 @@ namespace Runedal.GameData.Characters
 
             Modifiers = new List<Modifier>();
         }
-
-        //public event PropertyChangedEventHandler? PropertyChanged;
         public enum StatType
         {
             MaxHp,
@@ -72,35 +71,39 @@ namespace Runedal.GameData.Characters
         public double HpCounter { get; set; }
         public double MpCounter { get; set; }
 
-        //hp/mp real pools
-        public virtual double Hp 
-        { 
-            get { return _Hp; }
-            set
-            {
-                if (_Hp != value)
-                {
-                    _Hp = value;
-                    //NotifyPropertyChanged("Hp");
-                }
-            } 
-        }
-        public virtual double Mp
+        //health and mana statistics
+        public virtual double Hp { get; set; }
+        public virtual double Mp { get; set; } 
+        public virtual double EffectiveMaxHp { get; set; }
+        public virtual double EffectiveMaxMp { get; set; }
+        public virtual double MaxHp
         {
-            get { return _Mp; }
+            get { return _MaxHp; }
             set
             {
-                if (_Mp != value)
+                if (_MaxHp != value)
                 {
-                    _Mp = value;
-                    //NotifyPropertyChanged("Mp");
+                    _MaxHp = value;
+                    _Hp = _MaxHp;
+
+                    //every time MaxHp changes, update the effective max hp value so hp bar maxhp value updates via data binding
+                    EffectiveMaxHp = GetEffectiveMaxHp();
                 }
             }
         }
-
-        //health and mana statistics 
-        public virtual double MaxHp { get; set; }
-        public virtual double MaxMp { get; set; }
+        public virtual double MaxMp
+        {
+            get { return _MaxMp; }
+            set
+            {
+                if (_MaxMp != value)
+                {
+                    _MaxMp = value;
+                    _Mp = _MaxMp;
+                    EffectiveMaxMp = GetEffectiveMaxMp();
+                }
+            }
+        }
         public double HpRegen { get; set; }
         public double MpRegen { get; set; }
 
@@ -117,11 +120,6 @@ namespace Runedal.GameData.Characters
 
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
-        //public void NotifyPropertyChanged(string propName)
-        //{
-        //    if (this.PropertyChanged != null)
-        //        this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        //}
 
         //method doing actions every tick of the game clock
         public void HandleTick()
@@ -252,6 +250,8 @@ namespace Runedal.GameData.Characters
 
             return modifiersSumValue;
         }
+        
+        //method for adding modifiers to 
         
         //method regenerating hp
         private void RegenerateHp()

@@ -27,9 +27,6 @@ namespace Runedal.GameData.Characters
         //values of other multipliers
         private const double SpeedWeightMultiplier = -0.02;
 
-        private double _EffectiveMaxHp;
-        private double _EffectiveMaxMp;
-
         //default constructor for json deserialization
         public Player() : base()
         {
@@ -67,7 +64,7 @@ namespace Runedal.GameData.Characters
         public State CurrentState { get; set; }
 
         //effective max hp/mp for data binding
-        public double EffectiveMaxHp
+        public override double EffectiveMaxHp
         {
             get { return _EffectiveMaxHp; }
             set
@@ -79,7 +76,7 @@ namespace Runedal.GameData.Characters
                 }
             }
         }
-        public double EffectiveMaxMp
+        public override double EffectiveMaxMp
         {
             get { return _EffectiveMaxMp; }
             set

@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+//using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Runedal.GameData.Characters
 {
-    public class CombatCharacter : Character
+    public class CombatCharacter : Character/*, INotifyPropertyChanged*/
     {
         private const double CounterMax = 1000;
-        private const int SecondCounterMax = 10;
 
-        private double _MaxHp;
-        private double _MaxMp;
+        protected double _MaxHp;
+        protected double _MaxMp;
+        protected double _Hp;
+        protected double _Mp;
 
         //default constructor for json deserialization
         public CombatCharacter() : base()
@@ -45,6 +47,8 @@ namespace Runedal.GameData.Characters
 
             Modifiers = new List<Modifier>();
         }
+
+        //public event PropertyChangedEventHandler? PropertyChanged;
         public enum StatType
         {
             MaxHp,
@@ -69,29 +73,34 @@ namespace Runedal.GameData.Characters
         public double MpCounter { get; set; }
 
         //hp/mp real pools
-        public double Hp { get; set; }
-        public double Mp { get; set; }
+        public virtual double Hp 
+        { 
+            get { return _Hp; }
+            set
+            {
+                if (_Hp != value)
+                {
+                    _Hp = value;
+                    //NotifyPropertyChanged("Hp");
+                }
+            } 
+        }
+        public virtual double Mp
+        {
+            get { return _Mp; }
+            set
+            {
+                if (_Mp != value)
+                {
+                    _Mp = value;
+                    //NotifyPropertyChanged("Mp");
+                }
+            }
+        }
 
-        //health and mana statistics (setters for json deserialization to automaticly set Hp/Mp values
-        //according to MaxHp/Mp values
-        public double MaxHp
-        {
-            get { return _MaxHp; }
-            set
-            {
-                _MaxHp = value;
-                Hp = value;
-            }
-        }
-        public double MaxMp
-        {
-            get { return _MaxMp; }
-            set
-            {
-                _MaxMp = value;
-                Mp = value;
-            }
-        }
+        //health and mana statistics 
+        public virtual double MaxHp { get; set; }
+        public virtual double MaxMp { get; set; }
         public double HpRegen { get; set; }
         public double MpRegen { get; set; }
 
@@ -108,6 +117,11 @@ namespace Runedal.GameData.Characters
 
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
+        //public void NotifyPropertyChanged(string propName)
+        //{
+        //    if (this.PropertyChanged != null)
+        //        this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        //}
 
         //method doing actions every tick of the game clock
         public void HandleTick()

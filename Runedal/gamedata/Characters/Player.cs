@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Runedal.GameData.Items;
 
 namespace Runedal.GameData.Characters
 {
-    public class Player : CombatCharacter
+    public class Player : CombatCharacter, INotifyPropertyChanged
     {
         //values of multipliers for calculating attributes modifiers
         private const double MaxHpStrMultiplier = 10;
@@ -25,6 +26,9 @@ namespace Runedal.GameData.Characters
 
         //values of other multipliers
         private const double SpeedWeightMultiplier = -0.02;
+
+        private double _EffectiveMaxHp;
+        private double _EffectiveMaxMp;
 
         //default constructor for json deserialization
         public Player() : base()
@@ -52,6 +56,8 @@ namespace Runedal.GameData.Characters
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
             Weapon = new Weapon("placeholder");
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
         public enum State
         {
             Idle,
@@ -59,6 +65,56 @@ namespace Runedal.GameData.Characters
             Combat
         }
         public State CurrentState { get; set; }
+
+        //effective max hp/mp for data binding
+        public double EffectiveMaxHp
+        {
+            get { return _EffectiveMaxHp; }
+            set
+            {
+                if (_EffectiveMaxHp != value)
+                {
+                    _EffectiveMaxHp = value;
+                    NotifyPropertyChanged("EffectiveMaxHp");
+                }
+            }
+        }
+        public double EffectiveMaxMp
+        {
+            get { return _EffectiveMaxMp; }
+            set
+            {
+                if (_EffectiveMaxMp != value)
+                {
+                    _EffectiveMaxMp = value;
+                    NotifyPropertyChanged("EffectiveMaxMp");
+                }
+            }
+        }
+        public override double Hp
+        {
+            get { return _Hp; }
+            set
+            {
+                if (_Hp != value)
+                {
+                    _Hp = value;
+                    NotifyPropertyChanged("Hp");
+                }
+            }
+        }
+        public override double Mp
+        {
+            get { return _Mp; }
+            set
+            {
+                if (_Mp != value)
+                {
+                    _Mp = value;
+                    NotifyPropertyChanged("Mp");
+                }
+            }
+        }
 
         //player's level and amount of experience
         public int Level { get; set; }
@@ -78,6 +134,13 @@ namespace Runedal.GameData.Characters
 
         //character with whom player currently interacts
         public Character? InteractsWith { get; set; }
+
+        //property changed event handler
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
 
         //methods for getting effective statistics (after applying all modifiers)
         public override double GetEffectiveMaxHp()

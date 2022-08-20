@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Runedal.GameEngine;
+using Runedal.GameData.Characters;
 
 namespace Runedal
 {
@@ -26,11 +27,15 @@ namespace Runedal
         public MainWindow()
         {
             InitializeComponent();
-            this.Engine = new MainEngine(this);
+            Engine = new MainEngine(this);
+            Player = Engine.Data.Player!;
+
+            DataContext = Player;
         }
 
         public string Input { get; set; } = string.Empty;
         public MainEngine Engine { get; set; }
+        public Player Player { get; set; }
 
 
         //handling user input on pressing and releasing Enter key

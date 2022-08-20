@@ -33,7 +33,7 @@ namespace Runedal.GameEngine
 
             GameClock.Start();
 
-            
+            Data.Player.Hp -= 100;
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors

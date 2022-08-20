@@ -28,6 +28,8 @@ namespace Runedal.GameData.Characters
         private const double SpeedWeightMultiplier = -0.02;
         private double _HpPercentage;
         private double _MpPercentage;
+        private int _Strength;
+        private int _Intelligence;
 
         //default constructor for json deserialization
         public Player() : base()
@@ -152,8 +154,30 @@ namespace Runedal.GameData.Characters
         public int Experience { get; set; }
         
         //player character attributes influencing other statistics
-        public int Strength { get; set; }
-        public int Intelligence { get; set; }
+        public int Strength
+        {
+            get { return _Strength; }
+            set
+            {
+                if (_Strength != value)
+                {
+                    _Strength = value;
+                    EffectiveMaxHp = GetEffectiveMaxHp();
+                }
+            }
+        }
+        public int Intelligence
+        {
+            get { return _Intelligence; }
+            set
+            {
+                if (_Intelligence != value)
+                {
+                    _Intelligence = value;
+                    EffectiveMaxMp = GetEffectiveMaxMp();
+                }
+            }
+        }
         public int Agility { get; set; }
 
         //items worn by player
@@ -171,6 +195,13 @@ namespace Runedal.GameData.Characters
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+
+        //method initializing Hp/Mp pools
+        public override void InitializeHpMp()
+        {
+            Hp = GetEffectiveMaxHp();
+            Mp = GetEffectiveMaxMp();
         }
 
         //overriden methods for adding/removing modifiers, assuring effective maxhp/mp values are updated

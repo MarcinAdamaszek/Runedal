@@ -23,8 +23,6 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             HpCounter = CounterMax;
             MpCounter = CounterMax;
-            IsHpInitialized = false;
-            IsMpInitialized = false;
         }
         public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
             : base(descriptive, responses, gold)
@@ -47,8 +45,6 @@ namespace Runedal.GameData.Characters
             Mp = MaxMp;
             HpCounter = CounterMax;
             MpCounter = CounterMax;
-            IsHpInitialized = true;
-            IsMpInitialized = true;
 
             Modifiers = new List<Modifier>();
         }
@@ -71,10 +67,6 @@ namespace Runedal.GameData.Characters
             MagicResistance
         }
 
-        //values indicating if hp/mp amounts were already once set from their max values
-        bool IsHpInitialized { get; set; }
-        bool IsMpInitialized { get; set; }
-
         //hp/mp counters for regeneration
         public double HpCounter { get; set; }
         public double MpCounter { get; set; }
@@ -93,12 +85,6 @@ namespace Runedal.GameData.Characters
                 {
                     _MaxHp = value;
 
-                    //initialize hp amount only once, during construction of the object
-                    if (!IsHpInitialized)
-                    {
-                        _Hp = MaxHp;
-                    }
-
                     //every time MaxHp changes, update the effective max hp value so hp bar maxhp value updates via data binding
                     EffectiveMaxHp = GetEffectiveMaxHp();
                 }
@@ -112,10 +98,6 @@ namespace Runedal.GameData.Characters
                 if (_MaxMp != value)
                 {
                     _MaxMp = value;
-                    if (!IsMpInitialized)
-                    {
-                        _Mp = MaxMp;
-                    }
                     EffectiveMaxMp = GetEffectiveMaxMp();
                 }
             }
@@ -136,6 +118,13 @@ namespace Runedal.GameData.Characters
 
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
+
+        //method initializing hp/mp real values at the very first tick of the game clock
+        public virtual void InitializeHpMp()
+        {
+            Hp = GetEffectiveMaxHp();
+            Mp = GetEffectiveMaxMp();
+        }
 
         //method doing actions every tick of the game clock
         public void HandleTick()
@@ -287,7 +276,7 @@ namespace Runedal.GameData.Characters
         private void RegenerateHp()
         {
             //if hp is lesser than max
-            if (Hp < MaxHp && Hp > 0)
+            if (Hp < GetEffectiveMaxHp() && Hp > 0)
             {
 
                 //if HpCounter is lesser or equal to zero, regenerate 1 hp and reset the counter,
@@ -308,7 +297,7 @@ namespace Runedal.GameData.Characters
         private void RegenerateMp()
         {
             //if mp is lesser than max
-            if (Mp < MaxMp && Mp > 0)
+            if (Mp < GetEffectiveMaxMp() && Mp > 0)
             {
 
                 //if MpCounter is lesser or equal to zero, regenerate 1 mp and reset the counter,

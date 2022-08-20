@@ -72,6 +72,15 @@ namespace Runedal.GameData
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\monsters.json");
             Character[] monstersArray = JsonSerializer.Deserialize<Monster[]>(JsonString, Options)!;
             PopulateLocations(monstersArray);
+
+            //fill every combat-character's hp/mp pools accordingly to their effective max hp/mp
+            Characters.ForEach(character =>
+            {
+                if (character is CombatCharacter)
+                {
+                    (character as CombatCharacter)!.InitializeHpMp();
+                }
+            });
         } 
 
         //method loading locations from json file

@@ -679,7 +679,6 @@ namespace Runedal.GameEngine
             string description = string.Empty;
             string itemType = string.Empty;
             string modifiers = string.Empty;
-            string modType = string.Empty;
             string sign = string.Empty;
             Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
 
@@ -716,13 +715,7 @@ namespace Runedal.GameEngine
             //set modifiers string
             itemToDescribe.Modifiers!.ForEach(mod =>
             {
-                //translate mod type to polish
-                modType = GetPolishModType(mod.Type);
-
-                //set sign of modifier to + if its positive number (for negative, minus sign is displayed automaticly)
-                if (mod.Value >= 0) { sign = "+"; } 
-
-                modifiers += modType + "(" + sign + mod.Value + ") | ";
+                modifiers += GetModDescription(mod) + ", ";/*modType + "(" + sign + mod.Value + ") | ";*/
             });
 
             description += "\nWaga: " + Convert.ToString(itemToDescribe.Weight);
@@ -743,8 +736,31 @@ namespace Runedal.GameEngine
         //method applying consumable items effects to player
         private void ApplyEffect(Consumable item)
         {
-            string description = string.Empty;
+            string description = item.Name! + ":";
 
+            //add modifiers descriptors in form of 'modifier(+/-[value])' to
+            //description string for each modifier the item has
+            //item.Modifiers!.ForEach(mod =>
+            //{
+            //    description += " " + GetPolishModType(mod.Type) + "(" + 
+            //})
+        }
+
+        //method returning formatted string representing modifier and it's value with sign
+        private string GetModDescription(Modifier modifier)
+        {
+            string description = string.Empty;
+            string modType = GetPolishModType(modifier.Type);
+            string valueSign = string.Empty;
+
+            //set sign of modifier to + if its positive number (for negative, minus sign is displayed automatically)
+            if (modifier.Value > 0)
+            {
+                valueSign = "+";
+            }
+
+            description = modType + "(" + valueSign + modifier.Value + ")";
+            return description;
         }
 
         //method returning polish string representing specified type of ArmorType type

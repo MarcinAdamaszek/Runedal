@@ -456,6 +456,37 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method handling 'use' command
+        private void UseHandler(string itemName)
+        {
+            int itemIndex = -1;
+            Item itemToUse = new Item();
+
+            //if 'use' was typed without any argument
+            if (itemName == string.Empty)
+            {
+                PrintMessage("Co chcesz użyć?", MessageType.SystemFeedback);
+                return;
+            }
+
+            itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            if (itemIndex != -1)
+            {
+                itemToUse = Data.Player!.Inventory[itemIndex];
+            }
+            else
+            {
+                PrintMessage("Nie posiadasz przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
+                return;
+            }
+
+            if (itemToUse.GetType() == typeof(Consumable))
+            {
+
+            }
+
+        }
+
 
 
 
@@ -708,6 +739,13 @@ namespace Runedal.GameEngine
 
 
         //==============================================HELPER METHODS=============================================
+
+        //method applying consumable items effects to player
+        private void ApplyEffect(Consumable item)
+        {
+            string description = string.Empty;
+
+        }
 
         //method returning polish string representing specified type of ArmorType type
         private string GetPolishArmorType(Armor.ArmorType type)
@@ -969,7 +1007,7 @@ namespace Runedal.GameEngine
                 }
             });
 
-            PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
+            //PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
         }
     }
 }

@@ -677,53 +677,99 @@ namespace Runedal.GameEngine
         private void ItemInfo(string itemName)
         {
             string description = string.Empty;
+            string weight = string.Empty;
             string itemType = string.Empty;
             string modifiers = string.Empty;
+            string effect = string.Empty;
+            string attack = string.Empty;
+            string defense = string.Empty;
+            string range = string.Empty;
             string sign = string.Empty;
             Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
 
-            //print basic item info
-            PrintMessage("[ " + itemToDescribe.Name + " ]", MessageType.Info);
-            PrintMessage(itemToDescribe.Description!);
+            //set item's weight and type
+            weight = "Waga: " + Convert.ToString(itemToDescribe.Weight);
+            itemType = "Typ: ";
 
             //depending on item type, add info to description and set itemType string
             if (itemToDescribe.GetType() == typeof(Consumable))
             {
-                description += "Działanie: " + (itemToDescribe as Consumable)!.Effect;
-                itemType = "Zużywalne";
+                itemType += "używalne";
+                effect = "Działanie: ";
+
+                //add modifiers descriptions to effect description for every modifier present in the item
+                if (itemToDescribe.Modifiers!.Count > 0)
+                {
+                    itemToDescribe.Modifiers.ForEach(mod =>
+                    {
+                        effect += GetModDescription(mod);
+                    });
+
+                    //remove trailing comma and add duration
+                    effect = Regex.Replace(effect, @",\s$", "");
+                    effect += " {" + itemToDescribe.Modifiers[0].Duration + " sekund}";
+                }
+                else
+                {
+                    effect += "brak";
+                }
             }
             else if (itemToDescribe.GetType() == typeof(Armor))
             {
 
                 //set string for polish armor type
-                itemType = GetPolishArmorType((itemToDescribe as Armor)!.Type);
+                itemType += GetPolishArmorType((itemToDescribe as Armor)!.Type);
 
-                description += "Obrona: " + (itemToDescribe as Armor)!.Defense;
+                defense = "Obrona: " + (itemToDescribe as Armor)!.Defense;
             }
             else if (itemToDescribe.GetType() == typeof(Weapon))
             {
-                description += "Atak: " + (itemToDescribe as Weapon)!.Attack;
-                itemType = "Broń biała";
+                attack = "Atak: " + (itemToDescribe as Weapon)!.Attack;
+                itemType += "Broń biała";
             }
             else if (itemToDescribe.GetType() == typeof(Ranged))
             {
-                description += "Atak: " + (itemToDescribe as Ranged)!.Attack;
-                description += "\nZasięg: " + (itemToDescribe as Ranged)!.Range;
-                itemType = "Broń dystansowa";
+                attack = "Atak: " + (itemToDescribe as Ranged)!.Attack;
+                range += "Zasięg: " + (itemToDescribe as Ranged)!.Range;
+                itemType += "Broń dystansowa";
             }
 
             //set modifiers string
             itemToDescribe.Modifiers!.ForEach(mod =>
             {
-                modifiers += GetModDescription(mod) + ", ";/*modType + "(" + sign + mod.Value + ") | ";*/
+                //only if the mod is not temporary
+                if (mod.Duration == 0)
+                {
+                    modifiers += GetModDescription(mod) + ", ";
+                }
             });
 
-            description += "\nWaga: " + Convert.ToString(itemToDescribe.Weight);
-            PrintMessage("Typ: " + itemType, MessageType.Info);
-            PrintMessage(description, MessageType.Info);
+            //remove trailing comma
+            modifiers = Regex.Replace(modifiers, @",\s$", "");
+
+            //print basic item info
+            PrintMessage("[ " + itemToDescribe.Name + " ]", MessageType.Info);
+            PrintMessage(itemToDescribe.Description!);
+            PrintMessage(weight, MessageType.Info);
+            PrintMessage(itemType, MessageType.Info);
+            if (effect != string.Empty)
+            {
+                PrintMessage(effect, MessageType.Info);
+            }
+            if (defense != string.Empty)
+            {
+                PrintMessage(defense, MessageType.Info);
+            }
+            if (attack != string.Empty)
+            {
+                PrintMessage(attack, MessageType.Info);
+            }
+            if (range != string.Empty)
+            {
+                PrintMessage(range, MessageType.Info);
+            }
             if (modifiers != string.Empty)
             {
-                modifiers = Regex.Replace(modifiers, @"\|\s$", "");
                 PrintMessage("Modyfikatory: " + modifiers, MessageType.Info);
             }
         }
@@ -737,14 +783,24 @@ namespace Runedal.GameEngine
         private void ApplyEffect(Consumable item)
         {
             string description = item.Name! + ":";
+            int durationInTicks = 0;
 
+            if (item.Modifiers!.Count > 0)
+            {
+                durationInTicks = item.Modifiers[0].DurationInTicks;
+            }
             //add modifiers descriptors in form of 'modifier(+/-[value])' to
             //description string for each modifier the item has
-            //item.Modifiers!.ForEach(mod =>
-            //{
-            //    description += " " + GetPolishModType(mod.Type) + "(" + 
-            //})
+            item.Modifiers!.ForEach(mod =>
+            {
+                description += " " + GetModDescription(mod) + ",";
+            });
+            
+
         }
+
+        //method returning effect description string
+        //DEFINE THE METHOD NOW ===========================================
 
         //method returning formatted string representing modifier and it's value with sign
         private string GetModDescription(Modifier modifier)

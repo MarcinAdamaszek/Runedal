@@ -41,7 +41,7 @@ namespace Runedal.GameData.Characters
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
             Weapon = new Weapon("placeholder");
 
-            Effects = new List<Effect>();
+            Effects = new List<EffectOnPlayer>();
         }
         public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold)
             : base(descriptive, combatStats, responses, gold)
@@ -59,7 +59,7 @@ namespace Runedal.GameData.Characters
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
             Weapon = new Weapon("placeholder");
 
-            Effects = new List<Effect>();
+            Effects = new List<EffectOnPlayer>();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -195,7 +195,7 @@ namespace Runedal.GameData.Characters
         public Character? InteractsWith { get; set; }
 
         //effects currently affecting player
-        public List<Effect>? Effects { get; set; }
+        public List<EffectOnPlayer>? Effects { get; set; }
 
         //property changed event handler
         public void NotifyPropertyChanged(string propName)

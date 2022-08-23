@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Runedal.GameData
 {
-    public class Effect
+    public class EffectOnPlayer
     {
-        public Effect() { }
-        public Effect(string description, int duration) 
+        public EffectOnPlayer() { }
+        public EffectOnPlayer(string description, int duration) 
         {
             Description = description;
             DurationInTicks = duration;

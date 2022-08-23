@@ -127,6 +127,10 @@ namespace Runedal.GameEngine
                 case "u":
                     UseHandler(argument1);
                     break;
+                case "drop":
+                case "d":
+                    DropHandler(argument1, argument2);
+                    break;
                 case "inventory":
                 case "i":
                     InventoryHandler(Data.Player!, false);
@@ -240,6 +244,16 @@ namespace Runedal.GameEngine
             }
             else
             {
+
+                //search location for items on the ground
+                index = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == entityName);
+                if (index != -1)
+                {
+                    ItemInfo(entityName);
+                    return;
+                }
+
+
                 //else search characters of current location and player's inventory for entity with name matching the argument
                 index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
                 if (index != -1)
@@ -539,9 +553,60 @@ namespace Runedal.GameEngine
         }
 
         //method handling 'drop' command
-        private void DropHandler(string itemName)
+        private void DropHandler(string itemName, string quantity)
         {
+            int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            int itemQuantity = 1;
+            Item itemToRemove;
 
+            //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
+            if (quantity != string.Empty)
+            {
+                if (!int.TryParse(quantity, out itemQuantity))
+                {
+                    PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                    return;
+                }
+                if (itemQuantity == 0)
+                {
+                    PrintMessage("Powietrze chcesz wyrzucić?", MessageType.SystemFeedback);
+                    return;
+                }
+            }
+
+            //if the item name is 'zloto' drop gold
+            if (itemName == "złoto")
+            {
+                if (itemQuantity <= Data.Player.Gold)
+                {
+                    PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
+                    RemoveGoldFromPlayer(itemQuantity);
+                }
+                else
+                {
+                    PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
+                }
+                return;
+            }
+
+            if (itemIndex != -1)
+            {
+                itemToRemove = Data.Player!.Inventory[itemIndex];
+                if (itemToRemove.Quantity >= itemQuantity)
+                {
+                    PrintMessage("Upuszczasz " + itemQuantity + " " + itemToRemove.Name, MessageType.Action);
+                    RemoveItemFromPlayer(itemToRemove, itemQuantity);
+                    Data.Player!.CurrentLocation!.Items!.Add(itemToRemove);
+                }
+                else
+                {
+                    PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
+                }
+            }
+            else
+            {
+                PrintMessage("Nie posiadasz przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
+            }
         }
 
 
@@ -1125,13 +1190,13 @@ namespace Runedal.GameEngine
 
 
 
-        //==============================================PLAYER MANIPULATION METHODS=============================================
+        //==============================================MANIPULATION METHODS=============================================
 
         //method handling adding items to player's inventory
         private void AddItemToPlayer(Item item, int quantity)
         {
             Data.Player!.AddItem(item, quantity);
-            PrintMessage("Zdobyłeś " + item.Name + " w ilości " + Convert.ToString(quantity) + " sztuk", MessageType.Gain);
+            PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + item.Name, MessageType.Gain);
         }
 
         //method handling removing items from player's inventory
@@ -1139,7 +1204,7 @@ namespace Runedal.GameEngine
         {
             if (Data.Player!.RemoveItem(item.Name!, quantity))
             {
-                PrintMessage("Straciłeś " + item.Name! + " w ilości " + Convert.ToString(quantity) + " sztuk", MessageType.Loss);
+                PrintMessage("Straciłeś " + Convert.ToString(quantity) + " " + item.Name!, MessageType.Loss);
             }
             else
             {
@@ -1221,6 +1286,7 @@ namespace Runedal.GameEngine
              Data.Player.InteractsWith = new Character();
              Data.Player!.CurrentState = Player.State.Idle;
         }
+
 
 
 

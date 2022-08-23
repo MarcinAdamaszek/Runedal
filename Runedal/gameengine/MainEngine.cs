@@ -11,6 +11,7 @@ using Runedal.GameData;
 using Runedal.GameData.Locations;
 using Runedal.GameData.Characters;
 using Runedal.GameData.Items;
+using System.Windows.Media.Effects;
 
 
 namespace Runedal.GameEngine
@@ -25,7 +26,7 @@ namespace Runedal.GameEngine
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
             GameClock.Interval = TimeSpan.FromMilliseconds(100);
-            GameClock.Tick += GameClock_Tick!;
+            GameClock.Tick += GameClockTick!;
 
             Data.LoadLocations();
             Data.LoadCharacters();
@@ -119,6 +120,10 @@ namespace Runedal.GameEngine
                 case "look":
                 case "l":
                     LookHandler(argument1);
+                    break;
+                case "use":
+                case "u":
+                    UseHandler(argument1);
                     break;
                 case "inventory":
                 case "i":
@@ -459,8 +464,7 @@ namespace Runedal.GameEngine
         //method handling 'use' command
         private void UseHandler(string itemName)
         {
-            int itemIndex = -1;
-            Item itemToUse = new Item();
+            Item itemToUse;
 
             //if 'use' was typed without any argument
             if (itemName == string.Empty)
@@ -469,10 +473,18 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
-            if (itemIndex != -1)
+            if (Data.Player!.Inventory!.Exists(item => item.Name!.ToLower() == itemName.ToLower()))
             {
-                itemToUse = Data.Player!.Inventory[itemIndex];
+                itemToUse = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+                if (itemToUse.GetType() == typeof(Consumable))
+                {
+                    UseConsumable((itemToUse as Consumable)!);
+                }
+                else
+                {
+                    PrintMessage("Nie możesz użyć tego przedmiotu", MessageType.SystemFeedback);
+                }
             }
             else
             {
@@ -480,10 +492,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            if (itemToUse.GetType() == typeof(Consumable))
-            {
-                UseConsumable((itemToUse as Consumable)!);
-            }
+            
 
         }
 
@@ -702,7 +711,7 @@ namespace Runedal.GameEngine
                 {
                     itemToDescribe.Modifiers.ForEach(mod =>
                     {
-                        effect += GetModDescription(mod);
+                        effect += GetModDescription(mod) + ", ";
                     });
 
                     //remove trailing comma and add duration
@@ -961,52 +970,43 @@ namespace Runedal.GameEngine
         //method for using consumable item
         public void UseConsumable(Consumable item)
         {
+            ApplyEffect(item.Modifiers!, item.Name!);
+            RemoveItemFromPlayer(item);
+        }
+
+
+        //method applying effects to player
+        private void ApplyEffect(List<Modifier> modifiers, string objectName)
+        {
             Player player = Data.Player!;
-            int itemIndex = -1;
+            EffectOnPlayer itemEffect;
+            string description = objectName + ":";
+            int durationInTicks = 0;
 
-            itemIndex = player.Inventory!.IndexOf(item);
-
-            if (itemIndex != -1)
+            //if there are any modifiers in the item
+            if (modifiers.Count > 0)
             {
-                RemoveItemFromPlayer(item);
 
-                player.Inventory[itemIndex].Modifiers!.ForEach(mod =>
+                //get duration for new effect from first modifier in the list
+                durationInTicks = modifiers[0].DurationInTicks;
+
+                modifiers!.ForEach(mod =>
                 {
-                    
+
                     //apply only temporary modifiers
                     if (mod.Duration != 0)
                     {
                         player.AddModifier(mod);
+
+                        //add modifiers descriptors in form of 'modifier(+/-[value])' to description string 
+                        description += " " + GetModDescription(mod) + ",";
                     }
                 });
 
-                ApplyEffect(item);
+                itemEffect = new EffectOnPlayer(description, durationInTicks);
+                PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.SystemFeedback);
+                Data.Player!.Effects!.Add(itemEffect);
             }
-        }
-
-
-        //method applying consumable items effects to player
-        private void ApplyEffect(Consumable item)
-        {
-            Effect itemEffect;
-            string description = item.Name! + ":";
-            int durationInTicks = 0;
-
-            if (item.Modifiers!.Count > 0)
-            {
-                durationInTicks = item.Modifiers[0].DurationInTicks;
-            }
-            //add modifiers descriptors in form of 'modifier(+/-[value])' to
-            //description string for each modifier the item has
-            item.Modifiers!.ForEach(mod =>
-            {
-                description += " " + GetModDescription(mod) + ",";
-            });
-
-            itemEffect = new Effect(description, durationInTicks);
-
-            PrintMessage("Czujesz efekt działania " + description, MessageType.SystemFeedback);
-            Data.Player!.Effects!.Add(itemEffect);
         }
 
         /// <summary>
@@ -1072,6 +1072,7 @@ namespace Runedal.GameEngine
         //method displaying communicates in outputBox of the gui
         private void PrintMessage(string msg, MessageType type = MessageType.Default)
         {
+
             //color text of the message before displaying
             TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
             tr.Text = "\n" + msg;
@@ -1109,7 +1110,9 @@ namespace Runedal.GameEngine
         //handler for tick event of GameClock
         private void GameClockTick(object sender, EventArgs e)
         {
-            
+            int numberOfEffects;
+            List<EffectOnPlayer> playerEffects;
+
             //handle all characters regeneration/duration-decrease of modifiers etc
             Data.Characters!.ForEach(character =>
             {
@@ -1119,19 +1122,30 @@ namespace Runedal.GameEngine
                 }
             });
 
+            playerEffects = Data.Player!.Effects!;
+            numberOfEffects = playerEffects.Count;
+            
             //handle duration-decrease and wearing off of effects affecting player
-            Data.Player!.Effects!.ForEach(effect =>
+            for (int i = 0; i < numberOfEffects; i++)
             {
-                if (effect.DurationInTicks > 1)
+                
+                //if duration is greater than 1 - decrement it.
+                //otherwise, if it equals 1 - effect has ended so remove it
+                if (playerEffects[i].DurationInTicks > 1)
                 {
-                    effect.DurationInTicks--;
+                    playerEffects[i].DurationInTicks--;
                 }
-                else if (effect.DurationInTicks == 1)
+                else if (playerEffects[i].DurationInTicks == 1)
                 {
-                    PrintMessage("Skończyło się działanie " + effect.Description);
-                    Data.Player!.Effects!.Remove(effect);
+                    PrintMessage("Skończyło się działanie " + playerEffects[i].Description, MessageType.SystemFeedback);
+                    Data.Player!.Effects!.Remove(playerEffects[i]);
+                    
+                    //after removing effect, the list count has decremented, so number of effects also needs
+                    //to decrement to avoid OutOfRange exception
+                    numberOfEffects--;
                 }
-            });
+            }
+
 
             //PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
         }

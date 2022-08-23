@@ -131,6 +131,9 @@ namespace Runedal.GameEngine
                 case "i":
                     InventoryHandler(Data.Player!, false);
                     break;
+                case "stats":
+                    StatsHandler();
+                    break;
                 default:
                     PrintMessage("Pier%#$isz jak potłuczony..", MessageType.SystemFeedback);
                     return;
@@ -504,6 +507,12 @@ namespace Runedal.GameEngine
 
         }
 
+        //method handling 'stats' command
+        private void StatsHandler()
+        {
+            StatsInfo();
+        }
+
 
 
 
@@ -792,7 +801,78 @@ namespace Runedal.GameEngine
         }
 
         //method printing player's statistics
-        
+        private void StatsInfo()
+        {
+            const int halfSize = 42;
+            const int rowsSize = 13;
+            int remainingSpace = 0;
+            int i = 1;
+            int j = 0;
+            string[] rows = new string[rowsSize];
+            Player player = Data.Player!;
+
+            //format left side of the table
+            rows[0] = "**********************************STATYSTYKI POSTACI**********************************";
+            rows[1] = "||     Poziom: " + player.Level;
+            rows[2] = "||     Doświadczenie: " + player.Experience;
+            rows[3] = "||     Pkt. Atrybutów: " + player.AttributePoints;
+            rows[4] = "||-----------------------------------";
+            rows[5] = "||     Siła: " + player.Strength;
+            rows[6] = "||     Zręczność: " + player.Agility ;
+            rows[7] = "||     Inteligencja: " + player.Intelligence;
+            rows[8] = "||";
+            rows[9] = "||-----------------------------------";
+            rows[10] = "||     Maks. HP: " + player.EffectiveMaxHp;
+            rows[11] = "||     Maks. MP: " + player.EffectiveMaxMp;
+            rows[12] = "======================================================================================";
+
+            //fill remaining space with space-characters
+            for (i = 1; i < rowsSize - 1; i++)
+            {
+                remainingSpace = halfSize - rows[i].Length;
+
+                //fill with spaces
+                for (j = 0; j < remainingSpace; j++)
+                {
+                    rows[i] += " ";
+                }
+
+                //add middle vertical border
+                rows[i] += "|     ";
+            }
+
+            //add right side (combat statistics)
+            rows[1] += "Szybkość: " + Math.Floor(player.GetEffectiveSpeed());
+            rows[2] += "Atak: " + Math.Floor(player.GetEffectiveAttack());
+            rows[3] += "Szybkość Ataku: " + Math.Floor(player.GetEffectiveAtkSpeed());
+            rows[4] += "Celność: " + Math.Floor(player.GetEffectiveAccuracy());
+            rows[5] += "Obrona: " + Math.Floor(player.GetEffectiveDefense());
+            rows[6] += "Uniki: " + Math.Floor(player.GetEffectiveEvasion());
+            rows[7] += "Trafienia krytyczne: " + Math.Floor(player.GetEffectiveCritical());
+            rows[8] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
+            rows[9] += "Regeneracja HP " + Math.Floor(player.GetEffectiveHpRegen());
+            rows[10] += "Regeneracja HP: " + Math.Floor(player.GetEffectiveMpRegen());
+
+            //fill remaining space
+            for (i = 1; i < rowsSize - 1; i++)
+            {
+                remainingSpace = halfSize * 2 - rows[i].Length;
+
+                //fill with spaces
+                for (j = 0; j < remainingSpace; j++)
+                {
+                    rows[i] += " ";
+                }
+
+                //add middle vertical border
+                rows[i] += "||";
+            }
+
+            foreach (string row in rows)
+            {
+                PrintMessage(row);
+            }
+        }
 
 
         //==============================================HELPER METHODS=============================================

@@ -153,13 +153,17 @@ namespace Runedal.GameEngine
             Location nextLocation = new Location();
 
             //if player is in combat state
-            if (IsPlayerInCombat())
+            if (Data.Player!.CurrentState! == Player.State.Combat)
             {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
                 return;
             }
 
             //if player is in trade state
-            IsPlayerInTrade();
+            if (Data.Player!.CurrentState! == Player.State.Trade)
+            {
+                BreakTradeState();
+            }
 
             switch (direction)
             {
@@ -215,7 +219,7 @@ namespace Runedal.GameEngine
             string description = string.Empty;
             entityName = entityName.ToLower();
 
-            ////if player is in combat state
+            //if player is in combat state
             if (Data.Player!.CurrentState == Player.State.Combat)
             {
                 PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
@@ -224,8 +228,12 @@ namespace Runedal.GameEngine
 
             if (entityName == string.Empty || entityName == "around")
             {
-                //if player is in trade state, break the state and print proper message
-                IsPlayerInTrade();
+
+                //if player is in trade state
+                if (Data.Player!.CurrentState! == Player.State.Trade)
+                {
+                    BreakTradeState();
+                }
 
                 //if command "look" was used without argument, print location description
                 LocationInfo();
@@ -237,8 +245,11 @@ namespace Runedal.GameEngine
                 if (index != -1)
                 {
 
-                    //if player is in trade state, break the state and print proper message
-                    IsPlayerInTrade();
+                    //if player is in trade state
+                    if (Data.Player!.CurrentState! == Player.State.Trade)
+                    {
+                        BreakTradeState();
+                    }
                     CharacterInfo(Data.Player!.CurrentLocation!.Characters[index]);
                 }
                 else
@@ -273,14 +284,18 @@ namespace Runedal.GameEngine
             int index = -1;
             Character tradingCharacter = new Character();
 
-            ////if player isn't in idle state
-            if (IsPlayerInCombat())
+            //if player is in combat state
+            if (Data.Player!.CurrentState == Player.State.Combat)
             {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
                 return;
             }
 
             //check if player is trading with someone already
-            IsPlayerInTrade();
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                BreakTradeState();
+            }
 
             //check if the character of specified name exists in player's current location
             index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
@@ -314,12 +329,29 @@ namespace Runedal.GameEngine
         //method handling 'inventory' command
         private void InventoryHandler(Player player, bool withPrice)
         {
-            InventoryInfo(player, withPrice);
+
+            //if player is trading, print trader's and player's inventory (trading interface)
+            if (Data.Player!.CurrentState! == Player.State.Trade)
+            {
+                InventoryInfo(Data.Player!.InteractsWith!, true);
+                InventoryInfo(Data.Player!, true);
+            }
+            else
+            {
+                InventoryInfo(player, withPrice);
+            }
         }
 
         //method handling 'buy' command
         private void BuyHandler(string itemName, string quantity)
         {
+
+            //if player is in combat state
+            if (Data.Player!.CurrentState == Player.State.Combat)
+            {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return;
+            }
 
             //if the player is trading with someone
             if (Data.Player!.CurrentState == Player.State.Trade)
@@ -406,7 +438,6 @@ namespace Runedal.GameEngine
                 int sellingPrice = 0;
 
                 //set item quantity depedning on 2nd argument
-                if (quantity != string.Empty)
                 {
                     if (!int.TryParse(quantity, out itemQuantity))
                     {
@@ -470,12 +501,6 @@ namespace Runedal.GameEngine
         private void UseHandler(string itemName)
         {
             Item itemToUse;
-
-            if (IsPlayerInCombat())
-            {
-                return;
-            }
-            IsPlayerInTrade();
 
             //if 'use' was typed without any argument
             if (itemName == string.Empty)
@@ -995,35 +1020,104 @@ namespace Runedal.GameEngine
             return modType;
         }
 
-        //method checking if player is in combat state, and printing proper message if so
-        private bool IsPlayerInCombat()
+        /// <summary>
+        /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        /// 
+        private bool GetNextLocation(string direction, out Location nextLocation)
         {
-            if (Data.Player!.CurrentState! == Player.State.Combat)
+            nextLocation = Data.Player!.CurrentLocation!;
+            int currentX = nextLocation.X;
+            int currentY = nextLocation.Y;
+            int locationIndex = -1;
+            bool isFound = false;
+
+            switch (direction)
             {
-                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
-                return true;
+                case "n":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "e":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "s":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "w":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
             }
-            else
-            {
-                return false;
-            }
+
+            return isFound;
         }
 
-        //method breaking trade state and printing proper message
-        private bool IsPlayerInTrade()
-
+        //helper method for calculating selling price (trader price) of the item
+        private int CalculateTraderPrice(Item item)
         {
-            if (Data.Player!.CurrentState == Player.State.Trade)
+            double basePrice = Convert.ToDouble(item.Price);
+            int price = Convert.ToInt32(Math.Round(basePrice * Data!.PriceMultiplier));
+            return price;
+        }
+
+        //method displaying communicates in outputBox of the gui
+        private void PrintMessage(string msg, MessageType type = MessageType.Default)
+        {
+
+            //color text of the message before displaying
+            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
+            tr.Text = "\n" + msg;
+
+            switch (type)
             {
-                PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.Action);
-                Data.Player.InteractsWith = new Character();
-                Data.Player!.CurrentState = Player.State.Idle;
-                return true;
+                case (MessageType.Default):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
+                    break;
+                case (MessageType.UserCommand):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
+                    break;
+                case (MessageType.SystemFeedback):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
+                    break;
+                case (MessageType.Action):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                    break;
+                case (MessageType.Gain):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
+                    break;
+                case (MessageType.Loss):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
+                    break;
+                case (MessageType.EffectOn):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
+                    break;
+                case (MessageType.EffectOff):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
+                    break;
             }
-            else
-            {
-                return false;
-            }
+
+            Window.outputBox.ScrollToEnd();
         }
 
 
@@ -1119,104 +1213,15 @@ namespace Runedal.GameEngine
             }
         }
 
-        /// <summary>
-        /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
-        /// </summary>
-        /// <param name="direction"></param>
-        /// <returns></returns>
-        private bool GetNextLocation(string direction, out Location nextLocation)
+        //method breaking trade state and printing proper message
+        private void BreakTradeState()
+
         {
-            nextLocation = Data.Player!.CurrentLocation!;
-            int currentX = nextLocation.X;
-            int currentY = nextLocation.Y;
-            int locationIndex = -1;
-            bool isFound = false;
-
-            switch (direction)
-            {
-                case "n":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "e":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "s":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "w":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-            }
-
-            return isFound;
+             PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.Action);
+             Data.Player.InteractsWith = new Character();
+             Data.Player!.CurrentState = Player.State.Idle;
         }
 
-        //helper method for calculating selling price (trader price) of the item
-        private int CalculateTraderPrice(Item item)
-        {
-            double basePrice = Convert.ToDouble(item.Price);
-            int price = Convert.ToInt32(Math.Round(basePrice * Data!.PriceMultiplier));
-            return price;
-        }
-
-        //method displaying communicates in outputBox of the gui
-        private void PrintMessage(string msg, MessageType type = MessageType.Default)
-        {
-
-            //color text of the message before displaying
-            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
-            tr.Text = "\n" + msg;
-
-            switch (type)
-            {
-                case (MessageType.Default):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
-                    break;
-                case (MessageType.UserCommand):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
-                    break;
-                case (MessageType.SystemFeedback):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
-                    break;
-                case (MessageType.Action):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-                    break;
-                case (MessageType.Gain):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
-                    break;
-                case (MessageType.Loss):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
-                    break;
-                case (MessageType.EffectOn):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
-                    break;
-                case (MessageType.EffectOff):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
-                    break;
-            }
-
-            Window.outputBox.ScrollToEnd();
-        }
 
 
 

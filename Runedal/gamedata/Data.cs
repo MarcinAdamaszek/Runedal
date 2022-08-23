@@ -61,7 +61,6 @@ namespace Runedal.GameData
             //put player in his starting location
             PopulateLocations(playerArray);
             Player = playerArray[0];
-            Characters!.Add(Player);
 
             //load traders from json
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Traders.json");

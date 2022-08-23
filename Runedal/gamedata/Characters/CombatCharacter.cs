@@ -147,7 +147,7 @@ namespace Runedal.GameData.Characters
                 currentMod = Modifiers![i];
                 if (currentMod.DurationInTicks > 1)
                 {
-                    currentMod.DurationInTicks -= 1;
+                    currentMod.DurationInTicks--;
                 }
                 else if (currentMod.DurationInTicks == 1)
                 {

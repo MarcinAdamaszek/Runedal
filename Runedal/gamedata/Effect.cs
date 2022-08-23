@@ -8,12 +8,13 @@ namespace Runedal.GameData
 {
     public class Effect
     {
+        public Effect() { }
         public Effect(string description, int duration) 
         {
             Description = description;
             DurationInTicks = duration;
         }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public int DurationInTicks { get; set; }
     }
 }

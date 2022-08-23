@@ -466,6 +466,12 @@ namespace Runedal.GameEngine
         {
             Item itemToUse;
 
+            if (IsPlayerInCombat())
+            {
+                return;
+            }
+            IsPlayerInTrade();
+
             //if 'use' was typed without any argument
             if (itemName == string.Empty)
             {
@@ -936,7 +942,7 @@ namespace Runedal.GameEngine
         {
             if (Data.Player!.RemoveItem(item.Name!, quantity))
             {
-                PrintMessage("Straciłeś " + item.Name! + "w ilości " + Convert.ToString(quantity) + " sztuk", MessageType.Loss);
+                PrintMessage("Straciłeś " + item.Name! + " w ilości " + Convert.ToString(quantity) + " sztuk", MessageType.Loss);
             }
             else
             {
@@ -970,8 +976,8 @@ namespace Runedal.GameEngine
         //method for using consumable item
         public void UseConsumable(Consumable item)
         {
-            ApplyEffect(item.Modifiers!, item.Name!);
             RemoveItemFromPlayer(item);
+            ApplyEffect(item.Modifiers!, item.Name!);
         }
 
 
@@ -1003,6 +1009,7 @@ namespace Runedal.GameEngine
                     }
                 });
 
+                description = Regex.Replace(description, @",$", "");
                 itemEffect = new EffectOnPlayer(description, durationInTicks);
                 PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.SystemFeedback);
                 Data.Player!.Effects!.Add(itemEffect);

@@ -43,10 +43,12 @@ namespace Runedal.GameEngine
         {
             Default,
             UserCommand,
-            Info,
+            Action,
             SystemFeedback,
             Gain,
-            Loss
+            Loss,
+            EffectOn,
+            EffectOff
         }
 
         public MainWindow Window { get; set; }
@@ -178,7 +180,7 @@ namespace Runedal.GameEngine
                 //if the passage is open
                 if (passage)
                 {
-                    PrintMessage("Idziesz na " + directionString, MessageType.SystemFeedback);
+                    PrintMessage("Idziesz na " + directionString, MessageType.Action);
 
                     //change player's current location
                     Data.Player!.CurrentLocation = nextLocation;
@@ -296,7 +298,7 @@ namespace Runedal.GameEngine
                 //set player's state to trade
                 Data.Player!.CurrentState = Player.State.Trade;
 
-                PrintMessage("[ " + tradingCharacter.Name + " ]", MessageType.Info);
+                PrintMessage("Handlujesz z: " + tradingCharacter.Name, MessageType.Action);
                 InventoryInfo(tradingCharacter, true);
                 InventoryInfo(Data.Player!, true);
             }
@@ -335,7 +337,7 @@ namespace Runedal.GameEngine
                     }
                     if (itemQuantity == 0)
                     {
-                        PrintMessage("Nie możesz kupić Madiego", MessageType.SystemFeedback);
+                        PrintMessage("Powietrze chcesz kupić?", MessageType.SystemFeedback);
                         return;
                     }
                 }
@@ -410,7 +412,7 @@ namespace Runedal.GameEngine
                     }
                     if (itemQuantity == 0)
                     {
-                        PrintMessage("Nie możesz sprzedać Madiego (chyba że studentom ;E)", MessageType.SystemFeedback);
+                        PrintMessage("Kogo chcesz oszukać?", MessageType.SystemFeedback);
                         return;
                     }
                 }
@@ -519,7 +521,7 @@ namespace Runedal.GameEngine
             int currentY = Data.Player!.CurrentLocation!.Y;
 
             //print location name and description
-            PrintMessage("[ " + Data.Player!.CurrentLocation!.Name + " ]", MessageType.Info);
+            PrintMessage("[ " + Data.Player!.CurrentLocation!.Name + " ]");
             PrintMessage(Data.Player!.CurrentLocation!.Description!);
 
             //describe exits for each direction
@@ -536,7 +538,7 @@ namespace Runedal.GameEngine
             //remove the last comma 
             exitsInfo = Regex.Replace(exitsInfo, @",$", "");
 
-            PrintMessage(exitsInfo, MessageType.Info);
+            PrintMessage(exitsInfo);
 
             //add character names to their info strings for each character of specific type present in player's current location
             Data.Player.CurrentLocation.Characters!.ForEach((character) =>
@@ -554,7 +556,7 @@ namespace Runedal.GameEngine
             //if any characters found, print them to outputBox
             if (charactersInfo.Length > 13)
             {
-                PrintMessage(charactersInfo, MessageType.Info);
+                PrintMessage(charactersInfo);
             }
 
         }
@@ -677,14 +679,14 @@ namespace Runedal.GameEngine
             //print player's gold pool
             if (character.GetType() == typeof(Player))
             {
-                PrintMessage("Twoje złoto: " + Convert.ToString(Data.Player!.Gold!), MessageType.Info);
+                PrintMessage("Twoje złoto: " + Convert.ToString(Data.Player!.Gold!));
             }
         }
 
         //method describing character
         private void CharacterInfo(Character character)
         {
-            PrintMessage("[ " + character.Name + " ]", MessageType.Info);
+            PrintMessage("[ " + character.Name + " ]");
             PrintMessage(character.Description!);
         }
 
@@ -763,33 +765,34 @@ namespace Runedal.GameEngine
             modifiers = Regex.Replace(modifiers, @",\s$", "");
 
             //print basic item info
-            PrintMessage("[ " + itemToDescribe.Name + " ]", MessageType.Info);
+            PrintMessage("[ " + itemToDescribe.Name + " ]");
             PrintMessage(itemToDescribe.Description!);
-            PrintMessage(weight, MessageType.Info);
-            PrintMessage(itemType, MessageType.Info);
+            PrintMessage(weight);
+            PrintMessage(itemType);
             if (effect != string.Empty)
             {
-                PrintMessage(effect, MessageType.Info);
+                PrintMessage(effect);
             }
             if (defense != string.Empty)
             {
-                PrintMessage(defense, MessageType.Info);
+                PrintMessage(defense);
             }
             if (attack != string.Empty)
             {
-                PrintMessage(attack, MessageType.Info);
+                PrintMessage(attack);
             }
             if (range != string.Empty)
             {
-                PrintMessage(range, MessageType.Info);
+                PrintMessage(range);
             }
             if (modifiers != string.Empty)
             {
-                PrintMessage("Modyfikatory: " + modifiers, MessageType.Info);
+                PrintMessage("Modyfikatory: " + modifiers);
             }
         }
 
-
+        //method printing player's statistics
+        
 
 
         //==============================================HELPER METHODS=============================================
@@ -912,7 +915,7 @@ namespace Runedal.GameEngine
         {
             if (Data.Player!.CurrentState == Player.State.Trade)
             {
-                PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.SystemFeedback);
+                PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.Action);
                 Data.Player.InteractsWith = new Character();
                 Data.Player!.CurrentState = Player.State.Idle;
                 return true;
@@ -1011,7 +1014,7 @@ namespace Runedal.GameEngine
 
                 description = Regex.Replace(description, @",$", "");
                 itemEffect = new EffectOnPlayer(description, durationInTicks);
-                PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.SystemFeedback);
+                PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.EffectOn);
                 Data.Player!.Effects!.Add(itemEffect);
             }
         }
@@ -1095,14 +1098,20 @@ namespace Runedal.GameEngine
                 case (MessageType.SystemFeedback):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
                     break;
-                case (MessageType.Info):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.PaleGreen);
+                case (MessageType.Action):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
                     break;
                 case (MessageType.Gain):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
                     break;
                 case (MessageType.Loss):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Tan);
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
+                    break;
+                case (MessageType.EffectOn):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
+                    break;
+                case (MessageType.EffectOff):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
                     break;
             }
 
@@ -1144,7 +1153,7 @@ namespace Runedal.GameEngine
                 }
                 else if (playerEffects[i].DurationInTicks == 1)
                 {
-                    PrintMessage("Skończyło się działanie " + playerEffects[i].Description, MessageType.SystemFeedback);
+                    PrintMessage("Skończyło się działanie " + playerEffects[i].Description, MessageType.EffectOff);
                     Data.Player!.Effects!.Remove(playerEffects[i]);
                     
                     //after removing effect, the list count has decremented, so number of effects also needs

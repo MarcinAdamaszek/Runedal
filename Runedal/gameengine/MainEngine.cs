@@ -513,6 +513,12 @@ namespace Runedal.GameEngine
             StatsInfo();
         }
 
+        //method handling 'drop' command
+        private void DropHandler(string itemName)
+        {
+
+        }
+
 
 
 
@@ -522,6 +528,7 @@ namespace Runedal.GameEngine
         private void LocationInfo()
         {
             Location nextLocation = new Location();
+            string itemsInfo = "Przedmioty: ";
             string charactersInfo = "Postacie: ";
             string exitsInfo = "Wyjścia: ";
             string[] directionsLetters = { "n", "e", "s", "w" };
@@ -531,7 +538,7 @@ namespace Runedal.GameEngine
 
             //print location name and description
             PrintMessage("[ " + Data.Player!.CurrentLocation!.Name + " ]");
-            PrintMessage(Data.Player!.CurrentLocation!.Description!);
+            PrintMessage("Widzisz " + Data.Player!.CurrentLocation!.Description!);
 
             //describe exits for each direction
             for (int i = 0; i < 4; i++)
@@ -558,14 +565,27 @@ namespace Runedal.GameEngine
                 }
             });
 
+            //add items names for each item present in the location
+            Data.Player.CurrentLocation.Items!.ForEach((item) =>
+            {
+                itemsInfo += " " + item.Name + ",";
+            });
+
             //remove the last comma
             charactersInfo = Regex.Replace(charactersInfo, @",$", "");
+            itemsInfo = Regex.Replace(itemsInfo, @",$", "");
 
 
             //if any characters found, print them to outputBox
             if (charactersInfo.Length > 13)
             {
                 PrintMessage(charactersInfo);
+            }
+
+            //if any items found, print them to outputBox
+            if (itemsInfo.Length > 12)
+            {
+                PrintMessage(itemsInfo);
             }
 
         }

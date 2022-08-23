@@ -1107,13 +1107,29 @@ namespace Runedal.GameEngine
         //==============================================EVENT HANDLERS=============================================
 
         //handler for tick event of GameClock
-        private void GameClock_Tick(object sender, EventArgs e)
+        private void GameClockTick(object sender, EventArgs e)
         {
+            
+            //handle all characters regeneration/duration-decrease of modifiers etc
             Data.Characters!.ForEach(character =>
             {
                 if (character is CombatCharacter)
                 {
                     (character as CombatCharacter)!.HandleTick();
+                }
+            });
+
+            //handle duration-decrease and wearing off of effects affecting player
+            Data.Player!.Effects!.ForEach(effect =>
+            {
+                if (effect.DurationInTicks > 1)
+                {
+                    effect.DurationInTicks--;
+                }
+                else if (effect.DurationInTicks == 1)
+                {
+                    PrintMessage("Skończyło się działanie " + effect.Description);
+                    Data.Player!.Effects!.Remove(effect);
                 }
             });
 

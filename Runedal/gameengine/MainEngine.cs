@@ -482,7 +482,7 @@ namespace Runedal.GameEngine
 
             if (itemToUse.GetType() == typeof(Consumable))
             {
-
+                UseConsumable((itemToUse as Consumable)!);
             }
 
         }
@@ -779,26 +779,6 @@ namespace Runedal.GameEngine
 
         //==============================================HELPER METHODS=============================================
 
-        //method applying consumable items effects to player
-        private void ApplyEffect(Consumable item)
-        {
-            string description = item.Name! + ":";
-            int durationInTicks = 0;
-
-            if (item.Modifiers!.Count > 0)
-            {
-                durationInTicks = item.Modifiers[0].DurationInTicks;
-            }
-            //add modifiers descriptors in form of 'modifier(+/-[value])' to
-            //description string for each modifier the item has
-            item.Modifiers!.ForEach(mod =>
-            {
-                description += " " + GetModDescription(mod) + ",";
-            });
-            
-
-        }
-
         //method returning effect description string
         //DEFINE THE METHOD NOW ===========================================
 
@@ -928,6 +908,13 @@ namespace Runedal.GameEngine
             }
         }
 
+
+
+
+
+
+        //==============================================PLAYER MANIPULATION METHODS=============================================
+
         //method handling adding items to player's inventory
         private void AddItemToPlayer(Item item, int quantity)
         {
@@ -936,7 +923,7 @@ namespace Runedal.GameEngine
         }
 
         //method handling removing items from player's inventory
-        private void RemoveItemFromPlayer(Item item, int quantity)
+        private void RemoveItemFromPlayer(Item item, int quantity = 1)
         {
             if (Data.Player!.RemoveItem(item.Name!, quantity))
             {
@@ -969,6 +956,57 @@ namespace Runedal.GameEngine
                 Data.Player!.Gold = 0;
             }
 
+        }
+
+        //method for using consumable item
+        public void UseConsumable(Consumable item)
+        {
+            Player player = Data.Player!;
+            int itemIndex = -1;
+
+            itemIndex = player.Inventory!.IndexOf(item);
+
+            if (itemIndex != -1)
+            {
+                RemoveItemFromPlayer(item);
+
+                player.Inventory[itemIndex].Modifiers!.ForEach(mod =>
+                {
+                    
+                    //apply only temporary modifiers
+                    if (mod.Duration != 0)
+                    {
+                        player.AddModifier(mod);
+                    }
+                });
+
+                ApplyEffect(item);
+            }
+        }
+
+
+        //method applying consumable items effects to player
+        private void ApplyEffect(Consumable item)
+        {
+            Effect itemEffect;
+            string description = item.Name! + ":";
+            int durationInTicks = 0;
+
+            if (item.Modifiers!.Count > 0)
+            {
+                durationInTicks = item.Modifiers[0].DurationInTicks;
+            }
+            //add modifiers descriptors in form of 'modifier(+/-[value])' to
+            //description string for each modifier the item has
+            item.Modifiers!.ForEach(mod =>
+            {
+                description += " " + GetModDescription(mod) + ",";
+            });
+
+            itemEffect = new Effect(description, durationInTicks);
+
+            PrintMessage("Czujesz efekt działania " + description, MessageType.SystemFeedback);
+            Data.Player!.Effects!.Add(itemEffect);
         }
 
         /// <summary>

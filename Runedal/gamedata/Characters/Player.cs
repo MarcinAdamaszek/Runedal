@@ -157,6 +157,9 @@ namespace Runedal.GameData.Characters
         public int Level { get; set; }
         public int Experience { get; set; }
         
+        //player's available attribute points gained every lvl-up
+        public int AttributePoints { get; set; }
+        
         //player character attributes influencing other statistics
         public int Strength
         {

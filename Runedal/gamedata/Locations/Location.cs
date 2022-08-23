@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Runedal.GameData.Characters;
 using Runedal.GameData;
+using Runedal.GameData.Characters;
+using Runedal.GameData.Items;
+
 
 namespace Runedal.GameData.Locations
 {
@@ -18,6 +20,7 @@ namespace Runedal.GameData.Locations
             SouthPassage = true;
             WestPassage = true;
             Characters = new List<Character>();
+            Items = new List<Item>();
         }
         public Location(int[] coordinates, string[] descriptive, bool[] openBools) : base(descriptive)
         {
@@ -28,6 +31,7 @@ namespace Runedal.GameData.Locations
             SouthPassage = openBools[2];                  
             WestPassage = openBools[3];                   
             Characters = new List<Character>();
+            Items = new List<Item>();
         }
 
         //location coordinates
@@ -42,6 +46,9 @@ namespace Runedal.GameData.Locations
 
         //list of character-entities currently present in the location
         public List<Character>? Characters { get; set; }
+
+        //list of items lying in the location
+        public List<Item>? Items { get; set; }
 
         //methods for adding and removing characters
         public void AddCharacter(Character character)

@@ -137,12 +137,12 @@ namespace Runedal.GameData.Characters
         //method decreasing duration time for all modifiers
         public void DecreaseModDuration()
         {
-            int modAmount = Modifiers!.Count;
+            int numberOfMods = Modifiers!.Count;
             Modifier currentMod = new Modifier();
 
             //for every mod that is temporary (Duration value != 0), decrease it's duration by one tick
             //and if duration equals 1 - remove the modificator
-            for (int i = 0; i < modAmount; i++)
+            for (int i = 0; i < numberOfMods; i++)
             {
                 currentMod = Modifiers![i];
                 if (currentMod.DurationInTicks > 1)
@@ -152,6 +152,10 @@ namespace Runedal.GameData.Characters
                 else if (currentMod.DurationInTicks == 1)
                 {
                     RemoveModifier(currentMod);
+
+                    //after removing modifier, the list count has decremented, so number of mods also needs
+                    //to decrement to avoid OutOfRange exception
+                    numberOfMods--;
                 }
             }
         }

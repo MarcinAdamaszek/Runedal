@@ -52,7 +52,7 @@ namespace Runedal.GameData.Characters
         {
             int itemIndex = -1;
 
-            itemIndex = Inventory!.FindIndex(item => item.Name == newItem.Name);
+            itemIndex = Inventory!.FindIndex(item => item.Name!.ToLower() == newItem.Name!.ToLower());
 
             //if there is already another item with the same name in character's inventory, add to it's quantity 
             if (itemIndex != -1)

@@ -34,6 +34,7 @@ namespace Runedal.GameData
         public double PriceMultiplier { get; set; }
         public string? FileName { get; set; }
         public string? JsonString { get; set; }
+        public string[]? StackingEffects { get; set; }
         public JsonSerializerOptions Options { get; set; }
         public List<Location>? Locations { get; set; }
         public List<Character>? Characters { get; set; }
@@ -48,6 +49,13 @@ namespace Runedal.GameData
             FileName = filePath;
             jsonString = File.ReadAllText(FileName);
             return jsonString;
+        }
+
+        //method loading StackingEffects array of string representing object names which effects stack on player
+        private void LoadStackingEffects()
+        {
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\StackingEffects.json");
+            StackingEffects = JsonSerializer.Deserialize<string[]>(JsonString, Options)!;
         }
 
         //method loading characters from json file
@@ -73,7 +81,7 @@ namespace Runedal.GameData
             PopulateLocations(monstersArray);
 
             //fill every combat-character's hp/mp pools accordingly to their effective max hp/mp
-            Characters.ForEach(character =>
+            Characters!.ForEach(character =>
             {
                 if (character is CombatCharacter)
                 {
@@ -119,6 +127,9 @@ namespace Runedal.GameData
 
             //Fill characters inventories with items
             Characters!.ForEach(character => FillInventory(character));
+
+            //load stacking effects
+            LoadStackingEffects();
         }
 
         //helper method for pushing loaded characters objects into Characters list and assigning them into their starting location

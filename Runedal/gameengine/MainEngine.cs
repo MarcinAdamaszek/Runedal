@@ -1254,6 +1254,7 @@ namespace Runedal.GameEngine
         {
             Player player = Data.Player!;
             EffectOnPlayer itemEffect;
+            List<Modifier> modifiersToApply = new List<Modifier>();
             string description = objectName + ":";
             int durationInTicks = 0;
 
@@ -1264,13 +1265,12 @@ namespace Runedal.GameEngine
                 //get duration for new effect from first modifier in the list
                 durationInTicks = modifiers[0].DurationInTicks;
 
+                //get each temporary modifier description and save it to temporary list
                 modifiers!.ForEach(mod =>
                 {
-
-                    //apply only temporary modifiers
                     if (mod.Duration != 0)
                     {
-                        player.AddModifier(mod);
+                        modifiersToApply.Add(mod);
 
                         //add modifiers descriptors in form of 'modifier(+/-[value])' to description string 
                         description += " " + GetModDescription(mod) + ",";
@@ -1279,8 +1279,26 @@ namespace Runedal.GameEngine
 
                 description = Regex.Replace(description, @",$", "");
                 itemEffect = new EffectOnPlayer(description, durationInTicks);
+
+                //if effect is supposed to stack
+                if (Data.StackingEffects!.Contains(objectName))
+                {
+                    modifiersToApply.ForEach(mod =>
+                    {
+                        player.AddModifier(mod);
+                    });
+                    Data.Player!.Effects!.Add(itemEffect);
+                }
+                //else
+                //{
+                //    for (int i = 0; i < modifiersToApply.Count; i++)
+                //    {
+                //        player.Modifiers.First()
+                //    }
+                //}
+
+                
                 PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.EffectOn);
-                Data.Player!.Effects!.Add(itemEffect);
             }
         }
 

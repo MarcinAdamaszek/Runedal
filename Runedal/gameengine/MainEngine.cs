@@ -32,7 +32,7 @@ namespace Runedal.GameEngine
             Data.LoadCharacters();
             Data.LoadItems();
 
-            GameClock.Start();
+            //GameClock.Start();
 
             Data.Player.Hp -= 100;
             (Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
@@ -371,10 +371,23 @@ namespace Runedal.GameEngine
             if (Data.Player!.CurrentState == Player.State.Trade)
             {
                 Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
-                Item itemPrototype;
                 int itemIndex = -1;
                 int itemQuantity = 1;
                 int buyingPrice;
+
+                itemIndex = trader.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+
+                //check if the item exists in trader's inventory and if trader has enough of it
+                if (itemIndex == -1)
+                {
+                    PrintMessage(trader.Name + " nie posiada tego przedmiotu", MessageType.SystemFeedback);
+                    return;
+                }
+                else if (trader.Inventory[itemIndex].Quantity < itemQuantity)
+                {
+                    PrintMessage(trader.Name + " nie posiada przedmiotu w tej ilości", MessageType.SystemFeedback);
+                    return;
+                }
 
                 //set item quantity depedning on 2nd argument
                 if (quantity != string.Empty)
@@ -391,25 +404,8 @@ namespace Runedal.GameEngine
                     }
                 }
 
-                itemIndex = trader.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
-
-                //check if the item exists in trader's inventory and if trader has enough of it
-                if (itemIndex == -1)
-                {
-                    PrintMessage(trader.Name + " nie posiada wybranego przedmiotu", MessageType.SystemFeedback);
-                    return;
-                }
-                else if (trader.Inventory[itemIndex].Quantity < itemQuantity)
-                {
-                    PrintMessage(trader.Name + " nie posiada wybranego przedmiotu w tej ilości", MessageType.SystemFeedback);
-                    return;
-                }
-
-                //set boughtItem variable to proper item in Items list in Data
-                itemPrototype = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
-
                 //set buying price depending on quantity
-                buyingPrice = CalculateTraderPrice(itemPrototype) * itemQuantity;
+                buyingPrice = CalculateTraderPrice(itemName) * itemQuantity;
 
                 //if total buying price of the item is lesser than amount of gold possesed by player
                 if (Data.Player!.Gold! >= buyingPrice)
@@ -419,7 +415,7 @@ namespace Runedal.GameEngine
                     RemoveGoldFromPlayer(buyingPrice);
 
                     //add item to player's inventory 
-                    AddItemToPlayer(itemPrototype, itemQuantity);
+                    AddItemToPlayer(itemName, itemQuantity);
 
                     //add gold amount to trader's pool
                     trader.Gold += buyingPrice;
@@ -446,24 +442,9 @@ namespace Runedal.GameEngine
             if (Data.Player!.CurrentState == Player.State.Trade)
             {
                 Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
-                Item itemPrototype;
                 int itemIndex = -1;
                 int itemQuantity = 1;
                 int sellingPrice = 0;
-
-                //set item quantity depedning on 2nd argument
-                {
-                    if (!int.TryParse(quantity, out itemQuantity))
-                    {
-                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
-                        return;
-                    }
-                    if (itemQuantity == 0)
-                    {
-                        PrintMessage("Kogo chcesz oszukać?", MessageType.SystemFeedback);
-                        return;
-                    }
-                }
 
                 itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
 
@@ -479,18 +460,30 @@ namespace Runedal.GameEngine
                     return;
                 }
 
-                //set boughtItem variable to proper item in Items list in Data
-                itemPrototype = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+                //set item quantity depedning on 2nd argument
+                if (quantity != string.Empty)
+                {
+                    if (!int.TryParse(quantity, out itemQuantity))
+                    {
+                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                        return;
+                    }
+                    if (itemQuantity == 0)
+                    {
+                        PrintMessage("Kogo chcesz oszukać?", MessageType.SystemFeedback);
+                        return;
+                    }
+                }
 
                 //set buying price depending on quantity
-                sellingPrice = itemPrototype.Price * itemQuantity;
+                sellingPrice = Data.Player!.Inventory[itemIndex].Price * itemQuantity;
 
                 //if total buying price of the item is lesser than amount of gold possesed by player
                 if (trader.Gold >= sellingPrice)
                 {
                     //remove item from player's inventory and put it into trader's inventory
-                    RemoveItemFromPlayer(itemPrototype, itemQuantity);
-                    trader.AddItem(itemPrototype, itemQuantity);
+                    RemoveItemFromPlayer(itemName, itemQuantity);
+                    trader.AddItem(Data.Player!.Inventory[itemIndex], itemQuantity);
 
                     //swap gold from player to trader 
                     AddGoldToPlayer(sellingPrice);
@@ -559,23 +552,39 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             Item itemToRemove;
 
-            //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
-            if (quantity != string.Empty)
+            if (itemIndex != -1)
             {
-                if (!int.TryParse(quantity, out itemQuantity))
+                itemToRemove = Data.Player!.Inventory[itemIndex];
+
+                //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
+                if (quantity != string.Empty)
                 {
-                    PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
-                    return;
+                    if (!int.TryParse(quantity, out itemQuantity))
+                    {
+                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                        return;
+                    }
+                    if (itemQuantity == 0)
+                    {
+                        PrintMessage("Powietrze chcesz wyrzucić?", MessageType.SystemFeedback);
+                        return;
+                    }
                 }
-                if (itemQuantity == 0)
+
+                if (itemToRemove.Quantity >= itemQuantity)
                 {
-                    PrintMessage("Powietrze chcesz wyrzucić?", MessageType.SystemFeedback);
-                    return;
+                    PrintMessage("Upuszczasz " + itemQuantity + " " + itemToRemove.Name, MessageType.Action);
+                    RemoveItemFromPlayer(itemName, itemQuantity);
+                    Data.Player!.CurrentLocation!.AddItem(itemToRemove, itemQuantity);
+                }
+                else
+                {
+                    PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
                 }
             }
 
             //if the item name is 'zloto' drop gold
-            if (itemName == "złoto")
+            else if (itemName == "złoto")
             {
                 if (itemQuantity <= Data.Player.Gold)
                 {
@@ -587,21 +596,6 @@ namespace Runedal.GameEngine
                     PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
                 }
                 return;
-            }
-
-            if (itemIndex != -1)
-            {
-                itemToRemove = Data.Player!.Inventory[itemIndex];
-                if (itemToRemove.Quantity >= itemQuantity)
-                {
-                    PrintMessage("Upuszczasz " + itemQuantity + " " + itemToRemove.Name, MessageType.Action);
-                    RemoveItemFromPlayer(itemToRemove, itemQuantity);
-                    Data.Player!.CurrentLocation!.Items!.Add(itemToRemove);
-                }
-                else
-                {
-                    PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
-                }
             }
             else
             {
@@ -658,7 +652,12 @@ namespace Runedal.GameEngine
             //add items names for each item present in the location
             Data.Player.CurrentLocation.Items!.ForEach((item) =>
             {
-                itemsInfo += " " + item.Name + ",";
+                itemsInfo += " " + item.Name;
+                if (item.Quantity > 1)
+                {
+                    itemsInfo += "(" + item.Quantity + ")";
+                }
+                itemsInfo += ",";
             });
 
             //remove the last comma
@@ -774,7 +773,7 @@ namespace Runedal.GameEngine
                     }
                     else
                     {
-                        price = CalculateTraderPrice(item);
+                        price = CalculateTraderPrice(item.Name);
                     }
                 }
 
@@ -1139,11 +1138,13 @@ namespace Runedal.GameEngine
         }
 
         //helper method for calculating selling price (trader price) of the item
-        private int CalculateTraderPrice(Item item)
+        private int CalculateTraderPrice(string itemName)
         {
-            double basePrice = Convert.ToDouble(item.Price);
-            int price = Convert.ToInt32(Math.Round(basePrice * Data!.PriceMultiplier));
-            return price;
+            Item itemToEvaluate = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+            double doublePrice = Convert.ToDouble(itemToEvaluate.Price);
+            int roundedPrice = Convert.ToInt32(Math.Round(doublePrice * Data!.PriceMultiplier));
+            return roundedPrice;
         }
 
         //method displaying communicates in outputBox of the gui
@@ -1193,18 +1194,23 @@ namespace Runedal.GameEngine
         //==============================================MANIPULATION METHODS=============================================
 
         //method handling adding items to player's inventory
-        private void AddItemToPlayer(Item item, int quantity)
+        private void AddItemToPlayer(string itemName, int quantity)
         {
-            Data.Player!.AddItem(item, quantity);
-            PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + item.Name, MessageType.Gain);
+            Item itemToAdd = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Data.Player!.AddItem(itemToAdd, quantity);
+            PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + itemToAdd.Name, MessageType.Gain);
         }
 
         //method handling removing items from player's inventory
-        private void RemoveItemFromPlayer(Item item, int quantity = 1)
+        private void RemoveItemFromPlayer(string itemName, int quantity = 1)
         {
-            if (Data.Player!.RemoveItem(item.Name!, quantity))
+
+            //find item in data to have it's proper (first letter capitalized) name string to display in message for player
+            Item itemToRemove = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+            if (Data.Player!.RemoveItem(itemName, quantity))
             {
-                PrintMessage("Straciłeś " + Convert.ToString(quantity) + " " + item.Name!, MessageType.Loss);
+                PrintMessage("Straciłeś " + Convert.ToString(quantity) + " " + itemToRemove.Name, MessageType.Loss);
             }
             else
             {
@@ -1238,7 +1244,7 @@ namespace Runedal.GameEngine
         //method for using consumable item
         public void UseConsumable(Consumable item)
         {
-            RemoveItemFromPlayer(item);
+            RemoveItemFromPlayer(item.Name!);
             ApplyEffect(item.Modifiers!, item.Name!);
         }
 

@@ -50,6 +50,45 @@ namespace Runedal.GameData.Locations
         //list of items lying in the location
         public List<Item>? Items { get; set; }
 
+        //methods for adding and removing items
+        public void AddItem(Item item, int quantity)
+        {
+            int itemIndex = Items!.FindIndex(item => item.Name!.ToLower() == item.Name.ToLower());
+            Item itemToAdd;
+
+            if (itemIndex != -1)
+            {
+                Items[itemIndex].Quantity += quantity;
+            }
+            else
+            {
+                itemToAdd = new Item(item, quantity);
+                Items.Add(itemToAdd);
+            }
+        }
+
+        public bool RemoveItem(string itemName, int quantity)
+        {
+            int itemIndex = Items!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            Item itemToRemove;
+
+            if (itemIndex != -1)
+            {
+                itemToRemove = Items[itemIndex];
+                if (quantity < itemToRemove.Quantity)
+                {
+                    itemToRemove.Quantity -= quantity;
+                    return true;
+                }
+                else if (quantity == itemToRemove.Quantity)
+                {
+                    Items.Remove(itemToRemove);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //methods for adding and removing characters
         public void AddCharacter(Character character)
         {

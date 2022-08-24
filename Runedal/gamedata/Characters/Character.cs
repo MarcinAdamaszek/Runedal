@@ -57,11 +57,11 @@ namespace Runedal.GameData.Characters
             //if there is already another item with the same name in character's inventory, add to it's quantity 
             if (itemIndex != -1)
             {
-                Inventory![itemIndex].Quantity += newItem.Quantity;
+                Inventory![itemIndex].Quantity += quantity;
             }
             else
             {
-                   Inventory!.Add(new Item(newItem, quantity));
+                Inventory!.Add(new Item(newItem, quantity));
             }
         }
 
@@ -73,32 +73,24 @@ namespace Runedal.GameData.Characters
         /// inventory in the first place</returns>
         public bool RemoveItem(string itemName, int quantity)
         {
-            int itemIndex = -1;
-            Item itemToRemove = new Item();
+            int itemIndex = Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            Item itemToRemove;
 
-            itemIndex = Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
-            itemToRemove = Inventory[itemIndex];
-
-            //if the item exists in character's inventory and desired quantity is not greater than actual quantity
-            if (itemIndex != -1 && itemToRemove.Quantity >= quantity)
+            if (itemIndex != -1)
             {
-                //if the desided quantity is exact the same as actual quantity - remove item from traders inventory,
-                //otherwise subtract quantity
-                if (itemToRemove.Quantity == quantity)
-                {
-                    Inventory.Remove(itemToRemove);
-                    return true;
-                }
-                else
+                itemToRemove = Inventory[itemIndex];
+                if (quantity < itemToRemove.Quantity)
                 {
                     itemToRemove.Quantity -= quantity;
                     return true;
                 }
+                else if (quantity == itemToRemove.Quantity)
+                {
+                    Inventory.Remove(itemToRemove);
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
     }

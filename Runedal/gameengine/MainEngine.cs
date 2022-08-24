@@ -32,7 +32,7 @@ namespace Runedal.GameEngine
             Data.LoadCharacters();
             Data.LoadItems();
 
-            //GameClock.Start();
+            GameClock.Start();
 
             Data.Player.Hp -= 100;
             (Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
@@ -1254,7 +1254,6 @@ namespace Runedal.GameEngine
         {
             Player player = Data.Player!;
             EffectOnPlayer itemEffect;
-            List<Modifier> modifiersToApply = new List<Modifier>();
             string description = objectName + ":";
             int durationInTicks = 0;
 
@@ -1270,34 +1269,55 @@ namespace Runedal.GameEngine
                 {
                     if (mod.Duration != 0)
                     {
-                        modifiersToApply.Add(mod);
+                        mod.ParentEffect = objectName;
 
                         //add modifiers descriptors in form of 'modifier(+/-[value])' to description string 
                         description += " " + GetModDescription(mod) + ",";
                     }
                 });
 
+                //clear description from trailing comma and prepare item effect object
                 description = Regex.Replace(description, @",$", "");
-                itemEffect = new EffectOnPlayer(description, durationInTicks);
+                itemEffect = new EffectOnPlayer(objectName, description, durationInTicks);
 
                 //if effect is supposed to stack
                 if (Data.StackingEffects!.Contains(objectName))
                 {
-                    modifiersToApply.ForEach(mod =>
+                    player.Effects!.Add(itemEffect);
+                    modifiers.ForEach(mod =>
                     {
                         player.AddModifier(mod);
                     });
-                    Data.Player!.Effects!.Add(itemEffect);
                 }
-                //else
-                //{
-                //    for (int i = 0; i < modifiersToApply.Count; i++)
-                //    {
-                //        player.Modifiers.First()
-                //    }
-                //}
+                else
+                {
+                    
+                    //if player is already affected by the same effect, reset effect and mods durations
+                    if (player.Modifiers!.Exists(mod => mod.ParentEffect!.ToLower() == objectName.ToLower()))
+                    {
+                        player.Modifiers.ForEach(mod =>
+                        {
+                            if (mod.ParentEffect == objectName)
+                            {
+                                mod.ResetDuration();
+                            }
+                            
+                        });
 
-                
+                        //reset effect's durationInTicks value
+                        player.Effects!.Find(effect => effect.Name!.ToLower() == objectName.ToLower())!.DurationInTicks = durationInTicks;
+                    }
+                    else
+                    {
+                        player.Effects!.Add(itemEffect);
+                        modifiers.ForEach(mod =>
+                        {
+                            player.AddModifier(mod);
+                        });
+                    }
+                }
+
+
                 PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.EffectOn);
             }
         }

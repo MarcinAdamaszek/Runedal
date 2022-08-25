@@ -256,7 +256,7 @@ namespace Runedal.GameData.Characters
         /// </summary>
         /// <param name="statType"></param>
         /// <returns></returns>
-        private int ApplyModifiers(StatType statType)
+        protected int ApplyModifiers(StatType statType)
         {
             List<Modifier> modifiers;
             int modifiersSumValue = 0;

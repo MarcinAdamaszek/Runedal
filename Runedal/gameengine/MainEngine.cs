@@ -131,6 +131,11 @@ namespace Runedal.GameEngine
                 case "d":
                     DropHandler(argument1, argument2);
                     break;
+                case "pickup":
+                case "pick":
+                case "p":
+                    PickupHandler(argument1, argument2);
+                    break;
                 case "inventory":
                 case "i":
                     InventoryHandler(Data.Player!, false);
@@ -360,147 +365,127 @@ namespace Runedal.GameEngine
         private void BuyHandler(string itemName, string quantity)
         {
 
-            //if player is in combat state
-            if (Data.Player!.CurrentState == Player.State.Combat)
+            //if the player is trading with someone
+            if (Data.Player!.CurrentState != Player.State.Trade)
             {
-                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                PrintMessage("Obecnie z nikim nie handlujesz", MessageType.SystemFeedback);
                 return;
             }
 
-            //if the player is trading with someone
-            if (Data.Player!.CurrentState == Player.State.Trade)
+            Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
+            int itemIndex = -1;
+            int itemQuantity = 1;
+            int buyingPrice;
+
+            itemIndex = trader.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+
+            //check if the item exists in trader's inventory
+            if (itemIndex == -1)
             {
-                Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
-                int itemIndex = -1;
-                int itemQuantity = 1;
-                int buyingPrice;
+                PrintMessage(trader.Name + " nie posiada tego przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
 
-                itemIndex = trader.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            //set item quantity depedning on 2nd argument
+            if (!ConvertQuantityString(quantity, out itemQuantity))
+            {
+                PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                return;
+            }
 
-                //check if the item exists in trader's inventory and if trader has enough of it
-                if (itemIndex == -1)
-                {
-                    PrintMessage(trader.Name + " nie posiada tego przedmiotu", MessageType.SystemFeedback);
-                    return;
-                }
-                else if (trader.Inventory[itemIndex].Quantity < itemQuantity)
-                {
-                    PrintMessage(trader.Name + " nie posiada przedmiotu w tej ilości", MessageType.SystemFeedback);
-                    return;
-                }
+            //if player set quantity to more than trader has, set it to
+            //all trader has (just buy all)
+            if (trader.Inventory[itemIndex].Quantity < itemQuantity)
+            {
+                itemQuantity = trader.Inventory[itemIndex].Quantity;
+            }
 
-                //set item quantity depedning on 2nd argument
-                if (quantity != string.Empty)
-                {
-                    if (!int.TryParse(quantity, out itemQuantity))
-                    {
-                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
-                        return;
-                    }
-                    if (itemQuantity == 0)
-                    {
-                        PrintMessage("Powietrze chcesz kupić?", MessageType.SystemFeedback);
-                        return;
-                    }
-                }
+            //set buying price depending on quantity
+            buyingPrice = CalculateTraderPrice(itemName) * itemQuantity;
 
-                //set buying price depending on quantity
-                buyingPrice = CalculateTraderPrice(itemName) * itemQuantity;
+            //if total buying price of the item is lesser than amount of gold possesed by player
+            if (Data.Player!.Gold! >= buyingPrice)
+            {
+                //remove item from traders inventory and gold from player's inventory
+                trader.RemoveItem(itemName, itemQuantity);
+                RemoveGoldFromPlayer(buyingPrice);
 
-                //if total buying price of the item is lesser than amount of gold possesed by player
-                if (Data.Player!.Gold! >= buyingPrice)
-                {
-                    //remove item from traders inventory and gold from player's inventory
-                    trader.RemoveItem(itemName, itemQuantity);
-                    RemoveGoldFromPlayer(buyingPrice);
+                //add item to player's inventory 
+                AddItemToPlayer(itemName, itemQuantity);
 
-                    //add item to player's inventory 
-                    AddItemToPlayer(itemName, itemQuantity);
+                //add gold amount to trader's pool
+                trader.Gold += buyingPrice;
 
-                    //add gold amount to trader's pool
-                    trader.Gold += buyingPrice;
-
-                    //display trader's/player's inventories once again
-                    InventoryInfo(trader, true);
-                    InventoryInfo(Data.Player!, true);
-                }
-                else
-                {
-                    PrintMessage("Nie stać Cię", MessageType.SystemFeedback);
-                }
+                //display trader's/player's inventories once again
+                InventoryInfo(trader, true);
+                InventoryInfo(Data.Player!, true);
             }
             else
             {
-                PrintMessage("Obecnie z nikim nie handlujesz", MessageType.SystemFeedback);
+                PrintMessage("Nie stać Cię", MessageType.SystemFeedback);
             }
         }
 
         //method handling 'sell' command
         private void SellHandler(string itemName, string quantity)
         {
+
             //if the player is trading with someone
-            if (Data.Player!.CurrentState == Player.State.Trade)
+            if (Data.Player!.CurrentState != Player.State.Trade)
             {
-                Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
-                int itemIndex = -1;
-                int itemQuantity = 1;
-                int sellingPrice = 0;
+                PrintMessage("Obecnie z nikim nie handlujesz", MessageType.SystemFeedback);
+                return;
+            }
 
-                itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
+            int itemIndex = -1;
+            int itemQuantity = 1;
+            int sellingPrice = 0;
 
-                //check if the item exists in player's inventory and if he has enough of it
-                if (itemIndex == -1)
-                {
-                    PrintMessage("Nie posiadasz wybranego przedmiotu", MessageType.SystemFeedback);
-                    return;
-                }
-                else if (Data.Player!.Inventory[itemIndex].Quantity < itemQuantity)
-                {
-                    PrintMessage("Nie posiadasz wybranego przedmiotu w tej ilości", MessageType.SystemFeedback);
-                    return;
-                }
+            itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
 
-                //set item quantity depedning on 2nd argument
-                if (quantity != string.Empty)
-                {
-                    if (!int.TryParse(quantity, out itemQuantity))
-                    {
-                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
-                        return;
-                    }
-                    if (itemQuantity == 0)
-                    {
-                        PrintMessage("Kogo chcesz oszukać?", MessageType.SystemFeedback);
-                        return;
-                    }
-                }
+            //check if the item exists in player's inventory and if he has enough of it
+            if (itemIndex == -1)
+            {
+                PrintMessage("Nie posiadasz wybranego przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
 
-                //set buying price depending on quantity
-                sellingPrice = Data.Player!.Inventory[itemIndex].Price * itemQuantity;
+            //set item quantity depedning on 2nd argument
+            if (!ConvertQuantityString(quantity, out itemQuantity))
+            {
+                PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                return;
+            }
 
-                //if total buying price of the item is lesser than amount of gold possesed by player
-                if (trader.Gold >= sellingPrice)
-                {
-                    //remove item from player's inventory and put it into trader's inventory
-                    RemoveItemFromPlayer(itemName, itemQuantity);
-                    trader.AddItem(Data.Player!.Inventory[itemIndex], itemQuantity);
+            //if player set quantity to more than he has, set it to
+            //all he has (just sell all)
+            if (Data.Player!.Inventory[itemIndex].Quantity < itemQuantity)
+            {
+                itemQuantity = Data.Player!.Inventory[itemIndex].Quantity;
+            }
 
-                    //swap gold from player to trader 
-                    AddGoldToPlayer(sellingPrice);
-                    trader.Gold -= sellingPrice;
-   
-                    //display trader's/player's inventories once again
-                    InventoryInfo(trader, true);
-                    InventoryInfo(Data.Player!, true);
-                }
-                else
-                {
-                    PrintMessage("Handlarza nie stać na taki zakup", MessageType.SystemFeedback);
-                }
+            //set buying price depending on quantity
+            sellingPrice = Data.Player!.Inventory[itemIndex].Price * itemQuantity;
+
+            //if total buying price of the item is lesser than amount of gold possesed by player
+            if (trader.Gold >= sellingPrice)
+            {
+                //remove item from player's inventory and put it into trader's inventory
+                RemoveItemFromPlayer(itemName, itemQuantity);
+                trader.AddItem(Data.Player!.Inventory[itemIndex], itemQuantity);
+
+                //swap gold from player to trader 
+                AddGoldToPlayer(sellingPrice);
+                trader.Gold -= sellingPrice;
+
+                //display trader's/player's inventories once again
+                InventoryInfo(trader, true);
+                InventoryInfo(Data.Player!, true);
             }
             else
             {
-                PrintMessage("Obecnie z nikim nie handlujesz", MessageType.SystemFeedback);
+                PrintMessage("Handlarza nie stać na taki zakup", MessageType.SystemFeedback);
             }
         }
 
@@ -552,40 +537,23 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             Item itemToRemove;
 
-            if (itemIndex != -1)
+            if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
-                itemToRemove = Data.Player!.Inventory[itemIndex];
+                PrintMessage("Nie posiadasz przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
+                return;
+            }
 
-                //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
-                if (quantity != string.Empty)
-                {
-                    if (!int.TryParse(quantity, out itemQuantity))
-                    {
-                        PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
-                        return;
-                    }
-                    if (itemQuantity == 0)
-                    {
-                        PrintMessage("Powietrze chcesz wyrzucić?", MessageType.SystemFeedback);
-                        return;
-                    }
-                }
-
-                if (itemToRemove.Quantity >= itemQuantity)
-                {
-                    PrintMessage("Upuszczasz " + itemQuantity + " " + itemToRemove.Name, MessageType.Action);
-                    RemoveItemFromPlayer(itemName, itemQuantity);
-                    Data.Player!.CurrentLocation!.AddItem(itemToRemove, itemQuantity);
-                }
-                else
-                {
-                    PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
-                }
+            //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
+            if (!ConvertQuantityString(quantity, out itemQuantity))
+            {
+                PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                return;
             }
 
             //if the item name is 'zloto' drop gold
-            else if (itemName == "złoto")
+            if (itemName == "złoto")
             {
+
                 if (itemQuantity <= Data.Player.Gold)
                 {
                     PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
@@ -595,11 +563,73 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
                 }
+
                 return;
             }
-            else
+
+            itemToRemove = Data.Player!.Inventory[itemIndex];
+
+            //if player wants to drop more quantity of items than he actually has
+            //set quantity to equal actual item quantity and drop it all
+            if (itemToRemove.Quantity < itemQuantity)
+            {
+                itemQuantity = itemToRemove.Quantity;
+            }
+
+            PrintMessage("Upuszczasz " + itemQuantity + " " + itemToRemove.Name, MessageType.Action);
+            RemoveItemFromPlayer(itemName, itemQuantity);
+            Data.Player!.CurrentLocation!.AddItem(itemToRemove, itemQuantity);
+        }
+
+        //method handling 'pickup' command
+        private void PickupHandler(string itemName, string quantity)
+        {
+            int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            int itemQuantity = 1;
+            Item itemToPickup;
+
+            if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
                 PrintMessage("Nie posiadasz przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
+                return;
+            }
+
+            //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
+            if (!ConvertQuantityString(quantity, out itemQuantity))
+            {
+                PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                return;
+            }
+
+            //if the item name is 'zloto' drop gold
+            if (itemName == "złoto")
+            {
+                if (itemQuantity <= Data.Player.Gold)
+                {
+                    PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
+                    RemoveGoldFromPlayer(itemQuantity);
+                }
+                else
+                {
+                    PrintMessage("Nie możesz podnieść więcej niż tu leży", MessageType.SystemFeedback);
+                }
+                return;
+            }
+
+            itemToPickup = Data.Player!.CurrentLocation!.Items[itemIndex];
+
+            //if player wants to pick up more quantity of items than there are in his current
+            //location, set quantity to equal actual item quantity and pick up it all
+            if (itemToPickup.Quantity < itemQuantity)
+            {
+                itemQuantity = itemToPickup.Quantity;
+            }
+
+            if (itemToPickup.Quantity >= itemQuantity)
+            {
+                PrintMessage("Podnosisz " + itemQuantity + " " + itemToPickup.Name, MessageType.Action);
+                AddItemToPlayer(itemName, itemQuantity);
+                Data.Player!.CurrentLocation!.RemoveItem(itemName, itemQuantity);
             }
         }
 
@@ -1168,6 +1198,30 @@ namespace Runedal.GameEngine
             double doublePrice = Convert.ToDouble(itemToEvaluate.Price);
             int roundedPrice = Convert.ToInt32(Math.Round(doublePrice * Data!.PriceMultiplier));
             return roundedPrice;
+        }
+
+        //method converting quantity string to number and returning true
+        //if conversion succeded and value is > 0  (returns false otherwise)
+        private bool ConvertQuantityString(string quantityString, out int quantityValue)
+        {
+            int parsedQuantity = 1;
+
+            if (quantityString != string.Empty)
+            {
+                if (!int.TryParse(quantityString, out parsedQuantity))
+                {
+                    quantityValue = parsedQuantity;
+                    return false;
+                }
+                if (parsedQuantity <= 0)
+                {
+                    quantityValue = parsedQuantity;
+                    return false;
+                }
+            }
+
+            quantityValue = parsedQuantity;
+            return true;
         }
 
         //method displaying communicates in outputBox of the gui

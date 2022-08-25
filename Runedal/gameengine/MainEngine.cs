@@ -1372,7 +1372,7 @@ namespace Runedal.GameEngine
                 {
                     if (mod.Duration != 0)
                     {
-                        mod.ParentEffect = objectName;
+                        mod.Parent = objectName;
 
                         //add modifiers descriptors in form of 'modifier(+/-[value])' to description string 
                         description += " " + GetModDescription(mod) + ",";
@@ -1396,11 +1396,11 @@ namespace Runedal.GameEngine
                 {
                     
                     //if player is already affected by the same effect, reset effect and mods durations
-                    if (player.Modifiers!.Exists(mod => mod.ParentEffect!.ToLower() == objectName.ToLower()))
+                    if (player.Modifiers!.Exists(mod => mod.Parent!.ToLower() == objectName.ToLower()))
                     {
                         player.Modifiers.ForEach(mod =>
                         {
-                            if (mod.ParentEffect == objectName)
+                            if (mod.Parent == objectName)
                             {
                                 mod.ResetDuration();
                             }
@@ -1429,7 +1429,7 @@ namespace Runedal.GameEngine
         private void BreakTradeState()
 
         {
-             PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.Action);
+             PrintMessage("Przestajesz handlować z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
              Data.Player.InteractsWith = new Character();
              Data.Player!.CurrentState = Player.State.Idle;
         }

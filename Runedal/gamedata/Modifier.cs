@@ -14,14 +14,14 @@ namespace Runedal.GameData
         //default constructor for json deserialization
         public Modifier() 
         {
-            ParentEffect = "none";    
+            Parent = "none";    
         }
         public Modifier(CombatCharacter.StatType type, int value, int duration)
         {
             Type = type;
             Value = value;
             Duration = duration;
-            ParentEffect = "none";
+            Parent = "none";
         }
 
         //copy constructor 
@@ -30,7 +30,7 @@ namespace Runedal.GameData
             Type = mod.Type;
             Value = mod.Value;
             Duration = mod.Duration;
-            ParentEffect = mod.ParentEffect;
+            Parent = mod.Parent;
         }
 
         //enum for type of modifier (which statistic it modifies)
@@ -51,7 +51,7 @@ namespace Runedal.GameData
             }
         }
         public int DurationInTicks { get; set; }
-        public string ParentEffect { get; set; }
+        public string Parent { get; set; }
 
         //method setting DurationInTicks to full (Duration * 10)
         public void ResetDuration()

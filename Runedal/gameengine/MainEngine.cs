@@ -1090,8 +1090,11 @@ namespace Runedal.GameEngine
             string armorType = string.Empty;
             switch (type)
             {
-                case Armor.ArmorType.FullBody:
+                case Armor.ArmorType.Body:
                     armorType = "Korpus";
+                    break;
+                case Armor.ArmorType.Pants:
+                    armorType = "Spodnie";
                     break;
                 case Armor.ArmorType.Helmet:
                     armorType = "Hełm";

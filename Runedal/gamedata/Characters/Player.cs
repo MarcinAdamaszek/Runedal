@@ -200,7 +200,8 @@ namespace Runedal.GameData.Characters
         public int Agility { get; set; }
 
         //items worn by player
-        public Armor? FullBody { get; set; }
+        public Armor? Body { get; set; }
+        public Armor? Pants { get; set; }
         public Armor? Helmet { get; set; }
         public Armor? Gloves { get; set; }
         public Armor? Shoes { get; set; }

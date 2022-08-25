@@ -914,11 +914,34 @@ namespace Runedal.GameEngine
         {
             const int halfSize = 42;
             const int rowsSize = 13;
+            const int numberOfAttributes = 3;
             int remainingSpace = 0;
             int i = 1;
             int j = 0;
+            int[] diffs = new int[numberOfAttributes];
             string[] rows = new string[rowsSize];
+            string[] attributes = new string[numberOfAttributes];
             Player player = Data.Player!;
+
+            //set string for displaying attributes base values along with modifiers bonus
+            attributes[0] = Convert.ToString(player.Strength) + "(";
+            attributes[1] = Convert.ToString(player.Agility) + "(";
+            attributes[2] = Convert.ToString(player.Intelligence) + "(";
+            diffs[0] = player.GetEffectiveStrength() - player.Strength;
+            diffs[1] = player.GetEffectiveAgility() - player.Agility;
+            diffs[2] = player.GetEffectiveIntelligence() - player.Intelligence;
+
+            for (i = 0; i < numberOfAttributes; i++)
+            {
+                if (diffs[i] >= 0)
+                {
+                    attributes[i] += "+";
+                }
+
+                attributes[i] += diffs[i] + ")";
+            }
+    
+
 
             //format left side of the table
             rows[0] = "**********************************STATYSTYKI POSTACI**********************************";
@@ -926,9 +949,9 @@ namespace Runedal.GameEngine
             rows[2] = "||     Doświadczenie: " + player.Experience;
             rows[3] = "||     Pkt. Atrybutów: " + player.AttributePoints;
             rows[4] = "||-----------------------------------";
-            rows[5] = "||     Siła: " + player.Strength;
-            rows[6] = "||     Zręczność: " + player.Agility ;
-            rows[7] = "||     Inteligencja: " + player.Intelligence;
+            rows[5] = "||     Siła: " + attributes[0];
+            rows[6] = "||     Zręczność: " + attributes[1] ;
+            rows[7] = "||     Inteligencja: " + attributes[2];
             rows[8] = "||";
             rows[9] = "||-----------------------------------";
             rows[10] = "||     Maks. HP: " + player.EffectiveMaxHp;
@@ -1264,7 +1287,7 @@ namespace Runedal.GameEngine
                 //get duration for new effect from first modifier in the list
                 durationInTicks = modifiers[0].DurationInTicks;
 
-                //get each temporary modifier description and save it to temporary list
+                //set ParentEffect for each mod and add it's description to description string
                 modifiers!.ForEach(mod =>
                 {
                     if (mod.Duration != 0)
@@ -1281,7 +1304,7 @@ namespace Runedal.GameEngine
                 itemEffect = new EffectOnPlayer(objectName, description, durationInTicks);
 
                 //if effect is supposed to stack
-                if (Data.StackingEffects!.Contains(objectName))
+                if (Data.StackingEffects!.Contains(objectName.ToLower()))
                 {
                     player.Effects!.Add(itemEffect);
                     modifiers.ForEach(mod =>

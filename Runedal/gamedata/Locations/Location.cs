@@ -21,6 +21,7 @@ namespace Runedal.GameData.Locations
             WestPassage = true;
             Characters = new List<Character>();
             Items = new List<Item>();
+            Gold = 0;
         }
         public Location(int[] coordinates, string[] descriptive, bool[] openBools) : base(descriptive)
         {
@@ -32,6 +33,7 @@ namespace Runedal.GameData.Locations
             WestPassage = openBools[3];                   
             Characters = new List<Character>();
             Items = new List<Item>();
+            Gold = 0;
         }
 
         //location coordinates
@@ -47,8 +49,11 @@ namespace Runedal.GameData.Locations
         //list of character-entities currently present in the location
         public List<Character>? Characters { get; set; }
 
-        //list of items lying in the location
+        //list of items lying on the ground
         public List<Item>? Items { get; set; }
+
+        //gold lying on the ground
+        public int Gold { get; set; }
 
         //methods for adding and removing items
         public void AddItem(Item item, int quantity)

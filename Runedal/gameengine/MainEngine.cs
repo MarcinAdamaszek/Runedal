@@ -406,6 +406,9 @@ namespace Runedal.GameEngine
             //if total buying price of the item is lesser than amount of gold possesed by player
             if (Data.Player!.Gold! >= buyingPrice)
             {
+                //inform player about action
+                PrintMessage("Kupujesz " + itemQuantity + " " + itemName, MessageType.Action);
+
                 //remove item from traders inventory and gold from player's inventory
                 trader.RemoveItem(itemName, itemQuantity);
                 RemoveGoldFromPlayer(buyingPrice);
@@ -471,6 +474,9 @@ namespace Runedal.GameEngine
             //if total buying price of the item is lesser than amount of gold possesed by player
             if (trader.Gold >= sellingPrice)
             {
+                //inform player about action
+                PrintMessage("Sprzedajesz " + itemQuantity + " " + itemName, MessageType.Action);
+
                 //remove item from player's inventory and put it into trader's inventory
                 RemoveItemFromPlayer(itemName, itemQuantity);
                 AddItemToNpc(trader, itemName, itemQuantity);
@@ -554,15 +560,16 @@ namespace Runedal.GameEngine
             if (itemName == "złoto")
             {
 
-                if (itemQuantity <= Data.Player.Gold)
+                //if player wants to drop more quantity of gold than he has,
+                //set quantity to equal to what he possesses
+                if (Data.Player!.Gold < itemQuantity)
                 {
-                    PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
-                    RemoveGoldFromPlayer(itemQuantity);
+                    itemQuantity = Data.Player!.Gold;
                 }
-                else
-                {
-                    PrintMessage("Nie możesz wyrzucić więcej niż posiadasz", MessageType.SystemFeedback);
-                }
+
+                PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
+                RemoveGoldFromPlayer(itemQuantity);
+                Data.Player!.CurrentLocation!.Gold += itemQuantity;
 
                 return;
             }
@@ -601,18 +608,22 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            
+
             //if the item name is 'zloto' drop gold
             if (itemName == "złoto")
             {
-                if (itemQuantity <= Data.Player.Gold)
+                //if player wants to pick up more quantity of gold than there is in his current
+                //location, set quantity to the amout of all gold lying on the ground
+                if (Data.Player!.CurrentLocation.Gold < itemQuantity)
                 {
-                    PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
-                    RemoveGoldFromPlayer(itemQuantity);
+                    itemQuantity = Data.Player!.CurrentLocation.Gold;
                 }
-                else
-                {
-                    PrintMessage("Nie możesz podnieść więcej niż tu leży", MessageType.SystemFeedback);
-                }
+
+                PrintMessage("Podnosisz " + itemQuantity + " złota", MessageType.Action);
+                Data.Player!.CurrentLocation.Gold -= itemQuantity;
+                AddGoldToPlayer(itemQuantity);
+
                 return;
             }
 
@@ -641,18 +652,20 @@ namespace Runedal.GameEngine
         //method describing location to user
         private void LocationInfo()
         {
+            Location currentLocation = Data.Player!.CurrentLocation!;
             Location nextLocation = new Location();
+            string goldInfo = String.Empty;
             string itemsInfo = "Przedmioty: ";
             string charactersInfo = "Postacie: ";
             string exitsInfo = "Wyjścia: ";
             string[] directionsLetters = { "n", "e", "s", "w" };
             string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód," };
-            int currentX = Data.Player!.CurrentLocation!.X;
-            int currentY = Data.Player!.CurrentLocation!.Y;
+            int currentX = currentLocation.X;
+            int currentY = currentLocation.Y;
 
             //print location name and description
-            PrintMessage("[ " + Data.Player!.CurrentLocation!.Name + " ]");
-            PrintMessage("Widzisz " + Data.Player!.CurrentLocation!.Description!);
+            PrintMessage("[ " + currentLocation.Name + " ]");
+            PrintMessage("Widzisz " + currentLocation.Description!);
 
             //describe exits for each direction
             for (int i = 0; i < 4; i++)
@@ -671,7 +684,7 @@ namespace Runedal.GameEngine
             PrintMessage(exitsInfo);
 
             //add character names to their info strings for each character of specific type present in player's current location
-            Data.Player.CurrentLocation.Characters!.ForEach((character) =>
+            currentLocation.Characters!.ForEach((character) =>
             {
                 if (character.GetType() != typeof(Player))
                 {
@@ -680,7 +693,7 @@ namespace Runedal.GameEngine
             });
 
             //add items names for each item present in the location
-            Data.Player.CurrentLocation.Items!.ForEach((item) =>
+            currentLocation.Items!.ForEach((item) =>
             {
                 itemsInfo += " " + item.Name;
                 if (item.Quantity > 1)
@@ -689,6 +702,12 @@ namespace Runedal.GameEngine
                 }
                 itemsInfo += ",";
             });
+
+            //set the gold description string
+            if (currentLocation.Gold > 0)
+            {
+                goldInfo = "Złoto: " + currentLocation.Gold;
+            }
 
             //remove the last comma
             charactersInfo = Regex.Replace(charactersInfo, @",$", "");
@@ -705,6 +724,12 @@ namespace Runedal.GameEngine
             if (itemsInfo.Length > 12)
             {
                 PrintMessage(itemsInfo);
+            }
+
+            //if there is gold on the ground
+            if (goldInfo != String.Empty)
+            {
+                PrintMessage(goldInfo);
             }
 
         }

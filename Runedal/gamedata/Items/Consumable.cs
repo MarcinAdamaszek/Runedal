@@ -12,11 +12,11 @@ namespace Runedal.GameData.Items
         {
 
         } 
-        public Consumable(string[] descriptive, int[] stats, string effect) : base(descriptive, stats) 
+        public Consumable(string[] descriptive, int[] stats, string useActivityName) : base(descriptive, stats) 
         {
-            Effect = effect;
+            UseActivityName = useActivityName;
         }
 
-        public string? Effect { get; set; }
+        public string? UseActivityName { get; set; }
     }
 }

@@ -1321,6 +1321,7 @@ namespace Runedal.GameEngine
         //method for using consumable item
         public void UseConsumable(Consumable item)
         {
+            PrintMessage(item.UseActivityName! + " " + item.Name!, MessageType.Action);
             RemoveItemFromPlayer(item.Name!);
             ApplyEffect(item.Modifiers!, item.Name!);
         }

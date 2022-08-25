@@ -1432,9 +1432,13 @@ namespace Runedal.GameEngine
         //handler for tick event of GameClock
         private void GameClockTick(object sender, EventArgs e)
         {
-            int numberOfEffects;
-            List<EffectOnPlayer> playerEffects;
+            CharactersTick();
+            PlayerEffectsTick();
+        }
 
+        //method launching HandleTick method for every character in game
+        private void CharactersTick()
+        {
             //handle all characters regeneration/duration-decrease of modifiers etc
             Data.Characters!.ForEach(character =>
             {
@@ -1443,14 +1447,21 @@ namespace Runedal.GameEngine
                     (character as CombatCharacter)!.HandleTick();
                 }
             });
+        }
+
+        //method handling player effects tick
+        private void PlayerEffectsTick()
+        {
+            int numberOfEffects;
+            List<EffectOnPlayer> playerEffects;
 
             playerEffects = Data.Player!.Effects!;
             numberOfEffects = playerEffects.Count;
-            
+
             //handle duration-decrease and wearing off of effects affecting player
             for (int i = 0; i < numberOfEffects; i++)
             {
-                
+
                 //if duration is greater than 1 - decrement it.
                 //otherwise, if it equals 1 - effect has ended so remove it
                 if (playerEffects[i].DurationInTicks > 1)
@@ -1461,15 +1472,12 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage("Skończyło się działanie " + playerEffects[i].Description, MessageType.EffectOff);
                     Data.Player!.Effects!.Remove(playerEffects[i]);
-                    
+
                     //after removing effect, the list count has decremented, so number of effects also needs
                     //to decrement to avoid OutOfRange exception
                     numberOfEffects--;
                 }
             }
-
-
-            //PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
         }
     }
 }

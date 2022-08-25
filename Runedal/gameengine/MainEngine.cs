@@ -473,7 +473,7 @@ namespace Runedal.GameEngine
             {
                 //remove item from player's inventory and put it into trader's inventory
                 RemoveItemFromPlayer(itemName, itemQuantity);
-                trader.AddItem(Data.Player!.Inventory[itemIndex], itemQuantity);
+                AddItemToNpc(trader, itemName, itemQuantity);
 
                 //swap gold from player to trader 
                 AddGoldToPlayer(sellingPrice);
@@ -578,7 +578,7 @@ namespace Runedal.GameEngine
 
             PrintMessage("Upuszczasz " + itemQuantity + " " + itemToRemove.Name, MessageType.Action);
             RemoveItemFromPlayer(itemName, itemQuantity);
-            Data.Player!.CurrentLocation!.AddItem(itemToRemove, itemQuantity);
+            AddItemToLocation(Data.Player!.CurrentLocation!, itemName, itemQuantity);
         }
 
         //method handling 'pickup' command
@@ -1406,6 +1406,20 @@ namespace Runedal.GameEngine
              PrintMessage("Przestajesz handlować z: " + Data.Player.InteractsWith!.Name, MessageType.Action);
              Data.Player.InteractsWith = new Character();
              Data.Player!.CurrentState = Player.State.Idle;
+        }
+
+        //method adding items to non-player characters
+        private void AddItemToNpc(Character character, string itemName, int quantity)
+        {
+            Item itemToAdd = Data.Items!.Find(item => item.Name.ToLower() == itemName.ToLower())!;
+            character.AddItem(itemToAdd, quantity);
+        }
+
+        //method adding items to location
+        private void AddItemToLocation(Location location, string itemName, int quantity)
+        {
+            Item itemToAdd = Data.Items!.Find(item => item.Name.ToLower() == itemName.ToLower())!;
+            location.AddItem(itemToAdd, quantity);
         }
 
 

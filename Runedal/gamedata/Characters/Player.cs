@@ -136,10 +136,16 @@ namespace Runedal.GameData.Characters
                     _EffectiveMaxHp = value;
                     NotifyPropertyChanged("EffectiveMaxHp");
                     SetHpPercentage();
+
+                    //if max hp drops below real Hp value, equalize the Hp
+                    if (EffectiveMaxHp < Hp)
+                    {
+                        Hp = EffectiveMaxHp;
+                    }
                 }
             }
         }
-        public override double EffectiveMaxMp
+        public override double EffectiveMaxMp 
         {
             get { return _EffectiveMaxMp; }
             set
@@ -149,6 +155,12 @@ namespace Runedal.GameData.Characters
                     _EffectiveMaxMp = value;
                     NotifyPropertyChanged("EffectiveMaxMp");
                     SetMpPercentage();
+
+                    //if max mp drops below real Mp value, equalize the Mp
+                    if (EffectiveMaxHp < Hp)
+                    {
+                        Hp = EffectiveMaxHp;
+                    }
                 }
             }
         }
@@ -244,24 +256,66 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveMaxHp()
         {
             double effectiveMaxHp = base.GetEffectiveMaxHp();
-            double strengthModifier = MaxHpStrMultiplier * Strength;
+            double strengthModifier = MaxHpStrMultiplier * GetEffectiveStrength();
             effectiveMaxHp += strengthModifier;
+            if (effectiveMaxHp < 1)
+            {
+                effectiveMaxHp = 1;
+            }
             return effectiveMaxHp;
         }
         public override double GetEffectiveMaxMp()
         {
             double effectiveMaxMp = base.GetEffectiveMaxMp();
-            double intelligenceModifier = MaxMpIntMultiplier * Intelligence;
+            double intelligenceModifier = MaxMpIntMultiplier * GetEffectiveIntelligence();
             effectiveMaxMp += intelligenceModifier;
+            if (effectiveMaxMp < 1)
+            {
+                effectiveMaxMp = 1;
+            }
             return effectiveMaxMp;
         }
 
         //methods for getting effective statistics (after applying all modifiers)
+        public int GetEffectiveStrength()
+        {
+            int effectiveStrength = Strength;
+            effectiveStrength += base.ApplyModifiers(CombatCharacter.StatType.Strength);
+            if (effectiveStrength < 1)
+            {
+                effectiveStrength = 1;
+            }
+            return effectiveStrength;
+        }
+        public int GetEffectiveAgility()
+        {
+            int effectiveAgility = Agility;
+            effectiveAgility += base.ApplyModifiers(CombatCharacter.StatType.Agility);
+            if (effectiveAgility < 1)
+            {
+                effectiveAgility = 1;
+            }
+            return effectiveAgility;
+        }
+        public int GetEffectiveIntelligence()
+        {
+            int effectiveIntelligence = Intelligence;
+            effectiveIntelligence += base.ApplyModifiers(CombatCharacter.StatType.Intelligence);
+            if (effectiveIntelligence < 1)
+            {
+                effectiveIntelligence = 1;
+            }
+            return effectiveIntelligence;
+        }
         public override double GetEffectiveHpRegen()
         {
             double effectiveHpRegen = base.GetEffectiveHpRegen();
             double strengthModifier = HpRegenStrMultiplier * Strength;
             effectiveHpRegen += strengthModifier;
+            if (effectiveHpRegen < 1)
+            {
+                effectiveHpRegen = 1;
+            }
             return effectiveHpRegen;
         }
         public override double GetEffectiveMpRegen()
@@ -269,6 +323,10 @@ namespace Runedal.GameData.Characters
             double effectiveMpRegen = base.GetEffectiveMpRegen();
             double intelligenceModifier = MpRegenIntMultiplier * Intelligence;
             effectiveMpRegen += intelligenceModifier;
+            if (effectiveMpRegen < 1)
+            {
+                effectiveMpRegen = 1;
+            }
             return effectiveMpRegen;
         }
         public override double GetEffectiveSpeed()
@@ -307,6 +365,10 @@ namespace Runedal.GameData.Characters
 
             //add modifiers to effective stat
             effectiveAttack += strengthModifier += weaponModifier;
+            if (effectiveAttack < 1)
+            {
+                effectiveAttack = 1;
+            }
 
             return effectiveAttack;
         }
@@ -314,7 +376,10 @@ namespace Runedal.GameData.Characters
         {
             double effectiveAtkSpeed = base.GetEffectiveAtkSpeed();
             double agilityModifier = Agility * AtkSpeedAgiMultiplier;
-
+            if (effectiveAtkSpeed < 1)
+            {
+                effectiveAtkSpeed = 1;
+            }
             return effectiveAtkSpeed;
         }
         public override double GetEffectiveAccuracy()
@@ -322,6 +387,10 @@ namespace Runedal.GameData.Characters
             double effectiveAccuracy = base.GetEffectiveAccuracy();
             double agilityModifier = Agility * AccuracyAgiMultiplier;
             effectiveAccuracy += agilityModifier;
+            if (effectiveAccuracy < 1)
+            {
+                effectiveAccuracy = 1;
+            }
             return effectiveAccuracy;
         }
         public override double GetEffectiveCritical()
@@ -329,6 +398,10 @@ namespace Runedal.GameData.Characters
             double effectiveCritical = base.GetEffectiveCritical();
             double agilityModifier = Agility * CriticalAgiMultiplier;
             effectiveCritical += agilityModifier;
+            if (effectiveCritical < 1)
+            {
+                effectiveCritical = 1;
+            }
             return effectiveCritical;
         }
         public override double GetEffectiveDefense()
@@ -336,6 +409,10 @@ namespace Runedal.GameData.Characters
             double effectiveDefense = base.GetEffectiveDefense();
             double armorModifier = FullBody!.Defense + Helmet!.Defense + Gloves!.Defense + Shoes!.Defense;
             effectiveDefense += armorModifier;
+            if (effectiveDefense < 1)
+            {
+                effectiveDefense = 1;
+            }
             return effectiveDefense;
         }
         public override double GetEffectiveEvasion()
@@ -343,6 +420,10 @@ namespace Runedal.GameData.Characters
             double effectiveEvasion = base.GetEffectiveEvasion();
             double agilityModifier = Agility * EvasionAgiMultiplier;
             effectiveEvasion += agilityModifier;
+            if (effectiveEvasion < 1)
+            {
+                effectiveEvasion = 1;
+            }
             return effectiveEvasion;
         }
         public override double GetEffectiveMagicResistance()
@@ -350,6 +431,10 @@ namespace Runedal.GameData.Characters
             double effectiveMagicResistance = base.GetEffectiveMagicResistance();
             double intelligenceModifier = Intelligence * MagicResistanceIntMultiplier;
             effectiveMagicResistance += intelligenceModifier;
+            if (effectiveMagicResistance < 1)
+            {
+                effectiveMagicResistance = 1;
+            }
             return effectiveMagicResistance;
         }
 

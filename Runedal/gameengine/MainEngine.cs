@@ -242,6 +242,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
             {
 
@@ -251,7 +252,6 @@ namespace Runedal.GameEngine
                     BreakTradeState();
                 }
 
-                //if command "look" was used without argument, print location description
                 LocationInfo();
             }
             else
@@ -277,6 +277,7 @@ namespace Runedal.GameEngine
                         BreakTradeState();
                     }
                     CharacterInfo(Data.Player!.CurrentLocation!.Characters[index]);
+                    return;
                 }
                 else
                 {
@@ -285,6 +286,7 @@ namespace Runedal.GameEngine
                     if (index != -1)
                     {
                         ItemInfo(Data.Player!.Inventory[index].Name!);
+                        return;
                     }
                     else if (Data.Player!.CurrentState == Player.State.Trade)
                     {
@@ -292,15 +294,47 @@ namespace Runedal.GameEngine
                         if (index != -1)
                         {
                             ItemInfo(Data.Player!.InteractsWith!.Inventory![index].Name!);
+                            return;
                         }
                     }
                 }
 
-                //if any entity matched the argument, print it's description to user
-                if (index == -1)
+                //search for the item in player worn items
+                string wornItemName = "placeholder";
+
+                if (Data.Player!.Weapon!.Name!.ToLower() == entityName.ToLower())
                 {
-                    PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"", MessageType.SystemFeedback);
+                    wornItemName = Data.Player!.Weapon!.Name;
                 }
+                else if (Data.Player!.Helmet!.Name!.ToLower() == entityName.ToLower())
+                {
+                    wornItemName = Data.Player!.Helmet!.Name;
+                }
+                else if (Data.Player!.Torso!.Name!.ToLower() == entityName.ToLower())
+                {
+                    wornItemName = Data.Player!.Torso!.Name;
+                }
+                else if (Data.Player!.Pants!.Name!.ToLower() == entityName.ToLower())
+                {
+                    wornItemName = Data.Player!.Pants!.Name;
+                }
+                else if (Data.Player!.Gloves!.Name!.ToLower() == entityName.ToLower())
+                {
+                    wornItemName = Data.Player!.Gloves!.Name;
+                }
+                else if (Data.Player!.Shoes!.Name!.ToLower() == entityName.ToLower())
+                {
+                    wornItemName = Data.Player!.Shoes!.Name;
+                }
+
+                if (wornItemName != "placeholder")
+                {
+                    ItemInfo(wornItemName);
+                    return;
+                }
+
+                //if if nothing's matched, print appropriate message to user
+                PrintMessage("Nie ma tu niczego o nazwie \"" + entityName + "\"", MessageType.SystemFeedback);
             }
         }
 
@@ -937,7 +971,32 @@ namespace Runedal.GameEngine
             //print player's gold pool
             if (character.GetType() == typeof(Player))
             {
-                PrintMessage("Twoje złoto: " + Convert.ToString(Data.Player!.Gold!));
+                PrintMessage("Złoto: " + Convert.ToString(Data.Player!.Gold!));
+            }
+
+            //separate gold display from worn items display
+            PrintMessage(horizontalBorder);
+
+            //prepare worn items description
+            if (!withPrice)
+            {
+                string[] itemSlots = new string[6];
+                int i;
+
+                itemSlots[0] = "Broń: " + (character as Player)!.Weapon!.Name!;
+                itemSlots[1] = "Hełm: " + (character as Player)!.Helmet!.Name!;
+                itemSlots[2] = "Tors: " + (character as Player)!.Torso!.Name!;
+                itemSlots[3] = "Spodnie: " + (character as Player)!.Pants!.Name!;
+                itemSlots[4] = "Rękawice: " + (character as Player)!.Gloves!.Name!;
+                itemSlots[5] = "Buty: " + (character as Player)!.Shoes!.Name!;
+
+                //if item slot was empty (meaning was filled with placeholder)
+                //swap 'placeholder' string to 'brak'
+                for (i = 0; i < itemSlots.Length; i++)
+                {
+                    itemSlots[i] = Regex.Replace(itemSlots[i], @"\bplaceholder\b", "brak");
+                    PrintMessage(itemSlots[i]);
+                }
             }
         }
 
@@ -1230,7 +1289,7 @@ namespace Runedal.GameEngine
                     modType = "Atak";
                     break;
                 case (CombatCharacter.StatType.AtkSpeed):
-                    modType = "SzybkośćAtaku";
+                    modType = "Szybkość ataku";
                     break;
                 case (CombatCharacter.StatType.Accuracy):
                     modType = "Celność";

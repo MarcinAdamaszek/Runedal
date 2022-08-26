@@ -48,7 +48,7 @@ namespace Runedal.GameData.Characters
         public Dictionary<string, int>? Items { get; set; }
 
         //method for adding items into character's inventory
-        public void AddItem(Item newItem, int quantity)
+        public void AddItem(Item newItem, int quantity = 1)
         {
             int itemIndex = -1;
 
@@ -71,7 +71,7 @@ namespace Runedal.GameData.Characters
         /// <param name="oldItem"></param>
         /// <returns>true if the item is removed successfully, false if it didn't exist in character's 
         /// inventory in the first place</returns>
-        public bool RemoveItem(string itemName, int quantity)
+        public bool RemoveItem(string itemName, int quantity = 1)
         {
             int itemIndex = Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
             Item itemToRemove;

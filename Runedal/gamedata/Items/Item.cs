@@ -32,7 +32,7 @@ namespace Runedal.GameData.Items
         }
 
         //copy constructor
-        public Item(Item it, int quantity)
+        public Item(Item it, int quantity = 1)
         {
             Quantity = quantity;
             Name = it.Name;

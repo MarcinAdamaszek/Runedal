@@ -722,7 +722,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 default:
-                    PrintMessage("Nie możesz ściągnąć " + slotName + ". Prawidłowe nazwy to: helmet, body, pants, gloves, shoes", MessageType.SystemFeedback);
+                    PrintMessage("Nie możesz zdjąć " + slotName + ". Prawidłowe nazwy to: helmet, body, pants, gloves, shoes", MessageType.SystemFeedback);
                     break;
             }
         }

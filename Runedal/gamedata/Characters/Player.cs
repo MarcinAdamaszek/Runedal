@@ -464,7 +464,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveHpRegen()
         {
             double effectiveHpRegen = base.GetEffectiveHpRegen();
-            double strengthModifier = HpRegenStrMultiplier * Strength;
+            double strengthModifier = HpRegenStrMultiplier * GetEffectiveStrength();
             effectiveHpRegen += strengthModifier;
             if (effectiveHpRegen < 1)
             {
@@ -475,7 +475,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveMpRegen()
         {
             double effectiveMpRegen = base.GetEffectiveMpRegen();
-            double intelligenceModifier = MpRegenIntMultiplier * Intelligence;
+            double intelligenceModifier = MpRegenIntMultiplier * GetEffectiveIntelligence();
             effectiveMpRegen += intelligenceModifier;
             if (effectiveMpRegen < 1)
             {
@@ -489,7 +489,7 @@ namespace Runedal.GameData.Characters
             double effectiveSpeed = base.GetEffectiveSpeed();
 
             //attribute modifier
-            double agilityModifier = Agility * SpeedAgiMultiplier;
+            double agilityModifier = GetEffectiveAgility() * SpeedAgiMultiplier;
 
             //weight modifier
             double weightModifier = GetCarryWeight() * SpeedWeightMultiplier;
@@ -512,7 +512,7 @@ namespace Runedal.GameData.Characters
             double effectiveAttack = base.GetEffectiveAttack();
 
             //attribute modifier
-            double strengthModifier = Strength * AttackStrMultiplier;
+            double strengthModifier = GetEffectiveStrength() * AttackStrMultiplier;
 
             //weapon modifier
             double weaponModifier = Weapon!.Attack;
@@ -529,7 +529,8 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveAtkSpeed()
         {
             double effectiveAtkSpeed = base.GetEffectiveAtkSpeed();
-            double agilityModifier = Agility * AtkSpeedAgiMultiplier;
+            double agilityModifier = GetEffectiveAgility() * AtkSpeedAgiMultiplier;
+            effectiveAtkSpeed += agilityModifier;
             if (effectiveAtkSpeed < 1)
             {
                 effectiveAtkSpeed = 1;
@@ -539,7 +540,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveAccuracy()
         {
             double effectiveAccuracy = base.GetEffectiveAccuracy();
-            double agilityModifier = Agility * AccuracyAgiMultiplier;
+            double agilityModifier = GetEffectiveAgility() * AccuracyAgiMultiplier;
             effectiveAccuracy += agilityModifier;
             if (effectiveAccuracy < 1)
             {
@@ -550,7 +551,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveCritical()
         {
             double effectiveCritical = base.GetEffectiveCritical();
-            double agilityModifier = Agility * CriticalAgiMultiplier;
+            double agilityModifier = GetEffectiveAgility() * CriticalAgiMultiplier;
             effectiveCritical += agilityModifier;
             if (effectiveCritical < 1)
             {
@@ -572,7 +573,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveEvasion()
         {
             double effectiveEvasion = base.GetEffectiveEvasion();
-            double agilityModifier = Agility * EvasionAgiMultiplier;
+            double agilityModifier = GetEffectiveAgility() * EvasionAgiMultiplier;
             effectiveEvasion += agilityModifier;
             if (effectiveEvasion < 1)
             {
@@ -583,7 +584,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveMagicResistance()
         {
             double effectiveMagicResistance = base.GetEffectiveMagicResistance();
-            double intelligenceModifier = Intelligence * MagicResistanceIntMultiplier;
+            double intelligenceModifier = GetEffectiveIntelligence() * MagicResistanceIntMultiplier;
             effectiveMagicResistance += intelligenceModifier;
             if (effectiveMagicResistance < 1)
             {

@@ -127,6 +127,9 @@ namespace Runedal.GameEngine
                 case "u":
                     UseHandler(argument1);
                     break;
+                case "wear":
+                    WearHandler(argument1);
+                    break;
                 case "drop":
                 case "d":
                     DropHandler(argument1, argument2);
@@ -657,7 +660,7 @@ namespace Runedal.GameEngine
 
             Item itemToWear = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
             
-            if (itemToWear.GetType() != typeof(Armor))
+            if (itemToWear.GetType() == typeof(Armor))
             {
                 WearArmorOnPlayer(itemName);
             }

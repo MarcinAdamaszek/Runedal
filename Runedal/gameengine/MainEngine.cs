@@ -12,7 +12,7 @@ using Runedal.GameData.Locations;
 using Runedal.GameData.Characters;
 using Runedal.GameData.Items;
 using System.Windows.Media.Effects;
-
+using System.Windows.Navigation;
 
 namespace Runedal.GameEngine
 {
@@ -149,6 +149,9 @@ namespace Runedal.GameEngine
                     break;
                 case "stats":
                     StatsHandler();
+                    break;
+                case "stop":
+                    StopHandler();
                     break;
                 default:
                     PrintMessage("Pier%#$isz jak potłuczony..", MessageType.SystemFeedback);
@@ -541,6 +544,12 @@ namespace Runedal.GameEngine
         {
             Item itemToUse;
 
+            //if player is trading
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                BreakTradeState();
+            }
+
             //if 'use' was typed without any argument
             if (itemName == string.Empty)
             {
@@ -569,7 +578,7 @@ namespace Runedal.GameEngine
 
             
 
-        }
+        }   
 
         //method handling 'stats' command
         private void StatsHandler()
@@ -583,6 +592,12 @@ namespace Runedal.GameEngine
             int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
             int itemQuantity = 1;
             Item itemToRemove;
+
+            //if player is trading with someone, break the trade state
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                BreakTradeState();
+            }
 
             if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
@@ -635,6 +650,12 @@ namespace Runedal.GameEngine
             int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
             int itemQuantity = 1;
             Item itemToPickup;
+
+            //if player is trading with someone, break the trade state
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                BreakTradeState();
+            }
 
             if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
@@ -761,6 +782,15 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method for stopping actions/states
+        private void StopHandler()
+        {
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                BreakTradeState();
+            }
+        }
+
 
 
 
@@ -784,7 +814,7 @@ namespace Runedal.GameEngine
 
             //print location name and description
             PrintMessage("[ " + currentLocation.Name + " ]");
-            PrintMessage("Widzisz " + currentLocation.Description!);
+            PrintMessage(currentLocation.Description!);
 
             //describe exits for each direction
             for (int i = 0; i < 4; i++)

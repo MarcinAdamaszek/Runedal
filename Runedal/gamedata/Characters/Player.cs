@@ -236,12 +236,12 @@ namespace Runedal.GameData.Characters
             Weapon weaponToWear = new Weapon(weapon);
 
             //first, remove item from player's inventory
-            RemoveItem(weaponToWear.Name!);
+            RemoveItem(weapon.Name!);
 
             //then apply all modifiers and mark them with parent name
             weapon.Modifiers!.ForEach(mod =>
             {
-                mod.Parent = weaponToWear.Name!;
+                mod.Parent = weapon.Name!;
                 AddModifier(mod);
             });
 
@@ -255,12 +255,12 @@ namespace Runedal.GameData.Characters
             Armor armorToWear = new Armor(armor);
 
             //first, remove item from player's inventory
-            RemoveItem(armorToWear.Name!);
+            RemoveItem(armor.Name!);
 
             //then apply all modifiers and mark them with parent name
             armor.Modifiers!.ForEach(mod =>
             {
-                mod.Parent = armorToWear.Name!;
+                mod.Parent = armor.Name!;
                 AddModifier(mod);
             });
 

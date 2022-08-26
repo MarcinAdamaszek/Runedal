@@ -561,6 +561,8 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveDefense()
         {
             double effectiveDefense = base.GetEffectiveDefense();
+            double wornArmorModifier = Helmet!.Defense + Body!.Defense + Pants!.Defense + Gloves!.Defense + Shoes!.Defense;
+            effectiveDefense += wornArmorModifier;
             if (effectiveDefense < 1)
             {
                 effectiveDefense = 1;

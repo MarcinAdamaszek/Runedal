@@ -130,6 +130,10 @@ namespace Runedal.GameEngine
                 case "wear":
                     WearHandler(argument1);
                     break;
+                case "takeoff":
+                case "off":
+                    TakeoffHandler(argument1);
+                    break;
                 case "drop":
                 case "d":
                     DropHandler(argument1, argument2);
@@ -674,6 +678,53 @@ namespace Runedal.GameEngine
                 return;
             }
 
+        }
+
+        //method for handling 'takeoff' command
+        private void TakeoffHandler(string slotName)
+        {
+            switch (slotName)
+            {
+                case "weapon":
+                    if (!TakeOffWeaponFromPlayer())
+                    {
+                        PrintMessage("Nie jesteś uzbrojony", MessageType.SystemFeedback);
+                    }
+                    break;
+                case "helm":
+                    if (!TakeOffArmorFromPlayer(Armor.ArmorType.Helmet))
+                    {
+                        PrintMessage("Nie nosisz żadnego hełmu", MessageType.SystemFeedback);
+                    }
+                    break;
+                case "body":
+                    if (!TakeOffArmorFromPlayer(Armor.ArmorType.Body))
+                    {
+                        PrintMessage("Nie nosisz żadnego korpusu", MessageType.SystemFeedback);
+                    }
+                    break;
+                case "pants":
+                    if (!TakeOffArmorFromPlayer(Armor.ArmorType.Pants))
+                    {
+                        PrintMessage("Nie nosisz żadnych spodni (Trochę wstyd..)", MessageType.SystemFeedback);
+                    }
+                    break;
+                case "gloves":
+                    if (!TakeOffArmorFromPlayer(Armor.ArmorType.Gloves))
+                    {
+                        PrintMessage("Nie nosisz żadnych rękawic", MessageType.SystemFeedback);
+                    }
+                    break;
+                case "shoes":
+                    if (!TakeOffArmorFromPlayer(Armor.ArmorType.Shoes))
+                    {
+                        PrintMessage("Nie nosisz żadnych butów (Uważaj po czym stąpasz..)", MessageType.SystemFeedback);
+                    }
+                    break;
+                default:
+                    PrintMessage("Nie możesz ściągnąć " + slotName + ". Prawidłowe nazwy to: helmet, body, pants, gloves, shoes", MessageType.SystemFeedback);
+                    break;
+            }
         }
 
 
@@ -1405,24 +1456,36 @@ namespace Runedal.GameEngine
             Data.Player!.WearArmor(armorToWear);
         }
 
-        //method for taking off weapon-type items from player
-        private void TakeOffWeaponFromPlayer()
+        /// <summary>
+        /// Takes off weapon from player's weapon slot.
+        /// Returns true if weapon is taken off, false if slot is empty
+        /// </summary>
+        /// <returns></returns>
+        private bool TakeOffWeaponFromPlayer()
         {
             string weaponName = Data.Player!.TakeOffWeapon();
             if (weaponName != "placeholder")
             {
                 PrintMessage("Odkładasz " + weaponName, MessageType.Action);
+                return true;
             }
+            return false;
         }
 
-        //method for taking off wearable armor-items from player
-        private void TakeOffArmorFromPlayer(Armor.ArmorType type)
+        /// <summary>
+        /// Takes off armor from player's armor slot.
+        /// Returns true if armor is taken off, false if slot is empty
+        /// </summary>
+        /// <returns></returns>
+        private bool TakeOffArmorFromPlayer(Armor.ArmorType type)
         {
             string wornArmorName = Data.Player!.TakeOffArmor(type);
             if (wornArmorName != "placeholder")
             {
                 PrintMessage("Zdejmujesz " + wornArmorName, MessageType.Action);
+                return true;
             }
+            return false;
         }
 
         //method handling adding gold to player's pool

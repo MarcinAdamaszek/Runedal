@@ -644,6 +644,35 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method handling 'wear' command
+        private void WearHandler(string itemName)
+        {
+            int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+
+            if (itemIndex == -1)
+            {
+                PrintMessage("Nie posiadasz takiego przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
+
+            Item itemToWear = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            
+            if (itemToWear.GetType() != typeof(Armor))
+            {
+                
+            }
+            else if (itemToWear.GetType() != typeof(Weapon))
+            {
+
+            }
+            else
+            {
+                PrintMessage("Nie możesz założyć tego przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
+
+        }
+
 
 
 
@@ -1321,6 +1350,68 @@ namespace Runedal.GameEngine
             {
                 PrintMessage("Coś poszło nie tak..", MessageType.SystemFeedback);
             }
+        }
+
+        //method for wearing armor type items by player
+        private void WearArmor(string itemName)
+        {
+            Armor armorToWear = (Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower()) as Armor)!;
+            Armor.ArmorType armorType = armorToWear.Type;
+            string wornArmorName = string.Empty;
+
+            switch (armorType)
+            {
+                case Armor.ArmorType.Helmet:
+                    wornArmorName = Data.Player!.Helmet!.Name!;
+                    break;
+                case Armor.ArmorType.Body:
+                    wornArmorName = Data.Player!.Body!.Name!;
+                    break;
+                case Armor.ArmorType.Pants:
+                    wornArmorName = Data.Player!.Pants!.Name!;
+                    break;
+                case Armor.ArmorType.Gloves:
+                    wornArmorName = Data.Player!.Gloves!.Name!;
+                    break;
+                case Armor.ArmorType.Shoes:
+                    wornArmorName = Data.Player!.Shoes!.Name!;
+                    break;
+            }
+
+            //if there is something in the slot already, take it off
+            if (wornArmorName != "placeholder")
+            {
+                TakeOffArmorFromPlayer(armorType);
+            }
+
+            PrintMessage("Zakładasz " + armorToWear.Name, MessageType.Action);
+            Data.Player!.WearArmor(armorToWear);
+        }
+
+        //method for taking off wearable armor-items from player
+        private void TakeOffArmorFromPlayer(Armor.ArmorType type)
+        {
+            string wornArmorName = Data.Player!.TakeOffArmor(type);
+            PrintMessage("Zdejmujesz " + wornArmorName, MessageType.Action);
+
+            //switch (type)
+            //{
+            //    case (Armor.ArmorType.Helmet):
+            //        armorWorn = Data.Player!.Helmet!;
+            //        break;
+            //    case (Armor.ArmorType.Body):
+            //        armorWorn = Data.Player!.Body!;
+            //        break;
+            //    case (Armor.ArmorType.Pants):
+            //        armorWorn = Data.Player!.Pants!;
+            //        break;
+            //    case (Armor.ArmorType.Gloves):
+            //        armorWorn = Data.Player!.Gloves!;
+            //        break;
+            //    case (Armor.ArmorType.Shoes):
+            //        armorWorn = Data.Player!.Shoes!;
+            //        break;
+            //}
         }
 
         //method handling adding gold to player's pool

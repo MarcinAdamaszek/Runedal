@@ -6,6 +6,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Runedal.GameData.Items;
+using System.Windows.Media.Effects;
 
 namespace Runedal.GameData.Characters
 {
@@ -225,6 +226,88 @@ namespace Runedal.GameData.Characters
         {
             Hp = GetEffectiveMaxHp();
             Mp = GetEffectiveMaxMp();
+        }
+
+        //methods for wearing wearable items
+        public void WearArmor(Armor armor)
+        {
+            Armor armorToWear = new Armor(armor);
+
+            //first, remove item from player's inventory
+            RemoveItem(armorToWear.Name!);
+
+            //then apply all modifiers and mark them with parent name
+            armor.Modifiers!.ForEach(mod =>
+            {
+                mod.Parent = armor.Name!;
+                AddModifier(mod);
+            });
+
+            //finaly fill armor slot with item depending on type
+            switch (armor.Type)
+            {
+                case (Armor.ArmorType.Helmet):
+                    Helmet = armorToWear;
+                    break;
+                case (Armor.ArmorType.Body):
+                    Body = armorToWear;
+                    break;
+                case (Armor.ArmorType.Pants):
+                    Pants = armorToWear;
+                    break;
+                case (Armor.ArmorType.Gloves):
+                    Gloves = armorToWear;
+                    break;
+                case (Armor.ArmorType.Shoes):
+                    Shoes = armorToWear;
+                    break;
+            }
+        }
+
+        //methods for taking off wearable items
+        public string TakeOffArmor(Armor.ArmorType armorType)
+        {
+            Armor armorWorn = new Armor();
+            int i;
+
+            //depending on armor type, add armor-item to player's inventory
+            //and fill armor slot with placeholder
+            switch (armorType)
+            {
+                case (Armor.ArmorType.Helmet):
+                    armorWorn = Helmet!;
+                    Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
+                    break;
+                case (Armor.ArmorType.Body):
+                    armorWorn = Body!;
+                    Body = new Armor(Armor.ArmorType.Body, "placeholder");
+                    break;
+                case (Armor.ArmorType.Pants):
+                    armorWorn = Pants!;
+                    Pants = new Armor(Armor.ArmorType.Pants, "placeholder");
+                    break;
+                case (Armor.ArmorType.Gloves):
+                    armorWorn = Gloves!;
+                    Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
+                    break;
+                case (Armor.ArmorType.Shoes):
+                    armorWorn = Shoes!;
+                    Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
+                    break;
+            }
+
+            for (i = 0; i < Modifiers!.Count; i++)
+            {
+                if (Modifiers[i].Parent.ToLower() == armorWorn.Name!.ToLower())
+                {
+                    Modifiers.RemoveAt(i);
+                }
+            }
+
+            //put item into players inventory
+            AddItem(armorWorn);
+
+            return armorWorn.Name!;
         }
 
         //overriden methods for adding/removing modifiers, assuring effective maxhp/mp values are updated

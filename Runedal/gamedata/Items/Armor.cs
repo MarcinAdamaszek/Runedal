@@ -23,6 +23,13 @@ namespace Runedal.GameData.Items
             Type = type;
         }
 
+        //copy constructor
+        public Armor(Armor arm) : base(arm)
+        {
+            Defense = arm.Defense;
+            Type = arm.Type;
+        }
+
         //enum for type of armor item, indicating it's destined body part
         public enum ArmorType
         {

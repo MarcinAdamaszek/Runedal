@@ -270,6 +270,7 @@ namespace Runedal.GameData.Characters
         public string TakeOffArmor(Armor.ArmorType armorType)
         {
             Armor armorWorn = new Armor();
+            List<Modifier> modsToRemove = new List<Modifier>();
             int i;
 
             //depending on armor type, add armor-item to player's inventory
@@ -298,12 +299,20 @@ namespace Runedal.GameData.Characters
                     break;
             }
 
+            //first save all modifiers with the same parent to temporary list,
+            //then remove them from original list
+            //it has to be done this way, to prevent modifiers.count dropping
+            //and thus skipping last modifiers on the list
             for (i = 0; i < Modifiers!.Count; i++)
             {
                 if (Modifiers[i].Parent.ToLower() == armorWorn.Name!.ToLower())
                 {
-                    Modifiers.RemoveAt(i);
+                    modsToRemove.Add(Modifiers[i]);
                 }
+            }
+            foreach(var mod in modsToRemove)
+            {
+                Modifiers.Remove(mod);
             }
 
             //put item into players inventory

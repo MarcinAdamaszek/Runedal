@@ -16,7 +16,7 @@ namespace Runedal.GameData
         {
             Parent = "none";    
         }
-        public Modifier(CombatCharacter.StatType type, int value, int duration, string parent = "none")
+        public Modifier(CombatCharacter.StatType type, int value, int duration = 0, string parent = "none")
         {
             Type = type;
             Value = value;

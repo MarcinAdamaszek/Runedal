@@ -50,7 +50,7 @@ namespace Runedal.GameData.Items
                 {
                     int difference = value - _Defense;
 
-                    Modifiers!.Add(new Modifier(Characters.CombatCharacter.StatType.Defense, difference, 0));
+                    Modifiers!.Add(new Modifier(Characters.CombatCharacter.StatType.Defense, difference));
 
                     _Defense = value;
                 }

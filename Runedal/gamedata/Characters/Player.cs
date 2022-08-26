@@ -230,7 +230,26 @@ namespace Runedal.GameData.Characters
             Mp = GetEffectiveMaxMp();
         }
 
-        //methods for wearing wearable items
+        //method for wearing weapon-type items
+        public void WearWeapon(Weapon weapon)
+        {
+            Weapon weaponToWear = new Weapon(weapon);
+
+            //first, remove item from player's inventory
+            RemoveItem(weaponToWear.Name!);
+
+            //then apply all modifiers and mark them with parent name
+            weapon.Modifiers!.ForEach(mod =>
+            {
+                mod.Parent = weaponToWear.Name!;
+                AddModifier(mod);
+            });
+
+            //fill weapon slot
+            Weapon = weaponToWear;
+        }
+
+        //method for wearing wearable armor-type items
         public void WearArmor(Armor armor)
         {
             Armor armorToWear = new Armor(armor);
@@ -266,7 +285,42 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //methods for taking off wearable items
+        //method for taking off weapons
+        public string TakeOffWeapon()
+        {
+            Weapon weaponWorn = new Weapon();
+            List<Modifier> modsToRemove = new List<Modifier>();
+            int i;
+
+            weaponWorn = Weapon!;
+            Weapon = new Weapon("placeholder");
+
+            //first save all modifiers with the same parent to temporary list,
+            //then remove them from original list
+            //it has to be done this way, to prevent modifiers.count dropping
+            //and thus skipping last modifiers on the list
+            for (i = 0; i < Modifiers!.Count; i++)
+            {
+                if (Modifiers[i].Parent.ToLower() == weaponWorn.Name!.ToLower())
+                {
+                    modsToRemove.Add(Modifiers[i]);
+                }
+            }
+            foreach (var mod in modsToRemove)
+            {
+                RemoveModifier(mod);
+            }
+
+            //put item into players inventory
+            if (weaponWorn.Name!.ToLower() != "placeholder")
+            {
+                AddItem(weaponWorn);
+            }
+
+            return weaponWorn.Name!;
+        }
+
+        //method for taking off wearable armor-type items
         public string TakeOffArmor(Armor.ArmorType armorType)
         {
             Armor armorWorn = new Armor();
@@ -312,14 +366,19 @@ namespace Runedal.GameData.Characters
             }
             foreach(var mod in modsToRemove)
             {
-                Modifiers.Remove(mod);
+                RemoveModifier(mod);
             }
 
             //put item into players inventory
-            AddItem(armorWorn);
+            if (armorWorn.Name!.ToLower() != "placeholder")
+            {
+                AddItem(armorWorn);
+            }
 
             return armorWorn.Name!;
         }
+
+        
 
         //overriden methods for adding/removing modifiers, assuring effective maxhp/mp values are updated
         public override void AddModifier(Modifier mod)
@@ -502,8 +561,6 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveDefense()
         {
             double effectiveDefense = base.GetEffectiveDefense();
-            //double armorModifier = FullBody!.Defense + Helmet!.Defense + Gloves!.Defense + Shoes!.Defense;
-            //effectiveDefense += armorModifier;
             if (effectiveDefense < 1)
             {
                 effectiveDefense = 1;

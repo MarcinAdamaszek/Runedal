@@ -8,6 +8,8 @@ namespace Runedal.GameData.Items
 {
     public class Weapon : Item
     {
+        private int _Attack;
+
         //default constructor for json deserializer
         public Weapon() : base() { }
 
@@ -21,7 +23,27 @@ namespace Runedal.GameData.Items
             Attack = attack;
         }
 
-        public int Attack { get; set; }
-        
+        //copy constructor
+        public Weapon(Weapon wp) : base(wp)
+        {
+            Attack = wp.Attack;
+        }
+
+        public int Attack
+        {
+            get { return _Attack; }
+            set
+            {
+                if (_Attack != value)
+                {
+                    int difference = value - _Attack;
+
+                    Modifiers!.Add(new Modifier(Characters.CombatCharacter.StatType.Attack, difference));
+
+                    _Attack = value;
+                }
+            }
+        }
+
     }
 }

@@ -664,6 +664,10 @@ namespace Runedal.GameEngine
             {
                 WearArmorOnPlayer(itemName);
             }
+            else if (itemToWear.GetType() == typeof(Weapon))
+            {
+                WearWeaponOnPlayer(itemName);
+            }
             else
             {
                 PrintMessage("Nie możesz założyć tego przedmiotu", MessageType.SystemFeedback);
@@ -671,6 +675,8 @@ namespace Runedal.GameEngine
             }
 
         }
+
+
 
 
 
@@ -1090,10 +1096,11 @@ namespace Runedal.GameEngine
         }
 
 
-        //==============================================HELPER METHODS=============================================
 
-        //method returning effect description string
-        //DEFINE THE METHOD NOW ===========================================
+
+
+
+        //==============================================HELPER METHODS=============================================
 
         //method returning formatted string representing modifier and it's value with sign
         private string GetModDescription(Modifier modifier)
@@ -1351,6 +1358,17 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method for wearing a weapon-type items by player
+        private void WearWeaponOnPlayer(string itemName)
+        {
+            Weapon weaponToWear = (Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower()) as Weapon)!;
+
+            TakeOffWeaponFromPlayer();
+
+            PrintMessage("Uzbrajasz się w " + weaponToWear.Name, MessageType.Action);
+            Data.Player!.WearWeapon(weaponToWear);
+        }
+
         //method for wearing armor type items by player
         private void WearArmorOnPlayer(string itemName)
         {
@@ -1387,30 +1405,24 @@ namespace Runedal.GameEngine
             Data.Player!.WearArmor(armorToWear);
         }
 
+        //method for taking off weapon-type items from player
+        private void TakeOffWeaponFromPlayer()
+        {
+            string weaponName = Data.Player!.TakeOffWeapon();
+            if (weaponName != "placeholder")
+            {
+                PrintMessage("Odkładasz " + weaponName, MessageType.Action);
+            }
+        }
+
         //method for taking off wearable armor-items from player
         private void TakeOffArmorFromPlayer(Armor.ArmorType type)
         {
             string wornArmorName = Data.Player!.TakeOffArmor(type);
-            PrintMessage("Zdejmujesz " + wornArmorName, MessageType.Action);
-
-            //switch (type)
-            //{
-            //    case (Armor.ArmorType.Helmet):
-            //        armorWorn = Data.Player!.Helmet!;
-            //        break;
-            //    case (Armor.ArmorType.Body):
-            //        armorWorn = Data.Player!.Body!;
-            //        break;
-            //    case (Armor.ArmorType.Pants):
-            //        armorWorn = Data.Player!.Pants!;
-            //        break;
-            //    case (Armor.ArmorType.Gloves):
-            //        armorWorn = Data.Player!.Gloves!;
-            //        break;
-            //    case (Armor.ArmorType.Shoes):
-            //        armorWorn = Data.Player!.Shoes!;
-            //        break;
-            //}
+            if (wornArmorName != "placeholder")
+            {
+                PrintMessage("Zdejmujesz " + wornArmorName, MessageType.Action);
+            }
         }
 
         //method handling adding gold to player's pool

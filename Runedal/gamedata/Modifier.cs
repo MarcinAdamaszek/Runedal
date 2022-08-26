@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,12 +16,12 @@ namespace Runedal.GameData
         {
             Parent = "none";    
         }
-        public Modifier(CombatCharacter.StatType type, int value, int duration)
+        public Modifier(CombatCharacter.StatType type, int value, int duration, string parent = "none")
         {
             Type = type;
             Value = value;
             Duration = duration;
-            Parent = "none";
+            Parent = parent;
         }
 
         //copy constructor 

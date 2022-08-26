@@ -8,6 +8,8 @@ namespace Runedal.GameData.Items
 {
     public class Armor : Item
     {
+        private int _Defense;
+
         //json constructor
         public Armor() : base() { }
 
@@ -39,7 +41,21 @@ namespace Runedal.GameData.Items
             Gloves,
             Shoes,
         }
-        public int Defense { get; set; }
+        public int Defense
+        {
+            get { return _Defense; }
+            set
+            {
+                if (_Defense != value)
+                {
+                    int difference = value - _Defense;
+
+                    Modifiers!.Add(new Modifier(Characters.CombatCharacter.StatType.Defense, difference, 0));
+
+                    _Defense = value;
+                }
+            }
+        }
         public ArmorType Type { get; set; }
 
     }

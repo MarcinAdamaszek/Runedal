@@ -35,8 +35,9 @@ namespace Runedal.GameData.Characters
         //default constructor for json deserialization
         public Player() : base()
         {
-            //initialize items worn with placeholders to avoid null exception
-            FullBody = new Armor(Armor.ArmorType.FullBody, "placeholder");
+            //initialize items worn with placeholders
+            Body = new Armor(Armor.ArmorType.Body, "placeholder");
+            Pants = new Armor(Armor.ArmorType.Pants, "placeholder");
             Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
             Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
@@ -53,8 +54,9 @@ namespace Runedal.GameData.Characters
             Level = 1;
             Experience = 0;
 
-            //initialize items worn with placeholders to avoid null exception
-            FullBody = new Armor(Armor.ArmorType.FullBody, "placeholder");
+            //initialize items worn with placeholders
+            Body = new Armor(Armor.ArmorType.Body, "placeholder");
+            Pants = new Armor(Armor.ArmorType.Pants, "placeholder");
             Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
             Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
@@ -239,7 +241,7 @@ namespace Runedal.GameData.Characters
             //then apply all modifiers and mark them with parent name
             armor.Modifiers!.ForEach(mod =>
             {
-                mod.Parent = armor.Name!;
+                mod.Parent = armorToWear.Name!;
                 AddModifier(mod);
             });
 
@@ -491,8 +493,8 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveDefense()
         {
             double effectiveDefense = base.GetEffectiveDefense();
-            double armorModifier = FullBody!.Defense + Helmet!.Defense + Gloves!.Defense + Shoes!.Defense;
-            effectiveDefense += armorModifier;
+            //double armorModifier = FullBody!.Defense + Helmet!.Defense + Gloves!.Defense + Shoes!.Defense;
+            //effectiveDefense += armorModifier;
             if (effectiveDefense < 1)
             {
                 effectiveDefense = 1;
@@ -536,7 +538,7 @@ namespace Runedal.GameData.Characters
         public int GetCarryWeight()
         {
             //add all worn items weights to total carry weight
-            int carryWeight = FullBody!.Weight + Helmet!.Weight + Gloves!.Weight + Shoes!.Weight + Weapon!.Weight;
+            int carryWeight = Body!.Weight + Helmet!.Weight + Helmet!.Weight + Gloves!.Weight + Shoes!.Weight + Weapon!.Weight;
 
             //for each item in Inventory, add it's weight to total carry weight
             Inventory!.ForEach(item => carryWeight += item.Weight);

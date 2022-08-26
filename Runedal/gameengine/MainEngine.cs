@@ -659,11 +659,7 @@ namespace Runedal.GameEngine
             
             if (itemToWear.GetType() != typeof(Armor))
             {
-                
-            }
-            else if (itemToWear.GetType() != typeof(Weapon))
-            {
-
+                WearArmorOnPlayer(itemName);
             }
             else
             {
@@ -1353,7 +1349,7 @@ namespace Runedal.GameEngine
         }
 
         //method for wearing armor type items by player
-        private void WearArmor(string itemName)
+        private void WearArmorOnPlayer(string itemName)
         {
             Armor armorToWear = (Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower()) as Armor)!;
             Armor.ArmorType armorType = armorToWear.Type;

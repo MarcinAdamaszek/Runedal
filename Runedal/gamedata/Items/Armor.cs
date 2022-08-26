@@ -34,7 +34,7 @@ namespace Runedal.GameData.Items
         //enum for type of armor item, indicating it's destined body part
         public enum ArmorType
         {
-            Body,
+            Torso,
             Pants,
             Helmet,
             Gloves,

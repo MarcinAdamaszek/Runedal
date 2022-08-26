@@ -36,7 +36,7 @@ namespace Runedal.GameData.Characters
         public Player() : base()
         {
             //initialize items worn with placeholders
-            Body = new Armor(Armor.ArmorType.Body, "placeholder");
+            Torso = new Armor(Armor.ArmorType.Torso, "placeholder");
             Pants = new Armor(Armor.ArmorType.Pants, "placeholder");
             Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
             Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
@@ -55,7 +55,7 @@ namespace Runedal.GameData.Characters
             Experience = 0;
 
             //initialize items worn with placeholders
-            Body = new Armor(Armor.ArmorType.Body, "placeholder");
+            Torso = new Armor(Armor.ArmorType.Torso, "placeholder");
             Pants = new Armor(Armor.ArmorType.Pants, "placeholder");
             Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
             Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
@@ -203,7 +203,7 @@ namespace Runedal.GameData.Characters
         public int Agility { get; set; }
 
         //items worn by player
-        public Armor? Body { get; set; }
+        public Armor? Torso { get; set; }
         public Armor? Pants { get; set; }
         public Armor? Helmet { get; set; }
         public Armor? Gloves { get; set; }
@@ -270,8 +270,8 @@ namespace Runedal.GameData.Characters
                 case (Armor.ArmorType.Helmet):
                     Helmet = armorToWear;
                     break;
-                case (Armor.ArmorType.Body):
-                    Body = armorToWear;
+                case (Armor.ArmorType.Torso):
+                    Torso = armorToWear;
                     break;
                 case (Armor.ArmorType.Pants):
                     Pants = armorToWear;
@@ -335,9 +335,9 @@ namespace Runedal.GameData.Characters
                     armorWorn = Helmet!;
                     Helmet = new Armor(Armor.ArmorType.Helmet, "placeholder");
                     break;
-                case (Armor.ArmorType.Body):
-                    armorWorn = Body!;
-                    Body = new Armor(Armor.ArmorType.Body, "placeholder");
+                case (Armor.ArmorType.Torso):
+                    armorWorn = Torso!;
+                    Torso = new Armor(Armor.ArmorType.Torso, "placeholder");
                     break;
                 case (Armor.ArmorType.Pants):
                     armorWorn = Pants!;
@@ -377,8 +377,6 @@ namespace Runedal.GameData.Characters
 
             return armorWorn.Name!;
         }
-
-        
 
         //overriden methods for adding/removing modifiers, assuring effective maxhp/mp values are updated
         public override void AddModifier(Modifier mod)
@@ -562,7 +560,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveDefense()
         {
             double effectiveDefense = base.GetEffectiveDefense();
-            double wornArmorModifier = Helmet!.Defense + Body!.Defense + Pants!.Defense + Gloves!.Defense + Shoes!.Defense;
+            double wornArmorModifier = Helmet!.Defense + Torso!.Defense + Pants!.Defense + Gloves!.Defense + Shoes!.Defense;
             effectiveDefense += wornArmorModifier;
             if (effectiveDefense < 1)
             {
@@ -607,7 +605,7 @@ namespace Runedal.GameData.Characters
         public int GetCarryWeight()
         {
             //add all worn items weights to total carry weight
-            int carryWeight = Body!.Weight + Helmet!.Weight + Helmet!.Weight + Gloves!.Weight + Shoes!.Weight + Weapon!.Weight;
+            int carryWeight = Torso!.Weight + Helmet!.Weight + Helmet!.Weight + Gloves!.Weight + Shoes!.Weight + Weapon!.Weight;
 
             //for each item in Inventory, add it's weight to total carry weight
             Inventory!.ForEach(item => carryWeight += item.Weight);

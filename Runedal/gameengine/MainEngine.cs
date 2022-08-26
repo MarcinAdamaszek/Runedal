@@ -697,8 +697,8 @@ namespace Runedal.GameEngine
                         PrintMessage("Nie nosisz żadnego hełmu", MessageType.SystemFeedback);
                     }
                     break;
-                case "body":
-                    if (!TakeOffArmorFromPlayer(Armor.ArmorType.Body))
+                case "torso":
+                    if (!TakeOffArmorFromPlayer(Armor.ArmorType.Torso))
                     {
                         PrintMessage("Nie nosisz żadnego korpusu", MessageType.SystemFeedback);
                     }
@@ -722,7 +722,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 default:
-                    PrintMessage("Nie możesz zdjąć " + slotName + ". Prawidłowe nazwy to: helmet, body, pants, gloves, shoes", MessageType.SystemFeedback);
+                    PrintMessage("Nie możesz zdjąć " + slotName + ". Prawidłowe nazwy to: helmet, torso, pants, gloves, shoes", MessageType.SystemFeedback);
                     break;
             }
         }
@@ -1176,7 +1176,7 @@ namespace Runedal.GameEngine
             string armorType = string.Empty;
             switch (type)
             {
-                case Armor.ArmorType.Body:
+                case Armor.ArmorType.Torso:
                     armorType = "Korpus";
                     break;
                 case Armor.ArmorType.Pants:
@@ -1432,8 +1432,8 @@ namespace Runedal.GameEngine
                 case Armor.ArmorType.Helmet:
                     wornArmorName = Data.Player!.Helmet!.Name!;
                     break;
-                case Armor.ArmorType.Body:
-                    wornArmorName = Data.Player!.Body!.Name!;
+                case Armor.ArmorType.Torso:
+                    wornArmorName = Data.Player!.Torso!.Name!;
                     break;
                 case Armor.ArmorType.Pants:
                     wornArmorName = Data.Player!.Pants!.Name!;

@@ -107,6 +107,8 @@ namespace Runedal.GameEngine
                 case "e":
                 case "s":
                 case "w":
+                case "u":
+                case "d":
                     ChangeLocationHandler(command);
                     break;
                 case "t":
@@ -124,7 +126,6 @@ namespace Runedal.GameEngine
                     LookHandler(argument1);
                     break;
                 case "use":
-                case "u":
                     UseHandler(argument1);
                     break;
                 case "wear":
@@ -135,7 +136,6 @@ namespace Runedal.GameEngine
                     TakeoffHandler(argument1);
                     break;
                 case "drop":
-                case "d":
                     DropHandler(argument1, argument2);
                     break;
                 case "pickup":
@@ -187,16 +187,22 @@ namespace Runedal.GameEngine
             switch (direction)
             {
                 case "n":
-                    directionString = "północ";
+                    directionString = "na północ";
                     break;
                 case "e":
-                    directionString = "wschód";
+                    directionString = "na wschód";
                     break;
                 case "s":
-                    directionString = "południe";
+                    directionString = "na południe";
                     break;
                 case "w":
-                    directionString = "zachód";
+                    directionString = "na zachód";
+                    break;
+                case "u":
+                    directionString = "do góry";
+                    break;
+                case "d":
+                    directionString = "w dół";
                     break;
             }
 
@@ -206,7 +212,7 @@ namespace Runedal.GameEngine
                 //if the passage is open
                 if (passage)
                 {
-                    PrintMessage("Idziesz na " + directionString, MessageType.Action);
+                    PrintMessage("Idziesz " + directionString, MessageType.Action);
 
                     //change player's current location
                     Data.Player!.CurrentLocation = nextLocation;
@@ -807,8 +813,8 @@ namespace Runedal.GameEngine
             string itemsInfo = "Przedmioty: ";
             string charactersInfo = "Postacie: ";
             string exitsInfo = "Wyjścia: ";
-            string[] directionsLetters = { "n", "e", "s", "w" };
-            string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód," };
+            string[] directionsLetters = { "n", "e", "s", "w", "u", "d" };
+            string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód,", " góra,", " dół," };
             int currentX = currentLocation.X;
             int currentY = currentLocation.Y;
 
@@ -817,7 +823,7 @@ namespace Runedal.GameEngine
             PrintMessage(currentLocation.Description!);
 
             //describe exits for each direction
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < directionsLetters.Length; i++)
             {
 
                 //if the location exists
@@ -1351,13 +1357,14 @@ namespace Runedal.GameEngine
             nextLocation = Data.Player!.CurrentLocation!;
             int currentX = nextLocation.X;
             int currentY = nextLocation.Y;
+            int currentZ = nextLocation.Z;
             int locationIndex = -1;
             bool isFound = false;
 
             switch (direction)
             {
                 case "n":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1 && loc.Z == currentZ);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];
@@ -1365,7 +1372,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 case "e":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1 && loc.Z == currentZ);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];
@@ -1373,7 +1380,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 case "s":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1 && loc.Z == currentZ);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];
@@ -1381,7 +1388,23 @@ namespace Runedal.GameEngine
                     }
                     break;
                 case "w":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1 && loc.Z == currentZ);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "u":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Z == currentZ + 1 && loc.X == currentX && loc.Y == currentY);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "d":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Z == currentZ - 1 && loc.X == currentX && loc.Y == currentY);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];

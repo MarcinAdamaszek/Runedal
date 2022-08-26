@@ -26,11 +26,14 @@ namespace Runedal.GameData.Locations
         public Location(int[] coordinates, string[] descriptive, bool[] openBools) : base(descriptive)
         {
             this.X = coordinates[0];
-            this.Y = coordinates[1]; 
+            this.Y = coordinates[1];
+            this.Z = coordinates[2];
             NorthPassage = openBools[0];                
             EastPassage = openBools[1];                   
-            SouthPassage = openBools[2];                  
-            WestPassage = openBools[3];                   
+            SouthPassage = openBools[2];
+            WestPassage = openBools[3];
+            UpPassage = openBools[4];
+            DownPassage = openBools[5];
             Characters = new List<Character>();
             Items = new List<Item>();
             Gold = 0;
@@ -39,12 +42,15 @@ namespace Runedal.GameData.Locations
         //location coordinates
         public int X { get; set; }
         public int Y { get; set; }
+        public int Z { get; set; }
 
         //passages to other locations
         public bool NorthPassage { get; set; }
         public bool EastPassage { get; set; }
         public bool SouthPassage { get; set; }
         public bool WestPassage { get; set; }
+        public bool UpPassage { get; set; }
+        public bool DownPassage { get; set; }
 
         //list of character-entities currently present in the location
         public List<Character>? Characters { get; set; }
@@ -115,6 +121,10 @@ namespace Runedal.GameData.Locations
                     return SouthPassage;
                 case "w":
                     return WestPassage;
+                case "u":
+                    return UpPassage;
+                case "d":
+                    return DownPassage;
             }
 
             return false;

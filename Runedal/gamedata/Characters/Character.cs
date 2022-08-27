@@ -18,12 +18,14 @@ namespace Runedal.GameData.Characters
             Items = new Dictionary<string, int>();
             Inventory = new List<Item>();
         }
-        public Character(string[] descriptive, string[][] responses, int gold) : base(descriptive)
+        public Character(string[] descriptive, string[][] dialogues, int gold) : base(descriptive)
         {
             Items = new Dictionary<string, int>();
             Inventory = new List<Item>();
-            PassiveResponses = responses[0];
-            AggressiveResponses = responses[1];
+            PassiveResponses = dialogues[0];
+            AggressiveResponses = dialogues[1];
+            Questions = dialogues[2];
+            Answers = dialogues[3];
             Start = descriptive[2];
             Gold = gold;
         }
@@ -40,6 +42,12 @@ namespace Runedal.GameData.Characters
         
         //array of character's aggressive responses
         public string[]? AggressiveResponses { get; set; }
+
+        //array of questions player can ask character
+        public string[]? Questions { get; set; }
+
+        //array of answers character will respond when asked question
+        public string[]? Answers { get; set; }
 
         //character's starting location
         public string? Start { get; set; }

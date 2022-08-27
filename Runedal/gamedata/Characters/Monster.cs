@@ -19,15 +19,21 @@ namespace Runedal.GameData.Characters
             AssignId();
         }
 
+        //copy constructor
+        public Monster(Monster mon) : base(mon)
+        {
+            AssignId();
+        }
+
         //destructor for releasing id number
         ~Monster()
         {
             TakenIds.Remove(this.Id);
         }
-        
+        public int Id { get; set; }
+
         //list of id's assigned to all existing monsters
         public static List<int> TakenIds { get; set; } = new List<int>();
-        public int Id { get; set; }
 
         //method assigning unique id
         private void AssignId()

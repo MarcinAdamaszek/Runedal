@@ -28,8 +28,8 @@ namespace Runedal.GameData.Locations
             this.X = coordinates[0];
             this.Y = coordinates[1];
             this.Z = coordinates[2];
-            NorthPassage = openBools[0];                
-            EastPassage = openBools[1];                   
+            NorthPassage = openBools[0];
+            EastPassage = openBools[1];
             SouthPassage = openBools[2];
             WestPassage = openBools[3];
             UpPassage = openBools[4];
@@ -54,6 +54,9 @@ namespace Runedal.GameData.Locations
 
         //list of character-entities currently present in the location
         public List<Character>? Characters { get; set; }
+
+        //list of characters to load into the location at game launch
+        public Dictionary<string, int>? CharsToAdd { get; set;}
 
         //list of items lying on the ground
         public List<Item>? Items { get; set; }
@@ -104,6 +107,7 @@ namespace Runedal.GameData.Locations
         public void AddCharacter(Character character)
         {
             this.Characters!.Add(character);
+            character.CurrentLocation = this;
         }
         public void RemoveCharacter(Character character)
         {

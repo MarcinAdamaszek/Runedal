@@ -17,6 +17,12 @@ namespace Runedal.GameData.Characters
         {
             
         }
+
+        //copy constructor
+        public Trader(Trader tr) : base(tr)
+        {
+
+        }
         
     }
 }

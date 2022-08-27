@@ -32,12 +32,14 @@ namespace Runedal.GameEngine
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
+            Data.InitializeEverything();
 
             GameClock.Start();
 
             Data.Player.Hp -= 500;
             Data.Player.Mp -= 300;
             (Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
+            //PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
@@ -228,14 +230,11 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage("Idziesz " + directionString, MessageType.Action);
 
-                    //change player's current location
-                    Data.Player!.CurrentLocation = nextLocation;
-
                     //remove player from previous location
                     Data.Player.CurrentLocation!.Characters!.Remove(Data.Player);
 
-                    //add player to the list of new location entities
-                    Data.Player.CurrentLocation!.AddCharacter(Data.Player);
+                    //change player's current location
+                    nextLocation.AddCharacter(Data.Player!);
 
                     //display location info to user
                     LocationInfo();

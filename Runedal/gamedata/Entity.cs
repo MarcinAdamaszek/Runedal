@@ -25,6 +25,13 @@ namespace Runedal.GameData
             Description = descriptiveParameters[1];
         }
 
+        //copy constructor
+        public Entity(Entity en)
+        {
+            Name = en.Name;
+            Description = en.Description;
+        }
+
         public string? Name { get; set; }
         public string? Description { get; set; }
     }

@@ -16,7 +16,7 @@ namespace Runedal.GameData.Characters
         private const double MaxHpStrMultiplier = 10;
         private const double MaxMpIntMultiplier = 8;
         private const double HpRegenStrMultiplier = 1;
-        private const double MpRegenIntMultiplier = 0.3;
+        private const double MpRegenIntMultiplier = 1;
         private const double SpeedAgiMultiplier = 0.1;
         private const double AttackStrMultiplier = 1.5;
         private const double AtkSpeedAgiMultiplier = 0.3;
@@ -74,6 +74,9 @@ namespace Runedal.GameData.Characters
             Combat
         }
         public State CurrentState { get; set; }
+        
+        //name of player's starting location
+        public string Start { get; set; }
 
         //real hp/mp values
         public override double Hp

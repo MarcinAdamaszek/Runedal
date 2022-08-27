@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Runedal.GameData.Locations;
 using Runedal.GameData.Items;
+using System.Windows.Documents;
 
 namespace Runedal.GameData.Characters
 {
@@ -26,8 +27,22 @@ namespace Runedal.GameData.Characters
             AggressiveResponses = dialogues[1];
             Questions = dialogues[2];
             Answers = dialogues[3];
-            Start = descriptive[2];
             Gold = gold;
+        }
+
+        //copy constructor
+        public Character(Character ch) : base(ch)
+        {
+            //create deep copy of modifiers collection
+            Inventory = ch.Inventory!.ConvertAll(item => new Item(item));
+
+            Items = ch.Items!;
+            Inventory = new List<Item>();
+            PassiveResponses = ch.PassiveResponses;
+            AggressiveResponses = ch.AggressiveResponses;
+            Questions = ch.Questions;
+            Answers = ch.Answers;
+            Gold = ch.Gold;
         }
 
         //Amount of gold and list of items in the characters inventory
@@ -48,9 +63,6 @@ namespace Runedal.GameData.Characters
 
         //array of answers character will respond when asked question
         public string[]? Answers { get; set; }
-
-        //character's starting location
-        public string? Start { get; set; }
         
         //set and quantity of items to load into character's inventory on game launch
         public Dictionary<string, int>? Items { get; set; }

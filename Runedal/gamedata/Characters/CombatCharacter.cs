@@ -48,6 +48,32 @@ namespace Runedal.GameData.Characters
 
             Modifiers = new List<Modifier>();
         }
+        public CombatCharacter(CombatCharacter com) : base(com)
+        {
+            Modifiers = new List<Modifier>();
+
+            //create deep copy of modifiers collection
+            Modifiers = com.Modifiers!.ConvertAll(mod => new Modifier(mod));
+
+            MaxHp = com.MaxHp;
+            MaxMp = com.MaxMp;
+            HpRegen = com.HpRegen;
+            MpRegen = com.MpRegen;
+            Speed = com.Speed;
+            Attack = com.Attack;
+            AtkSpeed = com.AtkSpeed;
+            Accuracy = com.Accuracy;
+            Critical = com.Critical;
+            Defense = com.Defense;
+            Evasion = com.Evasion;
+            MagicResistance = com.MagicResistance;
+            Gold = com.Gold;
+
+            Hp = MaxHp;
+            Mp = MaxMp;
+            HpCounter = CounterMax;
+            MpCounter = CounterMax;
+        }
         public enum StatType
         {
             MaxHp,

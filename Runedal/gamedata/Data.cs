@@ -28,6 +28,7 @@ namespace Runedal.GameData
             
             Locations = new List<Location>();
             Characters = new List<Character>();
+            Monsters = new List<Monster>();
             Items = new List<Item>();
             PriceMultiplier = 1.2;
         }
@@ -38,6 +39,7 @@ namespace Runedal.GameData
         public JsonSerializerOptions Options { get; set; }
         public List<Location>? Locations { get; set; }
         public List<Character>? Characters { get; set; }
+        public List<Monster>? Monsters { get; set; }
         public List<Item>? Items { get; set; }
         public Player? Player { get; set; }
       
@@ -66,28 +68,26 @@ namespace Runedal.GameData
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Player.json");
             Player[] playerArray = JsonSerializer.Deserialize<Player[]>(JsonString, Options)!;
 
-            //put player in his starting location
-            PopulateLocations(playerArray);
+            
+            PopulateCharactersList(playerArray);
             Player = playerArray[0];
+
+            //put player in his starting location
+            Location startingLocation = Locations!.Find(loc => loc.Name!.ToLower() == Player.Start.ToLower())!;
+            Player.CurrentLocation = startingLocation;
+            startingLocation.AddCharacter(Player);
 
             //load traders from json
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Traders.json");
             Character[] tradersArray = JsonSerializer.Deserialize<Trader[]>(JsonString, Options)!;
-            PopulateLocations(tradersArray);
+            PopulateCharactersList(tradersArray);
 
             //load monsters
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\monsters.json");
             Character[] monstersArray = JsonSerializer.Deserialize<Monster[]>(JsonString, Options)!;
-            PopulateLocations(monstersArray);
+            PopulateCharactersList(monstersArray);
 
-            //fill every combat-character's hp/mp pools accordingly to their effective max hp/mp
-            Characters!.ForEach(character =>
-            {
-                if (character is CombatCharacter)
-                {
-                    (character as CombatCharacter)!.InitializeHpMp();
-                }
-            });
+            
         } 
 
         //method loading locations from json file
@@ -124,28 +124,84 @@ namespace Runedal.GameData
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Ranged.json");
             Item[] rangedArray = JsonSerializer.Deserialize<Ranged[]>(JsonString, Options)!;
             PopulateItems(rangedArray);
+        }
 
-            //Fill characters inventories with items
-            Characters!.ForEach(character => FillInventory(character));
+        //method filling locations with characters, characters with items, initializing hps etc
+        public void InitializeEverything()
+        {
+            //fill every combat-character's hp/mp pools accordingly to their effective max hp/mp
+            Characters!.ForEach(character =>
+            {
+                if (character is CombatCharacter)
+                {
+                    (character as CombatCharacter)!.InitializeHpMp();
+                }
+            });
+
+            //fill every location with it's starting characters
+            //and it's characters inventories with starting items
+            Locations!.ForEach(location =>
+            {
+                PopulateLocation(location);
+                location.Characters!.ForEach(character => FillInventory(character));
+            });
 
             //load stacking effects
             LoadStackingEffects();
         }
 
         //helper method for pushing loaded characters objects into Characters list and assigning them into their starting location
-        private void PopulateLocations(Character[] charactersArray)
+        private void PopulateCharactersList(Character[] charactersArray)
         {
-            Location startingLocation;
+            //Location startingLocation;
 
             foreach (var character in charactersArray)
             {
                 Characters!.Add(character);
-
-                //Assign trader to it's starting location
-                startingLocation = Locations!.Find(loc => loc.Name!.ToLower() == character.Start!.ToLower())!;
-                startingLocation.AddCharacter(character);
-                character.CurrentLocation = startingLocation;
             }
+        }
+
+        private void PopulateLocation(Location location)
+        {
+            Character character = new Character();
+            Trader trader = new Trader();
+            Monster monster = new Monster();
+            Hero hero = new Hero();
+            int i;
+
+            foreach (KeyValuePair<string, int> kvp in location.CharsToAdd!)
+            {
+                character = Characters!.Find(character => character.Name!.ToLower() == kvp.Key.ToLower())!;
+
+                if (character.GetType() == typeof(Monster))
+                {
+                    monster = new Monster((character as Monster)!);
+
+                    for (i = 0; i < kvp.Value; i++)
+                    {
+                        location.AddCharacter(monster);
+                    }
+                }
+                else if (character.GetType() == typeof(Trader))
+                {
+                    trader = new Trader((character as Trader)!);
+
+                    for (i = 0; i < kvp.Value; i++)
+                    {
+                        location.AddCharacter(trader);
+                    }
+                }
+                else if (character.GetType() == typeof(Hero))
+                {
+                    hero = new Hero((character as Hero)!);
+
+                    for (i = 0; i < kvp.Value; i++)
+                    {
+                        location.AddCharacter(hero);
+                    }
+                }
+            }
+
         }
 
         //helper method for pushing loaded items objects into Items list

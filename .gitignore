@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 #json files
 *.json
+
+#word files
+*.docx

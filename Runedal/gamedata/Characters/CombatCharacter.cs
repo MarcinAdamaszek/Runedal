@@ -308,6 +308,8 @@ namespace Runedal.GameData.Characters
                 //and add 1000 to it until its above 0
                 while (MpCounter <= 0)
                 {
+
+                    //prevent exceeding max mp with enormous mpregen values
                     if (Mp < GetEffectiveMaxMp())
                     {
                         Mp++;

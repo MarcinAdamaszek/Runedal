@@ -69,6 +69,7 @@ namespace Runedal.GameData.Characters
         public enum State
         {
             Idle,
+            Talk,
             Trade,
             Combat
         }

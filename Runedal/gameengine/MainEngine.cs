@@ -35,7 +35,7 @@ namespace Runedal.GameEngine
             GameClock.Start();
 
             Data.Player.Hp -= 500;
-            Data.Player.Mp -= 100;
+            Data.Player.Mp -= 300;
             (Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
         }
 
@@ -179,11 +179,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            //if player is in trade state
-            if (Data.Player!.CurrentState! == Player.State.Trade)
-            {
-                BreakTradeState();
-            }
+            RestoreIdleState();
 
             switch (direction)
             {
@@ -255,13 +251,7 @@ namespace Runedal.GameEngine
             //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
             {
-
-                //if player is in trade state
-                if (Data.Player!.CurrentState! == Player.State.Trade)
-                {
-                    BreakTradeState();
-                }
-
+                RestoreIdleState();
                 LocationInfo();
             }
             else
@@ -280,12 +270,7 @@ namespace Runedal.GameEngine
                 index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
                 if (index != -1)
                 {
-
-                    //if player is in trade state
-                    if (Data.Player!.CurrentState! == Player.State.Trade)
-                    {
-                        BreakTradeState();
-                    }
+                    RestoreIdleState();
                     CharacterInfo(Data.Player!.CurrentLocation!.Characters[index]);
                     return;
                 }
@@ -361,11 +346,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            //check if player is trading with someone already
-            if (Data.Player!.CurrentState == Player.State.Trade)
-            {
-                BreakTradeState();
-            }
+            RestoreIdleState();
 
             //check if the character of specified name exists in player's current location
             index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
@@ -394,6 +375,24 @@ namespace Runedal.GameEngine
             {
                 PrintMessage("Nie ma tu takiej postaci", MessageType.SystemFeedback);
             }
+        }
+
+        //method handling 'talk' command
+        private void TalkHandler(string characterName)
+        {
+            int index = -1;
+            Character tradingCharacter = new Character();
+
+            //if player is in combat state
+            if (Data.Player!.CurrentState == Player.State.Combat)
+            {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return;
+            }
+
+            RestoreIdleState();
+
+
         }
 
         //method handling 'inventory' command
@@ -551,11 +550,7 @@ namespace Runedal.GameEngine
         {
             Item itemToUse;
 
-            //if player is trading
-            if (Data.Player!.CurrentState == Player.State.Trade)
-            {
-                BreakTradeState();
-            }
+            RestoreIdleState();
 
             //if 'use' was typed without any argument
             if (itemName == string.Empty)
@@ -600,11 +595,7 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             Item itemToRemove;
 
-            //if player is trading with someone, break the trade state
-            if (Data.Player!.CurrentState == Player.State.Trade)
-            {
-                BreakTradeState();
-            }
+            RestoreIdleState();
 
             if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
@@ -658,11 +649,7 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             Item itemToPickup;
 
-            //if player is trading with someone, break the trade state
-            if (Data.Player!.CurrentState == Player.State.Trade)
-            {
-                BreakTradeState();
-            }
+            RestoreIdleState();
 
             if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
@@ -792,16 +779,7 @@ namespace Runedal.GameEngine
         //method for stopping actions/states
         private void StopHandler()
         {
-            if (Data.Player!.CurrentState == Player.State.Trade)
-            {
-                BreakTradeState();
-            }
-        }
-
-        //method handling 'talk' command
-        private void TalkHandler()
-        {
-
+            RestoreIdleState();
         }
 
 
@@ -1719,6 +1697,28 @@ namespace Runedal.GameEngine
              PrintMessage("Przestajesz handlować z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
              Data.Player.InteractsWith = new Character();
              Data.Player!.CurrentState = Player.State.Idle;
+        }
+
+        //method breaking talk state and printing proper message
+        private void BreakTalkState()
+        {
+            PrintMessage("Przestajesz rozmawiać z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
+            Data.Player.InteractsWith = new Character();
+            Data.Player!.CurrentState = Player.State.Idle;
+        }
+
+        //method checking if player is trading/talking and breaking the state if so
+        private void RestoreIdleState()
+        {
+            //check if player is trading with someone already
+            if (Data.Player!.CurrentState == Player.State.Trade)
+            {
+                BreakTradeState();
+            }
+            else if (Data.Player!.CurrentState == Player.State.Talk)
+            {
+                BreakTalkState();
+            }
         }
 
         //method adding items to non-player characters

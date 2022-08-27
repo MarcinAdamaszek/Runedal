@@ -34,7 +34,8 @@ namespace Runedal.GameEngine
 
             GameClock.Start();
 
-            Data.Player.Hp -= 100;
+            Data.Player.Hp -= 500;
+            Data.Player.Mp -= 100;
             (Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
         }
 
@@ -795,6 +796,12 @@ namespace Runedal.GameEngine
             {
                 BreakTradeState();
             }
+        }
+
+        //method handling 'talk' command
+        private void TalkHandler()
+        {
+
         }
 
 

@@ -276,21 +276,24 @@ namespace Runedal.GameData.Characters
         //method regenerating hp
         private void RegenerateHp()
         {
+
             //if hp is lesser than max
             if (Hp < GetEffectiveMaxHp() && Hp > 0)
             {
 
-                //if HpCounter is lesser or equal to zero, regenerate 1 hp and reset the counter,
-                //otherwise decrease the counter with value of effective HpRegen
-                if (HpCounter <= 0)
+                //while hpcounter is lesser or equal to zero, regenerate hp
+                //and add 1000 to it until its above 0
+                while (HpCounter <= 0)
                 {
-                    Hp++;
-                    HpCounter = CounterMax;
+
+                    //prevent exceeding max hp with enormous hpregen values
+                    if (Hp < GetEffectiveMaxHp() && Hp > 0)
+                    {
+                        Hp++;
+                    }
+                    HpCounter += CounterMax;
                 }
-                else
-                {
-                    HpCounter -= GetEffectiveHpRegen();
-                }
+                HpCounter -= GetEffectiveHpRegen();
             }
         }
 
@@ -298,20 +301,20 @@ namespace Runedal.GameData.Characters
         private void RegenerateMp()
         {
             //if mp is lesser than max
-            if (Mp < GetEffectiveMaxMp() && Mp > 0)
+            if (Mp < GetEffectiveMaxMp())
             {
 
-                //if MpCounter is lesser or equal to zero, regenerate 1 mp and reset the counter,
-                //otherwise decrease the counter with value of effective HpRegen
-                if (MpCounter <= 0)
+                //while mpcounter is lesser or equal to zero, regenerate mp
+                //and add 1000 to it until its above 0
+                while (MpCounter <= 0)
                 {
-                    Mp++;
-                    MpCounter = CounterMax;
+                    if (Mp < GetEffectiveMaxMp())
+                    {
+                        Mp++;
+                    }
+                    MpCounter += CounterMax;
                 }
-                else
-                {
-                    MpCounter -= GetEffectiveMpRegen();
-                }
+                MpCounter -= GetEffectiveMpRegen();
             }
         }
     }

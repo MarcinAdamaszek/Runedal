@@ -22,6 +22,7 @@ namespace Runedal.GameEngine
         { 
             this.Window = window;
             this.Data = new Data();
+            this.Rand = new Random();
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
@@ -49,12 +50,14 @@ namespace Runedal.GameEngine
             Gain,
             Loss,
             EffectOn,
-            EffectOff
+            EffectOff,
+            Speech
         }
 
         public MainWindow Window { get; set; }
         public Data Data { get; set; }
         public DispatcherTimer GameClock;
+        public Random Rand { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -112,9 +115,11 @@ namespace Runedal.GameEngine
                 case "d":
                     ChangeLocationHandler(command);
                     break;
-                case "t":
                 case "trade":
                     TradeHandler(argument1);
+                    break;
+                case "talk":
+                    TalkHandler(argument1);
                     break;
                 case "buy":
                     BuyHandler(argument1, argument2);
@@ -154,8 +159,20 @@ namespace Runedal.GameEngine
                 case "stop":
                     StopHandler();
                     break;
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                case "10":
+                    OptionHandler(command);
+                    break;
                 default:
-                    PrintMessage("Pier%#$isz jak potłuczony..", MessageType.SystemFeedback);
+                    PrintMessage("Że co?", MessageType.SystemFeedback);
                     return;
             }
         }
@@ -179,7 +196,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            RestoreIdleState();
+            ResetPlayerState();
 
             switch (direction)
             {
@@ -251,7 +268,7 @@ namespace Runedal.GameEngine
             //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
             {
-                RestoreIdleState();
+                ResetPlayerState();
                 LocationInfo();
             }
             else
@@ -270,7 +287,7 @@ namespace Runedal.GameEngine
                 index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
                 if (index != -1)
                 {
-                    RestoreIdleState();
+                    ResetPlayerState();
                     CharacterInfo(Data.Player!.CurrentLocation!.Characters[index]);
                     return;
                 }
@@ -346,7 +363,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            RestoreIdleState();
+            ResetPlayerState();
 
             //check if the character of specified name exists in player's current location
             index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
@@ -380,8 +397,6 @@ namespace Runedal.GameEngine
         //method handling 'talk' command
         private void TalkHandler(string characterName)
         {
-            int index = -1;
-            Character tradingCharacter = new Character();
 
             //if player is in combat state
             if (Data.Player!.CurrentState == Player.State.Combat)
@@ -390,9 +405,71 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            RestoreIdleState();
+            int index = Data.Player!.CurrentLocation!.Characters!.FindIndex(
+                character => character.Name!.ToLower() == characterName.ToLower());
 
 
+            ResetPlayerState();
+
+            //if character not found in current location
+            if (index == -1)
+            {
+                PrintMessage("Nie ma tu takiej postaci", MessageType.SystemFeedback);
+                return;
+            }
+
+            Character talkingCharacter = Data.Player!.CurrentLocation!.Characters[index];
+
+            //if there is no talking option with character
+            if (talkingCharacter.Questions!.Length == 0)
+            {
+                PrintMessage(talkingCharacter.Name + ": " + 
+                    talkingCharacter.PassiveResponses![Rand.Next(talkingCharacter.PassiveResponses.Length)], MessageType.Speech);
+                return;
+            }
+
+            //begin conversation
+            Data.Player!.CurrentState = Player.State.Talk;
+            Data.Player!.InteractsWith = talkingCharacter;
+            PrintMessage("Rozmawiasz z " + talkingCharacter.Name, MessageType.Action);
+            PrintMessage(talkingCharacter.Name + ": " + 
+                talkingCharacter.PassiveResponses![Rand.Next(talkingCharacter.PassiveResponses.Length)], MessageType.Speech);
+
+            PrintMessage("Wybierz co chcesz powiedzieć:");
+            for (int i = 0; i < talkingCharacter.Questions.Length; i++)
+            {
+                PrintMessage(i + 1 + ". " + talkingCharacter.Questions[i]);
+            }
+            PrintMessage(Data.Player!.InteractsWith!.Questions.Length + 1 + ": Bywaj");
+        }
+
+        //method handling chosen option (1, 2, 3 etc.)
+        private void OptionHandler(string option)
+        {
+            if (Data.Player!.CurrentState != Player.State.Talk)
+            {
+                PrintMessage("Nie rozmawiasz z nikim", MessageType.SystemFeedback);
+                return;
+            }
+
+            int optionNumber = Int32.Parse(option);
+            
+            if (optionNumber > Data.Player!.InteractsWith!.Questions!.Length)
+            {
+                PrintSpeech(Data.Player!, "Bywaj");
+                ResetPlayerState();
+                return;
+            }
+
+            PrintSpeech(Data.Player!, Data.Player!.InteractsWith!.Questions![optionNumber - 1]);
+            PrintSpeech(Data.Player!.InteractsWith, Data.Player!.InteractsWith!.Answers![optionNumber - 1]);
+
+            PrintMessage("Wybierz co chcesz powiedzieć: ");
+            for (int i = 0; i < Data.Player!.InteractsWith!.Questions.Length; i++)
+            {
+                PrintMessage(i + 1 + ". " + Data.Player!.InteractsWith!.Questions[i]);
+            }
+            PrintMessage(Data.Player!.InteractsWith!.Questions.Length + 1 + ": Bywaj");
         }
 
         //method handling 'inventory' command
@@ -550,7 +627,7 @@ namespace Runedal.GameEngine
         {
             Item itemToUse;
 
-            RestoreIdleState();
+            ResetPlayerState();
 
             //if 'use' was typed without any argument
             if (itemName == string.Empty)
@@ -595,7 +672,7 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             Item itemToRemove;
 
-            RestoreIdleState();
+            ResetPlayerState();
 
             if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
@@ -649,7 +726,7 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             Item itemToPickup;
 
-            RestoreIdleState();
+            ResetPlayerState();
 
             if (itemIndex == -1 && itemName.ToLower() != "złoto")
             {
@@ -779,7 +856,7 @@ namespace Runedal.GameEngine
         //method for stopping actions/states
         private void StopHandler()
         {
-            RestoreIdleState();
+            ResetPlayerState();
         }
 
 
@@ -1435,6 +1512,13 @@ namespace Runedal.GameEngine
             return true;
         }
 
+        //method printing characters line in form of speech
+        private void PrintSpeech(Character character, string line)
+        {
+            string characterLine = character.Name + ": " + line;
+            PrintMessage(characterLine, MessageType.Speech);
+        }
+
         //method displaying communicates in outputBox of the gui
         private void PrintMessage(string msg, MessageType type = MessageType.Default)
         {
@@ -1468,6 +1552,9 @@ namespace Runedal.GameEngine
                     break;
                 case (MessageType.EffectOff):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
+                    break;
+                case (MessageType.Speech):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
                     break;
             }
 
@@ -1616,7 +1703,6 @@ namespace Runedal.GameEngine
             ApplyEffect(item.Modifiers!, item.Name!);
         }
 
-
         //method applying effects to player
         private void ApplyEffect(List<Modifier> modifiers, string objectName)
         {
@@ -1708,7 +1794,7 @@ namespace Runedal.GameEngine
         }
 
         //method checking if player is trading/talking and breaking the state if so
-        private void RestoreIdleState()
+        private void ResetPlayerState()
         {
             //check if player is trading with someone already
             if (Data.Player!.CurrentState == Player.State.Trade)

@@ -23,6 +23,7 @@ namespace Runedal.GameEngine
             this.Window = window;
             this.Data = new Data();
             this.Rand = new Random();
+            this.AttackInstances = new List<AttackInstance>();
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
@@ -60,6 +61,7 @@ namespace Runedal.GameEngine
         public Data Data { get; set; }
         public DispatcherTimer GameClock;
         public Random Rand { get; set; }
+        public List<AttackInstance> AttackInstances { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()

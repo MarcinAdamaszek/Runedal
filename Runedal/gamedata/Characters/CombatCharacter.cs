@@ -9,6 +9,7 @@ namespace Runedal.GameData.Characters
     public class CombatCharacter : Character
     {
         private const double CounterMax = 1000;
+        private const double AttackCounterMax = 5000;
 
         protected double _EffectiveMaxHp;
         protected double _EffectiveMaxMp;
@@ -93,6 +94,9 @@ namespace Runedal.GameData.Characters
             MagicResistance
         }
 
+        //counter for attack
+        public double AttackCounter;
+
         //hp/mp counters for regeneration
         public double HpCounter { get; set; }
         public double MpCounter { get; set; }
@@ -145,6 +149,28 @@ namespace Runedal.GameData.Characters
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
 
+        /// <summary>
+        /// method dealing dmg to character. If the damage was lethal,
+        /// return true, otherwise - false
+        /// </summary>
+        /// <param name="dmg"></param>
+        /// <returns></returns>
+        public bool DealDamage(double dmg)
+        {
+            double hpAfterDmg = Hp - dmg;
+
+            if (hpAfterDmg < 0)
+            {
+                hpAfterDmg = 0;
+            }
+
+            if (hpAfterDmg == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         //method initializing hp/mp real values at the very first tick of the game clock
         public virtual void InitializeHpMp()
         {
@@ -158,6 +184,7 @@ namespace Runedal.GameData.Characters
             RegenerateHp();
             RegenerateMp();
             DecreaseModDuration();
+            DecreaseAttackCounter();
         }
 
         //method decreasing duration time for all modifiers
@@ -297,6 +324,22 @@ namespace Runedal.GameData.Characters
             }
 
             return modifiersSumValue;
+        }
+
+        //method descreasing attack counter
+        protected virtual void DecreaseAttackCounter()
+        {
+
+            if (AttackCounter > 0)
+            {
+                AttackCounter -= GetEffectiveAtkSpeed();
+            }
+        }
+
+        //method resetting attack counter
+        private void PerformAttack()
+        {
+            AttackCounter += AttackCounterMax;
         }
         
         //method regenerating hp

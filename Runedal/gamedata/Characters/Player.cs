@@ -23,10 +23,12 @@ namespace Runedal.GameData.Characters
         private const double AccuracyAgiMultiplier = 0.3;
         private const double CriticalAgiMultiplier = 0.5;
         private const double EvasionAgiMultiplier = 0.3;
-        private const double MagicResistanceIntMultiplier = 0.1;
+        private const double MagicResistanceIntMultiplier = 0.5;
 
         //values of other multipliers
         private const double SpeedWeightMultiplier = -0.02;
+
+        //fields required for proper hp/mp display in gui
         private double _HpPercentage;
         private double _MpPercentage;
         private int _Strength;
@@ -76,7 +78,7 @@ namespace Runedal.GameData.Characters
         public State CurrentState { get; set; }
         
         //name of player's starting location
-        public string Start { get; set; }
+        public string? Start { get; set; }
 
         //real hp/mp values
         public override double Hp
@@ -593,6 +595,15 @@ namespace Runedal.GameData.Characters
                 effectiveMagicResistance = 1;
             }
             return effectiveMagicResistance;
+        }
+
+        protected override void DecreaseAttackCounter()
+        {
+
+            if (AttackCounter > 0)
+            {
+                AttackCounter -= GetEffectiveAtkSpeed();
+            }
         }
 
         //methods for setting hp/mp percentages

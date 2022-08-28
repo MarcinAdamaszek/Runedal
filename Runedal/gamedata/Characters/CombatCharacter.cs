@@ -22,12 +22,17 @@ namespace Runedal.GameData.Characters
         public CombatCharacter() : base()
         {
             Modifiers = new List<Modifier>();
+            Opponents = new List<CombatCharacter>();
+
             HpCounter = CounterMax;
             MpCounter = CounterMax;
         }
         public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
             : base(descriptive, responses, gold)
         {
+            Modifiers = new List<Modifier>();
+            Opponents = new List<CombatCharacter>();
+
             MaxHp = combatStats[0];
             MaxMp = combatStats[1];
             HpRegen = combatStats[2];
@@ -46,12 +51,11 @@ namespace Runedal.GameData.Characters
             Mp = MaxMp;
             HpCounter = CounterMax;
             MpCounter = CounterMax;
-
-            Modifiers = new List<Modifier>();
         }
         public CombatCharacter(CombatCharacter com) : base(com)
         {
             Modifiers = new List<Modifier>();
+            Opponents = new List<CombatCharacter>();
 
             //create deep copy of modifiers collection
             Modifiers = com.Modifiers!.ConvertAll(mod => new Modifier(mod));
@@ -92,6 +96,13 @@ namespace Runedal.GameData.Characters
             Defense,
             Evasion,
             MagicResistance
+        }
+        public enum State
+        {
+            Idle,
+            Talk,
+            Trade,
+            Combat
         }
 
         //counter for attack
@@ -145,6 +156,13 @@ namespace Runedal.GameData.Characters
         public double MagicResistance { get; set; }
         public double Critical { get; set; }
 
+        public State CurrentState { get; set; }
+
+        //character with whom player currently interacts
+        public Character? InteractsWith { get; set; }
+
+        //list of combat characters involved in fight with this one
+        public List<CombatCharacter> Opponents { get; set; }
 
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }

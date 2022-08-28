@@ -68,14 +68,6 @@ namespace Runedal.GameData.Characters
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public enum State
-        {
-            Idle,
-            Talk,
-            Trade,
-            Combat
-        }
-        public State CurrentState { get; set; }
         
         //name of player's starting location
         public string? Start { get; set; }
@@ -215,9 +207,6 @@ namespace Runedal.GameData.Characters
         public Armor? Gloves { get; set; }
         public Armor? Shoes { get; set; }
         public Weapon? Weapon { get; set; }
-
-        //character with whom player currently interacts
-        public Character? InteractsWith { get; set; }
 
         //effects currently affecting player
         public List<EffectOnPlayer>? Effects { get; set; }

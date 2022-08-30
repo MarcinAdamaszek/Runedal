@@ -37,10 +37,10 @@ namespace Runedal.GameEngine
 
             GameClock.Start();
 
-            Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
-            Monster burek = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
-            AttackInstances.Add(new AttackInstance(Data.Player!, burek));
-            AttackInstances.Add(new AttackInstance(burek, Data.Player!));
+            //Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
+            //Monster burek = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
+            //AttackInstances.Add(new AttackInstance(Data.Player!, burek));
+            //AttackInstances.Add(new AttackInstance(burek, Data.Player!));
             //Data.Player.Hp -= 500;
             //Data.Player.Mp -= 300;
             //(Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
@@ -245,10 +245,10 @@ namespace Runedal.GameEngine
                     Data.Player.CurrentLocation!.Characters!.Remove(Data.Player);
 
                     //change player's current location
-                    nextLocation.AddCharacter(Data.Player!);
+                    AddCharacterToLocation(nextLocation, Data.Player!);
 
-                    //display location info to user
-                    LocationInfo();
+                    ////display location info to user
+                    //LocationInfo();
                 }
                 else
                 {
@@ -1658,6 +1658,21 @@ namespace Runedal.GameEngine
 
 
         //==============================================MANIPULATION METHODS=============================================
+
+        //method putting character into location
+        private void AddCharacterToLocation(Location location, Character character)
+        {
+            location.AddCharacter(character);
+
+            if (character.GetType() == typeof(Player))
+            {
+                LocationInfo();
+            }
+            else if (Data.Player!.CurrentLocation == location)
+            {
+                PrintMessage("Widzisz nowego przybysza: " + character.Name);
+            }
+        }
 
         //method handling adding items to player's inventory
         private void AddItemToPlayer(string itemName, int quantity)

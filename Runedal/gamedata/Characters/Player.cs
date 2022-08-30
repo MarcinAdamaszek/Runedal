@@ -225,6 +225,12 @@ namespace Runedal.GameData.Characters
             Mp = GetEffectiveMaxMp();
         }
 
+        public override void PerformAttack()
+        {
+            double attackDelay = CounterMax * (500 / GetEffectiveAtkSpeed());
+            ActionCounter += attackDelay;
+        }
+
         //method for wearing weapon-type items
         public void WearWeapon(Weapon weapon)
         {
@@ -584,15 +590,6 @@ namespace Runedal.GameData.Characters
                 effectiveMagicResistance = 1;
             }
             return effectiveMagicResistance;
-        }
-
-        protected override void DecreaseAttackCounter()
-        {
-
-            if (AttackCounter > 0)
-            {
-                AttackCounter -= GetEffectiveAtkSpeed();
-            }
         }
 
         //methods for setting hp/mp percentages

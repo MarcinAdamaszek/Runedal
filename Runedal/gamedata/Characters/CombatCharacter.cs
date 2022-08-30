@@ -8,8 +8,7 @@ namespace Runedal.GameData.Characters
 {
     public class CombatCharacter : Character
     {
-        private const double CounterMax = 1000;
-        private const double AttackCounterMax = 5000;
+        protected const double CounterMax = 1000;
 
         protected double _EffectiveMaxHp;
         protected double _EffectiveMaxMp;
@@ -106,7 +105,7 @@ namespace Runedal.GameData.Characters
         }
 
         //counter for attack
-        public double AttackCounter;
+        public double ActionCounter;
 
         //hp/mp counters for regeneration
         public double HpCounter { get; set; }
@@ -192,9 +191,10 @@ namespace Runedal.GameData.Characters
         }
 
         //method resetting attack counter
-        public void PerformAttack()
+        public virtual void PerformAttack()
         {
-            AttackCounter += AttackCounterMax;
+            double attackDelay = CounterMax * (500 / GetEffectiveAtkSpeed());
+            ActionCounter += attackDelay;
         }
 
         //method initializing hp/mp real values at the very first tick of the game clock
@@ -210,7 +210,7 @@ namespace Runedal.GameData.Characters
             RegenerateHp();
             RegenerateMp();
             DecreaseModDuration();
-            DecreaseAttackCounter();
+            DecreaseActionCounter();
         }
 
         //method decreasing duration time for all modifiers
@@ -236,6 +236,16 @@ namespace Runedal.GameData.Characters
                     //to decrement to avoid OutOfRange exception
                     numberOfMods--;
                 }
+            }
+        }
+
+        //method descreasing attack counter
+        public void DecreaseActionCounter()
+        {
+
+            if (ActionCounter > 0)
+            {
+                ActionCounter -= 100;
             }
         }
 
@@ -350,16 +360,6 @@ namespace Runedal.GameData.Characters
             }
 
             return modifiersSumValue;
-        }
-
-        //method descreasing attack counter
-        protected virtual void DecreaseAttackCounter()
-        {
-
-            if (AttackCounter > 0)
-            {
-                AttackCounter -= GetEffectiveAtkSpeed();
-            }
         }
         
         //method regenerating hp

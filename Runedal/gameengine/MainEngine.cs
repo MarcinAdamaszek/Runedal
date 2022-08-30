@@ -2011,7 +2011,7 @@ namespace Runedal.GameEngine
                 receiver = AttackInstances[i].Receiver;
 
                 //skip attack if attackers attack is on cooldown
-                if (attacker.AttackCounter > 0)
+                if (attacker.ActionCounter > 0)
                 {
                     continue;
                 }

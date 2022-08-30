@@ -37,9 +37,13 @@ namespace Runedal.GameEngine
 
             GameClock.Start();
 
-            Data.Player.Hp -= 500;
-            Data.Player.Mp -= 300;
-            (Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
+            Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
+            Monster burek = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
+            AttackInstances.Add(new AttackInstance(Data.Player!, burek));
+            AttackInstances.Add(new AttackInstance(burek, Data.Player!));
+            //Data.Player.Hp -= 500;
+            //Data.Player.Mp -= 300;
+            //(Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
             //PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
         }
 
@@ -54,7 +58,12 @@ namespace Runedal.GameEngine
             Loss,
             EffectOn,
             EffectOff,
-            Speech
+            Speech,
+            DealDmg,
+            ReceiveDmg,
+            CriticalHit,
+            Miss,
+            Avoid
         }
 
         public MainWindow Window { get; set; }
@@ -1557,10 +1566,91 @@ namespace Runedal.GameEngine
                 case (MessageType.Speech):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
                     break;
+                case (MessageType.DealDmg):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Lime);
+                    break;
+                case (MessageType.ReceiveDmg):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Crimson);
+                    break;
+                case (MessageType.CriticalHit):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Magenta);
+                    break;
+                case (MessageType.Miss):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.FloralWhite);
+                    break;
+                case (MessageType.Avoid):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.BurlyWood);
+                    break;
             }
 
             Window.outputBox.ScrollToEnd();
         }
+
+        /// <summary>
+        /// /// method taking chance parameter (as double 1-999 value, indicating promile
+        /// number) returns true if succeded and false if not
+        /// </summary>
+        /// <param name="chance"></param>
+        /// <returns></returns>
+        private bool TryOutChance(double chance)
+        {
+            double randShot = Rand.NextDouble();
+            if (chance < randShot)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// /// method determining if attack reached the target on basis of two 
+        /// parameters: accuracy and evasion. If attack is a success - returns true
+        /// if missed - returns false
+        /// </summary>
+        /// <param name="accuracy"></param>
+        /// <param name="evasion"></param>
+        /// <returns></returns>
+        private bool IsAttackHit(double accuracy, double evasion)
+        {
+            double hitChance = Rand.NextDouble() * accuracy;
+            double missChance = Rand.NextDouble() * evasion;
+
+            if (hitChance > missChance)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsHitCritical(double critical)
+        {
+            double chance = Math.Sqrt(critical) / 100;
+            bool isCritical = TryOutChance(chance);
+            return isCritical;
+        }
+
+        //method calculating dmg from attack and defense values
+        private double CalculateDmg(double attack, double defense)
+        {
+            double reductionMultiplier = 1 / (Math.Sqrt(defense) / 10);
+            double dmg = attack / 5 * reductionMultiplier;
+            return dmg;
+        }
+
+        //method randomizing dmg
+        private double RandomizeDmg(double staticDmg)
+        {
+            double randomDmgMultiplier = Rand.Next(80, 121) * 0.01;
+            double randomizedDmg = staticDmg * randomDmgMultiplier;
+            return randomizedDmg;
+        }
+
 
 
 
@@ -1834,19 +1924,24 @@ namespace Runedal.GameEngine
         {
             CharactersTick();
             PlayerEffectsTick();
+            AttacksTick();
         }
 
         //method launching HandleTick method for every character in game
         private void CharactersTick()
         {
             //handle all characters regeneration/duration-decrease of modifiers etc
-            Data.Characters!.ForEach(character =>
+            Data.Locations!.ForEach(loc =>
             {
-                if (character is CombatCharacter)
+                loc.Characters!.ForEach(character =>
                 {
-                    (character as CombatCharacter)!.HandleTick();
-                }
+                    if (character is CombatCharacter)
+                    {
+                        (character as CombatCharacter)!.HandleTick();
+                    }
+                });
             });
+            
         }
 
         //method handling player effects tick
@@ -1878,6 +1973,88 @@ namespace Runedal.GameEngine
                     numberOfEffects--;
                 }
             }
+        }
+
+        //method handling attacks for every attack instance
+        private void AttacksTick()
+        {
+            bool isAttackerPlayer;
+            bool isReceiverPlayer;
+            int numberOfInstances = AttackInstances.Count;
+            int i;
+            double staticDmg;
+            double rawDmg;
+            double dealtDmg;
+            int dmgAsInt;
+            
+            CombatCharacter attacker = new CombatCharacter();
+            CombatCharacter receiver = new CombatCharacter();
+
+            for (i = 0; i < numberOfInstances; i++)
+            {
+                attacker = AttackInstances[i].Attacker;
+                receiver = AttackInstances[i].Receiver;
+
+                //skip attack if attackers attack is on cooldown
+                if (attacker.AttackCounter > 0)
+                {
+                    continue;
+                }
+
+                isAttackerPlayer = attacker.GetType() == typeof(Player);
+                isReceiverPlayer = receiver.GetType() == typeof(Player);
+
+                
+                attacker.PerformAttack();
+                
+
+                //try if attack actually hits or misses
+                if (!IsAttackHit(attacker.GetEffectiveAccuracy(), receiver.GetEffectiveEvasion()))
+                {
+                    //if it's player attacking or receiving display appropriate messages
+                    if (isAttackerPlayer)
+                    {
+                        PrintMessage("Chybiłeś!", MessageType.Miss);
+                    }
+                    if (isReceiverPlayer)
+                    {
+                        PrintMessage("Unikasz ataku " + attacker.Name, MessageType.Miss);
+                    }
+                    continue;
+                }
+
+                staticDmg = CalculateDmg(attacker.GetEffectiveAttack(), receiver.GetEffectiveDefense());
+                rawDmg = RandomizeDmg(staticDmg);
+
+                if (IsHitCritical(attacker.GetEffectiveCritical()))
+                {
+                    if (isAttackerPlayer)
+                    {
+                        PrintMessage("Trafienie krytyczne!", MessageType.CriticalHit);
+                    }
+                    dealtDmg = rawDmg * 4;
+                }
+                else
+                {
+                    dealtDmg = rawDmg;
+                }
+
+                dmgAsInt = Convert.ToInt32(dealtDmg);
+
+                if (isAttackerPlayer)
+                {
+                    PrintMessage("Zadajesz " + dmgAsInt + " obrażeń", MessageType.DealDmg);
+                }
+                else if (isReceiverPlayer)
+                {
+                    PrintMessage(attacker.Name! + " zadaje Ci " + dmgAsInt + " obrażeń", MessageType.ReceiveDmg);
+                }
+
+                receiver.DealDamage(dmgAsInt);
+                
+            }
+
+            
         }
     }
 }

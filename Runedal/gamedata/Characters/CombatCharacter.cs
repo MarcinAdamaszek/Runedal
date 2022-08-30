@@ -182,11 +182,19 @@ namespace Runedal.GameData.Characters
                 hpAfterDmg = 0;
             }
 
+            Hp = hpAfterDmg;
+
             if (hpAfterDmg == 0)
             {
                 return true;
             }
             return false;
+        }
+
+        //method resetting attack counter
+        public void PerformAttack()
+        {
+            AttackCounter += AttackCounterMax;
         }
 
         //method initializing hp/mp real values at the very first tick of the game clock
@@ -352,12 +360,6 @@ namespace Runedal.GameData.Characters
             {
                 AttackCounter -= GetEffectiveAtkSpeed();
             }
-        }
-
-        //method resetting attack counter
-        private void PerformAttack()
-        {
-            AttackCounter += AttackCounterMax;
         }
         
         //method regenerating hp

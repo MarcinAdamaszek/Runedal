@@ -37,9 +37,9 @@ namespace Runedal.GameEngine
 
             GameClock.Start();
 
-            //Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
-            //Monster burek = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
-            //AttackInstances.Add(new AttackInstance(Data.Player!, burek));
+            Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
+            Monster burek = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
+            AttackInstances.Add(new AttackInstance(Data.Player!, burek));
             //AttackInstances.Add(new AttackInstance(burek, Data.Player!));
             //Data.Player.Hp -= 500;
             //Data.Player.Mp -= 300;

@@ -227,7 +227,7 @@ namespace Runedal.GameData.Characters
 
         public override void PerformAttack()
         {
-            double attackDelay = CounterMax * (500 / GetEffectiveAtkSpeed());
+            double attackDelay = 6000 / GetEffectiveAtkSpeed();
             ActionCounter += attackDelay;
         }
 

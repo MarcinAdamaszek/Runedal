@@ -104,7 +104,7 @@ namespace Runedal.GameData.Characters
             Combat
         }
 
-        //counter for attack
+        //counter for actions
         public double ActionCounter;
 
         //hp/mp counters for regeneration
@@ -190,10 +190,10 @@ namespace Runedal.GameData.Characters
             return false;
         }
 
-        //method resetting attack counter
+        //method adding attack delay to action counter
         public virtual void PerformAttack()
         {
-            double attackDelay = CounterMax * (500 / GetEffectiveAtkSpeed());
+            double attackDelay = CounterMax / (GetEffectiveAtkSpeed() / 5);
             ActionCounter += attackDelay;
         }
 
@@ -245,7 +245,7 @@ namespace Runedal.GameData.Characters
 
             if (ActionCounter > 0)
             {
-                ActionCounter -= 100;
+                ActionCounter -= 1;
             }
         }
 

@@ -166,8 +166,7 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //player's level and amount of experience
-        public int Level { get; set; }
+        //player's amount of experience
         public int Experience { get; set; }
         
         //player's available attribute points gained every lvl-up

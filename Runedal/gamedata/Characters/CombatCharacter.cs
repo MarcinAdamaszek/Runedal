@@ -111,6 +111,9 @@ namespace Runedal.GameData.Characters
         public double HpCounter { get; set; }
         public double MpCounter { get; set; }
 
+        //character's level
+        public int Level { get; set; }
+
         //health and mana statistics
         public virtual double Hp { get; set; }
         public virtual double Mp { get; set; }

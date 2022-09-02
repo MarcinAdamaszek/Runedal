@@ -264,6 +264,46 @@ namespace Runedal.GameData.Characters
             Modifiers!.Remove(mod);
         }
 
+        /// <summary>
+        /// method adding combat-character to list of character's opponents
+        /// if it's the very first opponent (meaning player wasn't in combat
+        /// state) return true - otherwise return false
+        /// </summary>
+        /// <param name="opponent"></param>
+        /// <returns></returns>
+        public bool AddOpponent(CombatCharacter opponent)
+        {
+            Opponents.Add(opponent);
+
+            if (Opponents.Count == 1)
+            {
+                CurrentState = State.Combat;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// method removing combat-character from character's opponents list.
+        /// if removed opponent was the last one, returns true. Otherwise -
+        /// returns false.
+        /// </summary>
+        /// <param name="opponent"></param>
+        /// <returns></returns>
+        public bool RemoveOpponent(CombatCharacter opponent)
+        {
+            Opponents.Remove(opponent);
+
+            if (Opponents.Count == 0)
+            {
+                CurrentState = State.Idle;
+                return true;
+            }
+
+            return false;
+        }
+
         //'getters' for effective character's statistics - calculated from base statistics and modifiers
 
         public virtual double GetEffectiveMaxHp()

@@ -1688,6 +1688,52 @@ namespace Runedal.GameEngine
             character.CurrentLocation!.RemoveCharacter(character);
         }
 
+        //method dealing dmg to combat-character
+        private void DealDmgToCharacter(CombatCharacter dealer, CombatCharacter receiver, int dmg)
+        {
+            bool isDealerPlayer = dealer.GetType() == typeof(Player);
+            bool isReceiverPlayer = receiver.GetType() == typeof(Player);
+            bool isDmgLethal = receiver.DealDamage(dmg);
+
+
+            if (isDmgLethal)
+            {
+                int attackerInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == dealer)!;
+                int receiverInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == receiver)!;
+
+                //if characters were attacking each other, remove their attack instances
+                if (attackerInstanceIndex != -1)
+                {
+                    AttackInstances.RemoveAt(attackerInstanceIndex);
+                }
+                if (receiverInstanceIndex != -1)
+                {
+                    AttackInstances.RemoveAt(receiverInstanceIndex);
+                }
+
+                //end combat, remove opponents etc.
+                if (dealer.Opponents.Exists(opponent => opponent == receiver))
+                {
+                    dealer.RemoveOpponent(receiver);
+                }
+                if (receiver.Opponents.Exists(opponent => opponent == dealer))
+                {
+                    receiver.RemoveOpponent(dealer);
+                }
+
+                if (isDealerPlayer)
+                {
+                    PrintMessage("Twój przeciwnik " + receiver.Name + " pada trupem!", MessageType.Action);
+                    KillCharacter(receiver);
+                }
+                else if (isReceiverPlayer)
+                {
+                    KillPlayer();
+                }
+                
+            }
+        }
+
         //method putting character into location
         private void AddCharacterToLocation(Location location, Character character)
         {
@@ -2058,7 +2104,7 @@ namespace Runedal.GameEngine
                 //try if attack actually hits or misses
                 if (!IsAttackHit(attacker.GetEffectiveAccuracy(), receiver.GetEffectiveEvasion()))
                 {
-                    //if it's player attacking or receiving display appropriate messages
+                    //display appropriate message if missed
                     if (isAttackerPlayer)
                     {
                         PrintMessage("Chybiłeś!", MessageType.Miss);
@@ -2088,6 +2134,7 @@ namespace Runedal.GameEngine
 
                 dmgAsInt = Convert.ToInt32(dealtDmg);
 
+                //print appropriate messages to user about dmg dealing
                 if (isAttackerPlayer)
                 {
                     PrintMessage("Zadajesz " + dmgAsInt + " obrażeń", MessageType.DealDmg);
@@ -2097,24 +2144,7 @@ namespace Runedal.GameEngine
                     PrintMessage(attacker.Name! + " zadaje Ci " + dmgAsInt + " obrażeń", MessageType.ReceiveDmg);
                 }
 
-                //deal the dmg, and if it's lethal - kill the character and end the fight
-                if (receiver.DealDamage(dmgAsInt))
-                {
-                    if (isAttackerPlayer)
-                    {
-                        PrintMessage("Pokonujesz " + receiver.Name + "!", MessageType.Action);
-                        KillCharacter(receiver);
-                    }
-                    else if (isReceiverPlayer)
-                    {
-                        KillPlayer();
-                    }
-
-                    AttackInstances.Remove(AttackInstances[i]);
-
-                    attacker.Opponents.Remove(receiver);
-                }
-                
+                DealDmgToCharacter(attacker, receiver, dmgAsInt);
             }
 
             

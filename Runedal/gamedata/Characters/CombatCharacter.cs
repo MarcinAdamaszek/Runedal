@@ -59,6 +59,7 @@ namespace Runedal.GameData.Characters
             //create deep copy of modifiers collection
             Modifiers = com.Modifiers!.ConvertAll(mod => new Modifier(mod));
 
+            Level = com.Level;
             MaxHp = com.MaxHp;
             MaxMp = com.MaxMp;
             HpRegen = com.HpRegen;

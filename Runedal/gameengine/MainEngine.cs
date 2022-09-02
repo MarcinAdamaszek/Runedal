@@ -13,6 +13,7 @@ using Runedal.GameData.Characters;
 using Runedal.GameData.Items;
 using System.Windows.Media.Effects;
 using System.Windows.Navigation;
+using Microsoft.Win32.SafeHandles;
 
 namespace Runedal.GameEngine
 {
@@ -1699,13 +1700,15 @@ namespace Runedal.GameEngine
             if (isDmgLethal)
             {
                 int attackerInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == dealer)!;
-                int receiverInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == receiver)!;
 
-                //if characters were attacking each other, remove their attack instances
+                //if dmgDealer was attacking an opponent, remove it's attack instance
                 if (attackerInstanceIndex != -1)
                 {
                     AttackInstances.RemoveAt(attackerInstanceIndex);
                 }
+
+                //same for receiver attack instance
+                int receiverInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == receiver)!;
                 if (receiverInstanceIndex != -1)
                 {
                     AttackInstances.RemoveAt(receiverInstanceIndex);
@@ -1723,14 +1726,29 @@ namespace Runedal.GameEngine
 
                 if (isDealerPlayer)
                 {
-                    PrintMessage("Twój przeciwnik " + receiver.Name + " pada trupem!", MessageType.Action);
+                    PrintMessage("Pokonujesz przeciwnika!", MessageType.Action);
                     KillCharacter(receiver);
+                    GivePlayerExperience(receiver.Level);
                 }
                 else if (isReceiverPlayer)
                 {
                     KillPlayer();
                 }
                 
+            }
+        }
+
+        //method adding certain amount to player's experience pool
+        private void GivePlayerExperience(int lvl)
+        {
+            ulong experience = Convert.ToUInt64(lvl * 100);
+            int previousLevel = Data.Player!.Level;
+
+            PrintMessage("Zdobywasz " + experience + " doświadczenia", MessageType.Action);
+            if (Data.Player!.GainExperience(experience))
+            {
+                PrintMessage("***Zdobywasz nowy poziom!***", MessageType.Action);
+                Data.Player!.AddAttributePoints((Data.Player!.Level - previousLevel) * 3);
             }
         }
 

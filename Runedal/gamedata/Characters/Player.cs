@@ -46,6 +46,10 @@ namespace Runedal.GameData.Characters
             Weapon = new Weapon("placeholder");
 
             Effects = new List<EffectOnPlayer>();
+
+            Level = 1;
+            Experience = 0;
+            NextLvlExpCap = 500;
         }
         public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold)
             : base(descriptive, combatStats, responses, gold)
@@ -55,6 +59,7 @@ namespace Runedal.GameData.Characters
             Agility = attributeStats[2];
             Level = 1;
             Experience = 0;
+            NextLvlExpCap = 500;
 
             //initialize items worn with placeholders
             Torso = new Armor(Armor.ArmorType.Torso, "placeholder");
@@ -167,7 +172,10 @@ namespace Runedal.GameData.Characters
         }
 
         //player's amount of experience
-        public int Experience { get; set; }
+        public ulong Experience { get; set; }
+
+        //amount of experience required to lvl-up
+        public ulong NextLvlExpCap { get; set; }
         
         //player's available attribute points gained every lvl-up
         public int AttributePoints { get; set; }
@@ -210,11 +218,47 @@ namespace Runedal.GameData.Characters
         //effects currently affecting player
         public List<EffectOnPlayer>? Effects { get; set; }
 
-        //property changed event handler
-        public void NotifyPropertyChanged(string propName)
+        /// <summary>
+        /// method for increasing experience pool. If player gained lvl-up
+        /// returns true, otherwise returns false.
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
+        public bool GainExperience(ulong exp)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            ulong expAfterGain = Experience + exp;
+            
+            if (expAfterGain >= NextLvlExpCap)
+            {
+                while (expAfterGain >= NextLvlExpCap)
+                {
+                    expAfterGain -= NextLvlExpCap;
+                    LevelUp();
+                }
+                Experience = expAfterGain;
+                return true;
+            }
+            else
+            {
+                Experience = expAfterGain;
+                return false;
+            }
+        }
+
+        //method incrementing player level by one
+        public void LevelUp()
+        {
+            Level++;
+            NextLvlExpCap = Convert.ToUInt64(Level * 500);
+            Strength += 1;
+            Agility += 1;
+            Intelligence += 1;
+        }
+
+        //method adding attribute points to player's pool
+        public void AddAttributePoints(int quantity)
+        {
+            AttributePoints += quantity;
         }
 
         //method initializing Hp/Mp pools
@@ -611,6 +655,13 @@ namespace Runedal.GameData.Characters
             Inventory!.ForEach(item => carryWeight += item.Weight);
 
             return carryWeight;
+        }
+
+        //property changed event handler
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
     }

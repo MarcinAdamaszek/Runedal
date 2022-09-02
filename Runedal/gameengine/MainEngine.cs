@@ -14,6 +14,7 @@ using Runedal.GameData.Items;
 using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using Microsoft.Win32.SafeHandles;
+using System.Windows.Input;
 
 namespace Runedal.GameEngine
 {
@@ -25,6 +26,7 @@ namespace Runedal.GameEngine
             this.Data = new Data();
             this.Rand = new Random();
             this.AttackInstances = new List<AttackInstance>();
+            this.DelayCounter = 0;
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
@@ -38,10 +40,10 @@ namespace Runedal.GameEngine
 
             GameClock.Start();
 
-            Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
-            Monster skeleton = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
-            AttackInstances.Add(new AttackInstance(Data.Player!, skeleton));
-            AttackInstances.Add(new AttackInstance(skeleton, Data.Player!));
+            //Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
+            //Monster skeleton = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
+            //AttackInstances.Add(new AttackInstance(Data.Player!, skeleton));
+            //AttackInstances.Add(new AttackInstance(skeleton, Data.Player!));
             //Data.Player.Hp -= 500;
             //Data.Player.Mp -= 300;
             //(Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
@@ -69,9 +71,10 @@ namespace Runedal.GameEngine
 
         public MainWindow Window { get; set; }
         public Data Data { get; set; }
-        public DispatcherTimer GameClock;
+        public DispatcherTimer GameClock { get; set; }
         public Random Rand { get; set; }
         public List<AttackInstance> AttackInstances { get; set; }
+        public int DelayCounter { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -128,6 +131,10 @@ namespace Runedal.GameEngine
                 case "u":
                 case "d":
                     ChangeLocationHandler(command);
+                    break;
+                case "attack":
+                case "a":
+                    AttackHandler(argument1);
                     break;
                 case "trade":
                     TradeHandler(argument1);
@@ -870,7 +877,56 @@ namespace Runedal.GameEngine
             ResetPlayerState();
         }
 
+        //method for handling 'attack' command
+        private void AttackHandler(string characterName)
+        {
 
+            //if user typed 'attack' without argument
+            if (characterName == string.Empty)
+            {
+
+                //if there are no opponents currently fighting with player
+                if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
+                {
+                    PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
+                    return;
+                }
+
+                //if player is fighting only with single opponent, attack that opponent
+                else if (Data.Player.Opponents.Count == 1)
+                {
+                    AttackCharacter(Data.Player, Data.Player.Opponents[0]);
+                }
+
+                //if player if fighting with multiple opponents
+                else
+                {
+
+                }
+                return;
+            }
+
+            //else if player wanted to attack specific character (typed attack with 1 argument)
+            int characterIndex = Data.Player!.CurrentLocation!.Characters!
+                .FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
+
+            if (characterIndex == -1)
+            {
+                PrintMessage("Nie ma tu takiej postaci", MessageType.SystemFeedback);
+                return;
+            }
+
+            Character characterToAttack = Data.Player!.CurrentLocation!.Characters[characterIndex];
+
+            if (!(characterToAttack is CombatCharacter))
+            {
+                PrintMessage("Nie możesz zaatakować tej postaci", MessageType.SystemFeedback);
+                return;
+            }
+
+            AttackCharacter(Data.Player, (characterToAttack as CombatCharacter)!);
+
+        }
 
 
 
@@ -1660,6 +1716,41 @@ namespace Runedal.GameEngine
 
         //==============================================MANIPULATION METHODS=============================================
 
+        //method for attacking character by another character
+        private void AttackCharacter(CombatCharacter attacker, CombatCharacter attacked)
+        {
+            AttackInstances.Add(new AttackInstance(attacker, attacked));
+
+            //print npcs aggressive response when it attacks
+            if (attacker != Data.Player)
+            {
+                int randomIndex = Rand.Next(0, attacker.AggressiveResponses!.Length);
+                PrintSpeech(attacker, attacker.AggressiveResponses[randomIndex]);
+            }
+
+            //print appropriate message depending on player's position in attacker/attacked configuration
+            if (attacker == Data.Player)
+            {
+                PrintMessage("Atakujesz postać: " + attacked.Name + "!", MessageType.Action);
+            }
+            else if (attacked == Data.Player)
+            {
+                PrintMessage("Zostałeś zaatakowany przez: " + attacker.Name + "!", MessageType.Action);
+            }
+            else if (attacked.CurrentLocation! == Data.Player!.CurrentLocation)
+            {
+                PrintMessage(attacker.Name! + " atakuje: " + attacked.Name);
+            }
+            
+            //if attacked character doesn't exist in attacker's opponents list
+            if (!(attacker.Opponents.Exists(op => op == attacked)))
+            {
+                attacker.InteractsWith = attacked;
+                attacker.Opponents.Add(attacked);
+                attacked.Opponents.Add(attacker);
+            }
+        }
+
         //method killing player
         private void KillPlayer()
         {
@@ -1725,6 +1816,8 @@ namespace Runedal.GameEngine
                 {
                     receiver.RemoveOpponent(dealer);
                 }
+                dealer.InteractsWith = new Character();
+                receiver.InteractsWith = new Character();
 
                 if (isDealerPlayer)
                 {
@@ -1736,7 +1829,7 @@ namespace Runedal.GameEngine
                 {
                     KillPlayer();
                 }
-                
+                return;
             }
         }
 
@@ -2119,7 +2212,18 @@ namespace Runedal.GameEngine
 
                 
                 attacker.PerformAttack();
-                
+
+                //if receiver is an npc character - respond with counterattack
+                //if it's any npc character receiving the dmg - respond with counter-attack
+                if (receiver != Data.Player)
+                {
+
+                    //check if attacked isn't already attacking the attacker
+                    if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == attacker))
+                    {
+                        AttackCharacter(receiver, attacker);
+                    }
+                }
 
                 //try if attack actually hits or misses
                 if (!IsAttackHit(attacker.GetEffectiveAccuracy(), receiver.GetEffectiveEvasion()))

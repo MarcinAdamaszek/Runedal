@@ -197,7 +197,7 @@ namespace Runedal.GameData.Characters
         //method adding attack delay to action counter
         public virtual void PerformAttack()
         {
-            double attackDelay = CounterMax / (GetEffectiveAtkSpeed() / 5);
+            double attackDelay = 6000 / GetEffectiveAtkSpeed();
             ActionCounter += attackDelay;
         }
 

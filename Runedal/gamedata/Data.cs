@@ -164,9 +164,6 @@ namespace Runedal.GameData
         private void PopulateLocation(Location location)
         {
             Character character = new Character();
-            Trader trader = new Trader();
-            Monster monster = new Monster();
-            Hero hero = new Hero();
             int i;
 
             foreach (KeyValuePair<string, int> kvp in location.CharsToAdd!)
@@ -175,29 +172,29 @@ namespace Runedal.GameData
 
                 if (character.GetType() == typeof(Monster))
                 {
-                    monster = new Monster((character as Monster)!);
+                    //monster = new Monster((character as Monster)!);
 
                     for (i = 0; i < kvp.Value; i++)
                     {
-                        location.AddCharacter(monster);
+                        location.AddCharacter(new Monster((character as Monster)!));
                     }
                 }
                 else if (character.GetType() == typeof(Trader))
                 {
-                    trader = new Trader((character as Trader)!);
+                    //trader = new Trader((character as Trader)!);
 
                     for (i = 0; i < kvp.Value; i++)
                     {
-                        location.AddCharacter(trader);
+                        location.AddCharacter(new Trader((character as Trader)!));
                     }
                 }
                 else if (character.GetType() == typeof(Hero))
                 {
-                    hero = new Hero((character as Hero)!);
+                    //hero = new Hero((character as Hero)!);
 
                     for (i = 0; i < kvp.Value; i++)
                     {
-                        location.AddCharacter(hero);
+                        location.AddCharacter(new Hero((character as Hero)!));
                     }
                 }
             }

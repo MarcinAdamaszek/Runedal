@@ -26,7 +26,6 @@ namespace Runedal.GameEngine
             this.Data = new Data();
             this.Rand = new Random();
             this.AttackInstances = new List<AttackInstance>();
-            this.DelayCounter = 0;
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
@@ -39,6 +38,22 @@ namespace Runedal.GameEngine
             Data.InitializeEverything();
 
             GameClock.Start();
+
+
+            //Data.Locations!.Find(loc => loc.Name == "Karczma").Characters.ForEach(ch =>
+            //{
+            //    if (ch.GetType() == typeof(Monster))
+            //    {
+            //        PrintMessage(Convert.ToString((ch as Monster).Id));
+            //    }
+            //});
+            //double szczurAtkSpeed = (Data.Locations!.Find(loc => loc.Name == "Piwnica").Characters.
+            //    Find(character => character.Name == "Szczur") as CombatCharacter).GetEffectiveAtkSpeed();
+            //double playerAtkSpeed = (Data.Locations!.Find(loc => loc.Name == "Karczma").Characters.
+            //    Find(character => character.Name == "Czesiek") as CombatCharacter).GetEffectiveAtkSpeed();
+
+            //PrintMessage("atk speed szczura: " + szczurAtkSpeed);
+            //PrintMessage("atk speed gracza: " + playerAtkSpeed);
 
             //Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
             //Monster skeleton = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
@@ -74,7 +89,6 @@ namespace Runedal.GameEngine
         public DispatcherTimer GameClock { get; set; }
         public Random Rand { get; set; }
         public List<AttackInstance> AttackInstances { get; set; }
-        public int DelayCounter { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -2132,6 +2146,16 @@ namespace Runedal.GameEngine
             CharactersTick();
             PlayerEffectsTick();
             AttacksTick();
+            DelayCounterTick();
+        }
+
+        //method decreasing delay counter
+        private void DelayCounterTick()
+        {
+            if (DelayCounter > 0)
+            {
+                DelayCounter--;
+            }
         }
 
         //method launching HandleTick method for every character in game
@@ -2214,7 +2238,6 @@ namespace Runedal.GameEngine
                 attacker.PerformAttack();
 
                 //if receiver is an npc character - respond with counterattack
-                //if it's any npc character receiving the dmg - respond with counter-attack
                 if (receiver != Data.Player)
                 {
 

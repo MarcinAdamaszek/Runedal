@@ -45,6 +45,7 @@ namespace Runedal.GameData.Characters
             {
                 Id++;
             }
+            TakenIds.Add(Id);
         }
         
     }

@@ -39,7 +39,7 @@ namespace Runedal.GameEngine
             GameClock.Start();
 
             Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
-            Monster skeleton = karczma.Characters.Find(ch => ch.Name.ToLower() == "szkielet_wojownik") as Monster;
+            Monster skeleton = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
             AttackInstances.Add(new AttackInstance(Data.Player!, skeleton));
             AttackInstances.Add(new AttackInstance(skeleton, Data.Player!));
             //Data.Player.Hp -= 500;
@@ -1665,9 +1665,11 @@ namespace Runedal.GameEngine
         {
             PrintMessage("Nogi odmawiają Ci posłuszeństwa, wzrok traci ostrość a dźwięki dochodzą jakby z oddali. " +
                 "Upadasz na kolana, a potem na twarz. Czujesz, że to koniec i powoli odpływasz w nicość.. umierasz.", MessageType.Action);
+
             Data.Player!.CurrentLocation!.RemoveCharacter(Data.Player);
             Data.Locations!.Find(loc => loc.Name! == "Karczma")!.AddCharacter(Data.Player);
-            PrintMessage("Odradzasz się..");
+
+            PrintMessage("Odradzasz się..", MessageType.Action);
             LocationInfo();
         }
 

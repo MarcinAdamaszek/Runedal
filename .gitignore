@@ -402,3 +402,6 @@ FodyWeavers.xsd
 
 #word files
 *.docx
+
+#other
+RunedalNotatki.txt

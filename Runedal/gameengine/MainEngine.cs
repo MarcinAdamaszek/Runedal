@@ -1361,7 +1361,7 @@ namespace Runedal.GameEngine
             rows[7] += "Trafienia krytyczne: " + Math.Floor(player.GetEffectiveCritical());
             rows[8] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
             rows[9] += "Regeneracja HP " + Math.Floor(player.GetEffectiveHpRegen());
-            rows[10] += "Regeneracja HP: " + Math.Floor(player.GetEffectiveMpRegen());
+            rows[10] += "Regeneracja MP: " + Math.Floor(player.GetEffectiveMpRegen());
 
             //fill remaining space
             for (i = 1; i < rowsSize - 1; i++)
@@ -1760,8 +1760,8 @@ namespace Runedal.GameEngine
             if (!(attacker.Opponents.Exists(op => op == attacked)))
             {
                 attacker.InteractsWith = attacked;
-                attacker.Opponents.Add(attacked);
-                attacked.Opponents.Add(attacker);
+                attacker.AddOpponent(attacked);
+                attacked.AddOpponent(attacker);
             }
         }
 
@@ -2146,16 +2146,6 @@ namespace Runedal.GameEngine
             CharactersTick();
             PlayerEffectsTick();
             AttacksTick();
-            DelayCounterTick();
-        }
-
-        //method decreasing delay counter
-        private void DelayCounterTick()
-        {
-            if (DelayCounter > 0)
-            {
-                DelayCounter--;
-            }
         }
 
         //method launching HandleTick method for every character in game

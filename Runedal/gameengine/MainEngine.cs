@@ -38,9 +38,9 @@ namespace Runedal.GameEngine
             GameClock.Start();
 
             Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
-            Monster burek = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
-            AttackInstances.Add(new AttackInstance(Data.Player!, burek));
-            //AttackInstances.Add(new AttackInstance(burek, Data.Player!));
+            Monster skeleton = karczma.Characters.Find(ch => ch.Name.ToLower() == "szkielet_wojownik") as Monster;
+            AttackInstances.Add(new AttackInstance(Data.Player!, skeleton));
+            AttackInstances.Add(new AttackInstance(skeleton, Data.Player!));
             //Data.Player.Hp -= 500;
             //Data.Player.Mp -= 300;
             //(Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
@@ -1659,6 +1659,35 @@ namespace Runedal.GameEngine
 
         //==============================================MANIPULATION METHODS=============================================
 
+        //method killing player
+        private void KillPlayer()
+        {
+            PrintMessage("Nogi odmawiają Ci posłuszeństwa, wzrok traci ostrość a dźwięki dochodzą jakby z oddali. " +
+                "Upadasz na kolana, a potem na twarz. Czujesz, że to koniec i powoli odpływasz w nicość.. umierasz.", MessageType.Action);
+            Data.Player!.CurrentLocation!.RemoveCharacter(Data.Player);
+            Data.Locations!.Find(loc => loc.Name! == "Karczma")!.AddCharacter(Data.Player);
+            PrintMessage("Odradzasz się..");
+            LocationInfo();
+        }
+
+        //method killing non-player combat character
+        private void KillCharacter(CombatCharacter character)
+        {
+            if (character.CurrentLocation == Data.Player!.CurrentLocation)
+            {
+                PrintMessage(character.Name + " ginie");
+            }
+
+            //drop characters items
+            character.Inventory!.ForEach(item =>
+            {
+                AddItemToLocation(character.CurrentLocation!, item.Name!, item.Quantity);
+            });
+
+            //erase character
+            character.CurrentLocation!.RemoveCharacter(character);
+        }
+
         //method putting character into location
         private void AddCharacterToLocation(Location location, Character character)
         {
@@ -1670,7 +1699,7 @@ namespace Runedal.GameEngine
             }
             else if (Data.Player!.CurrentLocation == location)
             {
-                PrintMessage("Widzisz nowego przybysza: " + character.Name);
+                PrintMessage("W lokacji pojawia się postać: " + character.Name);
             }
         }
 
@@ -1916,15 +1945,19 @@ namespace Runedal.GameEngine
         //method adding items to non-player characters
         private void AddItemToNpc(Character character, string itemName, int quantity)
         {
-            Item itemToAdd = Data.Items!.Find(item => item.Name.ToLower() == itemName.ToLower())!;
+            Item itemToAdd = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
             character.AddItem(itemToAdd, quantity);
         }
 
         //method adding items to location
         private void AddItemToLocation(Location location, string itemName, int quantity)
         {
-            Item itemToAdd = Data.Items!.Find(item => item.Name.ToLower() == itemName.ToLower())!;
+            Item itemToAdd = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
             location.AddItem(itemToAdd, quantity);
+            if (location == Data.Player!.CurrentLocation)
+            {
+                PrintMessage("W lokacji pojawia się przedmiot: " + itemToAdd.Name + "(" + quantity + ")");
+            }
         }
 
 
@@ -1995,7 +2028,6 @@ namespace Runedal.GameEngine
         {
             bool isAttackerPlayer;
             bool isReceiverPlayer;
-            int numberOfInstances = AttackInstances.Count;
             int i;
             double staticDmg;
             double rawDmg;
@@ -2005,7 +2037,7 @@ namespace Runedal.GameEngine
             CombatCharacter attacker = new CombatCharacter();
             CombatCharacter receiver = new CombatCharacter();
 
-            for (i = 0; i < numberOfInstances; i++)
+            for (i = 0; i < AttackInstances.Count; i++)
             {
                 attacker = AttackInstances[i].Attacker;
                 receiver = AttackInstances[i].Receiver;
@@ -2065,7 +2097,23 @@ namespace Runedal.GameEngine
                     PrintMessage(attacker.Name! + " zadaje Ci " + dmgAsInt + " obrażeń", MessageType.ReceiveDmg);
                 }
 
-                receiver.DealDamage(dmgAsInt);
+                //deal the dmg, and if it's lethal - kill the character and end the fight
+                if (receiver.DealDamage(dmgAsInt))
+                {
+                    if (isAttackerPlayer)
+                    {
+                        PrintMessage("Pokonujesz " + receiver.Name + "!", MessageType.Action);
+                        KillCharacter(receiver);
+                    }
+                    else if (isReceiverPlayer)
+                    {
+                        KillPlayer();
+                    }
+
+                    AttackInstances.Remove(AttackInstances[i]);
+
+                    attacker.Opponents.Remove(receiver);
+                }
                 
             }
 

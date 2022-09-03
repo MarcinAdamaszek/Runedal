@@ -699,22 +699,47 @@ namespace Runedal.GameEngine
         private void DropHandler(string itemName, string quantity)
         {
             int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
-            int itemQuantity = 1;
-            Item itemToRemove;
+            int itemQuantity;
+            Item itemToRemove = new Item();
 
             ResetPlayerState();
 
-            if (itemIndex == -1 && itemName.ToLower() != "złoto")
+            if (itemIndex == -1 && itemName != "złoto")
             {
                 PrintMessage("Nie posiadasz przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
                 return;
             }
 
-            //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
-            if (!ConvertQuantityString(quantity, out itemQuantity))
+            if (itemName != "złoto")
+            {
+                itemToRemove = Data.Player!.Inventory[itemIndex];
+            }
+
+            //set item quantity depedning on 2nd argument if it's not empty
+            if (quantity == "all" || quantity == "a")
+            {
+
+                //depending if it's item or gold
+                if (itemName != "złoto")
+                {
+                    itemQuantity = itemToRemove.Quantity;
+                }
+                else
+                {
+                    itemQuantity = Data.Player.Gold;
+                }
+            }
+            else if (!ConvertQuantityString(quantity, out itemQuantity))
             {
                 PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
                 return;
+            }
+
+            //if player typed drop without quantity argument (ConvertQuantityString method
+            //assigns 0 to it's out parameter) - set quantity to 1
+            if (itemQuantity == 0)
+            {
+                itemQuantity = 1;
             }
 
             //if the item name is 'zloto' drop gold
@@ -735,8 +760,6 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            itemToRemove = Data.Player!.Inventory[itemIndex];
-
             //if player wants to drop more quantity of items than he actually has
             //set quantity to equal actual item quantity and drop it all
             if (itemToRemove.Quantity < itemQuantity)
@@ -752,59 +775,85 @@ namespace Runedal.GameEngine
         //method handling 'pickup' command
         private void PickupHandler(string itemName, string quantity)
         {
-            int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
-            int itemQuantity = 1;
-            Item itemToPickup;
+            int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == itemName);
+            int itemQuantity;
+            Item itemToPickup = new Item();
 
             ResetPlayerState();
 
-            if (itemIndex == -1 && itemName.ToLower() != "złoto")
+            if (itemIndex == -1 && itemName != "złoto")
             {
-                PrintMessage("Nie posiadasz przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
+                PrintMessage("Nie ma tu przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
                 return;
             }
 
-            //set item quantity depedning on 2nd argument if it's not empty, otherwise leave it as 1
-            if (!ConvertQuantityString(quantity, out itemQuantity))
+            if (itemName != "złoto")
+            {
+                itemToPickup = Data.Player!.CurrentLocation!.Items[itemIndex];
+            }
+
+            //set item quantity depedning on 2nd argument if it's not empty
+            if (quantity == "all" || quantity == "a")
+            {
+
+                //depending if it's item or gold
+                if (itemName != "złoto")
+                {
+                    itemQuantity = itemToPickup.Quantity;
+                }
+                else
+                {
+                    itemQuantity = Data.Player.Gold;
+                }
+            }
+            else if (!ConvertQuantityString(quantity, out itemQuantity))
             {
                 PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
                 return;
-            }
+            }            
 
-            
-
-            //if the item name is 'zloto' drop gold
+            //if the item name is 'zloto' pickup gold
             if (itemName == "złoto")
             {
                 //if player wants to pick up more quantity of gold than there is in his current
-                //location, set quantity to the amout of all gold lying on the ground
-                if (Data.Player!.CurrentLocation.Gold < itemQuantity)
+                //location, set quantity to the amount of all gold lying on the ground
+                if (Data.Player!.CurrentLocation.Gold < itemQuantity || itemQuantity == 0)
                 {
                     itemQuantity = Data.Player!.CurrentLocation.Gold;
                 }
 
-                PrintMessage("Podnosisz " + itemQuantity + " złota", MessageType.Action);
-                Data.Player!.CurrentLocation.Gold -= itemQuantity;
-                AddGoldToPlayer(itemQuantity);
+                //if there is any gold on the ground..
+                if (itemQuantity != 0)
+                {
+                    PrintMessage("Podnosisz " + itemQuantity + " złota", MessageType.Action);
+                    Data.Player!.CurrentLocation.Gold -= itemQuantity;
+                    AddGoldToPlayer(itemQuantity);
+                }
+                else
+                {
+                    PrintMessage("Nie ma tu żadnego złota", MessageType.SystemFeedback);
+                }
 
                 return;
             }
 
-            itemToPickup = Data.Player!.CurrentLocation!.Items[itemIndex];
-
             //if player wants to pick up more quantity of items than there are in his current
-            //location, set quantity to equal actual item quantity and pick up it all
+            //location, set quantity to equal actual item quantity and pick up them all
             if (itemToPickup.Quantity < itemQuantity)
             {
                 itemQuantity = itemToPickup.Quantity;
             }
 
-            if (itemToPickup.Quantity >= itemQuantity)
+            //if player typed pickup without quantity argument (ConvertQuantityString method
+            //assigns 0 to it's out parameter) - set quantity to 1
+            if (itemQuantity == 0)
             {
-                PrintMessage("Podnosisz " + itemQuantity + " " + itemToPickup.Name, MessageType.Action);
-                AddItemToPlayer(itemName, itemQuantity);
-                Data.Player!.CurrentLocation!.RemoveItem(itemName, itemQuantity);
+                itemQuantity = 1;
             }
+
+            PrintMessage("Podnosisz " + itemQuantity + " " + itemToPickup.Name, MessageType.Action);
+            AddItemToPlayer(itemName, itemQuantity);
+            Data.Player!.CurrentLocation!.RemoveItem(itemName, itemQuantity);
         }
 
         //method handling 'wear' command
@@ -1587,7 +1636,7 @@ namespace Runedal.GameEngine
         //if conversion succeded and value is > 0  (returns false otherwise)
         private bool ConvertQuantityString(string quantityString, out int quantityValue)
         {
-            int parsedQuantity = 1;
+            int parsedQuantity = 0;
 
             if (quantityString != string.Empty)
             {

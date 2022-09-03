@@ -13,7 +13,7 @@ namespace Runedal.GameData.Characters
         {
             AssignId();
         }
-        public Monster(string[] descriptive, int[] combatStats, string[][] responses, int gold)
+        public Monster(string[] descriptive, int[] combatStats, string[][] responses, int gold, bool isAggressive)
             : base(descriptive, combatStats, responses, gold) 
         {
             AssignId();
@@ -22,6 +22,7 @@ namespace Runedal.GameData.Characters
         //copy constructor
         public Monster(Monster mon) : base(mon)
         {
+            isAggressive = mon.isAggressive;
             AssignId();
         }
 
@@ -31,6 +32,8 @@ namespace Runedal.GameData.Characters
             TakenIds.Remove(this.Id);
         }
         public int Id { get; set; }
+
+        public bool isAggressive { get; set; }
 
         //list of id's assigned to all existing monsters
         public static List<int> TakenIds { get; set; } = new List<int>();

@@ -268,9 +268,6 @@ namespace Runedal.GameEngine
 
                     //change player's current location
                     AddCharacterToLocation(nextLocation, Data.Player!);
-
-                    ////display location info to user
-                    //LocationInfo();
                 }
                 else
                 {
@@ -732,7 +729,7 @@ namespace Runedal.GameEngine
 
                 PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
                 RemoveGoldFromPlayer(itemQuantity);
-                Data.Player!.CurrentLocation!.Gold += itemQuantity;
+                AddGoldToLocation(Data.Player.CurrentLocation!, itemQuantity);
 
                 return;
             }
@@ -1772,10 +1769,8 @@ namespace Runedal.GameEngine
                 "Upadasz na kolana, a potem na twarz. Czujesz, że to koniec i powoli odpływasz w nicość.. umierasz.", MessageType.Action);
 
             Data.Player!.CurrentLocation!.RemoveCharacter(Data.Player);
-            Data.Locations!.Find(loc => loc.Name! == "Karczma")!.AddCharacter(Data.Player);
-
             PrintMessage("Odradzasz się..", MessageType.Action);
-            LocationInfo();
+            AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma")!, Data.Player!);
         }
 
         //method killing non-player combat character
@@ -1791,13 +1786,14 @@ namespace Runedal.GameEngine
             {
                 AddItemToLocation(character.CurrentLocation!, item.Name!, item.Quantity);
             });
+            AddGoldToLocation(character.CurrentLocation!, character.Gold);
 
             //erase character
             character.CurrentLocation!.RemoveCharacter(character);
         }
 
         //method dealing dmg to combat-character
-        private void DealDmgToCharacter(CombatCharacter dealer, CombatCharacter receiver, int dmg)
+        private bool DealDmgToCharacter(CombatCharacter dealer, CombatCharacter receiver, int dmg)
         {
             bool isDealerPlayer = dealer.GetType() == typeof(Player);
             bool isReceiverPlayer = receiver.GetType() == typeof(Player);
@@ -1843,8 +1839,9 @@ namespace Runedal.GameEngine
                 {
                     KillPlayer();
                 }
-                return;
             }
+
+            return isDmgLethal;
         }
 
         //method adding certain amount to player's experience pool
@@ -2132,7 +2129,17 @@ namespace Runedal.GameEngine
                 PrintMessage("W lokacji pojawia się przedmiot: " + itemToAdd.Name + "(" + quantity + ")");
             }
         }
-
+        
+        //method adding gold to location
+        private void AddGoldToLocation(Location location, int amount)
+        {
+            location.Gold += amount;
+            
+            if (location == Data.Player!.CurrentLocation)
+            {
+                PrintMessage("W lokacji pojawia się złoto!");
+            }
+        }
 
 
 
@@ -2201,6 +2208,7 @@ namespace Runedal.GameEngine
         {
             bool isAttackerPlayer;
             bool isReceiverPlayer;
+            bool isDmgLethal = false;
             int i;
             double staticDmg;
             double rawDmg;
@@ -2224,19 +2232,7 @@ namespace Runedal.GameEngine
                 isAttackerPlayer = attacker.GetType() == typeof(Player);
                 isReceiverPlayer = receiver.GetType() == typeof(Player);
 
-                
                 attacker.PerformAttack();
-
-                //if receiver is an npc character - respond with counterattack
-                if (receiver != Data.Player)
-                {
-
-                    //check if attacked isn't already attacking the attacker
-                    if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == attacker))
-                    {
-                        AttackCharacter(receiver, attacker);
-                    }
-                }
 
                 //try if attack actually hits or misses
                 if (!IsAttackHit(attacker.GetEffectiveAccuracy(), receiver.GetEffectiveEvasion()))
@@ -2250,38 +2246,51 @@ namespace Runedal.GameEngine
                     {
                         PrintMessage("Unikasz ataku " + attacker.Name, MessageType.Miss);
                     }
-                    continue;
-                }
-
-                staticDmg = CalculateDmg(attacker.GetEffectiveAttack(), receiver.GetEffectiveDefense());
-                rawDmg = RandomizeDmg(staticDmg);
-
-                if (IsHitCritical(attacker.GetEffectiveCritical()))
-                {
-                    if (isAttackerPlayer)
-                    {
-                        PrintMessage("Trafienie krytyczne!", MessageType.CriticalHit);
-                    }
-                    dealtDmg = rawDmg * 4;
                 }
                 else
                 {
-                    dealtDmg = rawDmg;
+
+                    staticDmg = CalculateDmg(attacker.GetEffectiveAttack(), receiver.GetEffectiveDefense());
+                    rawDmg = RandomizeDmg(staticDmg);
+
+                    if (IsHitCritical(attacker.GetEffectiveCritical()))
+                    {
+                        if (isAttackerPlayer)
+                        {
+                            PrintMessage("Trafienie krytyczne!", MessageType.CriticalHit);
+                        }
+                        dealtDmg = rawDmg * 4;
+                    }
+                    else
+                    {
+                        dealtDmg = rawDmg;
+                    }
+
+                    dmgAsInt = Convert.ToInt32(dealtDmg);
+
+                    //print appropriate messages to user about dmg dealing
+                    if (isAttackerPlayer)
+                    {
+                        PrintMessage("Zadajesz " + dmgAsInt + " obrażeń", MessageType.DealDmg);
+                    }
+                    else if (isReceiverPlayer)
+                    {
+                        PrintMessage(attacker.Name! + " zadaje Ci " + dmgAsInt + " obrażeń", MessageType.ReceiveDmg);
+                    }
+
+                    isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt);
                 }
 
-                dmgAsInt = Convert.ToInt32(dealtDmg);
-
-                //print appropriate messages to user about dmg dealing
-                if (isAttackerPlayer)
+                //if receiver is an npc character - respond with counterattack
+                if (receiver != Data.Player && !isDmgLethal)
                 {
-                    PrintMessage("Zadajesz " + dmgAsInt + " obrażeń", MessageType.DealDmg);
-                }
-                else if (isReceiverPlayer)
-                {
-                    PrintMessage(attacker.Name! + " zadaje Ci " + dmgAsInt + " obrażeń", MessageType.ReceiveDmg);
-                }
 
-                DealDmgToCharacter(attacker, receiver, dmgAsInt);
+                    //check if attacked isn't already attacking the attacker
+                    if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == attacker))
+                    {
+                        AttackCharacter(receiver, attacker);
+                    }
+                }
             }
 
             

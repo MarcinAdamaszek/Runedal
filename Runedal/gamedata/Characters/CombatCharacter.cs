@@ -401,10 +401,11 @@ namespace Runedal.GameData.Characters
         /// </summary>
         /// <param name="statType"></param>
         /// <returns></returns>
-        protected int ApplyModifiers(StatType statType)
+        protected virtual int ApplyModifiers(StatType statType)
         {
             List<Modifier> modifiers;
             int modifiersSumValue = 0;
+            int modifiersPercentValue = 0;
 
             //find all modifiers of specified type
             modifiers = this.Modifiers!.FindAll(mod => mod.Type == statType);
@@ -412,7 +413,58 @@ namespace Runedal.GameData.Characters
             //sum values of all matched modifiers
             if (modifiers.Count > 0)
             {
-                modifiers.ForEach(mod => modifiersSumValue += mod.Value);
+                modifiers.ForEach(mod =>
+                {
+                    if (mod.IsPercentage)
+                    {
+                        modifiersPercentValue += mod.Value;
+                    }
+                    else
+                    {
+                        modifiersSumValue += mod.Value;
+                    }
+                });
+
+                double baseStatValue = 1;
+
+                switch (statType)
+                {
+                    case StatType.MaxHp:
+                        baseStatValue = MaxHp;
+                        break;
+                    case StatType.MaxMp:
+                        baseStatValue = MaxMp;
+                        break;
+                    case StatType.HpRegen:
+                        baseStatValue = HpRegen;
+                        break;
+                    case StatType.Speed:
+                        baseStatValue = Speed;
+                        break;
+                    case StatType.Attack:
+                        baseStatValue = Attack;
+                        break;
+                    case StatType.AtkSpeed:
+                        baseStatValue = AtkSpeed;
+                        break;
+                    case StatType.Accuracy:
+                        baseStatValue = Accuracy;
+                        break;
+                    case StatType.Defense:
+                        baseStatValue = Defense;
+                        break;
+                    case StatType.Evasion:
+                        baseStatValue = Evasion;
+                        break;
+                    case StatType.MagicResistance:
+                        baseStatValue = Evasion;
+                        break;
+                    case StatType.Critical:
+                        baseStatValue = Evasion;
+                        break;
+                }
+
+                modifiersSumValue += Convert.ToInt32((baseStatValue + modifiersSumValue) * (0.01 * modifiersPercentValue));
             }
 
             return modifiersSumValue;

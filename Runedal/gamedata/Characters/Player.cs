@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Runedal.GameData.Items;
 using System.Windows.Media.Effects;
+using static Runedal.GameData.Characters.CombatCharacter;
 
 namespace Runedal.GameData.Characters
 {
@@ -451,7 +452,7 @@ namespace Runedal.GameData.Characters
         //methods for setting effective max hp/mp
         public override double GetEffectiveMaxHp()
         {
-            double effectiveMaxHp = base.GetEffectiveMaxHp();
+            double effectiveMaxHp = MaxHp + ApplyModifiers(StatType.MaxHp);
             double strengthModifier = MaxHpStrMultiplier * GetEffectiveStrength();
             effectiveMaxHp += strengthModifier;
             if (effectiveMaxHp < 1)
@@ -462,7 +463,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveMaxMp()
         {
-            double effectiveMaxMp = base.GetEffectiveMaxMp();
+            double effectiveMaxMp = this.MaxMp + ApplyModifiers(StatType.MaxMp);
             double intelligenceModifier = MaxMpIntMultiplier * GetEffectiveIntelligence();
             effectiveMaxMp += intelligenceModifier;
             if (effectiveMaxMp < 1)
@@ -476,7 +477,7 @@ namespace Runedal.GameData.Characters
         public int GetEffectiveStrength()
         {
             int effectiveStrength = Strength;
-            effectiveStrength += base.ApplyModifiers(CombatCharacter.StatType.Strength);
+            effectiveStrength += ApplyModifiers(CombatCharacter.StatType.Strength);
             if (effectiveStrength < 1)
             {
                 effectiveStrength = 1;
@@ -486,7 +487,7 @@ namespace Runedal.GameData.Characters
         public int GetEffectiveAgility()
         {
             int effectiveAgility = Agility;
-            effectiveAgility += base.ApplyModifiers(CombatCharacter.StatType.Agility);
+            effectiveAgility += ApplyModifiers(CombatCharacter.StatType.Agility);
             if (effectiveAgility < 1)
             {
                 effectiveAgility = 1;
@@ -496,7 +497,7 @@ namespace Runedal.GameData.Characters
         public int GetEffectiveIntelligence()
         {
             int effectiveIntelligence = Intelligence;
-            effectiveIntelligence += base.ApplyModifiers(CombatCharacter.StatType.Intelligence);
+            effectiveIntelligence += ApplyModifiers(CombatCharacter.StatType.Intelligence);
             if (effectiveIntelligence < 1)
             {
                 effectiveIntelligence = 1;
@@ -505,7 +506,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveHpRegen()
         {
-            double effectiveHpRegen = base.GetEffectiveHpRegen();
+            double effectiveHpRegen = this.HpRegen + ApplyModifiers(StatType.HpRegen);
             double strengthModifier = HpRegenStrMultiplier * GetEffectiveStrength();
             effectiveHpRegen += strengthModifier;
             if (effectiveHpRegen < 1)
@@ -516,7 +517,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveMpRegen()
         {
-            double effectiveMpRegen = base.GetEffectiveMpRegen();
+            double effectiveMpRegen = this.MpRegen + ApplyModifiers(StatType.MpRegen);
             double intelligenceModifier = MpRegenIntMultiplier * GetEffectiveIntelligence();
             effectiveMpRegen += intelligenceModifier;
             if (effectiveMpRegen < 1)
@@ -528,7 +529,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveSpeed()
         {
             //effective stat with external modifiers
-            double effectiveSpeed = base.GetEffectiveSpeed();
+            double effectiveSpeed = this.Speed + ApplyModifiers(StatType.Speed);
 
             //attribute modifier
             double agilityModifier = GetEffectiveAgility() * SpeedAgiMultiplier;
@@ -551,7 +552,7 @@ namespace Runedal.GameData.Characters
         public override double GetEffectiveAttack()
         {
             //effective stat with external modifiers
-            double effectiveAttack = base.GetEffectiveAttack();
+            double effectiveAttack = this.Attack + ApplyModifiers(StatType.Attack);
 
             //attribute modifier
             double strengthModifier = GetEffectiveStrength() * AttackStrMultiplier;
@@ -570,7 +571,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveAtkSpeed()
         {
-            double effectiveAtkSpeed = base.GetEffectiveAtkSpeed();
+            double effectiveAtkSpeed = this.AtkSpeed + ApplyModifiers(StatType.AtkSpeed);
             double agilityModifier = GetEffectiveAgility() * AtkSpeedAgiMultiplier;
             effectiveAtkSpeed += agilityModifier;
             if (effectiveAtkSpeed < 1)
@@ -581,7 +582,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveAccuracy()
         {
-            double effectiveAccuracy = base.GetEffectiveAccuracy();
+            double effectiveAccuracy = this.Accuracy + ApplyModifiers(StatType.Accuracy);
             double agilityModifier = GetEffectiveAgility() * AccuracyAgiMultiplier;
             effectiveAccuracy += agilityModifier;
             if (effectiveAccuracy < 1)
@@ -592,7 +593,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveCritical()
         {
-            double effectiveCritical = base.GetEffectiveCritical();
+            double effectiveCritical = this.Critical + ApplyModifiers(StatType.Critical);
             double agilityModifier = GetEffectiveAgility() * CriticalAgiMultiplier;
             effectiveCritical += agilityModifier;
             if (effectiveCritical < 1)
@@ -603,7 +604,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveDefense()
         {
-            double effectiveDefense = base.GetEffectiveDefense();
+            double effectiveDefense = this.Defense + ApplyModifiers(StatType.Defense);
             double wornArmorModifier = Helmet!.Defense + Torso!.Defense + Pants!.Defense + Gloves!.Defense + Shoes!.Defense;
             effectiveDefense += wornArmorModifier;
             if (effectiveDefense < 1)
@@ -614,7 +615,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveEvasion()
         {
-            double effectiveEvasion = base.GetEffectiveEvasion();
+            double effectiveEvasion = this.Evasion + ApplyModifiers(StatType.Evasion);
             double agilityModifier = GetEffectiveAgility() * EvasionAgiMultiplier;
             effectiveEvasion += agilityModifier;
             if (effectiveEvasion < 1)
@@ -625,7 +626,7 @@ namespace Runedal.GameData.Characters
         }
         public override double GetEffectiveMagicResistance()
         {
-            double effectiveMagicResistance = base.GetEffectiveMagicResistance();
+            double effectiveMagicResistance = this.MagicResistance + ApplyModifiers(StatType.MagicResistance);
             double intelligenceModifier = GetEffectiveIntelligence() * MagicResistanceIntMultiplier;
             effectiveMagicResistance += intelligenceModifier;
             if (effectiveMagicResistance < 1)
@@ -633,6 +634,86 @@ namespace Runedal.GameData.Characters
                 effectiveMagicResistance = 1;
             }
             return effectiveMagicResistance;
+        }
+
+        protected override int ApplyModifiers(CombatCharacter.StatType statType)
+        {
+            List<Modifier> modifiers;
+            int modifiersSumValue = 0;
+            int modifiersPercentValue = 0;
+
+            //find all modifiers of specified type
+            modifiers = this.Modifiers!.FindAll(mod => mod.Type == statType);
+
+            //sum values of all matched modifiers
+            if (modifiers.Count > 0)
+            {
+                modifiers.ForEach(mod =>
+                {
+                    if (mod.IsPercentage)
+                    {
+                        modifiersPercentValue += mod.Value;
+                    }
+                    else
+                    {
+                        modifiersSumValue += mod.Value;
+                    }
+                });
+
+                double baseStatValue = 1;
+
+                //get base stat value combined with static-modifiers values and
+                //add percentage value of multiplying it by percentage modifiers sum value
+                switch (statType)
+                {
+                    case StatType.Strength:
+                        baseStatValue = Strength + modifiersSumValue;
+                        break;
+                    case StatType.Agility:
+                        baseStatValue = Agility + modifiersSumValue;
+                        break;
+                    case StatType.Intelligence:
+                        baseStatValue = Intelligence + modifiersSumValue;
+                        break;
+                    case StatType.MaxHp:
+                        baseStatValue = MaxHp + modifiersSumValue + MaxHpStrMultiplier * GetEffectiveStrength();
+                        break;
+                    case StatType.MaxMp:
+                        baseStatValue = MaxMp + modifiersSumValue + MaxMpIntMultiplier * GetEffectiveIntelligence();
+                        break;
+                    case StatType.HpRegen:
+                        baseStatValue = HpRegen + modifiersSumValue + HpRegenStrMultiplier * GetEffectiveStrength();
+                        break;
+                    case StatType.Speed:
+                        baseStatValue = Speed + modifiersSumValue + SpeedAgiMultiplier * GetEffectiveAgility();
+                        break;
+                    case StatType.Attack:
+                        baseStatValue = Attack + modifiersSumValue + AttackStrMultiplier * GetEffectiveStrength();
+                        break;
+                    case StatType.AtkSpeed:
+                        baseStatValue = AtkSpeed + modifiersSumValue + AtkSpeedAgiMultiplier * GetEffectiveAgility();
+                        break;
+                    case StatType.Accuracy:
+                        baseStatValue = Accuracy + modifiersSumValue + AccuracyAgiMultiplier * GetEffectiveAgility();
+                        break;
+                    case StatType.Defense:
+                        baseStatValue = Defense + modifiersSumValue;
+                        break;
+                    case StatType.Evasion:
+                        baseStatValue = Evasion + modifiersSumValue + EvasionAgiMultiplier * GetEffectiveAgility();
+                        break;
+                    case StatType.MagicResistance:
+                        baseStatValue = MagicResistance + modifiersSumValue + MagicResistanceIntMultiplier * GetEffectiveIntelligence();
+                        break;
+                    case StatType.Critical:
+                        baseStatValue = Critical + modifiersSumValue + CriticalAgiMultiplier * GetEffectiveAgility();
+                        break;
+                }
+
+                modifiersSumValue += Convert.ToInt32(baseStatValue * (0.01 * modifiersPercentValue));
+            }
+
+            return modifiersSumValue;
         }
 
         //methods for setting hp/mp percentages

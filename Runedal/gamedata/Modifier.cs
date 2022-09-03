@@ -14,14 +14,15 @@ namespace Runedal.GameData
         //default constructor for json deserialization
         public Modifier() 
         {
-            Parent = "none";    
+            Parent = "none";   
         }
-        public Modifier(CombatCharacter.StatType type, int value, int duration = 0, string parent = "none")
+        public Modifier(CombatCharacter.StatType type, int value, int duration = 0, string parent = "none", bool isPercentage = false)
         {
             Type = type;
             Value = value;
             Duration = duration;
             Parent = parent;
+            IsPercentage = isPercentage;
         }
 
         //copy constructor 
@@ -31,10 +32,14 @@ namespace Runedal.GameData
             Value = mod.Value;
             Duration = mod.Duration;
             Parent = mod.Parent;
+            IsPercentage = mod.IsPercentage;
         }
 
-        //enum for type of modifier (which statistic it modifies)
+        //type of modifier (which statistic it modifies)
         public CombatCharacter.StatType Type { get; set; }
+
+        //bool indicating if value is percentage
+        public bool IsPercentage { get; set; }
 
         //value of how much is statistic going to be modified
         public int Value { get; set; }

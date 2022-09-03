@@ -1460,6 +1460,13 @@ namespace Runedal.GameEngine
             string description = string.Empty;
             string modType = GetPolishModType(modifier.Type);
             string valueSign = string.Empty;
+            string percentSign = string.Empty;
+
+            //add percent sign if the modifier is percentage
+            if (modifier.IsPercentage)
+            {
+                percentSign = "_%";
+            }
 
             //set sign of modifier to + if its positive number (for negative, minus sign is displayed automatically)
             if (modifier.Value > 0)
@@ -1467,7 +1474,7 @@ namespace Runedal.GameEngine
                 valueSign = "+";
             }
 
-            description = modType + "(" + valueSign + modifier.Value + ")";
+            description = modType + "(" + valueSign + modifier.Value + percentSign + ")";
             return description;
         }
 

@@ -543,13 +543,25 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            //set item quantity depedning on 2nd argument
-            if (!ConvertQuantityString(quantity, out itemQuantity))
+            //if player typed 'all' as second argument, set quantity to maximum
+            if (quantity == "all" || quantity == "a")
+            {
+                itemQuantity = trader.Inventory[itemIndex].Quantity;
+            }
+
+            //else set quantity depending on value parsed from second argument
+            else if (!ConvertQuantityString(quantity, out itemQuantity))
             {
                 PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
                 return;
             }
 
+            //prevent player from buying '0' items
+            if (itemQuantity == 0)
+            {
+                itemQuantity = 1;
+            }
+            
             //if player set quantity to more than trader has, set it to
             //all trader has (just buy all)
             if (trader.Inventory[itemIndex].Quantity < itemQuantity)
@@ -604,18 +616,30 @@ namespace Runedal.GameEngine
 
             itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
 
-            //check if the item exists in player's inventory and if he has enough of it
+            //check if the item exists in player's inventory
             if (itemIndex == -1)
             {
                 PrintMessage("Nie posiadasz wybranego przedmiotu", MessageType.SystemFeedback);
                 return;
             }
 
-            //set item quantity depedning on 2nd argument
-            if (!ConvertQuantityString(quantity, out itemQuantity))
+            //if player typed 'all' as second argument, set quantity to maximum
+            if (quantity == "all" || quantity == "a")
+            {
+                itemQuantity = Data.Player!.Inventory[itemIndex].Quantity;
+            }
+
+            //else set quantity depending on value parsed from second argument
+            else if (!ConvertQuantityString(quantity, out itemQuantity))
             {
                 PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
                 return;
+            }
+
+            //prevent player from selling 0 items
+            if (itemQuantity == 0)
+            {
+                itemQuantity = 1;
             }
 
             //if player set quantity to more than he has, set it to

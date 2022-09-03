@@ -2125,6 +2125,13 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method removing effects from player
+        private void RemoveEffect(EffectOnPlayer effect)
+        {
+            PrintMessage("Skończyło się działanie " + effect.Description, MessageType.EffectOff);
+            Data.Player!.Effects!.Remove(effect);
+        }
+
         //method breaking trade state and printing proper message
         private void BreakTradeState()
 
@@ -2219,14 +2226,12 @@ namespace Runedal.GameEngine
         //method handling player effects tick
         private void PlayerEffectsTick()
         {
-            int numberOfEffects;
             List<EffectOnPlayer> playerEffects;
-
+            List<EffectOnPlayer> effectsToRemove = new List<EffectOnPlayer>();
             playerEffects = Data.Player!.Effects!;
-            numberOfEffects = playerEffects.Count;
 
             //handle duration-decrease and wearing off of effects affecting player
-            for (int i = 0; i < numberOfEffects; i++)
+            for (int i = 0; i < playerEffects.Count; i++)
             {
 
                 //if duration is greater than 1 - decrement it.
@@ -2237,14 +2242,13 @@ namespace Runedal.GameEngine
                 }
                 else if (playerEffects[i].DurationInTicks == 1)
                 {
-                    PrintMessage("Skończyło się działanie " + playerEffects[i].Description, MessageType.EffectOff);
-                    Data.Player!.Effects!.Remove(playerEffects[i]);
-
-                    //after removing effect, the list count has decremented, so number of effects also needs
-                    //to decrement to avoid OutOfRange exception
-                    numberOfEffects--;
+                    effectsToRemove.Add(playerEffects[i]);
                 }
             }
+            effectsToRemove.ForEach(eff =>
+            {
+                RemoveEffect(eff);
+            });
         }
 
         //method handling attacks for every attack instance

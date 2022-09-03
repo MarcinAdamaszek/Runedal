@@ -1791,6 +1791,20 @@ namespace Runedal.GameEngine
         {
             //erase character from it's current location
             character.CurrentLocation!.RemoveCharacter(character);
+
+            //remove all attack instances related to dying character
+            List<AttackInstance> instancesToRemove = new List<AttackInstance>();
+            for (int i = 0; i < AttackInstances.Count; i++)
+            {
+                if (AttackInstances[i].Attacker == character || AttackInstances[i].Receiver == character)
+                {
+                    instancesToRemove.Add(AttackInstances[i]);
+                }
+            }
+            instancesToRemove.ForEach(ins =>
+            {
+                AttackInstances.Remove(ins);
+            });
             
             //if it's player dying
             if (character == Data.Player!)
@@ -1840,21 +1854,6 @@ namespace Runedal.GameEngine
             if (isDmgLethal)
             {
                 KillCharacter(receiver);
-
-                int attackerInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == dealer)!;
-
-                //if dmgDealer was attacking an opponent, remove it's attack instance
-                if (attackerInstanceIndex != -1)
-                {
-                    AttackInstances.RemoveAt(attackerInstanceIndex);
-                }
-
-                //same for receiver attack instance
-                int receiverInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == receiver)!;
-                if (receiverInstanceIndex != -1)
-                {
-                    AttackInstances.RemoveAt(receiverInstanceIndex);
-                }
 
                 //end combat, remove opponents etc.
                 if (dealer.Opponents.Exists(opponent => opponent == receiver))

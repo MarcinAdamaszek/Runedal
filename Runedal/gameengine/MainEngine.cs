@@ -1822,7 +1822,14 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method dealing dmg to combat-character
+        /// <summary>
+        /// method dealing dmg to combat-character. Returns true if the dmg is lethal,
+        /// otherwise - returns false;
+        /// </summary>
+        /// <param name="dealer"></param>
+        /// <param name="receiver"></param>
+        /// <param name="dmg"></param>
+        /// <returns></returns>
         private bool DealDmgToCharacter(CombatCharacter dealer, CombatCharacter receiver, int dmg)
         {
             bool isDealerPlayer = dealer.GetType() == typeof(Player);
@@ -1832,6 +1839,8 @@ namespace Runedal.GameEngine
 
             if (isDmgLethal)
             {
+                KillCharacter(receiver);
+
                 int attackerInstanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == dealer)!;
 
                 //if dmgDealer was attacking an opponent, remove it's attack instance
@@ -1861,15 +1870,8 @@ namespace Runedal.GameEngine
 
                 if (isDealerPlayer)
                 {
-                    PrintMessage("Pokonujesz przeciwnika!", MessageType.Action);
-                    
                     GivePlayerExperience(receiver.Level);
                 }
-                //else if (isReceiverPlayer)
-                //{
-                //    KillPlayer();
-                //}
-                KillCharacter(receiver);
             }
 
             return isDmgLethal;

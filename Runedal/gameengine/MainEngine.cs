@@ -1789,12 +1789,14 @@ namespace Runedal.GameEngine
         //method killing non-player combat character
         private void KillCharacter(CombatCharacter character)
         {
+            int i;
+
             //erase character from it's current location
             character.CurrentLocation!.RemoveCharacter(character);
 
             //remove all attack instances related to dying character
             List<AttackInstance> instancesToRemove = new List<AttackInstance>();
-            for (int i = 0; i < AttackInstances.Count; i++)
+            for (i = 0; i < AttackInstances.Count; i++)
             {
                 if (AttackInstances[i].Attacker == character || AttackInstances[i].Receiver == character)
                 {
@@ -1805,12 +1807,30 @@ namespace Runedal.GameEngine
             {
                 AttackInstances.Remove(ins);
             });
-            
+
+            //remove all modifiers from character
+            List<Modifier> modsToRemove = new List<Modifier>();
+            for (i = 0; i < character.Modifiers!.Count; i++)
+            {
+                modsToRemove.Add(character.Modifiers[i]);
+            }
+            modsToRemove.ForEach(mod => character.RemoveModifier(mod));
+
             //if it's player dying
             if (character == Data.Player!)
             {
                 PrintMessage("Nogi odmawiają Ci posłuszeństwa, wzrok traci ostrość a dźwięki dochodzą jakby z oddali. " +
                 "Upadasz na kolana, a potem na twarz. Czujesz, że to koniec i powoli odpływasz w nicość.. umierasz.", MessageType.Action);
+
+                //remove all effects from player
+                List<EffectOnPlayer> effectsToRemove = new List<EffectOnPlayer>();
+                for (i = 0; i < (character as Player)!.Effects!.Count; i++)
+                {
+                    effectsToRemove.Add((character as Player)!.Effects![i]);
+                }
+                effectsToRemove.ForEach(eff => RemoveEffect(eff));
+
+                //respawn player
                 PrintMessage("Odradzasz się..", MessageType.Action);
                 AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma")!, Data.Player!);
                 Data.Player!.Hp = Data.Player.MaxHp * 0.4;

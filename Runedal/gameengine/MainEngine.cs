@@ -15,6 +15,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using Microsoft.Win32.SafeHandles;
 using System.Windows.Input;
+using System.Numerics;
 
 namespace Runedal.GameEngine
 {
@@ -912,13 +913,13 @@ namespace Runedal.GameEngine
                 //if player if fighting with multiple opponents
                 else
                 {
-                    CombatCharacter weakestOpponent = new CombatCharacter(0);
+                    CombatCharacter weakestOpponent = new CombatCharacter(9999999);
                     bool opponentFound = false;
 
                     //find the opponent with the lowest level
                     Data.Player!.Opponents!.ForEach(op =>
                     {
-                        if (op.Level > weakestOpponent.Level)
+                        if (op.Level < weakestOpponent.Level)
                         {
                             weakestOpponent = op;
                             opponentFound = true;
@@ -1730,7 +1731,7 @@ namespace Runedal.GameEngine
         //method randomizing dmg
         private double RandomizeDmg(double staticDmg)
         {
-            double randomDmgMultiplier = Rand.Next(80, 121) * 0.01;
+            double randomDmgMultiplier = Rand.Next(70, 131) * 0.01;
             double randomizedDmg = staticDmg * randomDmgMultiplier;
             return randomizedDmg;
         }
@@ -1785,34 +1786,40 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method killing player
-        private void KillPlayer()
-        {
-            PrintMessage("Nogi odmawiają Ci posłuszeństwa, wzrok traci ostrość a dźwięki dochodzą jakby z oddali. " +
-                "Upadasz na kolana, a potem na twarz. Czujesz, że to koniec i powoli odpływasz w nicość.. umierasz.", MessageType.Action);
-
-            Data.Player!.CurrentLocation!.RemoveCharacter(Data.Player);
-            PrintMessage("Odradzasz się..", MessageType.Action);
-            AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma")!, Data.Player!);
-        }
-
         //method killing non-player combat character
         private void KillCharacter(CombatCharacter character)
         {
-            if (character.CurrentLocation == Data.Player!.CurrentLocation)
+            //erase character from it's current location
+            character.CurrentLocation!.RemoveCharacter(character);
+            
+            //if it's player dying
+            if (character == Data.Player!)
             {
-                PrintMessage(character.Name + " ginie");
+                PrintMessage("Nogi odmawiają Ci posłuszeństwa, wzrok traci ostrość a dźwięki dochodzą jakby z oddali. " +
+                "Upadasz na kolana, a potem na twarz. Czujesz, że to koniec i powoli odpływasz w nicość.. umierasz.", MessageType.Action);
+                PrintMessage("Odradzasz się..", MessageType.Action);
+                AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma")!, Data.Player!);
+                Data.Player!.Hp = Data.Player.MaxHp * 0.4;
+                Data.Player!.Mp = 0;
             }
 
-            //drop characters items
-            character.Inventory!.ForEach(item =>
+            //else if it's npc dying
+            else
             {
-                AddItemToLocation(character.CurrentLocation!, item.Name!, item.Quantity);
-            });
-            AddGoldToLocation(character.CurrentLocation!, character.Gold);
 
-            //erase character
-            character.CurrentLocation!.RemoveCharacter(character);
+                //if it's dying in location occupied by the player
+                if (character.CurrentLocation == Data.Player!.CurrentLocation)
+                {
+                    PrintMessage(character.Name + " ginie");
+                }
+
+                //drop character's items
+                character.Inventory!.ForEach(item =>
+                {
+                    AddItemToLocation(character.CurrentLocation!, item.Name!, item.Quantity);
+                });
+                AddGoldToLocation(character.CurrentLocation!, character.Gold);
+            }
         }
 
         //method dealing dmg to combat-character
@@ -1855,13 +1862,14 @@ namespace Runedal.GameEngine
                 if (isDealerPlayer)
                 {
                     PrintMessage("Pokonujesz przeciwnika!", MessageType.Action);
-                    KillCharacter(receiver);
+                    
                     GivePlayerExperience(receiver.Level);
                 }
-                else if (isReceiverPlayer)
-                {
-                    KillPlayer();
-                }
+                //else if (isReceiverPlayer)
+                //{
+                //    KillPlayer();
+                //}
+                KillCharacter(receiver);
             }
 
             return isDmgLethal;

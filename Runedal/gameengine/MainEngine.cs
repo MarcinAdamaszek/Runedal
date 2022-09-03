@@ -912,7 +912,23 @@ namespace Runedal.GameEngine
                 //if player if fighting with multiple opponents
                 else
                 {
+                    CombatCharacter weakestOpponent = new CombatCharacter(0);
+                    bool opponentFound = false;
 
+                    //find the opponent with the lowest level
+                    Data.Player!.Opponents!.ForEach(op =>
+                    {
+                        if (op.Level > weakestOpponent.Level)
+                        {
+                            weakestOpponent = op;
+                            opponentFound = true;
+                        }
+                    });
+
+                    if (opponentFound)
+                    {
+                        AttackCharacter(Data.Player, weakestOpponent);
+                    }
                 }
                 return;
             }
@@ -1730,6 +1746,13 @@ namespace Runedal.GameEngine
         //method for attacking character by another character
         private void AttackCharacter(CombatCharacter attacker, CombatCharacter attacked)
         {
+            //make sure to remove previous attack instance, so attacker doesn't attack
+            //2 (or more) characters simultaneously
+            int instanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == attacker);
+            if (instanceIndex != -1)
+            {
+                AttackInstances.RemoveAt(instanceIndex);
+            }
             AttackInstances.Add(new AttackInstance(attacker, attacked));
 
             //print npcs aggressive response when it attacks
@@ -1862,10 +1885,22 @@ namespace Runedal.GameEngine
         private void AddCharacterToLocation(Location location, Character character)
         {
             location.AddCharacter(character);
+            character.CurrentLocation = location;
 
             if (character.GetType() == typeof(Player))
             {
                 LocationInfo();
+
+                location.Characters!.ForEach(ch =>
+                {
+                    if (ch.GetType() == typeof(Monster))
+                    {
+                        if ((ch as Monster)!.isAggressive)
+                        {
+                            AttackCharacter((ch as CombatCharacter)!, (character as CombatCharacter)!);
+                        }
+                    }
+                });
             }
             else if (Data.Player!.CurrentLocation == location)
             {

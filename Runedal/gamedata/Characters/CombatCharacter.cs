@@ -26,6 +26,18 @@ namespace Runedal.GameData.Characters
             HpCounter = CounterMax;
             MpCounter = CounterMax;
         }
+
+        //special constructor for AttackHandler to instantiate character with 0 lvl
+        public CombatCharacter(int level)
+        {
+            Modifiers = new List<Modifier>();
+            Opponents = new List<CombatCharacter>();
+
+            HpCounter = CounterMax;
+            MpCounter = CounterMax;
+
+            Level = level;
+        }
         public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
             : base(descriptive, responses, gold)
         {

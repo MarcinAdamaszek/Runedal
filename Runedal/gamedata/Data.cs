@@ -120,10 +120,15 @@ namespace Runedal.GameData
             Item[] armorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
             PopulateItems(armorsArray);
 
-            //load ranged
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Ranged.json");
-            Item[] rangedArray = JsonSerializer.Deserialize<Ranged[]>(JsonString, Options)!;
-            PopulateItems(rangedArray);
+            //load runes
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Runes.json");
+            Item[] runesArray = JsonSerializer.Deserialize<RuneStone[]>(JsonString, Options)!;
+            PopulateItems(runesArray);
+
+            ////load ranged
+            //JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Ranged.json");
+            //Item[] rangedArray = JsonSerializer.Deserialize<Ranged[]>(JsonString, Options)!;
+            //PopulateItems(rangedArray);
         }
 
         //method filling locations with characters, characters with items, initializing hps etc

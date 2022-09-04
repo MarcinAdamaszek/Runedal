@@ -8,6 +8,12 @@ namespace Runedal.GameData
 {
     public class Action
     {
+        public Action() { }
 
+        public Action(double actionPointsCost)
+        {
+            ActionPointsCost = actionPointsCost;
+        }
+        public double ActionPointsCost { get; set; }
     }
 }

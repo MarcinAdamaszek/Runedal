@@ -1369,11 +1369,9 @@ namespace Runedal.GameEngine
                 attack = "Atak: " + (itemToDescribe as Weapon)!.Attack;
                 itemType += "Broń biała";
             }
-            else if (itemToDescribe.GetType() == typeof(Ranged))
+            else if (itemToDescribe.GetType() == typeof(RuneStone))
             {
-                attack = "Atak: " + (itemToDescribe as Ranged)!.Attack;
-                range += "Zasięg: " + (itemToDescribe as Ranged)!.Range;
-                itemType += "Broń dystansowa";
+                itemType += "Runa";
             }
 
             //set modifiers string

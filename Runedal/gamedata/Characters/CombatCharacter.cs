@@ -182,6 +182,10 @@ namespace Runedal.GameData.Characters
         //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
 
+        //spells remembered by character
+        public List<Spell> RememberedSpells { get; set; }
+        public int MaxSpellsRemembered { get; set; }
+
         /// <summary>
         /// method dealing dmg to character. If the damage was lethal,
         /// return true, otherwise - false

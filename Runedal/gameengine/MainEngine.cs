@@ -192,6 +192,9 @@ namespace Runedal.GameEngine
                 case "stats":
                     StatsHandler();
                     break;
+                case "point":
+                    PointHandler(argument1);
+                    break;
                 case "stop":
                     StopHandler();
                     break;
@@ -1027,6 +1030,45 @@ namespace Runedal.GameEngine
 
             AttackCharacter(Data.Player, (characterToAttack as CombatCharacter)!);
 
+        }
+
+        //method for spending attribute points
+        private void PointHandler(string attribute)
+        {
+            Player player = Data.Player!;
+            string attributeWord = string.Empty;
+
+            if (player.AttributePoints < 1)
+            {
+                PrintMessage("Nie masz żadnych punktów atrybutów!", MessageType.SystemFeedback);
+                return;
+            }
+
+            switch (attribute)
+            {
+                case "strength":
+                case "str":
+                    attributeWord = "siła";
+                    player.Strength++;
+                    break;
+                case "agility":
+                case "agi":
+                    attributeWord = "zręczność";
+                    player.Agility++;
+                    break;
+                case "intelligence":
+                case "int":
+                    attributeWord = "inteligencja";
+                    player.Intelligence++;
+                    break;
+                default:
+                    PrintMessage("\"" + attribute + "\" nie jest poprawną nazwą atrybutu. Poprawne nazwy" +
+                        "to: strength, agility, intelligence (lub str, agi, int)", MessageType.SystemFeedback);
+                    return;
+            }
+
+            player.AttributePoints--;
+            PrintMessage("Twoja " + attributeWord + " zwiększa się o 1!");
         }
 
 

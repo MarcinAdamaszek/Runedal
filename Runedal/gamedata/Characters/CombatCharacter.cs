@@ -32,6 +32,7 @@ namespace Runedal.GameData.Characters
         {
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
+            RememberedSpells = new List<Spell>();
 
             HpCounter = CounterMax;
             MpCounter = CounterMax;
@@ -43,6 +44,7 @@ namespace Runedal.GameData.Characters
         {
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
+            RememberedSpells = new List<Spell>();
 
             MaxHp = combatStats[0];
             MaxMp = combatStats[1];
@@ -67,6 +69,7 @@ namespace Runedal.GameData.Characters
         {
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
+            RememberedSpells = new List<Spell>();
 
             //create deep copy of modifiers collection
             Modifiers = com.Modifiers!.ConvertAll(mod => new Modifier(mod));

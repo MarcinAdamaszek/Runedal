@@ -984,6 +984,9 @@ namespace Runedal.GameEngine
         private void AttackHandler(string characterName)
         {
 
+            //break trade/talk state if needed
+            ResetPlayerState();
+
             //if user typed 'attack' without argument
             if (characterName == string.Empty)
             {
@@ -1181,6 +1184,42 @@ namespace Runedal.GameEngine
         private void SpellsHandler()
         {
             SpellsInfo(Data.Player!);
+        }
+
+        //method for handling spell casting
+        private void CastHandler(string spellNumber, string targetName)
+        {
+            int i;
+            int numberOfSpells = Data.Player!.RememberedSpells!.Count;
+            int[] numbers = new int[numberOfSpells];
+            string[] numbersAsStrings = new string[numberOfSpells];
+
+            //break trade/talk state if needed
+            ResetPlayerState();
+
+            //if user typed 'cast' without any arguments
+            if (spellNumber == string.Empty)
+            {
+                PrintMessage("Musisz wybrać numer czaru", MessageType.SystemFeedback);
+                return;
+            }
+
+            for (i = 0; i < numberOfSpells; i++)
+            {
+                numbers[i] = i;
+                numbersAsStrings[i] = Convert.ToString(i);
+            }
+
+            if (numbersAsStrings.Contains(spellNumber))
+            {
+                
+                //if user typed only first argument (spellnumber)
+                if (targetName == string.Empty)
+                {
+
+                }
+            }
+
         }
 
 
@@ -2603,8 +2642,8 @@ namespace Runedal.GameEngine
                 attacker = AttackInstances[i].Attacker;
                 receiver = AttackInstances[i].Receiver;
 
-                //skip attack if attackers attack is on cooldown
-                if (attacker.ActionCounter > 0)
+                //skip attack if attackers attack is on cooldown or other action is queued up
+                if (attacker.ActionCounter > 0 && attacker.NextAction.ActionPointsCost == 0)
                 {
                     continue;
                 }

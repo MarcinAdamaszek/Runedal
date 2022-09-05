@@ -8,11 +8,11 @@ namespace Runedal.GameData
 {
     public class SpellCast : Action
     {
-        public SpellCast() : base() { }
-        public SpellCast(Spell spellToCast)
+        public SpellCast() : base(50) { }
+        public SpellCast(Spell spellToCast) : base(50)
         {
             SpellToCast = spellToCast;
         }
-        public Spell SpellToCast { get; set; }
+        public Spell? SpellToCast { get; set; }
     }
 }

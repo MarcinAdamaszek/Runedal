@@ -19,6 +19,13 @@ namespace Runedal.GameData.Characters
             Items = new Dictionary<string, int>();
             Inventory = new List<Item>();
         }
+        
+        //constructor for placeholder
+        public Character(string placeholder) : base(placeholder)
+        {
+            Items = new Dictionary<string, int>();
+            Inventory = new List<Item>();
+        }
         public Character(string[] descriptive, string[][] dialogues, int gold) : base(descriptive)
         {
             Items = new Dictionary<string, int>();
@@ -37,7 +44,6 @@ namespace Runedal.GameData.Characters
             Inventory = ch.Inventory!.ConvertAll(item => new Item(item));
 
             Items = ch.Items!;
-            Inventory = new List<Item>();
             PassiveResponses = ch.PassiveResponses;
             AggressiveResponses = ch.AggressiveResponses;
             Questions = ch.Questions;

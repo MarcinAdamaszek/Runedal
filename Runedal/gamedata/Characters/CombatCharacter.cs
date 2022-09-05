@@ -177,6 +177,9 @@ namespace Runedal.GameData.Characters
 
         public State CurrentState { get; set; }
 
+        //next action to do (one slot queue)
+        public Action NextAction { get; set; }
+
         //character with whom player currently interacts
         public Character? InteractsWith { get; set; }
 

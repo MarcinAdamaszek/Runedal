@@ -310,7 +310,6 @@ namespace Runedal.GameData.Characters
                 
                 removedSpell = RememberedSpells[0];
                 RememberedSpells.Remove(removedSpell);
-                RememberedSpells.Add(new Spell(spell));
             }
             else
             {

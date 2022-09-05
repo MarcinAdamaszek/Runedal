@@ -314,6 +314,14 @@ namespace Runedal.GameEngine
             else
             {
 
+                //search player's remembered spells
+                index = Data.Player!.RememberedSpells.FindIndex(spell => spell.Name.ToLower() == entityName);
+                if (index != -1)
+                {
+                    SpellInfo(Data.Player!.RememberedSpells[index]);
+                    return;
+                }
+
                 //search location for items on the ground
                 index = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == entityName);
                 if (index != -1)
@@ -1155,6 +1163,7 @@ namespace Runedal.GameEngine
             if (!Data.Player.SpendMana(100))
             {
                 PrintMessage("Nie masz wystarczającej ilości many aby to zrobić");
+                return;
             }
 
             PrintMessage("Tworzysz czar " + craftedSpell.Name, MessageType.Action);
@@ -1443,21 +1452,7 @@ namespace Runedal.GameEngine
                 effect = "Działanie: ";
 
                 //add modifiers descriptions to effect description for every modifier present in the item
-                if (itemToDescribe.Modifiers!.Count > 0)
-                {
-                    itemToDescribe.Modifiers.ForEach(mod =>
-                    {
-                        effect += GetModDescription(mod) + ", ";
-                    });
-
-                    //remove trailing comma and add duration
-                    effect = Regex.Replace(effect, @",\s$", "");
-                    effect += " {" + itemToDescribe.Modifiers[0].Duration + " sekund}";
-                }
-                else
-                {
-                    effect += "brak";
-                }
+                effect += GetEffectDescription(itemToDescribe.Modifiers!);
             }
             else if (itemToDescribe.GetType() == typeof(Armor))
             {
@@ -1653,12 +1648,67 @@ namespace Runedal.GameEngine
 
         }
 
+        //method printing detailed info about single spell
+        private void SpellInfo(Spell spell)
+        {
+            string name = spell.Name!;
+            string description = spell.Description!;
+            string defaultTarget = "Cel domyślny: ";
+            string manaCost = "Koszt many: " + spell.ManaCost;
+            string dmgDealt = "Obrażenia: " + spell.Damage;
+            string effect = "Działanie: ";
+
+            //assign proper default target name
+            if (spell.DefaultTarget == Spell.Target.Self)
+            {
+                defaultTarget += "Rzucający";
+            }
+            else
+            {
+                defaultTarget += "Przeciwnik";
+            }
+
+            effect += GetEffectDescription(spell.Modifiers!);
+
+            //display info
+            PrintMessage("[ " + name + " ]");
+            PrintMessage(description);
+            PrintMessage(defaultTarget);
+            PrintMessage(manaCost);
+            PrintMessage(dmgDealt);
+            PrintMessage(effect);
+        }
+
 
 
 
 
 
         //==============================================HELPER METHODS=============================================
+
+        //method returning formatted string representing effect description (it's modifiers and duration)
+        private string GetEffectDescription(List<Modifier> modifiers)
+        {
+            string effect = string.Empty;
+
+            if (modifiers.Count > 0)
+            {
+                modifiers.ForEach(mod =>
+                {
+                    effect += GetModDescription(mod) + ", ";
+                });
+
+                //remove trailing comma and add duration
+                effect = Regex.Replace(effect, @",\s$", "");
+                effect += " {" + modifiers[0].Duration + " sekund}";
+            }
+            else
+            {
+                effect += "brak";
+            }
+
+            return effect;
+        }
 
         //method returning formatted string representing modifier and it's value with sign
         private string GetModDescription(Modifier modifier)

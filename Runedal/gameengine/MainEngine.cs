@@ -152,6 +152,9 @@ namespace Runedal.GameEngine
                 case "a":
                     AttackHandler(argument1);
                     break;
+                case "cast":
+                    CastHandler(argument1, argument2);
+                    break;
                 case "trade":
                     TradeHandler(argument1);
                     break;
@@ -438,7 +441,7 @@ namespace Runedal.GameEngine
             }
             else
             {
-                PrintMessage("Nie ma tu takiej postaci", MessageType.SystemFeedback);
+                PrintMessage("Nie ma tu postaci o imieniu \"" + characterName + "\"", MessageType.SystemFeedback);
             }
         }
 
@@ -462,7 +465,7 @@ namespace Runedal.GameEngine
             //if character not found in current location
             if (index == -1)
             {
-                PrintMessage("Nie ma tu takiej postaci", MessageType.SystemFeedback);
+                PrintMessage("Nie ma tu postaci o imieniu \"" + characterName + "\"", MessageType.SystemFeedback);
                 return;
             }
 
@@ -1188,38 +1191,123 @@ namespace Runedal.GameEngine
         }
 
         //method for handling spell casting
-        private void CastHandler(string spellNumber, string targetName)
+        private void CastHandler(string spellNumberAsString, string targetName)
         {
             int i;
+            int spellNumber;
             int numberOfSpells = Data.Player!.RememberedSpells!.Count;
             int[] numbers = new int[numberOfSpells];
-            string[] numbersAsStrings = new string[numberOfSpells];
+            //string[] numbersAsStrings = new string[numberOfSpells];
 
             //break trade/talk state if needed
             ResetPlayerState();
 
             //if user typed 'cast' without any arguments
-            if (spellNumber == string.Empty)
+            if (spellNumberAsString == string.Empty)
             {
                 PrintMessage("Musisz wybrać numer czaru", MessageType.SystemFeedback);
                 return;
             }
 
-            for (i = 0; i < numberOfSpells; i++)
+            //check if string representation of spellnumber is correct integer value,
+            //and convert it to int if it is
+            if (!Int32.TryParse(spellNumberAsString, out spellNumber))
             {
-                numbers[i] = i;
-                numbersAsStrings[i] = Convert.ToString(i);
+                PrintMessage("Niepoprawny numer czaru");
+                return;
             }
 
-            if (numbersAsStrings.Contains(spellNumber))
+            for (i = 0; i < numberOfSpells; i++)
             {
-                
+                numbers[i] = i + 1;
+                //numbersAsStrings[i] = Convert.ToString(i);
+            }
+
+            Spell spellToCast = new Spell("placeholder");
+            CombatCharacter target = new CombatCharacter("placeholder");
+
+            if (numbers.Contains(spellNumber))
+            {
+                spellToCast = Data.Player.RememberedSpells[spellNumber - 1];
+                target = new CombatCharacter("placeholder");
+
                 //if user typed only first argument (spellnumber)
                 if (targetName == string.Empty)
                 {
 
+                    //if the spell is a buff/heal etc. (default target is self)
+                    if (spellToCast.DefaultTarget == Spell.Target.Self)
+                    {
+                        target = Data.Player;
+                    }
+
+                    //if player isn't fighting with anyone
+                    if (Data.Player.CurrentState != CombatCharacter.State.Combat)
+                    {
+                        PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
+                        return;
+                    }
+
+                    //else, if player is attacking a character
+                    if (Data.Player.InteractsWith!.Name != "placeholder")
+                    {
+                        target = (Data.Player!.InteractsWith as CombatCharacter)!;
+                    }
+                    
+                    //else if player is fighting with someone but not attacking anyone,
+                    //choose the weakest target from his opponents
+                    else
+                    {
+                        CombatCharacter weakestOpponent = new CombatCharacter();
+                        weakestOpponent.Level = 9999999;
+
+                        //find the opponent with the lowest level
+                        Data.Player!.Opponents!.ForEach(op =>
+                        {
+                            if (op.Level < weakestOpponent.Level)
+                            {
+                                weakestOpponent = op;
+                            }
+                        });
+
+                        target = weakestOpponent;
+                    }
+                }
+
+                //else, if player typed second argument (target name)
+                else
+                {
+                    int characterIndex = Data.Player!.CurrentLocation!.Characters!.
+                        FindIndex(character => character.Name!.ToLower() == targetName);
+
+                    //if there is no character with specified name
+                    if (characterIndex == -1)
+                    {
+                        PrintMessage("Nie ma tu postaci o imieniu \"" + targetName + "\"", MessageType.SystemFeedback);
+                        return;
+                    }
+
+                    Character specifiedTarget = Data.Player!.CurrentLocation!.Characters![characterIndex];
+
+                    //if specified target isn't combat character
+                    if (!(specifiedTarget is CombatCharacter)) 
+                    {
+                        PrintMessage("Nie możesz zaatakować tej postaci", MessageType.SystemFeedback);
+                        return;
+                    }
+
+                    target = (specifiedTarget as CombatCharacter)!;
                 }
             }
+            else
+            {
+                PrintMessage("Nie pamiętasz czaru o tym numerze");
+                return;
+            }
+
+            PrintMessage(spellToCast.Name!);
+            PrintMessage(target.Name!);
+            //Here invoke CastASpell() method!!!!!!!!!!!!!!!!!!!!!!!!!!!!! =======================================
 
         }
 

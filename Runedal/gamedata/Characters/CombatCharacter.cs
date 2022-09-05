@@ -23,22 +23,22 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
+            NextAction = new Action(0);
 
             HpCounter = CounterMax;
             MpCounter = CounterMax;
         }
 
-        //special constructor for AttackHandler to instantiate character with 0 lvl
-        public CombatCharacter(int level)
+        //constructor for placeholder
+        public CombatCharacter(string placeholder) : base(placeholder)
         {
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
+            NextAction = new Action(0);
 
             HpCounter = CounterMax;
             MpCounter = CounterMax;
-
-            Level = level;
         }
         public CombatCharacter(string[] descriptive, int[] combatStats, string[][] responses, int gold)
             : base(descriptive, responses, gold)
@@ -46,6 +46,7 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
+            NextAction = new Action(0);
 
             MaxHp = combatStats[0];
             MaxMp = combatStats[1];
@@ -71,6 +72,7 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
+            NextAction = new Action(0);
 
             //create deep copy of modifiers collection
             Modifiers = com.Modifiers!.ConvertAll(mod => new Modifier(mod));

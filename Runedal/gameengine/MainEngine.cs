@@ -1007,7 +1007,8 @@ namespace Runedal.GameEngine
                 //if player if fighting with multiple opponents
                 else
                 {
-                    CombatCharacter weakestOpponent = new CombatCharacter(9999999);
+                    CombatCharacter weakestOpponent = new CombatCharacter();
+                    weakestOpponent.Level = 9999999;
                     bool opponentFound = false;
 
                     //find the opponent with the lowest level
@@ -2235,8 +2236,8 @@ namespace Runedal.GameEngine
                 {
                     receiver.RemoveOpponent(dealer);
                 }
-                dealer.InteractsWith = new Character();
-                receiver.InteractsWith = new Character();
+                dealer.InteractsWith = new Character("placeholder");
+                receiver.InteractsWith = new Character("placeholder");
 
                 if (isDealerPlayer)
                 {
@@ -2508,7 +2509,7 @@ namespace Runedal.GameEngine
 
         {
              PrintMessage("Przestajesz handlować z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
-             Data.Player.InteractsWith = new Character();
+             Data.Player.InteractsWith = new Character("placeholder");
              Data.Player!.CurrentState = Player.State.Idle;
         }
 
@@ -2516,7 +2517,7 @@ namespace Runedal.GameEngine
         private void BreakTalkState()
         {
             PrintMessage("Przestajesz rozmawiać z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
-            Data.Player.InteractsWith = new Character();
+            Data.Player.InteractsWith = new Character("placeholder");
             Data.Player!.CurrentState = Player.State.Idle;
         }
 

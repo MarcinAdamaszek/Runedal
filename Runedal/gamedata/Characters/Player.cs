@@ -203,6 +203,11 @@ namespace Runedal.GameData.Characters
                 {
                     _Intelligence = value;
                     EffectiveMaxMp = GetEffectiveMaxMp();
+                    MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(Intelligence) / 3);
+                    if (MaxSpellsRemembered < 1)
+                    {
+                        MaxSpellsRemembered = 1;
+                    }
                 }
             }
         }

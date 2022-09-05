@@ -30,6 +30,7 @@ namespace Runedal.GameData
             Characters = new List<Character>();
             Monsters = new List<Monster>();
             Items = new List<Item>();
+            Spells = new List<Spell>();
             PriceMultiplier = 1.2;
         }
         public double PriceMultiplier { get; set; }
@@ -41,6 +42,7 @@ namespace Runedal.GameData
         public List<Character>? Characters { get; set; }
         public List<Monster>? Monsters { get; set; }
         public List<Item>? Items { get; set; }
+        public List<Spell>? Spells { get; set; }
         public Player? Player { get; set; }
       
         
@@ -129,6 +131,19 @@ namespace Runedal.GameData
             //JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Ranged.json");
             //Item[] rangedArray = JsonSerializer.Deserialize<Ranged[]>(JsonString, Options)!;
             //PopulateItems(rangedArray);
+        }
+
+        //method loading spells from json
+        public void LoadSpells()
+        {
+            //load consumables
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Spells.json");
+            Spell[] spellsArray = JsonSerializer.Deserialize<Spell[]>(JsonString, Options)!;
+
+            foreach (var spell in spellsArray)
+            {
+                Spells!.Add(spell);
+            }
         }
 
         //method filling locations with characters, characters with items, initializing hps etc

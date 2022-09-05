@@ -39,7 +39,6 @@ namespace Runedal.GameData.Items
             Description = it.Description;
             Weight = it.Weight;
             Price = it.Price;
-            Modifiers = new List<Modifier>();
 
             //create deep copy of modifiers collection
             Modifiers = it.Modifiers!.ConvertAll(mod => new Modifier(mod));

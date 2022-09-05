@@ -22,6 +22,7 @@ namespace Runedal.GameData.Characters
         {
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
+            RememberedSpells = new List<Spell>();
 
             HpCounter = CounterMax;
             MpCounter = CounterMax;
@@ -269,6 +270,29 @@ namespace Runedal.GameData.Characters
             if (ActionCounter > 0)
             {
                 ActionCounter -= 1;
+            }
+        }
+
+        /// <summary>
+        /// method adding spell to character's remembered spells
+        /// returns old spell which was replaced by the new one
+        /// </summary>
+        /// <param name="spell"></param>
+        /// <returns></returns>
+        public Spell AddSpell(Spell spell)
+        {
+            RememberedSpells.Add(new Spell(spell));
+
+            if (RememberedSpells.Count == MaxSpellsRemembered)
+            {
+                
+                Spell removedSpell = RememberedSpells[0];
+                RememberedSpells.Remove(removedSpell);
+                return removedSpell;
+            }
+            else
+            {
+                return new Spell("placeholder");
             }
         }
 

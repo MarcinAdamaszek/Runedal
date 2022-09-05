@@ -36,6 +36,7 @@ namespace Runedal.GameEngine
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
+            Data.LoadSpells();
             Data.InitializeEverything();
 
             GameClock.Start();
@@ -192,8 +193,14 @@ namespace Runedal.GameEngine
                 case "stats":
                     StatsHandler();
                     break;
+                case "spells":
+                    SpellsHandler();
+                    break;
                 case "point":
                     PointHandler(argument1);
+                    break;
+                case "combine":
+                    CombineHandler(argument1, argument2);
                     break;
                 case "stop":
                     StopHandler();
@@ -1032,7 +1039,7 @@ namespace Runedal.GameEngine
 
         }
 
-        //method for spending attribute points
+        //method for spending attribute pointsd
         private void PointHandler(string attribute)
         {
             Player player = Data.Player!;
@@ -1069,6 +1076,97 @@ namespace Runedal.GameEngine
 
             player.AttributePoints--;
             PrintMessage("Twoja " + attributeWord + " zwiększa się o 1!");
+        }
+
+        //method for crafting spells from runes combinations
+        private void CombineHandler(string firstRune, string secondRune)
+        {
+            bool isCombinationDouble = false;
+            string spellName = string.Empty;
+            string[] runeNames = new string[5] { "zjarrit", "akull", "verde", "xitan", "dara" };
+            Spell craftedSpell = new Spell();
+            Spell returnedSpell = new Spell();
+
+            //choose spell depending on single rune choice
+            if (secondRune == string.Empty)
+            {
+                switch (firstRune)
+                {
+                    case "zjarrit":
+                        spellName = "kula_ognia";
+                        break;
+                    case "akull":
+                        spellName = "";
+                        break;
+                    case "verde":
+                        spellName = "";
+                        break;
+                    case "xitan":
+                        spellName = "";
+                        break;
+                    case "dara":
+                        spellName = "";
+                        break;
+
+                        //if the first rune name is incorrect
+                    default:
+                        PrintMessage("Nie istnieje runa o nazwie \"" + firstRune + "\"", MessageType.SystemFeedback);
+                        return;
+                }
+            }
+
+            //choose spell depending on double runes combination
+            else
+            {
+                isCombinationDouble = true;
+
+                //if the second rune name is incorrect
+                if (!runeNames.Contains(secondRune))
+                {
+                    PrintMessage("Nie istnieje runa o nazwie \"" + secondRune + "\"", MessageType.SystemFeedback);
+                    return;
+                }
+
+                //zjarrit-akull combination
+                if (firstRune == runeNames[0] && secondRune == runeNames[1] || firstRune == runeNames[1] && secondRune == runeNames[0])
+                {
+                    spellName = "podmuch_pary";
+                }
+            }
+
+            //check if player possesses required runes
+            if (!Data.Player!.Inventory!.Exists(item => item.Name!.ToLower() == firstRune))
+            {
+                PrintMessage("Nie posiadasz runy " + firstRune, MessageType.SystemFeedback);
+                return;
+            }
+            if (isCombinationDouble)
+            {
+                if (!Data.Player!.Inventory!.Exists(item => item.Name!.ToLower() == secondRune))
+                {
+                    PrintMessage("Nie posiadasz runy " + secondRune, MessageType.SystemFeedback);
+                    return;
+                }
+            }
+
+            //craft spell and add it to player's remembered spells
+            craftedSpell = Data.Spells!.Find(spell => spell.Name!.ToLower() == spellName)!;
+
+            PrintMessage("Tworzysz czar " + craftedSpell.Name, MessageType.Action);
+            PrintMessage("Czujesz jak nowe zaklęcie wypełnia Twój umysł", MessageType.Action);
+
+            returnedSpell = Data.Player.AddSpell(craftedSpell);
+            if (returnedSpell.Name != "placeholder")
+            {
+                PrintMessage("Zapominasz czar " + returnedSpell.Name, MessageType.Action);
+            }
+
+        }
+
+        //method showing player's remembered spells
+        private void SpellsHandler()
+        {
+            SpellsInfo(Data.Player!);
         }
 
 
@@ -1171,7 +1269,7 @@ namespace Runedal.GameEngine
             string tableRow = string.Empty;
             string horizontalBorder = string.Empty;
             string delimeter = "||-----------------------------------------------------------||";
-            string descriptionRow = "|| Przedmiot:                              | Ilość: || Cena: ||\n" + delimeter;
+            string descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
             int nameColumnSize = 0;
             int quantityColumnSize = 0;
             int priceColumnSize = 0;
@@ -1182,7 +1280,7 @@ namespace Runedal.GameEngine
             if (withPrice)
             {
                 delimeter = "||-----------------------------------------------------------||";
-                descriptionRow = "|| Przedmiot:                              | Ilość: || Cena: ||\n" + delimeter;
+                descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
                 borderSize = 63;
             }
             else
@@ -1509,6 +1607,45 @@ namespace Runedal.GameEngine
             {
                 PrintMessage(row);
             }
+        }
+
+        //method printing info about player's remembered spells
+        private void SpellsInfo(CombatCharacter character)
+        {
+            int i, j;
+            int remainingSpace;
+            int tableWidth = 53;
+            int numberOfRows = character.RememberedSpells!.Count + 2;
+            string[] tableRows = new string[numberOfRows];
+
+            tableRows[0] = "******************* TWOJE CZARY *********************";
+
+            //bottom border of the table
+            for (i = 0; i < tableWidth; i++)
+            {
+                tableRows[numberOfRows - 1] += "*";
+            }
+
+            //fill interior of the table with character's spells
+            for (i = 1; i < numberOfRows - 1; i++)
+            {
+                tableRows[i] += "||   " + i + ". " + character.RememberedSpells[i - 1].Name;
+
+                //fill remaining space in every row with white space characters
+                remainingSpace = tableWidth - tableRows[i].Length - 2;
+                for (j = 0; j < remainingSpace; j++)
+                {
+                    tableRows[i] += " ";
+                }
+
+                tableRows[i] += "||";
+            }
+
+            for (i = 0; i < numberOfRows; i++)
+            {
+                PrintMessage(tableRows[i]);
+            }
+
         }
 
 

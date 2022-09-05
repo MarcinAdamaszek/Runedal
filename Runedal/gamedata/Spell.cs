@@ -16,6 +16,15 @@ namespace Runedal.GameData
         {
             Modifiers = new List<Modifier>();
         }
+        public Spell(Spell sp) : base(sp)
+        {
+            DefaultTarget = sp.DefaultTarget;
+            Damage = sp.Damage;
+            ManaCost = sp.ManaCost;
+
+            //create deep copy of modifiers collection
+            Modifiers = sp.Modifiers!.ConvertAll(mod => new Modifier(mod));
+        }
         public enum Target
         {
             Enemy,

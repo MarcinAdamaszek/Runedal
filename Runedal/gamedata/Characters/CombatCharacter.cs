@@ -214,6 +214,28 @@ namespace Runedal.GameData.Characters
             return false;
         }
 
+        /// <summary>
+        /// method decreasing character's Mp by value of cost parameter.
+        /// If mana spending is succeded, reduces character's Mp by cost
+        /// and returns true. Otherwise, does nothing and returns false;
+        /// </summary>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        public bool SpendMana(double cost)
+        {
+            double manaAfterCost = Mp - cost;
+
+            if (manaAfterCost < 0)
+            {
+                return false;
+            }
+            else
+            {
+                Mp = manaAfterCost;
+                return true;
+            }
+        }
+
         //method adding attack delay to action counter
         public virtual void PerformAttack()
         {
@@ -281,19 +303,22 @@ namespace Runedal.GameData.Characters
         /// <returns></returns>
         public Spell AddSpell(Spell spell)
         {
-            RememberedSpells.Add(new Spell(spell));
+            Spell removedSpell = new Spell();
 
             if (RememberedSpells.Count == MaxSpellsRemembered)
             {
                 
-                Spell removedSpell = RememberedSpells[0];
+                removedSpell = RememberedSpells[0];
                 RememberedSpells.Remove(removedSpell);
-                return removedSpell;
+                RememberedSpells.Add(new Spell(spell));
             }
             else
             {
-                return new Spell("placeholder");
+                removedSpell = new Spell("placeholder");
             }
+
+            RememberedSpells.Add(new Spell(spell));
+            return removedSpell;
         }
 
         //method for adding modifier to character's list of modifiers

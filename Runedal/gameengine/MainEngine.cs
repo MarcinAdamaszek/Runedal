@@ -1096,16 +1096,16 @@ namespace Runedal.GameEngine
                         spellName = "kula_ognia";
                         break;
                     case "akull":
-                        spellName = "";
+                        spellName = "zamrożenie";
                         break;
                     case "verde":
-                        spellName = "";
+                        spellName = "zdrewniała_skóra";
                         break;
                     case "xitan":
-                        spellName = "";
+                        spellName = "pocisk_zagłady";
                         break;
                     case "dara":
-                        spellName = "";
+                        spellName = "niebiański_dotyk";
                         break;
 
                         //if the first rune name is incorrect
@@ -1151,6 +1151,11 @@ namespace Runedal.GameEngine
 
             //craft spell and add it to player's remembered spells
             craftedSpell = Data.Spells!.Find(spell => spell.Name!.ToLower() == spellName)!;
+
+            if (!Data.Player.SpendMana(100))
+            {
+                PrintMessage("Nie masz wystarczającej ilości many aby to zrobić");
+            }
 
             PrintMessage("Tworzysz czar " + craftedSpell.Name, MessageType.Action);
             PrintMessage("Czujesz jak nowe zaklęcie wypełnia Twój umysł", MessageType.Action);

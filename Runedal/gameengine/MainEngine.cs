@@ -1305,11 +1305,12 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            PrintMessage(spellToCast.Name!);
-            PrintMessage(target.Name!);
-            //Here invoke CastASpell() method!!!!!!!!!!!!!!!!!!!!!!!!!!!!! =======================================
-
+            //PrintMessage(spellToCast.Name!);
+            //PrintMessage(target.Name!);
+            //here push spellcast action into the player's action 'queue'
         }
+
+
 
 
 
@@ -2112,7 +2113,7 @@ namespace Runedal.GameEngine
         }
 
         /// <summary>
-        /// /// method taking chance parameter (as double 1-999 value, indicating promile
+        /// /// method taking chance parameter (as double 0.01-1.00 value, indicating percent
         /// number) returns true if succeded and false if not
         /// </summary>
         /// <param name="chance"></param>
@@ -2183,6 +2184,46 @@ namespace Runedal.GameEngine
 
 
         //==============================================MANIPULATION METHODS=============================================
+
+        //method for casting spell by specified caster onto specified target
+        private void CastSpell(CombatCharacter caster, CombatCharacter target, Spell spell)
+        {
+            bool hasSpellLanded;
+            double spellDmg = 0;
+            double landRate = 0;
+            
+
+            //if target self, then ignore magicResistance
+            if (caster == target)
+            {
+                landRate = 1.1;
+            }
+            else
+            {
+                landRate = 1 / (Math.Sqrt(target.GetEffectiveMagicResistance() * 0.01));
+
+                //if caster if a player, include intelligence multiplier
+                landRate += (caster as Player)!.GetEffectiveIntelligence() * 0.002;
+            }
+
+            spellDmg = spell.Damage * landRate;
+            hasSpellLanded = TryOutChance(landRate);
+
+            //print message about spell being cast depending on who is caster
+            if (caster == Data.Player!)
+            {
+                PrintMessage("Rzucasz czar" + spell.Name + "w postać: " + target.Name, MessageType.Action);
+            }
+            else if (target == Data.Player!)
+            {
+                PrintMessage(caster.Name + " rzuca w Ciebie czar " + spell.Name);
+            }
+
+            //deal spell dmg
+            DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
+
+
+        }
 
         //method for attacking character by another character
         private void AttackCharacter(CombatCharacter attacker, CombatCharacter attacked)
@@ -2310,6 +2351,15 @@ namespace Runedal.GameEngine
             bool isReceiverPlayer = receiver.GetType() == typeof(Player);
             bool isDmgLethal = receiver.DealDamage(dmg);
 
+            //print appropriate messages to user about dmg dealing
+            if (isDealerPlayer)
+            {
+                PrintMessage("Zadajesz " + dmg + " obrażeń postaci: " + receiver.Name, MessageType.DealDmg);
+            }
+            else if (isReceiverPlayer)
+            {
+                PrintMessage(dealer.Name! + " zadaje Ci " + dmg + " obrażeń", MessageType.ReceiveDmg);
+            }
 
             if (isDmgLethal)
             {
@@ -2775,17 +2825,6 @@ namespace Runedal.GameEngine
                     }
 
                     dmgAsInt = Convert.ToInt32(dealtDmg);
-
-                    //print appropriate messages to user about dmg dealing
-                    if (isAttackerPlayer)
-                    {
-                        PrintMessage("Zadajesz " + dmgAsInt + " obrażeń", MessageType.DealDmg);
-                    }
-                    else if (isReceiverPlayer)
-                    {
-                        PrintMessage(attacker.Name! + " zadaje Ci " + dmgAsInt + " obrażeń", MessageType.ReceiveDmg);
-                    }
-
                     isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt);
                 }
 

@@ -19,7 +19,7 @@ namespace Runedal.GameData
         public Spell(Spell sp) : base(sp)
         {
             DefaultTarget = sp.DefaultTarget;
-            Damage = sp.Damage;
+            Power = sp.Power;
             ManaCost = sp.ManaCost;
 
             //create deep copy of modifiers collection
@@ -31,7 +31,7 @@ namespace Runedal.GameData
             Self
         }
         public Target DefaultTarget { get; set; }
-        public double Damage { get; set; }
+        public double Power { get; set; }
         public double ManaCost { get; set; }
         public List<Modifier> Modifiers { get; set; }
     }

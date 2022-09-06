@@ -1363,6 +1363,7 @@ namespace Runedal.GameEngine
             bool hasSpellLanded;
             double spellDmg;
             double landRate;
+            double casterDmgFactor;
             
             //prevent casting the spell when it's cost is higher than caster's actual mana value
             if (caster.Mp < spell.ManaCost)
@@ -1382,9 +1383,25 @@ namespace Runedal.GameEngine
                 //if caster if a player, include intelligence multiplier
                 landRate += (caster as Player)!.GetEffectiveIntelligence() * 0.002;
             }
-
-            spellDmg = spell.Damage * landRate;
             hasSpellLanded = TryOutChance(landRate);
+
+            //calculate spell damage, using slightly different formulas
+            //for player and other combat characters (intelligence factor
+            //for player, and level factor for other characters)
+            if (caster == Data.Player)
+            {
+                casterDmgFactor = (caster as Player)!.GetEffectiveIntelligence();
+            }
+            else
+            {
+                casterDmgFactor = caster.Level;
+            }
+
+            spellDmg = (spell.Power * 3 + casterDmgFactor * 10) /
+                    (Math.Sqrt(target.GetEffectiveMagicResistance() * 0.02));
+
+            //randomize spell dmg
+            spellDmg = RandomizeDmg(spellDmg);
 
             //print message about spell being cast depending on who is caster
             if (caster == Data.Player!)
@@ -2426,7 +2443,7 @@ namespace Runedal.GameEngine
             string description = spell.Description!;
             string defaultTarget = "Cel domyślny: ";
             string manaCost = "Koszt many: " + spell.ManaCost;
-            string dmgDealt = "Obrażenia: " + spell.Damage;
+            string dmgDealt = "Moc: " + spell.Power;
             string effect = "Działanie: ";
 
             //assign proper default target name

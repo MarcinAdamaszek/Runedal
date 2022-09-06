@@ -1555,6 +1555,17 @@ namespace Runedal.GameEngine
                 PrintMessage(dealer.Name! + " zadaje Ci " + dmg + " obrażeń", MessageType.ReceiveDmg);
             }
 
+            //if receiver is an npc character - respond with counterattack
+            if (receiver != Data.Player && !isDmgLethal)
+            {
+
+                //check if receiver isn't already attacking the attacker
+                if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == dealer))
+                {
+                    AttackCharacter(receiver, dealer);
+                }
+            }
+
             if (isDmgLethal)
             {
                 KillCharacter(receiver);
@@ -1608,7 +1619,7 @@ namespace Runedal.GameEngine
                 {
                     if (ch.GetType() == typeof(Monster))
                     {
-                        if ((ch as Monster)!.isAggressive)
+                        if ((ch as Monster)!.Aggressiveness == Monster.AggressionType.Aggressive)
                         {
                             AttackCharacter((ch as CombatCharacter)!, (character as CombatCharacter)!);
                         }
@@ -2897,20 +2908,7 @@ namespace Runedal.GameEngine
                     dmgAsInt = Convert.ToInt32(dealtDmg);
                     isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt);
                 }
-
-                //if receiver is an npc character - respond with counterattack
-                if (receiver != Data.Player && !isDmgLethal)
-                {
-
-                    //check if attacked isn't already attacking the attacker
-                    if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == attacker))
-                    {
-                        AttackCharacter(receiver, attacker);
-                    }
-                }
             }
-
-            
         }
 
         //method handling actions done by combat characters

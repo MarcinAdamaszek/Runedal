@@ -304,12 +304,12 @@ namespace Runedal.GameEngine
             string description = string.Empty;
             entityName = entityName.ToLower();
 
-            //if player is in combat state
-            if (Data.Player!.CurrentState == Player.State.Combat)
-            {
-                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
-                return;
-            }
+            ////if player is in combat state
+            //if (Data.Player!.CurrentState == Player.State.Combat)
+            //{
+            //    PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+            //    return;
+            //}
 
             //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
@@ -1387,9 +1387,6 @@ namespace Runedal.GameEngine
             //spend caster's mana
             caster.Mp -= spell.ManaCost;
 
-            //deal spell dmg
-            DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
-
             //apply effect/modifiers
             if (hasSpellLanded)
             {
@@ -1417,6 +1414,9 @@ namespace Runedal.GameEngine
                     PrintMessage(target.Name + " odpiera Twój czar " + spell.Name! + "!");
                 }
             }
+
+            //deal spell dmg
+            DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
         }
 
         //method for attacking character by another character

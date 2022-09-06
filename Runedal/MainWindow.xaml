@@ -78,6 +78,14 @@
                 <TextBlock Name="mpSlashLabel" Text=" / " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="maxMpLabel" Text="{Binding EffectiveMaxMp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
             </StackPanel>
+            
+            <!--action cooldown bar-->
+            <ProgressBar Name="actionBar" Value="{Binding ActionCounter}" Grid.Column="1" Grid.Row="0" Margin="10, 0, 10, 5" Maximum="200" Foreground="Orange" Background="Black"/>
+            <!--<TextBlock Text="AP" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>-->
+
+            <!--shadow bar (not yet determined)-->
+            <ProgressBar Visibility="Hidden" Name="shadowBar" Value="{Binding ActionCounter}" Grid.Column="1" Grid.Row="1" Margin="10, 5, 10, 0" Maximum="200" Foreground="Orange" Background="Black"/>
+            <TextBlock Visibility="Hidden" Text="AP" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
         </Grid>
     </Grid>
 </Window>

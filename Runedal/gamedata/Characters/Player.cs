@@ -78,6 +78,21 @@ namespace Runedal.GameData.Characters
         //name of player's starting location
         public string? Start { get; set; }
 
+        //counter for actions
+        public override double ActionCounter
+        {
+            get { return _ActionCounter; }
+            set
+            {
+                if (_ActionCounter != value)
+                {
+                    _ActionCounter = value;
+                    NotifyPropertyChanged("ActionCounter");
+                }
+            }
+
+        }
+
         //real hp/mp values
         public override double Hp
         {

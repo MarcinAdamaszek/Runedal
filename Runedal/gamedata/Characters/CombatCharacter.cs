@@ -16,6 +16,7 @@ namespace Runedal.GameData.Characters
         protected double _MaxMp;
         protected double _Hp;
         protected double _Mp;
+        protected double _ActionCounter;
 
         //default constructor for json deserialization
         public CombatCharacter() : base()
@@ -123,7 +124,7 @@ namespace Runedal.GameData.Characters
         }
 
         //counter for actions
-        public double ActionCounter;
+        public virtual double ActionCounter { get; set; }
 
         //hp/mp counters for regeneration
         public double HpCounter { get; set; }

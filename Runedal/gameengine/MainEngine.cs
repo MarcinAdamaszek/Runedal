@@ -2218,11 +2218,13 @@ namespace Runedal.GameEngine
             {
                 PrintMessage(caster.Name + " rzuca w Ciebie czar " + spell.Name);
             }
+            else if (caster.CurrentLocation == Data.Player!.CurrentLocation)
+            {
+                PrintMessage(caster.Name! + " rzuca czar w postać: " + target.Name);
+            }
 
             //deal spell dmg
             DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
-
-
         }
 
         //method for attacking character by another character

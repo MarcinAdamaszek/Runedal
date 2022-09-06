@@ -310,7 +310,7 @@ namespace Runedal.GameData.Characters
             if (RememberedSpells.Count == MaxSpellsRemembered)
             {
                 
-                removedSpell = RememberedSpells[0];
+                removedSpell = RememberedSpells[MaxSpellsRemembered - 1];
                 RememberedSpells.Remove(removedSpell);
             }
             else
@@ -318,7 +318,7 @@ namespace Runedal.GameData.Characters
                 removedSpell = new Spell("placeholder");
             }
 
-            RememberedSpells.Add(new Spell(spell));
+            RememberedSpells.Insert(0, new Spell(spell));
             return removedSpell;
         }
 

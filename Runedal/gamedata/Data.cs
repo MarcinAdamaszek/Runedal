@@ -89,7 +89,12 @@ namespace Runedal.GameData
             Character[] monstersArray = JsonSerializer.Deserialize<Monster[]>(JsonString, Options)!;
             PopulateCharactersList(monstersArray);
 
-            
+            //load heroes
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Heroes.json");
+            Character[] heroesArray = JsonSerializer.Deserialize<Hero[]>(JsonString, Options)!;
+            PopulateCharactersList(heroesArray);
+
+
         } 
 
         //method loading locations from json file
@@ -192,8 +197,6 @@ namespace Runedal.GameData
 
                 if (character.GetType() == typeof(Monster))
                 {
-                    //monster = new Monster((character as Monster)!);
-
                     for (i = 0; i < kvp.Value; i++)
                     {
                         location.AddCharacter(new Monster((character as Monster)!));
@@ -201,8 +204,6 @@ namespace Runedal.GameData
                 }
                 else if (character.GetType() == typeof(Trader))
                 {
-                    //trader = new Trader((character as Trader)!);
-
                     for (i = 0; i < kvp.Value; i++)
                     {
                         location.AddCharacter(new Trader((character as Trader)!));
@@ -210,8 +211,6 @@ namespace Runedal.GameData
                 }
                 else if (character.GetType() == typeof(Hero))
                 {
-                    //hero = new Hero((character as Hero)!);
-
                     for (i = 0; i < kvp.Value; i++)
                     {
                         location.AddCharacter(new Hero((character as Hero)!));

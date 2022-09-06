@@ -1258,37 +1258,39 @@ namespace Runedal.GameEngine
                     {
                         target = Data.Player;
                     }
-
-                    //if player isn't fighting with anyone
-                    if (Data.Player.CurrentState != CombatCharacter.State.Combat)
-                    {
-                        PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
-                        return;
-                    }
-
-                    //else, if player is attacking a character
-                    if (Data.Player.InteractsWith!.Name != "placeholder")
-                    {
-                        target = (Data.Player!.InteractsWith as CombatCharacter)!;
-                    }
-                    
-                    //else if player is fighting with someone but not attacking anyone,
-                    //choose the weakest target from his opponents
                     else
                     {
-                        CombatCharacter weakestOpponent = new CombatCharacter();
-                        weakestOpponent.Level = 9999999;
-
-                        //find the opponent with the lowest level
-                        Data.Player!.Opponents!.ForEach(op =>
+                        //if player isn't fighting with anyone
+                        if (Data.Player.CurrentState != CombatCharacter.State.Combat)
                         {
-                            if (op.Level < weakestOpponent.Level)
-                            {
-                                weakestOpponent = op;
-                            }
-                        });
+                            PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
+                            return;
+                        }
 
-                        target = weakestOpponent;
+                        //else, if player is attacking a character
+                        if (Data.Player.InteractsWith!.Name != "placeholder")
+                        {
+                            target = (Data.Player!.InteractsWith as CombatCharacter)!;
+                        }
+
+                        //else if player is fighting with someone but not attacking anyone,
+                        //choose the weakest target from his opponents
+                        else
+                        {
+                            CombatCharacter weakestOpponent = new CombatCharacter();
+                            weakestOpponent.Level = 9999999;
+
+                            //find the opponent with the lowest level
+                            Data.Player!.Opponents!.ForEach(op =>
+                            {
+                                if (op.Level < weakestOpponent.Level)
+                                {
+                                    weakestOpponent = op;
+                                }
+                            });
+
+                            target = weakestOpponent;
+                        }
                     }
                 }
 
@@ -1430,7 +1432,10 @@ namespace Runedal.GameEngine
             }
 
             //deal spell dmg
-            DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
+            if (spellDmg > 0)
+            {
+                DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
+            }
         }
 
         //method for attacking character by another character

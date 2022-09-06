@@ -1556,14 +1556,31 @@ namespace Runedal.GameEngine
             }
 
             //if receiver is an npc character - respond with counterattack
-            if (receiver != Data.Player && !isDmgLethal)
+            if (receiver != Data.Player)
             {
 
-                //check if receiver isn't already attacking the attacker
-                if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == dealer))
+                //check if receiver isn't already attacking the attacker and prevent
+                //counterattacking if the attacked character has been killed
+                if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == dealer)
+                    && !isDmgLethal)
                 {
                     AttackCharacter(receiver, dealer);
                 }
+
+                //also, if the monster is social type, make his 'comrades'
+                //attack the attacker
+                receiver.CurrentLocation!.Characters!.ForEach(character =>
+                {
+                    if (character.Name! == receiver.Name!)
+                    {
+
+                        //make sure they aren't already attacking the attacker
+                        if (!AttackInstances.Exists(ins => ins.Attacker == character && ins.Receiver == dealer)) 
+                        {
+                            AttackCharacter((character as CombatCharacter)!, dealer);
+                        }
+                    }
+                });
             }
 
             if (isDmgLethal)

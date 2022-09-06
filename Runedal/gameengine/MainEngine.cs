@@ -1345,8 +1345,8 @@ namespace Runedal.GameEngine
         private void CastSpell(CombatCharacter caster, CombatCharacter target, Spell spell)
         {
             bool hasSpellLanded;
-            double spellDmg = 0;
-            double landRate = 0;
+            double spellDmg;
+            double landRate;
             
             //prevent casting the spell when it's cost is higher than caster's actual mana value
             if (caster.Mp < spell.ManaCost)
@@ -1389,6 +1389,34 @@ namespace Runedal.GameEngine
 
             //deal spell dmg
             DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
+
+            //apply effect/modifiers
+            if (hasSpellLanded)
+            {
+                if (target == Data.Player!)
+                {
+                    ApplyEffect(spell.Modifiers!, spell.Name!);
+                }
+                else
+                {
+                    if (caster == Data.Player!)
+                    {
+                        PrintMessage("Czar się powiódł!");
+                    }
+                    spell.Modifiers.ForEach(mod => target.AddModifier(mod));
+                }
+            }
+            else
+            {
+                if (target == Data.Player!)
+                {
+                    PrintMessage("Odpierasz czar " + spell.Name + "!", MessageType.Action);
+                }
+                else if (caster == Data.Player)
+                {
+                    PrintMessage(target.Name + " odpiera Twój czar " + spell.Name! + "!");
+                }
+            }
         }
 
         //method for attacking character by another character

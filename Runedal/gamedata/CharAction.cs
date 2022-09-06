@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Runedal.GameData
 {
-    public class Action
+    public class CharAction
     {
-        public Action() { }
-        public Action(double actionPointsCost)
+        public CharAction() { }
+        public CharAction(double actionPointsCost)
         {
             ActionPointsCost = actionPointsCost;
         }

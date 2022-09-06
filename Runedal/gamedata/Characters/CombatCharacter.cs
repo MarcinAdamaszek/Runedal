@@ -23,7 +23,7 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
-            NextAction = new Action(0);
+            NextAction = new CharAction(0);
             InteractsWith = new Character("placeholder");
 
             HpCounter = CounterMax;
@@ -36,7 +36,7 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
-            NextAction = new Action(0);
+            NextAction = new CharAction(0);
 
             HpCounter = CounterMax;
             MpCounter = CounterMax;
@@ -47,7 +47,7 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
-            NextAction = new Action(0);
+            NextAction = new CharAction(0);
             InteractsWith = new Character("placeholder");
 
             MaxHp = combatStats[0];
@@ -74,7 +74,7 @@ namespace Runedal.GameData.Characters
             Modifiers = new List<Modifier>();
             Opponents = new List<CombatCharacter>();
             RememberedSpells = new List<Spell>();
-            NextAction = new Action(0);
+            NextAction = new CharAction(0);
             InteractsWith = new Character("placeholder");
 
             //create deep copy of modifiers collection
@@ -183,7 +183,7 @@ namespace Runedal.GameData.Characters
         public State CurrentState { get; set; }
 
         //next action to do (one slot queue)
-        public Action NextAction { get; set; }
+        public CharAction NextAction { get; set; }
 
         //character with whom player currently interacts
         public Character? InteractsWith { get; set; }

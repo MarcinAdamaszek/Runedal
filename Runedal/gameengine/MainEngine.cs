@@ -1307,7 +1307,8 @@ namespace Runedal.GameEngine
 
             //PrintMessage(spellToCast.Name!);
             //PrintMessage(target.Name!);
-            //here push spellcast action into the player's action 'queue'
+            CharAction spellcast = new SpellCast(target, spellToCast);
+            Data.Player.NextAction = spellcast;
         }
 
 
@@ -2222,6 +2223,9 @@ namespace Runedal.GameEngine
             {
                 PrintMessage(caster.Name! + " rzuca czar w postać: " + target.Name);
             }
+
+            //spend caster's mana
+            caster.Mp -= spell.ManaCost;
 
             //deal spell dmg
             DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));

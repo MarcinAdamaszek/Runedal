@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Runedal.GameData
+namespace Runedal.GameData.Actions
 {
     public class CharAction
     {
-        public CharAction() 
+        public CharAction()
         {
             Performer = new CombatCharacter("placeholder");
         }

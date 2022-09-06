@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using Microsoft.Win32.SafeHandles;
 using System.Windows.Input;
 using System.Numerics;
+using Runedal.GameData.Actions;
 
 namespace Runedal.GameEngine
 {
@@ -204,8 +205,8 @@ namespace Runedal.GameEngine
                 case "point":
                     PointHandler(argument1);
                     break;
-                case "combine":
-                    CombineHandler(argument1, argument2);
+                case "craft":
+                    CraftHandler(argument1, argument2);
                     break;
                 case "stop":
                     StopHandler();
@@ -1096,7 +1097,7 @@ namespace Runedal.GameEngine
         }
 
         //method for crafting spells from runes combinations
-        private void CombineHandler(string firstRune, string secondRune)
+        private void CraftHandler(string firstRune, string secondRune)
         {
             bool isCombinationDouble = false;
             string spellName = string.Empty;

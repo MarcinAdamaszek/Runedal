@@ -26,7 +26,8 @@
                          FontSize="14"
                          IsReadOnly ="True"
                          Focusable="False"
-                         FontFamily="Consolas" 
+                         FontFamily="Consolas"
+                         VerticalScrollBarVisibility="Visible"
                          >
             
                 <!--sets the line spacing of outputBox-->
@@ -73,7 +74,7 @@
             <!--mp bar-->
             <ProgressBar Name="mpBar" Value="{Binding MpPercentage}" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" Foreground="#FF1330D2" Background="Black"/>
             <TextBlock Text="MP" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
-            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 5">
+            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 0">
                 <TextBlock Name="mpLabel" Text="{Binding Mp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="mpSlashLabel" Text=" / " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="maxMpLabel" Text="{Binding EffectiveMaxMp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>

@@ -1233,6 +1233,13 @@ namespace Runedal.GameEngine
                 spellToCast = Data.Player.RememberedSpells[spellNumber - 1];
                 target = new CombatCharacter("placeholder");
 
+                //check if user's character has enough mana to cast the spell
+                if (spellToCast.ManaCost > Data.Player.Mp)
+                {
+                    PrintMessage("Masz za mało many aby użyć tego czaru!", MessageType.SystemFeedback);
+                    return;
+                }
+
                 //if user typed only first argument (spellnumber)
                 if (targetName == string.Empty)
                 {
@@ -2207,6 +2214,11 @@ namespace Runedal.GameEngine
             double spellDmg = 0;
             double landRate = 0;
             
+            //prevent casting the spell when it's cost is higher than caster's actual mana value
+            if (caster.Mp < spell.ManaCost)
+            {
+                return;
+            }
 
             //if target self, then ignore magicResistance
             if (caster == target)

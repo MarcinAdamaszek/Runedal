@@ -237,7 +237,7 @@ namespace Runedal.GameData
 
             foreach(KeyValuePair<string, int> kvp in character.Items!)
             {
-                itemToAdd = Items!.Find(item => item.Name == kvp.Key)!;
+                itemToAdd = Items!.Find(item => item.Name!.ToLower() == kvp.Key.ToLower())!;
                 character.AddItem(itemToAdd, kvp.Value);
             }
         } 

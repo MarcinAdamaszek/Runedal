@@ -27,6 +27,7 @@ namespace Runedal.GameEngine
             this.Data = new Data();
             this.Rand = new Random();
             this.AttackInstances = new List<AttackInstance>();
+            this.Actions = new List<CharAction>();
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
@@ -91,6 +92,7 @@ namespace Runedal.GameEngine
         public DispatcherTimer GameClock { get; set; }
         public Random Rand { get; set; }
         public List<AttackInstance> AttackInstances { get; set; }
+        public List<CharAction> Actions { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -1307,8 +1309,8 @@ namespace Runedal.GameEngine
 
             //PrintMessage(spellToCast.Name!);
             //PrintMessage(target.Name!);
-            CharAction spellcast = new SpellCast(target, spellToCast);
-            Data.Player.NextAction = spellcast;
+            CharAction spellcast = new SpellCast(Data.Player, target, spellToCast);
+            AddAction(spellcast);
         }
 
 
@@ -2178,6 +2180,18 @@ namespace Runedal.GameEngine
             return randomizedDmg;
         }
 
+        //method adding action to actions list
+        private void AddAction(CharAction action)
+        {
+            int actionIndex = Actions.FindIndex(act => act.Performer == action.Performer);
+
+            if (actionIndex != -1)
+            {
+                Actions.RemoveAt(actionIndex);
+            }
+
+            Actions.Add(action);
+        }
 
 
 
@@ -2213,7 +2227,7 @@ namespace Runedal.GameEngine
             //print message about spell being cast depending on who is caster
             if (caster == Data.Player!)
             {
-                PrintMessage("Rzucasz czar" + spell.Name + "w postać: " + target.Name, MessageType.Action);
+                PrintMessage("Rzucasz czar " + spell.Name + " w postać: " + target.Name, MessageType.Action);
             }
             else if (target == Data.Player!)
             {
@@ -2717,14 +2731,6 @@ namespace Runedal.GameEngine
         //handler for tick event of GameClock
         private void GameClockTick(object sender, EventArgs e)
         {
-            CharactersTick();
-            PlayerEffectsTick();
-            AttacksTick();
-        }
-
-        //method launching HandleTick method for every character in game
-        private void CharactersTick()
-        {
             //handle all characters regeneration/duration-decrease of modifiers etc
             Data.Locations!.ForEach(loc =>
             {
@@ -2736,7 +2742,10 @@ namespace Runedal.GameEngine
                     }
                 });
             });
-            
+
+            PlayerEffectsTick();
+            AttacksTick();
+            ActionsTick();
         }
 
         //method handling player effects tick
@@ -2787,8 +2796,9 @@ namespace Runedal.GameEngine
                 attacker = AttackInstances[i].Attacker;
                 receiver = AttackInstances[i].Receiver;
 
-                //skip attack if attackers attack is on cooldown or other action is queued up
-                if (attacker.ActionCounter > 0 && attacker.NextAction.ActionPointsCost == 0)
+                //skip attack if attacker's attack is on cooldown or there is
+                //any action to be performed by the attacker waiting in the queue
+                if (attacker.ActionCounter > 0 || Actions.Exists(action => action.Performer == attacker))
                 {
                     continue;
                 }
@@ -2847,6 +2857,44 @@ namespace Runedal.GameEngine
             }
 
             
+        }
+
+        //method handling actions done by combat characters
+        private void ActionsTick()
+        {
+            List<CharAction> actionsToRemove = new List<CharAction>();
+
+            Actions.ForEach(action =>
+            {
+
+                //skip action if it's performers action counter is on cooldown
+                if (action.Performer!.ActionCounter > 0)
+                {
+                    return;
+                }
+
+                //perform the action
+                if (action.GetType() == typeof(SpellCast))
+                {
+                    SpellCast spellCast = (SpellCast)action;
+
+                    //add cooldown to performer's action counter
+                    spellCast.Performer!.ActionCounter += spellCast.ActionPointsCost;
+
+                    //cast a spell
+                    CastSpell(spellCast.Performer!, spellCast.Target!, spellCast.SpellToCast!);
+                }
+
+                //make sure action will be removed from the list
+                actionsToRemove.Add(action);
+            });
+
+            //remove actions that were performed successfully
+            actionsToRemove.ForEach(action =>
+            {
+                Actions.Remove(action);
+            });
+
         }
     }
 }

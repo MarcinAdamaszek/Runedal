@@ -293,7 +293,7 @@ namespace Runedal.GameEngine
             }
             else
             {
-                PrintMessage("Nic nie ma w tamtym kierunku", MessageType.SystemFeedback);
+                PrintMessage("Nie możesz tego zrobić - niczego nie ma w tamtym kierunku", MessageType.SystemFeedback);
             }
         }
 
@@ -315,13 +315,27 @@ namespace Runedal.GameEngine
             if (entityName == string.Empty || entityName == "around")
             {
                 ResetPlayerState();
-                LocationInfo();
+                LocationInfo(Data.Player!.CurrentLocation!);
             }
             else
             {
+                //if player typed n, e, s, w, u or d - search for adjacent locations
+                string[] directionLetters = new string[] { "n", "e", "s", "w", "u", "d" };
+                if (directionLetters.Contains(entityName))
+                {
+                    Location nextLocation;
+                    if (!GetNextLocation(entityName, out nextLocation))
+                    {
+                        PrintMessage("Niczego nie ma w tamtym kierunku", MessageType.SystemFeedback);
+                        return;
+                    }
+
+                    LocationInfo(nextLocation);
+                    return;
+                }
 
                 //search player's remembered spells
-                index = Data.Player!.RememberedSpells.FindIndex(spell => spell.Name.ToLower() == entityName);
+                index = Data.Player!.RememberedSpells.FindIndex(spell => spell.Name!.ToLower() == entityName);
                 if (index != -1)
                 {
                     SpellInfo(Data.Player!.RememberedSpells[index]);
@@ -1630,7 +1644,7 @@ namespace Runedal.GameEngine
 
             if (character.GetType() == typeof(Player))
             {
-                LocationInfo();
+                LocationInfo(Data.Player!.CurrentLocation!);
 
                 location.Characters!.ForEach(ch =>
                 {
@@ -1941,9 +1955,9 @@ namespace Runedal.GameEngine
         //==============================================DESCRIPTION METHODS=============================================
 
         //method describing location to user
-        private void LocationInfo()
+        private void LocationInfo(Location currentLocation)
         {
-            Location currentLocation = Data.Player!.CurrentLocation!;
+            //Location currentLocation = Data.Player!.CurrentLocation!;
             Location nextLocation = new Location();
             string goldInfo = String.Empty;
             string itemsInfo = "Przedmioty: ";

@@ -1326,885 +1326,6 @@ namespace Runedal.GameEngine
 
 
 
-        //==============================================DESCRIPTION METHODS=============================================
-
-        //method describing location to user
-        private void LocationInfo()
-        {
-            Location currentLocation = Data.Player!.CurrentLocation!;
-            Location nextLocation = new Location();
-            string goldInfo = String.Empty;
-            string itemsInfo = "Przedmioty: ";
-            string charactersInfo = "Postacie: ";
-            string exitsInfo = "Wyjścia: ";
-            string[] directionsLetters = { "n", "e", "s", "w", "u", "d" };
-            string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód,", " góra,", " dół," };
-            int currentX = currentLocation.X;
-            int currentY = currentLocation.Y;
-
-            //print location name and description
-            PrintMessage("[ " + currentLocation.Name + " ]");
-            PrintMessage(currentLocation.Description!);
-
-            //describe exits for each direction
-            for (int i = 0; i < directionsLetters.Length; i++)
-            {
-
-                //if the location exists
-                if (GetNextLocation(directionsLetters[i], out nextLocation))
-                {
-                    exitsInfo += directionsStrings[i];
-                }
-            }
-
-            //remove the last comma 
-            exitsInfo = Regex.Replace(exitsInfo, @",$", "");
-
-            PrintMessage(exitsInfo);
-
-            //add character names to their info strings for each character of specific type present in player's current location
-            currentLocation.Characters!.ForEach((character) =>
-            {
-                if (character.GetType() != typeof(Player))
-                {
-                    charactersInfo += " " + character.Name + ",";
-                }
-            });
-
-            //add items names for each item present in the location
-            currentLocation.Items!.ForEach((item) =>
-            {
-                itemsInfo += " " + item.Name;
-                if (item.Quantity > 1)
-                {
-                    itemsInfo += "(" + item.Quantity + ")";
-                }
-                itemsInfo += ",";
-            });
-
-            //set the gold description string
-            if (currentLocation.Gold > 0)
-            {
-                goldInfo = "Złoto: " + currentLocation.Gold;
-            }
-
-            //remove the last comma
-            charactersInfo = Regex.Replace(charactersInfo, @",$", "");
-            itemsInfo = Regex.Replace(itemsInfo, @",$", "");
-
-
-            //if any characters found, print them to outputBox
-            if (charactersInfo.Length > 13)
-            {
-                PrintMessage(charactersInfo);
-            }
-
-            //if any items found, print them to outputBox
-            if (itemsInfo.Length > 12)
-            {
-                PrintMessage(itemsInfo);
-            }
-
-            //if there is gold on the ground
-            if (goldInfo != String.Empty)
-            {
-                PrintMessage(goldInfo);
-            }
-
-        }
-
-        //method printing character's inventory
-        private void InventoryInfo(Character character, bool withPrice = true)
-        {
-            string spaceAfterName = string.Empty;
-            string spaceAfterQuantity = string.Empty;
-            string spaceAfterPrice = string.Empty;
-            string descriptionTable = string.Empty;
-            string tableRow = string.Empty;
-            string horizontalBorder = string.Empty;
-            string delimeter = "||-----------------------------------------------------------||";
-            string descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
-            int nameColumnSize = 0;
-            int quantityColumnSize = 0;
-            int priceColumnSize = 0;
-            int price = 0;
-            int borderSize = 0;
-
-            //set delimeter, borderSize and descriptionRow depending on withPrice parameter
-            if (withPrice)
-            {
-                delimeter = "||-----------------------------------------------------------||";
-                descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
-                borderSize = 63;
-            }
-            else
-            {
-                delimeter = "||--------------------------------------------------||";
-                descriptionRow = "|| Przedmiot:                              | Ilość: ||\n" + delimeter;
-                borderSize = 54;
-            }
-
-            //create string representing top/bottom table borders
-            for (int i = 0; i < borderSize; i++)
-            {
-                horizontalBorder += "=";
-            }
-
-            if (!withPrice)
-            {
-                descriptionTable = "********************** EKWIPUNEK *********************";
-            }
-            else if (character.GetType() == typeof(Player))
-            {
-                descriptionTable = "*********************** TWÓJ EKWIPUNEK ************************";
-            }
-            else
-            {
-                descriptionTable = "********************* EKWIPUNEK HANDLARZA *********************";
-            }
-
-            //print talbe description and top table border
-            PrintMessage(descriptionTable);
-            PrintMessage(descriptionRow);
-
-            foreach (var item in character.Inventory!)
-            {
-                //calculate sizes of spaces in table rows to mantain neat table layout
-                nameColumnSize = 40 - item.Name!.Length;
-                quantityColumnSize = 7 - Convert.ToString(item.Quantity).Length;
-                spaceAfterName = string.Empty;
-                spaceAfterQuantity = string.Empty;
-
-                //only if it's trade mode and price is needed
-                if (withPrice)
-                {
-                    priceColumnSize = 7 - Convert.ToString(item.Price).Length;
-                    spaceAfterPrice = string.Empty;
-                    for (int i = 0; i < priceColumnSize; i++)
-                    {
-                        spaceAfterPrice += " ";
-                    }
-                }
-
-                //create strings representing spaces with calculated lenghts
-                for (int i = 0; i < nameColumnSize; i++)
-                {
-                    spaceAfterName += " ";
-                }
-                for (int i = 0; i < quantityColumnSize; i++)
-                {
-                    spaceAfterQuantity += " ";
-                }
-
-
-                //set the price depending on character type (higher price for traders)
-                //only if it's in trade mode
-                if (withPrice)
-                {
-                    if (character.GetType() == typeof(Player))
-                    {
-                        price = item.Price;
-                    }
-                    else
-                    {
-                        price = CalculateTraderPrice(item.Name);
-                    }
-                }
-
-                //create a string representing table row (with price or without depending on withPrice parameter)
-                if (withPrice)
-                {
-                    tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "| "
-                        + price + spaceAfterPrice + "||";
-                }
-                else
-                {
-                    tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "||";
-                }
-
-                PrintMessage(tableRow);
-            }
-
-            //print bottom table border
-            PrintMessage(horizontalBorder);
-
-            //print player's gold pool
-            if (character.GetType() == typeof(Player))
-            {
-                PrintMessage("Złoto: " + Convert.ToString(Data.Player!.Gold!));
-            }
-
-            //separate gold display from worn items display
-            PrintMessage(horizontalBorder);
-
-            //prepare worn items description
-            if (!withPrice)
-            {
-                string[] itemSlots = new string[6];
-                int i;
-
-                itemSlots[0] = "Broń: " + (character as Player)!.Weapon!.Name!;
-                itemSlots[1] = "Hełm: " + (character as Player)!.Helmet!.Name!;
-                itemSlots[2] = "Tors: " + (character as Player)!.Torso!.Name!;
-                itemSlots[3] = "Spodnie: " + (character as Player)!.Pants!.Name!;
-                itemSlots[4] = "Rękawice: " + (character as Player)!.Gloves!.Name!;
-                itemSlots[5] = "Buty: " + (character as Player)!.Shoes!.Name!;
-
-                //if item slot was empty (meaning was filled with placeholder)
-                //swap 'placeholder' string to 'brak'
-                for (i = 0; i < itemSlots.Length; i++)
-                {
-                    itemSlots[i] = Regex.Replace(itemSlots[i], @"\bplaceholder\b", "brak");
-                    PrintMessage(itemSlots[i]);
-                }
-            }
-        }
-
-        //method describing character
-        private void CharacterInfo(Character character)
-        {
-            PrintMessage("[ " + character.Name + " ]");
-            PrintMessage(character.Description!);
-        }
-
-        //method describing item
-        private void ItemInfo(string itemName)
-        {
-            string description = string.Empty;
-            string weight = string.Empty;
-            string itemType = string.Empty;
-            string modifiers = string.Empty;
-            string effect = string.Empty;
-            string attack = string.Empty;
-            string defense = string.Empty;
-            string range = string.Empty;
-            string sign = string.Empty;
-            Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
-
-            //set item's weight and type
-            weight = "Waga: " + Convert.ToString(itemToDescribe.Weight);
-            itemType = "Typ: ";
-
-            //depending on item type, add info to description and set itemType string
-            if (itemToDescribe.GetType() == typeof(Consumable))
-            {
-                itemType += "używalne";
-                effect = "Działanie: ";
-
-                //add modifiers descriptions to effect description for every modifier present in the item
-                effect += GetEffectDescription(itemToDescribe.Modifiers!);
-            }
-            else if (itemToDescribe.GetType() == typeof(Armor))
-            {
-
-                //set string for polish armor type
-                itemType += GetPolishArmorType((itemToDescribe as Armor)!.Type);
-
-                defense = "Obrona: " + (itemToDescribe as Armor)!.Defense;
-            }
-            else if (itemToDescribe.GetType() == typeof(Weapon))
-            {
-                attack = "Atak: " + (itemToDescribe as Weapon)!.Attack;
-                itemType += "Broń biała";
-            }
-            else if (itemToDescribe.GetType() == typeof(RuneStone))
-            {
-                itemType += "Runa";
-            }
-
-            //set modifiers string
-            itemToDescribe.Modifiers!.ForEach(mod =>
-            {
-                //only if the mod is not temporary
-                if (mod.Duration == 0)
-                {
-                    modifiers += GetModDescription(mod) + ", ";
-                }
-            });
-
-            //remove trailing comma
-            modifiers = Regex.Replace(modifiers, @",\s$", "");
-
-            //print basic item info
-            PrintMessage("[ " + itemToDescribe.Name + " ]");
-            PrintMessage(itemToDescribe.Description!);
-            PrintMessage(weight);
-            PrintMessage(itemType);
-            if (effect != string.Empty)
-            {
-                PrintMessage(effect);
-            }
-            if (defense != string.Empty)
-            {
-                PrintMessage(defense);
-            }
-            if (attack != string.Empty)
-            {
-                PrintMessage(attack);
-            }
-            if (range != string.Empty)
-            {
-                PrintMessage(range);
-            }
-            if (modifiers != string.Empty)
-            {
-                PrintMessage("Modyfikatory: " + modifiers);
-            }
-        }
-
-        //method printing player's statistics
-        private void StatsInfo()
-        {
-            const int halfSize = 42;
-            const int rowsSize = 13;
-            const int numberOfAttributes = 3;
-            int remainingSpace = 0;
-            int i = 1;
-            int j = 0;
-            int[] diffs = new int[numberOfAttributes];
-            string[] rows = new string[rowsSize];
-            string[] attributes = new string[numberOfAttributes];
-            Player player = Data.Player!;
-
-            //set string for displaying attributes base values along with modifiers bonus
-            attributes[0] = Convert.ToString(player.Strength) + "(";
-            attributes[1] = Convert.ToString(player.Agility) + "(";
-            attributes[2] = Convert.ToString(player.Intelligence) + "(";
-            diffs[0] = player.GetEffectiveStrength() - player.Strength;
-            diffs[1] = player.GetEffectiveAgility() - player.Agility;
-            diffs[2] = player.GetEffectiveIntelligence() - player.Intelligence;
-
-            for (i = 0; i < numberOfAttributes; i++)
-            {
-                if (diffs[i] >= 0)
-                {
-                    attributes[i] += "+";
-                }
-
-                attributes[i] += diffs[i] + ")";
-            }
-    
-
-
-            //format left side of the table
-            rows[0] = "**********************************STATYSTYKI POSTACI**********************************";
-            rows[1] = "||     Poziom: " + player.Level;
-            rows[2] = "||     Doświadczenie: " + player.Experience;
-            rows[3] = "||     Następny poziom: " + player.NextLvlExpCap; 
-            rows[4] = "||     Pkt. Atrybutów: " + player.AttributePoints;
-            rows[5] = "||-----------------------------------";
-            rows[6] = "||     Siła: " + attributes[0];
-            rows[7] = "||     Zręczność: " + attributes[1];
-            rows[8] = "||     Inteligencja: " + attributes[2]; ;
-            rows[9] = "||-----------------------------------";
-            rows[10] = "||     Maks. HP: " + player.EffectiveMaxHp;
-            rows[11] = "||     Maks. MP: " + player.EffectiveMaxMp;
-            rows[12] = "======================================================================================";
-
-            //fill remaining space with space-characters
-            for (i = 1; i < rowsSize - 1; i++)
-            {
-                remainingSpace = halfSize - rows[i].Length;
-
-                //fill with spaces
-                for (j = 0; j < remainingSpace; j++)
-                {
-                    rows[i] += " ";
-                }
-
-                //add middle vertical border
-                rows[i] += "|     ";
-            }
-
-            //add right side (combat statistics)
-            rows[1] += "Szybkość: " + Math.Floor(player.GetEffectiveSpeed());
-            rows[2] += "Atak: " + Math.Floor(player.GetEffectiveAttack());
-            rows[3] += "Szybkość Ataku: " + Math.Floor(player.GetEffectiveAtkSpeed());
-            rows[4] += "Celność: " + Math.Floor(player.GetEffectiveAccuracy());
-            rows[5] += "Obrona: " + Math.Floor(player.GetEffectiveDefense());
-            rows[6] += "Uniki: " + Math.Floor(player.GetEffectiveEvasion());
-            rows[7] += "Trafienia krytyczne: " + Math.Floor(player.GetEffectiveCritical());
-            rows[8] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
-            rows[9] += "Regeneracja HP " + Math.Floor(player.GetEffectiveHpRegen());
-            rows[10] += "Regeneracja MP: " + Math.Floor(player.GetEffectiveMpRegen());
-
-            //fill remaining space
-            for (i = 1; i < rowsSize - 1; i++)
-            {
-                remainingSpace = halfSize * 2 - rows[i].Length;
-
-                //fill with spaces
-                for (j = 0; j < remainingSpace; j++)
-                {
-                    rows[i] += " ";
-                }
-
-                //add middle vertical border
-                rows[i] += "||";
-            }
-
-            foreach (string row in rows)
-            {
-                PrintMessage(row);
-            }
-        }
-
-        //method printing info about player's remembered spells
-        private void SpellsInfo(CombatCharacter character)
-        {
-            int i, j;
-            int remainingSpace;
-            int tableWidth = 53;
-            int numberOfRows = character.RememberedSpells!.Count + 2;
-            string[] tableRows = new string[numberOfRows];
-
-            tableRows[0] = "******************* TWOJE CZARY *********************";
-
-            //bottom border of the table
-            for (i = 0; i < tableWidth; i++)
-            {
-                tableRows[numberOfRows - 1] += "*";
-            }
-
-            //fill interior of the table with character's spells
-            for (i = 1; i < numberOfRows - 1; i++)
-            {
-                tableRows[i] += "||   " + i + ". " + character.RememberedSpells[i - 1].Name;
-
-                //fill remaining space in every row with white space characters
-                remainingSpace = tableWidth - tableRows[i].Length - 2;
-                for (j = 0; j < remainingSpace; j++)
-                {
-                    tableRows[i] += " ";
-                }
-
-                tableRows[i] += "||";
-            }
-
-            for (i = 0; i < numberOfRows; i++)
-            {
-                PrintMessage(tableRows[i]);
-            }
-
-        }
-
-        //method printing detailed info about single spell
-        private void SpellInfo(Spell spell)
-        {
-            string name = spell.Name!;
-            string description = spell.Description!;
-            string defaultTarget = "Cel domyślny: ";
-            string manaCost = "Koszt many: " + spell.ManaCost;
-            string dmgDealt = "Obrażenia: " + spell.Damage;
-            string effect = "Działanie: ";
-
-            //assign proper default target name
-            if (spell.DefaultTarget == Spell.Target.Self)
-            {
-                defaultTarget += "Rzucający";
-            }
-            else
-            {
-                defaultTarget += "Przeciwnik";
-            }
-
-            effect += GetEffectDescription(spell.Modifiers!);
-
-            //display info
-            PrintMessage("[ " + name + " ]");
-            PrintMessage(description);
-            PrintMessage(defaultTarget);
-            PrintMessage(manaCost);
-            PrintMessage(dmgDealt);
-            PrintMessage(effect);
-        }
-
-
-
-
-
-
-        //==============================================HELPER METHODS=============================================
-
-        //method returning formatted string representing effect description (it's modifiers and duration)
-        private string GetEffectDescription(List<Modifier> modifiers)
-        {
-            string effect = string.Empty;
-
-            if (modifiers.Count > 0)
-            {
-                modifiers.ForEach(mod =>
-                {
-                    effect += GetModDescription(mod) + ", ";
-                });
-
-                //remove trailing comma and add duration
-                effect = Regex.Replace(effect, @",\s$", "");
-                effect += " {" + modifiers[0].Duration + " sekund}";
-            }
-            else
-            {
-                effect += "brak";
-            }
-
-            return effect;
-        }
-
-        //method returning formatted string representing modifier and it's value with sign
-        private string GetModDescription(Modifier modifier)
-        {
-            string description = string.Empty;
-            string modType = GetPolishModType(modifier.Type);
-            string valueSign = string.Empty;
-            string percentSign = string.Empty;
-
-            //add percent sign if the modifier is percentage
-            if (modifier.IsPercentage)
-            {
-                percentSign = "_%";
-            }
-
-            //set sign of modifier to + if its positive number (for negative, minus sign is displayed automatically)
-            if (modifier.Value > 0)
-            {
-                valueSign = "+";
-            }
-
-            description = modType + "(" + valueSign + modifier.Value + percentSign + ")";
-            return description;
-        }
-
-        //method returning polish string representing specified type of ArmorType type
-        private string GetPolishArmorType(Armor.ArmorType type)
-        {
-            string armorType = string.Empty;
-            switch (type)
-            {
-                case Armor.ArmorType.Torso:
-                    armorType = "Korpus";
-                    break;
-                case Armor.ArmorType.Pants:
-                    armorType = "Spodnie";
-                    break;
-                case Armor.ArmorType.Helmet:
-                    armorType = "Hełm";
-                    break;
-                case Armor.ArmorType.Shoes:
-                    armorType = "Buty";
-                    break;
-                case Armor.ArmorType.Gloves:
-                    armorType = "Rękawice";
-                    break;
-            }
-            return armorType;
-        }
-
-        //method returning polish string representing specified type of CombatCharacter statistic 
-        private string GetPolishModType(CombatCharacter.StatType type)
-        {
-            string modType = string.Empty;
-
-            switch (type)
-            {
-                case (CombatCharacter.StatType.HpRegen):
-                    modType = "Regeneracja Hp";
-                    break;
-                case (CombatCharacter.StatType.MpRegen):
-                    modType = "Regeneracja Mp";
-                    break;
-                case (CombatCharacter.StatType.MaxHp):
-                    modType = "Maks. Hp";
-                    break;
-                case (CombatCharacter.StatType.MaxMp):
-                    modType = "Maks. Mp";
-                    break;
-                case (CombatCharacter.StatType.Strength):
-                    modType = "Siła";
-                    break;
-                case (CombatCharacter.StatType.Intelligence):
-                    modType = "Inteligencja";
-                    break;
-                case (CombatCharacter.StatType.Agility):
-                    modType = "Zręczność";
-                    break;
-                case (CombatCharacter.StatType.Speed):
-                    modType = "Szybkość";
-                    break;
-                case (CombatCharacter.StatType.Attack):
-                    modType = "Atak";
-                    break;
-                case (CombatCharacter.StatType.AtkSpeed):
-                    modType = "Szybkość ataku";
-                    break;
-                case (CombatCharacter.StatType.Accuracy):
-                    modType = "Celność";
-                    break;
-                case (CombatCharacter.StatType.Critical):
-                    modType = "Trafienia krytyczne";
-                    break;
-                case (CombatCharacter.StatType.Defense):
-                    modType = "Obrona";
-                    break;
-                case (CombatCharacter.StatType.Evasion):
-                    modType = "Uniki";
-                    break;
-                case (CombatCharacter.StatType.MagicResistance):
-                    modType = "Odporność na magię";
-                    break;
-            }
-            return modType;
-        }
-
-        /// <summary>
-        /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
-        /// </summary>
-        /// <param name="direction"></param>
-        /// <returns></returns>
-        /// 
-        private bool GetNextLocation(string direction, out Location nextLocation)
-        {
-            nextLocation = Data.Player!.CurrentLocation!;
-            int currentX = nextLocation.X;
-            int currentY = nextLocation.Y;
-            int currentZ = nextLocation.Z;
-            int locationIndex = -1;
-            bool isFound = false;
-
-            switch (direction)
-            {
-                case "n":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1 && loc.Z == currentZ);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "e":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1 && loc.Z == currentZ);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "s":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1 && loc.Z == currentZ);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "w":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1 && loc.Z == currentZ);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "u":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Z == currentZ + 1 && loc.X == currentX && loc.Y == currentY);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-                case "d":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Z == currentZ - 1 && loc.X == currentX && loc.Y == currentY);
-                    if (locationIndex != -1)
-                    {
-                        nextLocation = Data.Locations![locationIndex];
-                        isFound = true;
-                    }
-                    break;
-            }
-
-            return isFound;
-        }
-
-        //helper method for calculating selling price (trader price) of the item
-        private int CalculateTraderPrice(string itemName)
-        {
-            Item itemToEvaluate = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
-
-            double doublePrice = Convert.ToDouble(itemToEvaluate.Price);
-            int roundedPrice = Convert.ToInt32(Math.Round(doublePrice * Data!.PriceMultiplier));
-            return roundedPrice;
-        }
-
-        //method converting quantity string to number and returning true
-        //if conversion succeded and value is > 0  (returns false otherwise)
-        private bool ConvertQuantityString(string quantityString, out int quantityValue)
-        {
-            int parsedQuantity = 0;
-
-            if (quantityString != string.Empty)
-            {
-                if (!int.TryParse(quantityString, out parsedQuantity))
-                {
-                    quantityValue = parsedQuantity;
-                    return false;
-                }
-                if (parsedQuantity <= 0)
-                {
-                    quantityValue = parsedQuantity;
-                    return false;
-                }
-            }
-
-            quantityValue = parsedQuantity;
-            return true;
-        }
-
-        //method printing characters line in form of speech
-        private void PrintSpeech(Character character, string line)
-        {
-            string characterLine = character.Name + ": " + line;
-            PrintMessage(characterLine, MessageType.Speech);
-        }
-
-        //method displaying communicates in outputBox of the gui
-        private void PrintMessage(string msg, MessageType type = MessageType.Default)
-        {
-
-            //color text of the message before displaying
-            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
-            tr.Text = "\n" + msg;
-
-            switch (type)
-            {
-                case (MessageType.Default):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
-                    break;
-                case (MessageType.UserCommand):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
-                    break;
-                case (MessageType.SystemFeedback):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
-                    break;
-                case (MessageType.Action):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-                    break;
-                case (MessageType.Gain):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
-                    break;
-                case (MessageType.Loss):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
-                    break;
-                case (MessageType.EffectOn):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
-                    break;
-                case (MessageType.EffectOff):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
-                    break;
-                case (MessageType.Speech):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
-                    break;
-                case (MessageType.DealDmg):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Lime);
-                    break;
-                case (MessageType.ReceiveDmg):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Crimson);
-                    break;
-                case (MessageType.CriticalHit):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Magenta);
-                    break;
-                case (MessageType.Miss):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.FloralWhite);
-                    break;
-                case (MessageType.Avoid):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.BurlyWood);
-                    break;
-            }
-
-            Window.outputBox.ScrollToEnd();
-        }
-
-        /// <summary>
-        /// /// method taking chance parameter (as double 0.01-1.00 value, indicating percent
-        /// number) returns true if succeded and false if not
-        /// </summary>
-        /// <param name="chance"></param>
-        /// <returns></returns>
-        private bool TryOutChance(double chance)
-        {
-            double randShot = Rand.NextDouble();
-            if (chance < randShot)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// /// method determining if attack reached the target on basis of two 
-        /// parameters: accuracy and evasion. If attack is a success - returns true
-        /// if missed - returns false
-        /// </summary>
-        /// <param name="accuracy"></param>
-        /// <param name="evasion"></param>
-        /// <returns></returns>
-        private bool IsAttackHit(double accuracy, double evasion)
-        {
-            double hitChance = Rand.NextDouble() * accuracy;
-            double missChance = Rand.NextDouble() * evasion;
-
-            if (hitChance > missChance)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool IsHitCritical(double critical)
-        {
-            double chance = Math.Sqrt(critical) / 100;
-            bool isCritical = TryOutChance(chance);
-            return isCritical;
-        }
-
-        //method calculating dmg from attack and defense values
-        private double CalculateDmg(double attack, double defense)
-        {
-            double reductionMultiplier = 1 / (Math.Sqrt(defense) / 10);
-            double dmg = attack / 5 * reductionMultiplier;
-            return dmg;
-        }
-
-        //method randomizing dmg
-        private double RandomizeDmg(double staticDmg)
-        {
-            double randomDmgMultiplier = Rand.Next(70, 131) * 0.01;
-            double randomizedDmg = staticDmg * randomDmgMultiplier;
-            return randomizedDmg;
-        }
-
-        //method adding action to actions list
-        private void AddAction(CharAction action)
-        {
-            int actionIndex = Actions.FindIndex(act => act.Performer == action.Performer);
-
-            if (actionIndex != -1)
-            {
-                Actions.RemoveAt(actionIndex);
-            }
-
-            Actions.Add(action);
-        }
-
-
-
-
-
 
         //==============================================MANIPULATION METHODS=============================================
 
@@ -2733,6 +1854,886 @@ namespace Runedal.GameEngine
             {
                 PrintMessage("W lokacji pojawia się złoto!");
             }
+        }
+
+
+
+
+
+
+        //==============================================DESCRIPTION METHODS=============================================
+
+        //method describing location to user
+        private void LocationInfo()
+        {
+            Location currentLocation = Data.Player!.CurrentLocation!;
+            Location nextLocation = new Location();
+            string goldInfo = String.Empty;
+            string itemsInfo = "Przedmioty: ";
+            string charactersInfo = "Postacie: ";
+            string exitsInfo = "Wyjścia: ";
+            string[] directionsLetters = { "n", "e", "s", "w", "u", "d" };
+            string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód,", " góra,", " dół," };
+            int currentX = currentLocation.X;
+            int currentY = currentLocation.Y;
+
+            //print location name and description
+            PrintMessage("[ " + currentLocation.Name + " ]");
+            PrintMessage(currentLocation.Description!);
+
+            //describe exits for each direction
+            for (int i = 0; i < directionsLetters.Length; i++)
+            {
+
+                //if the location exists
+                if (GetNextLocation(directionsLetters[i], out nextLocation))
+                {
+                    exitsInfo += directionsStrings[i];
+                }
+            }
+
+            //remove the last comma 
+            exitsInfo = Regex.Replace(exitsInfo, @",$", "");
+
+            PrintMessage(exitsInfo);
+
+            //add character names to their info strings for each character of specific type present in player's current location
+            currentLocation.Characters!.ForEach((character) =>
+            {
+                if (character.GetType() != typeof(Player))
+                {
+                    charactersInfo += " " + character.Name + ",";
+                }
+            });
+
+            //add items names for each item present in the location
+            currentLocation.Items!.ForEach((item) =>
+            {
+                itemsInfo += " " + item.Name;
+                if (item.Quantity > 1)
+                {
+                    itemsInfo += "(" + item.Quantity + ")";
+                }
+                itemsInfo += ",";
+            });
+
+            //set the gold description string
+            if (currentLocation.Gold > 0)
+            {
+                goldInfo = "Złoto: " + currentLocation.Gold;
+            }
+
+            //remove the last comma
+            charactersInfo = Regex.Replace(charactersInfo, @",$", "");
+            itemsInfo = Regex.Replace(itemsInfo, @",$", "");
+
+
+            //if any characters found, print them to outputBox
+            if (charactersInfo.Length > 13)
+            {
+                PrintMessage(charactersInfo);
+            }
+
+            //if any items found, print them to outputBox
+            if (itemsInfo.Length > 12)
+            {
+                PrintMessage(itemsInfo);
+            }
+
+            //if there is gold on the ground
+            if (goldInfo != String.Empty)
+            {
+                PrintMessage(goldInfo);
+            }
+
+        }
+
+        //method printing character's inventory
+        private void InventoryInfo(Character character, bool withPrice = true)
+        {
+            string spaceAfterName = string.Empty;
+            string spaceAfterQuantity = string.Empty;
+            string spaceAfterPrice = string.Empty;
+            string descriptionTable = string.Empty;
+            string tableRow = string.Empty;
+            string horizontalBorder = string.Empty;
+            string delimeter = "||-----------------------------------------------------------||";
+            string descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
+            int nameColumnSize = 0;
+            int quantityColumnSize = 0;
+            int priceColumnSize = 0;
+            int price = 0;
+            int borderSize = 0;
+
+            //set delimeter, borderSize and descriptionRow depending on withPrice parameter
+            if (withPrice)
+            {
+                delimeter = "||-----------------------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
+                borderSize = 63;
+            }
+            else
+            {
+                delimeter = "||--------------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                              | Ilość: ||\n" + delimeter;
+                borderSize = 54;
+            }
+
+            //create string representing top/bottom table borders
+            for (int i = 0; i < borderSize; i++)
+            {
+                horizontalBorder += "=";
+            }
+
+            if (!withPrice)
+            {
+                descriptionTable = "********************** EKWIPUNEK *********************";
+            }
+            else if (character.GetType() == typeof(Player))
+            {
+                descriptionTable = "*********************** TWÓJ EKWIPUNEK ************************";
+            }
+            else
+            {
+                descriptionTable = "********************* EKWIPUNEK HANDLARZA *********************";
+            }
+
+            //print talbe description and top table border
+            PrintMessage(descriptionTable);
+            PrintMessage(descriptionRow);
+
+            foreach (var item in character.Inventory!)
+            {
+                //calculate sizes of spaces in table rows to mantain neat table layout
+                nameColumnSize = 40 - item.Name!.Length;
+                quantityColumnSize = 7 - Convert.ToString(item.Quantity).Length;
+                spaceAfterName = string.Empty;
+                spaceAfterQuantity = string.Empty;
+
+                //only if it's trade mode and price is needed
+                if (withPrice)
+                {
+                    priceColumnSize = 7 - Convert.ToString(item.Price).Length;
+                    spaceAfterPrice = string.Empty;
+                    for (int i = 0; i < priceColumnSize; i++)
+                    {
+                        spaceAfterPrice += " ";
+                    }
+                }
+
+                //create strings representing spaces with calculated lenghts
+                for (int i = 0; i < nameColumnSize; i++)
+                {
+                    spaceAfterName += " ";
+                }
+                for (int i = 0; i < quantityColumnSize; i++)
+                {
+                    spaceAfterQuantity += " ";
+                }
+
+
+                //set the price depending on character type (higher price for traders)
+                //only if it's in trade mode
+                if (withPrice)
+                {
+                    if (character.GetType() == typeof(Player))
+                    {
+                        price = item.Price;
+                    }
+                    else
+                    {
+                        price = CalculateTraderPrice(item.Name);
+                    }
+                }
+
+                //create a string representing table row (with price or without depending on withPrice parameter)
+                if (withPrice)
+                {
+                    tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "| "
+                        + price + spaceAfterPrice + "||";
+                }
+                else
+                {
+                    tableRow = "|| " + item.Name + spaceAfterName + "| " + Convert.ToString(item.Quantity) + spaceAfterQuantity + "||";
+                }
+
+                PrintMessage(tableRow);
+            }
+
+            //print bottom table border
+            PrintMessage(horizontalBorder);
+
+            //print player's gold pool
+            if (character.GetType() == typeof(Player))
+            {
+                PrintMessage("Złoto: " + Convert.ToString(Data.Player!.Gold!));
+            }
+
+            //separate gold display from worn items display
+            PrintMessage(horizontalBorder);
+
+            //prepare worn items description
+            if (!withPrice)
+            {
+                string[] itemSlots = new string[6];
+                int i;
+
+                itemSlots[0] = "Broń: " + (character as Player)!.Weapon!.Name!;
+                itemSlots[1] = "Hełm: " + (character as Player)!.Helmet!.Name!;
+                itemSlots[2] = "Tors: " + (character as Player)!.Torso!.Name!;
+                itemSlots[3] = "Spodnie: " + (character as Player)!.Pants!.Name!;
+                itemSlots[4] = "Rękawice: " + (character as Player)!.Gloves!.Name!;
+                itemSlots[5] = "Buty: " + (character as Player)!.Shoes!.Name!;
+
+                //if item slot was empty (meaning was filled with placeholder)
+                //swap 'placeholder' string to 'brak'
+                for (i = 0; i < itemSlots.Length; i++)
+                {
+                    itemSlots[i] = Regex.Replace(itemSlots[i], @"\bplaceholder\b", "brak");
+                    PrintMessage(itemSlots[i]);
+                }
+            }
+        }
+
+        //method describing character
+        private void CharacterInfo(Character character)
+        {
+            PrintMessage("[ " + character.Name + " ]");
+            PrintMessage(character.Description!);
+        }
+
+        //method describing item
+        private void ItemInfo(string itemName)
+        {
+            string description = string.Empty;
+            string weight = string.Empty;
+            string itemType = string.Empty;
+            string modifiers = string.Empty;
+            string effect = string.Empty;
+            string attack = string.Empty;
+            string defense = string.Empty;
+            string range = string.Empty;
+            string sign = string.Empty;
+            Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+            //set item's weight and type
+            weight = "Waga: " + Convert.ToString(itemToDescribe.Weight);
+            itemType = "Typ: ";
+
+            //depending on item type, add info to description and set itemType string
+            if (itemToDescribe.GetType() == typeof(Consumable))
+            {
+                itemType += "używalne";
+                effect = "Działanie: ";
+
+                //add modifiers descriptions to effect description for every modifier present in the item
+                effect += GetEffectDescription(itemToDescribe.Modifiers!);
+            }
+            else if (itemToDescribe.GetType() == typeof(Armor))
+            {
+
+                //set string for polish armor type
+                itemType += GetPolishArmorType((itemToDescribe as Armor)!.Type);
+
+                defense = "Obrona: " + (itemToDescribe as Armor)!.Defense;
+            }
+            else if (itemToDescribe.GetType() == typeof(Weapon))
+            {
+                attack = "Atak: " + (itemToDescribe as Weapon)!.Attack;
+                itemType += "Broń biała";
+            }
+            else if (itemToDescribe.GetType() == typeof(RuneStone))
+            {
+                itemType += "Runa";
+            }
+
+            //set modifiers string
+            itemToDescribe.Modifiers!.ForEach(mod =>
+            {
+                //only if the mod is not temporary
+                if (mod.Duration == 0)
+                {
+                    modifiers += GetModDescription(mod) + ", ";
+                }
+            });
+
+            //remove trailing comma
+            modifiers = Regex.Replace(modifiers, @",\s$", "");
+
+            //print basic item info
+            PrintMessage("[ " + itemToDescribe.Name + " ]");
+            PrintMessage(itemToDescribe.Description!);
+            PrintMessage(weight);
+            PrintMessage(itemType);
+            if (effect != string.Empty)
+            {
+                PrintMessage(effect);
+            }
+            if (defense != string.Empty)
+            {
+                PrintMessage(defense);
+            }
+            if (attack != string.Empty)
+            {
+                PrintMessage(attack);
+            }
+            if (range != string.Empty)
+            {
+                PrintMessage(range);
+            }
+            if (modifiers != string.Empty)
+            {
+                PrintMessage("Modyfikatory: " + modifiers);
+            }
+        }
+
+        //method printing player's statistics
+        private void StatsInfo()
+        {
+            const int halfSize = 42;
+            const int rowsSize = 13;
+            const int numberOfAttributes = 3;
+            int remainingSpace = 0;
+            int i = 1;
+            int j = 0;
+            int[] diffs = new int[numberOfAttributes];
+            string[] rows = new string[rowsSize];
+            string[] attributes = new string[numberOfAttributes];
+            Player player = Data.Player!;
+
+            //set string for displaying attributes base values along with modifiers bonus
+            attributes[0] = Convert.ToString(player.Strength) + "(";
+            attributes[1] = Convert.ToString(player.Agility) + "(";
+            attributes[2] = Convert.ToString(player.Intelligence) + "(";
+            diffs[0] = player.GetEffectiveStrength() - player.Strength;
+            diffs[1] = player.GetEffectiveAgility() - player.Agility;
+            diffs[2] = player.GetEffectiveIntelligence() - player.Intelligence;
+
+            for (i = 0; i < numberOfAttributes; i++)
+            {
+                if (diffs[i] >= 0)
+                {
+                    attributes[i] += "+";
+                }
+
+                attributes[i] += diffs[i] + ")";
+            }
+
+
+
+            //format left side of the table
+            rows[0] = "**********************************STATYSTYKI POSTACI**********************************";
+            rows[1] = "||     Poziom: " + player.Level;
+            rows[2] = "||     Doświadczenie: " + player.Experience;
+            rows[3] = "||     Następny poziom: " + player.NextLvlExpCap;
+            rows[4] = "||     Pkt. Atrybutów: " + player.AttributePoints;
+            rows[5] = "||-----------------------------------";
+            rows[6] = "||     Siła: " + attributes[0];
+            rows[7] = "||     Zręczność: " + attributes[1];
+            rows[8] = "||     Inteligencja: " + attributes[2]; ;
+            rows[9] = "||-----------------------------------";
+            rows[10] = "||     Maks. HP: " + player.EffectiveMaxHp;
+            rows[11] = "||     Maks. MP: " + player.EffectiveMaxMp;
+            rows[12] = "======================================================================================";
+
+            //fill remaining space with space-characters
+            for (i = 1; i < rowsSize - 1; i++)
+            {
+                remainingSpace = halfSize - rows[i].Length;
+
+                //fill with spaces
+                for (j = 0; j < remainingSpace; j++)
+                {
+                    rows[i] += " ";
+                }
+
+                //add middle vertical border
+                rows[i] += "|     ";
+            }
+
+            //add right side (combat statistics)
+            rows[1] += "Szybkość: " + Math.Floor(player.GetEffectiveSpeed());
+            rows[2] += "Atak: " + Math.Floor(player.GetEffectiveAttack());
+            rows[3] += "Szybkość Ataku: " + Math.Floor(player.GetEffectiveAtkSpeed());
+            rows[4] += "Celność: " + Math.Floor(player.GetEffectiveAccuracy());
+            rows[5] += "Obrona: " + Math.Floor(player.GetEffectiveDefense());
+            rows[6] += "Uniki: " + Math.Floor(player.GetEffectiveEvasion());
+            rows[7] += "Trafienia krytyczne: " + Math.Floor(player.GetEffectiveCritical());
+            rows[8] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
+            rows[9] += "Regeneracja HP " + Math.Floor(player.GetEffectiveHpRegen());
+            rows[10] += "Regeneracja MP: " + Math.Floor(player.GetEffectiveMpRegen());
+
+            //fill remaining space
+            for (i = 1; i < rowsSize - 1; i++)
+            {
+                remainingSpace = halfSize * 2 - rows[i].Length;
+
+                //fill with spaces
+                for (j = 0; j < remainingSpace; j++)
+                {
+                    rows[i] += " ";
+                }
+
+                //add middle vertical border
+                rows[i] += "||";
+            }
+
+            foreach (string row in rows)
+            {
+                PrintMessage(row);
+            }
+        }
+
+        //method printing info about player's remembered spells
+        private void SpellsInfo(CombatCharacter character)
+        {
+            int i, j;
+            int remainingSpace;
+            int tableWidth = 53;
+            int numberOfRows = character.RememberedSpells!.Count + 2;
+            string[] tableRows = new string[numberOfRows];
+
+            tableRows[0] = "******************* TWOJE CZARY *********************";
+
+            //bottom border of the table
+            for (i = 0; i < tableWidth; i++)
+            {
+                tableRows[numberOfRows - 1] += "*";
+            }
+
+            //fill interior of the table with character's spells
+            for (i = 1; i < numberOfRows - 1; i++)
+            {
+                tableRows[i] += "||   " + i + ". " + character.RememberedSpells[i - 1].Name;
+
+                //fill remaining space in every row with white space characters
+                remainingSpace = tableWidth - tableRows[i].Length - 2;
+                for (j = 0; j < remainingSpace; j++)
+                {
+                    tableRows[i] += " ";
+                }
+
+                tableRows[i] += "||";
+            }
+
+            for (i = 0; i < numberOfRows; i++)
+            {
+                PrintMessage(tableRows[i]);
+            }
+
+        }
+
+        //method printing detailed info about single spell
+        private void SpellInfo(Spell spell)
+        {
+            string name = spell.Name!;
+            string description = spell.Description!;
+            string defaultTarget = "Cel domyślny: ";
+            string manaCost = "Koszt many: " + spell.ManaCost;
+            string dmgDealt = "Obrażenia: " + spell.Damage;
+            string effect = "Działanie: ";
+
+            //assign proper default target name
+            if (spell.DefaultTarget == Spell.Target.Self)
+            {
+                defaultTarget += "Rzucający";
+            }
+            else
+            {
+                defaultTarget += "Przeciwnik";
+            }
+
+            effect += GetEffectDescription(spell.Modifiers!);
+
+            //display info
+            PrintMessage("[ " + name + " ]");
+            PrintMessage(description);
+            PrintMessage(defaultTarget);
+            PrintMessage(manaCost);
+            PrintMessage(dmgDealt);
+            PrintMessage(effect);
+        }
+
+
+
+
+
+
+        //==============================================HELPER METHODS=============================================
+
+        //method returning formatted string representing effect description (it's modifiers and duration)
+        private string GetEffectDescription(List<Modifier> modifiers)
+        {
+            string effect = string.Empty;
+
+            if (modifiers.Count > 0)
+            {
+                modifiers.ForEach(mod =>
+                {
+                    effect += GetModDescription(mod) + ", ";
+                });
+
+                //remove trailing comma and add duration
+                effect = Regex.Replace(effect, @",\s$", "");
+                effect += " {" + modifiers[0].Duration + " sekund}";
+            }
+            else
+            {
+                effect += "brak";
+            }
+
+            return effect;
+        }
+
+        //method returning formatted string representing modifier and it's value with sign
+        private string GetModDescription(Modifier modifier)
+        {
+            string description = string.Empty;
+            string modType = GetPolishModType(modifier.Type);
+            string valueSign = string.Empty;
+            string percentSign = string.Empty;
+
+            //add percent sign if the modifier is percentage
+            if (modifier.IsPercentage)
+            {
+                percentSign = "_%";
+            }
+
+            //set sign of modifier to + if its positive number (for negative, minus sign is displayed automatically)
+            if (modifier.Value > 0)
+            {
+                valueSign = "+";
+            }
+
+            description = modType + "(" + valueSign + modifier.Value + percentSign + ")";
+            return description;
+        }
+
+        //method returning polish string representing specified type of ArmorType type
+        private string GetPolishArmorType(Armor.ArmorType type)
+        {
+            string armorType = string.Empty;
+            switch (type)
+            {
+                case Armor.ArmorType.Torso:
+                    armorType = "Korpus";
+                    break;
+                case Armor.ArmorType.Pants:
+                    armorType = "Spodnie";
+                    break;
+                case Armor.ArmorType.Helmet:
+                    armorType = "Hełm";
+                    break;
+                case Armor.ArmorType.Shoes:
+                    armorType = "Buty";
+                    break;
+                case Armor.ArmorType.Gloves:
+                    armorType = "Rękawice";
+                    break;
+            }
+            return armorType;
+        }
+
+        //method returning polish string representing specified type of CombatCharacter statistic 
+        private string GetPolishModType(CombatCharacter.StatType type)
+        {
+            string modType = string.Empty;
+
+            switch (type)
+            {
+                case (CombatCharacter.StatType.HpRegen):
+                    modType = "Regeneracja Hp";
+                    break;
+                case (CombatCharacter.StatType.MpRegen):
+                    modType = "Regeneracja Mp";
+                    break;
+                case (CombatCharacter.StatType.MaxHp):
+                    modType = "Maks. Hp";
+                    break;
+                case (CombatCharacter.StatType.MaxMp):
+                    modType = "Maks. Mp";
+                    break;
+                case (CombatCharacter.StatType.Strength):
+                    modType = "Siła";
+                    break;
+                case (CombatCharacter.StatType.Intelligence):
+                    modType = "Inteligencja";
+                    break;
+                case (CombatCharacter.StatType.Agility):
+                    modType = "Zręczność";
+                    break;
+                case (CombatCharacter.StatType.Speed):
+                    modType = "Szybkość";
+                    break;
+                case (CombatCharacter.StatType.Attack):
+                    modType = "Atak";
+                    break;
+                case (CombatCharacter.StatType.AtkSpeed):
+                    modType = "Szybkość ataku";
+                    break;
+                case (CombatCharacter.StatType.Accuracy):
+                    modType = "Celność";
+                    break;
+                case (CombatCharacter.StatType.Critical):
+                    modType = "Trafienia krytyczne";
+                    break;
+                case (CombatCharacter.StatType.Defense):
+                    modType = "Obrona";
+                    break;
+                case (CombatCharacter.StatType.Evasion):
+                    modType = "Uniki";
+                    break;
+                case (CombatCharacter.StatType.MagicResistance):
+                    modType = "Odporność na magię";
+                    break;
+            }
+            return modType;
+        }
+
+        /// <summary>
+        /// finds location in the direction specified by 'direction' argument and returns true if found, false otherwise
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        /// 
+        private bool GetNextLocation(string direction, out Location nextLocation)
+        {
+            nextLocation = Data.Player!.CurrentLocation!;
+            int currentX = nextLocation.X;
+            int currentY = nextLocation.Y;
+            int currentZ = nextLocation.Z;
+            int locationIndex = -1;
+            bool isFound = false;
+
+            switch (direction)
+            {
+                case "n":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1 && loc.Z == currentZ);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "e":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1 && loc.Z == currentZ);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "s":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1 && loc.Z == currentZ);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "w":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1 && loc.Z == currentZ);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "u":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Z == currentZ + 1 && loc.X == currentX && loc.Y == currentY);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+                case "d":
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.Z == currentZ - 1 && loc.X == currentX && loc.Y == currentY);
+                    if (locationIndex != -1)
+                    {
+                        nextLocation = Data.Locations![locationIndex];
+                        isFound = true;
+                    }
+                    break;
+            }
+
+            return isFound;
+        }
+
+        //helper method for calculating selling price (trader price) of the item
+        private int CalculateTraderPrice(string itemName)
+        {
+            Item itemToEvaluate = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
+            double doublePrice = Convert.ToDouble(itemToEvaluate.Price);
+            int roundedPrice = Convert.ToInt32(Math.Round(doublePrice * Data!.PriceMultiplier));
+            return roundedPrice;
+        }
+
+        //method converting quantity string to number and returning true
+        //if conversion succeded and value is > 0  (returns false otherwise)
+        private bool ConvertQuantityString(string quantityString, out int quantityValue)
+        {
+            int parsedQuantity = 0;
+
+            if (quantityString != string.Empty)
+            {
+                if (!int.TryParse(quantityString, out parsedQuantity))
+                {
+                    quantityValue = parsedQuantity;
+                    return false;
+                }
+                if (parsedQuantity <= 0)
+                {
+                    quantityValue = parsedQuantity;
+                    return false;
+                }
+            }
+
+            quantityValue = parsedQuantity;
+            return true;
+        }
+
+        //method printing characters line in form of speech
+        private void PrintSpeech(Character character, string line)
+        {
+            string characterLine = character.Name + ": " + line;
+            PrintMessage(characterLine, MessageType.Speech);
+        }
+
+        //method displaying communicates in outputBox of the gui
+        private void PrintMessage(string msg, MessageType type = MessageType.Default)
+        {
+
+            //color text of the message before displaying
+            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
+            tr.Text = "\n" + msg;
+
+            switch (type)
+            {
+                case (MessageType.Default):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
+                    break;
+                case (MessageType.UserCommand):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
+                    break;
+                case (MessageType.SystemFeedback):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
+                    break;
+                case (MessageType.Action):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                    break;
+                case (MessageType.Gain):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
+                    break;
+                case (MessageType.Loss):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
+                    break;
+                case (MessageType.EffectOn):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
+                    break;
+                case (MessageType.EffectOff):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
+                    break;
+                case (MessageType.Speech):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
+                    break;
+                case (MessageType.DealDmg):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Lime);
+                    break;
+                case (MessageType.ReceiveDmg):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Crimson);
+                    break;
+                case (MessageType.CriticalHit):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Magenta);
+                    break;
+                case (MessageType.Miss):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.FloralWhite);
+                    break;
+                case (MessageType.Avoid):
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.BurlyWood);
+                    break;
+            }
+
+            Window.outputBox.ScrollToEnd();
+        }
+
+        /// <summary>
+        /// /// method taking chance parameter (as double 0.01-1.00 value, indicating percent
+        /// number) returns true if succeded and false if not
+        /// </summary>
+        /// <param name="chance"></param>
+        /// <returns></returns>
+        private bool TryOutChance(double chance)
+        {
+            double randShot = Rand.NextDouble();
+            if (chance < randShot)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// /// method determining if attack reached the target on basis of two 
+        /// parameters: accuracy and evasion. If attack is a success - returns true
+        /// if missed - returns false
+        /// </summary>
+        /// <param name="accuracy"></param>
+        /// <param name="evasion"></param>
+        /// <returns></returns>
+        private bool IsAttackHit(double accuracy, double evasion)
+        {
+            double hitChance = Rand.NextDouble() * accuracy;
+            double missChance = Rand.NextDouble() * evasion;
+
+            if (hitChance > missChance)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsHitCritical(double critical)
+        {
+            double chance = Math.Sqrt(critical) / 100;
+            bool isCritical = TryOutChance(chance);
+            return isCritical;
+        }
+
+        //method calculating dmg from attack and defense values
+        private double CalculateDmg(double attack, double defense)
+        {
+            double reductionMultiplier = 1 / (Math.Sqrt(defense) / 10);
+            double dmg = attack / 5 * reductionMultiplier;
+            return dmg;
+        }
+
+        //method randomizing dmg
+        private double RandomizeDmg(double staticDmg)
+        {
+            double randomDmgMultiplier = Rand.Next(70, 131) * 0.01;
+            double randomizedDmg = staticDmg * randomDmgMultiplier;
+            return randomizedDmg;
+        }
+
+        //method adding action to actions list
+        private void AddAction(CharAction action)
+        {
+            int actionIndex = Actions.FindIndex(act => act.Performer == action.Performer);
+
+            if (actionIndex != -1)
+            {
+                Actions.RemoveAt(actionIndex);
+            }
+
+            Actions.Add(action);
         }
 
 

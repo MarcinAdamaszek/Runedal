@@ -9,11 +9,11 @@ namespace Runedal.GameData.Actions
 {
     public class SpellCraft : CharAction
     {
-        public SpellCraft(Player crafter, Spell craftedSpell) : base(crafter, 100)
+        public SpellCraft(CombatCharacter crafter, Spell spellToCraft) : base(crafter, 100)
         {
-            CraftedSpell = craftedSpell;
+            SpellToCraft = spellToCraft;
         }
 
-        public Spell CraftedSpell { get; set; }
+        public Spell SpellToCraft { get; set; }
     }
 }

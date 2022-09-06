@@ -1103,7 +1103,6 @@ namespace Runedal.GameEngine
             string spellName = string.Empty;
             string[] runeNames = new string[5] { "zjarrit", "akull", "verde", "xitan", "dara" };
             Spell craftedSpell = new Spell();
-            Spell returnedSpell = new Spell();
 
             //choose spell depending on single rune choice
             if (secondRune == string.Empty)
@@ -1167,24 +1166,19 @@ namespace Runedal.GameEngine
                 }
             }
 
-            //craft spell and add it to player's remembered spells
-            craftedSpell = Data.Spells!.Find(spell => spell.Name!.ToLower() == spellName)!;
-
-            if (!Data.Player.SpendMana(100))
+            //check if player has enough mana to craft a spell
+            if (!Data.Player!.SpendMana(100))
             {
                 PrintMessage("Nie masz wystarczającej ilości many aby to zrobić");
                 return;
             }
 
-            PrintMessage("Tworzysz czar " + craftedSpell.Name, MessageType.Action);
-            PrintMessage("Czujesz jak nowe zaklęcie wypełnia Twój umysł", MessageType.Action);
+            //choose proper spell
+            craftedSpell = Data.Spells!.Find(spell => spell.Name!.ToLower() == spellName)!;
 
-            returnedSpell = Data.Player.AddSpell(craftedSpell);
-            if (returnedSpell.Name != "placeholder")
-            {
-                PrintMessage("Zapominasz czar " + returnedSpell.Name, MessageType.Action);
-            }
-
+            //add spellcraft action to the queue
+            CharAction SpellCraft = new SpellCraft(Data.Player!, craftedSpell);
+            Actions.Add(SpellCraft);
         }
 
         //method showing player's remembered spells
@@ -1328,6 +1322,24 @@ namespace Runedal.GameEngine
 
 
         //==============================================MANIPULATION METHODS=============================================
+
+        //method for crafting a spell
+        private void CraftSpell(Spell spellToCraft)
+        {
+
+            PrintMessage("Tworzysz czar " + spellToCraft.Name, MessageType.Action);
+            PrintMessage("Czujesz jak nowe zaklęcie wypełnia Twój umysł", MessageType.Action);
+
+            //if collection of player's spells was full and the last spell
+            //was removed - print proper message to user about it
+            Spell returnedSpell = Data.Player!.AddSpell(spellToCraft);
+            if (returnedSpell.Name != "placeholder")
+            {
+                PrintMessage("Zapominasz czar " + returnedSpell.Name, MessageType.Action);
+            }
+
+            SpellsInfo(Data.Player!);
+        }
 
         //method for casting spell by specified caster onto specified target
         private void CastSpell(CombatCharacter caster, CombatCharacter target, Spell spell)
@@ -2887,17 +2899,23 @@ namespace Runedal.GameEngine
                     return;
                 }
 
-                //perform the action
+                //perform the action:
+                //if it's spell casting
                 if (action.GetType() == typeof(SpellCast))
                 {
                     SpellCast spellCast = (SpellCast)action;
-
-                    //add cooldown to performer's action counter
-                    spellCast.Performer!.ActionCounter += spellCast.ActionPointsCost;
-
-                    //cast a spell
                     CastSpell(spellCast.Performer!, spellCast.Target!, spellCast.SpellToCast!);
                 }
+
+                //else if it's spell CRAFTING
+                else if (action.GetType() == typeof(SpellCraft))
+                {
+                    SpellCraft spellCraft = (SpellCraft)action;
+                    CraftSpell(spellCraft.SpellToCraft);
+                }
+
+                //add cooldown to performer's action counter
+                action.Performer!.ActionCounter += action.ActionPointsCost;
 
                 //make sure action will be removed from the list
                 actionsToRemove.Add(action);

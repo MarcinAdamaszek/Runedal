@@ -18,13 +18,13 @@ namespace Runedal.GameData.Characters
         private const double MaxMpIntMultiplier = 8;
         private const double HpRegenStrMultiplier = 1;
         private const double MpRegenIntMultiplier = 1;
-        private const double SpeedAgiMultiplier = 0.1;
+        private const double SpeedAgiMultiplier = 0.3;
         private const double AttackStrMultiplier = 1.5;
-        private const double AtkSpeedAgiMultiplier = 0.3;
-        private const double AccuracyAgiMultiplier = 0.3;
+        private const double AtkSpeedAgiMultiplier = 1.0;
+        private const double AccuracyAgiMultiplier = 0.5;
         private const double CriticalAgiMultiplier = 0.5;
         private const double EvasionAgiMultiplier = 0.3;
-        private const double MagicResistanceIntMultiplier = 0.5;
+        private const double MagicResistanceIntMultiplier = 1.0;
 
         //values of other multipliers
         private const double SpeedWeightMultiplier = -0.02;

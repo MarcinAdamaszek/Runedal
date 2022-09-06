@@ -1163,6 +1163,10 @@ namespace Runedal.GameEngine
                 {
                     spellName = "podmuch_pary";
                 }
+                else if (firstRune == runeNames[0] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[0])
+                {
+                    spellName = "szał_berserkera";
+                }
             }
 
             //check if player possesses required runes
@@ -1449,7 +1453,7 @@ namespace Runedal.GameEngine
             }
 
             //deal spell dmg
-            if (spellDmg > 0)
+            if (spell.Power > 0)
             {
                 DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
             }

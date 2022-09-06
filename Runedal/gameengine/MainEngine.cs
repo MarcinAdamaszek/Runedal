@@ -1629,6 +1629,15 @@ namespace Runedal.GameEngine
             else if (Data.Player!.CurrentLocation == location)
             {
                 PrintMessage("W lokacji pojawia się postać: " + character.Name);
+
+                //if added character is aggressive monster, attack player immediately
+                if (character.GetType() == typeof(Monster))
+                {
+                    if ((character as Monster)!.Aggressiveness == Monster.AggressionType.Aggressive)
+                    {
+                        AttackCharacter((character as CombatCharacter)!, Data.Player!);
+                    }
+                }
             }
         }
 

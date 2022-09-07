@@ -734,7 +734,8 @@ namespace Runedal.GameEngine
 
                 if (itemToUse.GetType() == typeof(Consumable))
                 {
-                    UseConsumable((itemToUse as Consumable)!);
+                    CharAction itemUse = new ItemUse(Data.Player!, itemToUse);
+                    AddAction(itemUse);
                 }
                 else
                 {
@@ -1828,6 +1829,13 @@ namespace Runedal.GameEngine
         //method for using consumable item
         public void UseConsumable(Consumable item)
         {
+            //prevent using non-existent item
+            if (!Data.Player!.Inventory!.Exists(it => it.Name!.ToLower() == item.Name!.ToLower()))
+            {
+                PrintMessage("Nie posiadasz przedmiotu " + item.Name! + "!", MessageType.SystemFeedback);
+                return;
+            }
+
             PrintMessage(item.UseActivityName! + " " + item.Name!, MessageType.Action);
             RemoveItemFromPlayer(item.Name!);
             ApplyEffect(item.Modifiers!, item.Name!);
@@ -2994,8 +3002,19 @@ namespace Runedal.GameEngine
                 }
 
                 //perform the action:
-                //if it's spell casting
-                if (action.GetType() == typeof(SpellCast))
+                //if it's item use
+                if (action.GetType() == typeof(ItemUse))
+                {
+                    ItemUse itemUse = (ItemUse)action;
+                    
+                    if (itemUse.ItemToUse.GetType() == typeof(Consumable))
+                    {
+                        UseConsumable((itemUse.ItemToUse as Consumable)!);
+                    }
+                }
+
+                //else if it's spell casting
+                else if (action.GetType() == typeof(SpellCast))
                 {
                     SpellCast spellCast = (SpellCast)action;
                     CastSpell(spellCast.Performer!, spellCast.Target!, spellCast.SpellToCast!);

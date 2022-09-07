@@ -2563,55 +2563,55 @@ namespace Runedal.GameEngine
         }
 
         //method returning polish string representing specified type of CombatCharacter statistic 
-        private string GetPolishModType(CombatCharacter.StatType type)
+        private string GetPolishModType(Modifier.ModType type)
         {
             string modType = string.Empty;
 
             switch (type)
             {
-                case (CombatCharacter.StatType.HpRegen):
+                case (Modifier.ModType.HpRegen):
                     modType = "Regeneracja Hp";
                     break;
-                case (CombatCharacter.StatType.MpRegen):
+                case (Modifier.ModType.MpRegen):
                     modType = "Regeneracja Mp";
                     break;
-                case (CombatCharacter.StatType.MaxHp):
+                case (Modifier.ModType.MaxHp):
                     modType = "Maks. Hp";
                     break;
-                case (CombatCharacter.StatType.MaxMp):
+                case (Modifier.ModType.MaxMp):
                     modType = "Maks. Mp";
                     break;
-                case (CombatCharacter.StatType.Strength):
+                case (Modifier.ModType.Strength):
                     modType = "Siła";
                     break;
-                case (CombatCharacter.StatType.Intelligence):
+                case (Modifier.ModType.Intelligence):
                     modType = "Inteligencja";
                     break;
-                case (CombatCharacter.StatType.Agility):
+                case (Modifier.ModType.Agility):
                     modType = "Zręczność";
                     break;
-                case (CombatCharacter.StatType.Speed):
+                case (Modifier.ModType.Speed):
                     modType = "Szybkość";
                     break;
-                case (CombatCharacter.StatType.Attack):
+                case (Modifier.ModType.Attack):
                     modType = "Atak";
                     break;
-                case (CombatCharacter.StatType.AtkSpeed):
+                case (Modifier.ModType.AtkSpeed):
                     modType = "Szybkość ataku";
                     break;
-                case (CombatCharacter.StatType.Accuracy):
+                case (Modifier.ModType.Accuracy):
                     modType = "Celność";
                     break;
-                case (CombatCharacter.StatType.Critical):
+                case (Modifier.ModType.Critical):
                     modType = "Trafienia krytyczne";
                     break;
-                case (CombatCharacter.StatType.Defense):
+                case (Modifier.ModType.Defense):
                     modType = "Obrona";
                     break;
-                case (CombatCharacter.StatType.Evasion):
+                case (Modifier.ModType.Evasion):
                     modType = "Uniki";
                     break;
-                case (CombatCharacter.StatType.MagicResistance):
+                case (Modifier.ModType.MagicResistance):
                     modType = "Odporność na magię";
                     break;
             }

@@ -16,7 +16,7 @@ namespace Runedal.GameData.Effects
         {
             Parent = "none";
         }
-        public Modifier(CombatCharacter.StatType type, int value, int duration = 0, string parent = "none", bool isPercentage = false)
+        public Modifier(Modifier.ModType type, int value, int duration = 0, string parent = "none", bool isPercentage = false)
         {
             Type = type;
             Value = value;
@@ -34,9 +34,27 @@ namespace Runedal.GameData.Effects
             Parent = mod.Parent;
             IsPercentage = mod.IsPercentage;
         }
+        public enum ModType
+        {
+            MaxHp,
+            MaxMp,
+            HpRegen,
+            MpRegen,
+            Strength,
+            Intelligence,
+            Agility,
+            Speed,
+            Attack,
+            AtkSpeed,
+            Accuracy,
+            Critical,
+            Defense,
+            Evasion,
+            MagicResistance
+        }
 
-        //type of modifier (which statistic it modifies)
-        public CombatCharacter.StatType Type { get; set; }
+        //type of modifier 
+        public Modifier.ModType Type { get; set; }
 
         //bool indicating if value is percentage
         public bool IsPercentage { get; set; }

@@ -98,24 +98,6 @@ namespace Runedal.GameData.Characters
             HpCounter = CounterMax;
             MpCounter = CounterMax;
         }
-        public enum StatType
-        {
-            MaxHp,
-            MaxMp,
-            HpRegen,
-            MpRegen,
-            Strength,
-            Intelligence,
-            Agility,
-            Speed,
-            Attack,
-            AtkSpeed,
-            Accuracy,
-            Critical,
-            Defense,
-            Evasion,
-            MagicResistance
-        }
         public enum State
         {
             Idle,
@@ -379,77 +361,77 @@ namespace Runedal.GameData.Characters
 
         public virtual double GetEffectiveMaxHp()
         {
-            double effectiveMaxHp = this.MaxHp + ApplyModifiers(StatType.MaxHp);
+            double effectiveMaxHp = this.MaxHp + ApplyModifiers(Modifier.ModType.MaxHp);
             return effectiveMaxHp;
         }
         public virtual double GetEffectiveMaxMp()
         {
-            double effectiveMaxMp = this.MaxMp + ApplyModifiers(StatType.MaxMp);
+            double effectiveMaxMp = this.MaxMp + ApplyModifiers(Modifier.ModType.MaxMp);
             return effectiveMaxMp;
         }
         public virtual double GetEffectiveHpRegen()
         {
-            double effectiveHpRegen = this.HpRegen + ApplyModifiers(StatType.HpRegen);
+            double effectiveHpRegen = this.HpRegen + ApplyModifiers(Modifier.ModType.HpRegen);
             return effectiveHpRegen;
         }
         public virtual double GetEffectiveMpRegen()
         {
-            double effectiveMpRegen = this.MpRegen + ApplyModifiers(StatType.MpRegen);
+            double effectiveMpRegen = this.MpRegen + ApplyModifiers(Modifier.ModType.MpRegen);
             return effectiveMpRegen;
         }
         public virtual double GetEffectiveSpeed()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveSpeed = this.Speed + ApplyModifiers(StatType.Speed);
+            double effectiveSpeed = this.Speed + ApplyModifiers(Modifier.ModType.Speed);
 
             return effectiveSpeed;
         }
         public virtual double GetEffectiveAttack()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveAttack = this.Attack + ApplyModifiers(StatType.Attack);
+            double effectiveAttack = this.Attack + ApplyModifiers(Modifier.ModType.Attack);
 
             return effectiveAttack;
         }
         public virtual double GetEffectiveAtkSpeed()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveAtkSpeed = this.AtkSpeed + ApplyModifiers(StatType.AtkSpeed);
+            double effectiveAtkSpeed = this.AtkSpeed + ApplyModifiers(Modifier.ModType.AtkSpeed);
 
             return effectiveAtkSpeed;
         }
         public virtual double GetEffectiveAccuracy()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveAccuracy = this.Accuracy + ApplyModifiers(StatType.Accuracy);
+            double effectiveAccuracy = this.Accuracy + ApplyModifiers(Modifier.ModType.Accuracy);
 
             return effectiveAccuracy;
         }
         public virtual double GetEffectiveCritical()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveCritical = this.Critical + ApplyModifiers(StatType.Critical);
+            double effectiveCritical = this.Critical + ApplyModifiers(Modifier.ModType.Critical);
 
             return effectiveCritical;
         }
         public virtual double GetEffectiveDefense()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveDefense = this.Defense + ApplyModifiers(StatType.Defense);
+            double effectiveDefense = this.Defense + ApplyModifiers(Modifier.ModType.Defense);
 
             return effectiveDefense;
         }
         public virtual double GetEffectiveEvasion()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveEvasion = this.Evasion + ApplyModifiers(StatType.Evasion);
+            double effectiveEvasion = this.Evasion + ApplyModifiers(Modifier.ModType.Evasion);
 
             return effectiveEvasion;
         }
         public virtual double GetEffectiveMagicResistance()
         {
             //combine base stat value and value of all its modifiers
-            double effectiveMagicResistance = this.MagicResistance + ApplyModifiers(StatType.MagicResistance);
+            double effectiveMagicResistance = this.MagicResistance + ApplyModifiers(Modifier.ModType.MagicResistance);
 
             return effectiveMagicResistance;
         }
@@ -459,7 +441,7 @@ namespace Runedal.GameData.Characters
         /// </summary>
         /// <param name="statType"></param>
         /// <returns></returns>
-        protected virtual int ApplyModifiers(StatType statType)
+        protected virtual int ApplyModifiers(Modifier.ModType statType)
         {
             List<Modifier> modifiers;
             int modifiersSumValue = 0;
@@ -487,37 +469,37 @@ namespace Runedal.GameData.Characters
 
                 switch (statType)
                 {
-                    case StatType.MaxHp:
+                    case Modifier.ModType.MaxHp:
                         baseStatValue = MaxHp;
                         break;
-                    case StatType.MaxMp:
+                    case Modifier.ModType.MaxMp:
                         baseStatValue = MaxMp;
                         break;
-                    case StatType.HpRegen:
+                    case Modifier.ModType.HpRegen:
                         baseStatValue = HpRegen;
                         break;
-                    case StatType.Speed:
+                    case Modifier.ModType.Speed:
                         baseStatValue = Speed;
                         break;
-                    case StatType.Attack:
+                    case Modifier.ModType.Attack:
                         baseStatValue = Attack;
                         break;
-                    case StatType.AtkSpeed:
+                    case Modifier.ModType.AtkSpeed:
                         baseStatValue = AtkSpeed;
                         break;
-                    case StatType.Accuracy:
+                    case Modifier.ModType.Accuracy:
                         baseStatValue = Accuracy;
                         break;
-                    case StatType.Defense:
+                    case Modifier.ModType.Defense:
                         baseStatValue = Defense;
                         break;
-                    case StatType.Evasion:
+                    case Modifier.ModType.Evasion:
                         baseStatValue = Evasion;
                         break;
-                    case StatType.MagicResistance:
+                    case Modifier.ModType.MagicResistance:
                         baseStatValue = Evasion;
                         break;
-                    case StatType.Critical:
+                    case Modifier.ModType.Critical:
                         baseStatValue = Evasion;
                         break;
                 }

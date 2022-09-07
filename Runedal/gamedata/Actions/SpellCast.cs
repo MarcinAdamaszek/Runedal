@@ -9,8 +9,8 @@ namespace Runedal.GameData.Actions
 {
     public class SpellCast : CharAction
     {
-        public SpellCast() : base(new CombatCharacter("placeholder"), 50) { }
-        public SpellCast(CombatCharacter caster, CombatCharacter target, Spell spellToCast) : base(caster, 50)
+        public SpellCast() : base(new CombatCharacter("placeholder"), 40) { }
+        public SpellCast(CombatCharacter caster, CombatCharacter target, Spell spellToCast) : base(caster, 40)
         {
             Target = target;
             SpellToCast = spellToCast;

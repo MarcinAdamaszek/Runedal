@@ -1401,7 +1401,7 @@ namespace Runedal.GameEngine
                 casterDmgFactor = caster.Level;
             }
 
-            spellDmg = (spell.Power * 3 + casterDmgFactor * 10) /
+            spellDmg = (spell.Power * Math.Sqrt(casterDmgFactor)) /
                     (Math.Sqrt(target.GetEffectiveMagicResistance() * 0.02));
 
             //randomize spell dmg
@@ -2437,6 +2437,8 @@ namespace Runedal.GameEngine
             {
                 PrintMessage(tableRows[i]);
             }
+
+            PrintMessage("Maks. zapamiętanych czarów: (" + character.MaxSpellsRemembered + ")");
 
         }
 

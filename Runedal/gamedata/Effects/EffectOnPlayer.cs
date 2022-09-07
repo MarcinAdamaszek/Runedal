@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Runedal.GameData
+namespace Runedal.GameData.Effects
 {
     public class EffectOnPlayer
     {
         public EffectOnPlayer() { }
-        public EffectOnPlayer(string name, string description, int duration) 
+        public EffectOnPlayer(string name, string description, int duration)
         {
             Name = name;
             Description = description;

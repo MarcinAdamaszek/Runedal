@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Runedal.GameData.Items;
 using System.Windows.Media.Effects;
 using static Runedal.GameData.Characters.CombatCharacter;
+using Runedal.GameData.Effects;
 
 namespace Runedal.GameData.Characters
 {

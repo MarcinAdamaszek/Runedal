@@ -1,20 +1,20 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Runedal.GameData.Characters;
 
-namespace Runedal.GameData
+namespace Runedal.GameData.Effects
 {
     public class Modifier
     {
         protected int _Duration;
 
         //default constructor for json deserialization
-        public Modifier() 
+        public Modifier()
         {
-            Parent = "none";   
+            Parent = "none";
         }
         public Modifier(CombatCharacter.StatType type, int value, int duration = 0, string parent = "none", bool isPercentage = false)
         {

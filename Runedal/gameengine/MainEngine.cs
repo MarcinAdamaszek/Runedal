@@ -17,6 +17,7 @@ using Microsoft.Win32.SafeHandles;
 using System.Windows.Input;
 using System.Numerics;
 using Runedal.GameData.Actions;
+using Runedal.GameData.Effects;
 
 namespace Runedal.GameEngine
 {

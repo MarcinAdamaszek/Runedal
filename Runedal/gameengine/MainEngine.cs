@@ -1127,13 +1127,13 @@ namespace Runedal.GameEngine
                         spellName = "kula_ognia";
                         break;
                     case "akull":
-                        spellName = "zamrożenie";
+                        spellName = "fala_mrozu";
                         break;
                     case "verde":
                         spellName = "zdrewniała_skóra";
                         break;
                     case "xitan":
-                        spellName = "zgniła_dusza";
+                        spellName = "dotyk_śmierci";
                         break;
                     case "dara":
                         spellName = "niebiański_dotyk";
@@ -1170,7 +1170,29 @@ namespace Runedal.GameEngine
                     spellName = "szał_berserkera";
                 }
 
+                //zjarrit-xitan
+                else if (firstRune == runeNames[0] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[0])
+                {
+                    spellName = "szpon_demona";
+                }
 
+                //zjarrit-dara
+                else if (firstRune == runeNames[0] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[0])
+                {
+                    spellName = "duch_paladyna";
+                }
+
+                //akull-verde
+                else if (firstRune == runeNames[1] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[1])
+                {
+                    spellName = "duch_zabójcy";
+                }
+
+                //akull-xitan
+                else if (firstRune == runeNames[1] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[1])
+                {
+                    spellName = "Demoniczny_portal";
+                }
 
 
                 //verde-xitan
@@ -1312,6 +1334,13 @@ namespace Runedal.GameEngine
                 //else, if player typed second argument (target name)
                 else
                 {
+                    //prevent casting self-spells on enemy
+                    if (spellToCast.DefaultTarget == Spell.Target.Self)
+                    {
+                        PrintMessage("Nie możesz użyć tego czaru na wrogu", MessageType.SystemFeedback);
+                        return;
+                    }
+
                     int characterIndex = Data.Player!.CurrentLocation!.Characters!.
                         FindIndex(character => character.Name!.ToLower() == targetName);
 

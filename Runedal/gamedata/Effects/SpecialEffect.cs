@@ -10,6 +10,12 @@ namespace Runedal.GameData.Effects
     {
         private EffectType _Type;
         public SpecialEffect() { }
+        public SpecialEffect(SpecialEffect sp) 
+        {
+            Type = sp.Type;
+            Value = sp.Value;
+            Duration = sp.Duration;
+        }
         public enum EffectType
         {
             Heal,
@@ -17,8 +23,8 @@ namespace Runedal.GameData.Effects
             Lifesteal
         }
         
-        public double Value { get; set; }
-        public double Duration { get; set; }
+        public int Value { get; set; }
+        public int Duration { get; set; }
         public EffectType Type
         {
             get { return _Type; }

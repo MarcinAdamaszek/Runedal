@@ -84,9 +84,7 @@ namespace Runedal.GameEngine
             Speech,
             DealDmg,
             ReceiveDmg,
-            CriticalHit,
-            Miss,
-            Avoid
+            CriticalHit
         }
 
         public MainWindow Window { get; set; }
@@ -1135,7 +1133,7 @@ namespace Runedal.GameEngine
                         spellName = "zdrewniała_skóra";
                         break;
                     case "xitan":
-                        spellName = "pocisk_zagłady";
+                        spellName = "zgniła_dusza";
                         break;
                     case "dara":
                         spellName = "niebiański_dotyk";
@@ -1165,9 +1163,20 @@ namespace Runedal.GameEngine
                 {
                     spellName = "podmuch_pary";
                 }
+
+                //zjarrit-verde
                 else if (firstRune == runeNames[0] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[0])
                 {
                     spellName = "szał_berserkera";
+                }
+
+
+
+
+                //verde-xitan
+                else if (firstRune == runeNames[2] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[2])
+                {
+                    spellName = "wampirza_dusza";
                 }
             }
 
@@ -1441,6 +1450,12 @@ namespace Runedal.GameEngine
                     }
                     spell.Modifiers.ForEach(mod => target.AddModifier(mod));
                 }
+
+                //apply special effects
+                spell.SpecialEffects.ForEach(eff =>
+                {
+                    ApplySpecialEffect(target, eff);
+                });
             }
             else
             {
@@ -1595,6 +1610,25 @@ namespace Runedal.GameEngine
             else if (isReceiverPlayer)
             {
                 PrintMessage(dealer.Name! + " zadaje Ci " + dmg + " obrażeń", MessageType.ReceiveDmg);
+            }
+
+            //handle lifesteal modifiers (if present on dealer)
+            double lifestealPercentValue = 0;
+            dealer.Modifiers!.ForEach(mod =>
+            {
+                if (mod.Type == Modifier.ModType.Lifesteal)
+                {
+                    lifestealPercentValue += mod.Value;
+                }
+            });
+
+            //heal dealer for value of dmg multiplied by
+            //lifesteal percent multiplier
+            if (lifestealPercentValue > 0)
+            {
+                double lifestealMultiplier = lifestealPercentValue * 0.01;
+                double lifestealHeal = Math.Round(lifestealMultiplier * dmg);
+                dealer.Heal(lifestealHeal);
             }
 
             //if receiver is an npc character - respond with counterattack
@@ -1869,6 +1903,13 @@ namespace Runedal.GameEngine
                     }
                 });
 
+                //if the effect is stun, clear the description from all extra signs
+                //extept "Ogłuszenie" phrase
+                if (objectName == "Ogłuszenie")
+                {
+                    description = Regex.Replace(description, @"[^Ogłuszenie]", "");
+                }
+
                 //clear description from trailing comma and prepare item effect object
                 description = Regex.Replace(description, @",$", "");
                 itemEffect = new EffectOnPlayer(objectName, description, durationInTicks);
@@ -1910,9 +1951,47 @@ namespace Runedal.GameEngine
                     }
                 }
 
-
                 PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.EffectOn);
             }
+        }
+
+        //method applying special effects to combat character
+        private void ApplySpecialEffect(CombatCharacter target, SpecialEffect effect)
+        {
+            Modifier specialMod = new Modifier();
+
+
+            if (effect.Type == SpecialEffect.EffectType.Heal)
+            {
+                double healedHp = target.Heal(effect.Value);
+
+                if (target == Data.Player)
+                {
+                    PrintMessage("Uleczono: " + healedHp + " HP");
+                }
+                return;
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Stun)
+            {
+                specialMod = (new Modifier(Modifier.ModType.Stun, 0, effect.Duration, "Ogłuszenie"));
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
+            {
+                specialMod = (new Modifier(Modifier.ModType.Lifesteal, effect.Value, effect.Duration, "Kradzież życia", true));
+            }
+
+            //apply special modifier depending on target type
+            if (target == Data.Player)
+            {
+                List<Modifier> specialMods = new List<Modifier>();
+                specialMods.Add(specialMod);
+                ApplyEffect(specialMods, specialMod.Parent);
+            }
+            else
+            {
+                target.AddModifier(specialMod);
+            }
+
         }
 
         //method removing effects from player
@@ -2460,6 +2539,7 @@ namespace Runedal.GameEngine
             string manaCost = "Koszt many: " + spell.ManaCost;
             string dmgDealt = "Moc: " + spell.Power;
             string effect = "Działanie: ";
+            string specialEffects = "Efekty specjalne: ";
 
             //assign proper default target name
             if (spell.DefaultTarget == Spell.Target.Self)
@@ -2471,6 +2551,15 @@ namespace Runedal.GameEngine
                 defaultTarget += "Przeciwnik";
             }
 
+            //get special effects description
+            spell.SpecialEffects.ForEach(eff =>
+            {
+                specialEffects += GetSpecialEffectDescription(eff) + ", ";
+            });
+
+            //remove trailing comma from special effects description
+            specialEffects = Regex.Replace(specialEffects, @",\s$", "");
+
             effect += GetEffectDescription(spell.Modifiers!);
 
             //display info
@@ -2480,6 +2569,7 @@ namespace Runedal.GameEngine
             PrintMessage(manaCost);
             PrintMessage(dmgDealt);
             PrintMessage(effect);
+            PrintMessage(specialEffects);
         }
 
 
@@ -2488,6 +2578,27 @@ namespace Runedal.GameEngine
 
 
         //==============================================HELPER METHODS=============================================
+
+        //method returning formatted string representing special effect description
+        private string GetSpecialEffectDescription(SpecialEffect effect)
+        {
+            string effectDescription = string.Empty;
+
+            if (effect.Type == SpecialEffect.EffectType.Heal)
+            {
+                effectDescription = "Leczenie(" + effect.Value + "_HP)";
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Stun)
+            {
+                effectDescription = "Ogłuszenie {" + effect.Duration + " sek.}";
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
+            {
+                effectDescription = "Kradzież życia(+" + effect.Value + "_%) " + "{" + effect.Duration + " sek.}";
+            }
+
+            return effectDescription;
+        }
 
         //method returning formatted string representing effect description (it's modifiers and duration)
         private string GetEffectDescription(List<Modifier> modifiers)
@@ -2503,7 +2614,7 @@ namespace Runedal.GameEngine
 
                 //remove trailing comma and add duration
                 effect = Regex.Replace(effect, @",\s$", "");
-                effect += " {" + modifiers[0].Duration + " sekund}";
+                effect += " {" + modifiers[0].Duration + " sek.}";
             }
             else
             {
@@ -2767,19 +2878,13 @@ namespace Runedal.GameEngine
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
                     break;
                 case (MessageType.DealDmg):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Lime);
+                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Chartreuse);
                     break;
                 case (MessageType.ReceiveDmg):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Crimson);
                     break;
                 case (MessageType.CriticalHit):
                     tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Magenta);
-                    break;
-                case (MessageType.Miss):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.FloralWhite);
-                    break;
-                case (MessageType.Avoid):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.BurlyWood);
                     break;
             }
 
@@ -2956,11 +3061,11 @@ namespace Runedal.GameEngine
                     //display appropriate message if missed
                     if (isAttackerPlayer)
                     {
-                        PrintMessage("Chybiłeś!", MessageType.Miss);
+                        PrintMessage("Chybiłeś!");
                     }
                     if (isReceiverPlayer)
                     {
-                        PrintMessage("Unikasz ataku " + attacker.Name, MessageType.Miss);
+                        PrintMessage("Unikasz ataku " + attacker.Name);
                     }
                 }
                 else

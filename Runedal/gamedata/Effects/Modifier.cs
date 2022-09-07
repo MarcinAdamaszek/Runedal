@@ -50,7 +50,9 @@ namespace Runedal.GameData.Effects
             Critical,
             Defense,
             Evasion,
-            MagicResistance
+            MagicResistance,
+            Stun,
+            Lifesteal
         }
 
         //type of modifier 

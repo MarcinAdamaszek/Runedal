@@ -175,6 +175,25 @@ namespace Runedal.GameData.Characters
         public List<Spell> RememberedSpells { get; set; }
         public int MaxSpellsRemembered { get; set; }
 
+
+        public double Heal(double healAmount)
+        {
+            double hpAfterHeal = Hp + healAmount;
+            double realAmountHealed;
+
+            if (hpAfterHeal > GetEffectiveMaxHp())
+            {
+                realAmountHealed = GetEffectiveMaxHp() - Hp;
+            }
+            else
+            {
+                realAmountHealed = healAmount;
+            }
+
+            Hp += realAmountHealed;
+            return realAmountHealed;
+        }
+
         /// <summary>
         /// method dealing dmg to character. If the damage was lethal,
         /// return true, otherwise - false
@@ -273,8 +292,16 @@ namespace Runedal.GameData.Characters
         //method descreasing attack counter
         public void DecreaseActionCounter()
         {
+            bool isCharacterStunned = Modifiers!.Exists(mod => mod.Type == Modifier.ModType.Stun);
+            
+            if (isCharacterStunned && ActionCounter == 0)
+            {
+                ActionCounter++;
+            }
 
-            if (ActionCounter > 0)
+            //if character's action is on cooldown and character isn't stunned - 
+            //reduce action cooldown
+            if (ActionCounter > 0 && !isCharacterStunned)
             {
                 ActionCounter -= 1;
             }

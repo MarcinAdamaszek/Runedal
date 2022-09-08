@@ -568,7 +568,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
+            Trader trader = (Data.Player!.InteractsWith as Trader)!;
             int itemIndex = -1;
             int itemQuantity = 1;
             int buyingPrice;
@@ -648,7 +648,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            Trader trader = trader = (Data.Player!.InteractsWith as Trader)!;
+            Trader trader = (Data.Player!.InteractsWith as Trader)!;
             int itemIndex = -1;
             int itemQuantity = 1;
             int sellingPrice = 0;
@@ -999,6 +999,14 @@ namespace Runedal.GameEngine
         //method for stopping actions/states
         private void StopHandler()
         {
+            int instanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == Data.Player!);
+            if (instanceIndex != -1)
+            {
+                PrintMessage("Przestajesz atakować postać: " + AttackInstances[instanceIndex].Receiver.Name, MessageType.Action);
+                AttackInstances.RemoveAt(instanceIndex);
+                return;
+            }
+
             ResetPlayerState();
         }
 
@@ -1314,9 +1322,9 @@ namespace Runedal.GameEngine
                         }
 
                         //else, if player is attacking a character
-                        if (Data.Player.InteractsWith!.Name != "placeholder")
+                        if (AttackInstances.Exists(ins => ins.Attacker == Data.Player!))
                         {
-                            target = (Data.Player!.InteractsWith as CombatCharacter)!;
+                            target = AttackInstances.Find(ins => ins.Attacker == Data.Player!)!.Receiver;
                         }
 
                         //else if player is fighting with someone but not attacking anyone,
@@ -1575,7 +1583,6 @@ namespace Runedal.GameEngine
             //if attacked character doesn't exist in attacker's opponents list
             if (!(attacker.Opponents.Exists(op => op == attacked)))
             {
-                attacker.InteractsWith = attacked;
                 attacker.AddOpponent(attacked);
                 attacked.AddOpponent(attacker);
             }
@@ -1735,8 +1742,8 @@ namespace Runedal.GameEngine
                 {
                     receiver.RemoveOpponent(dealer);
                 }
-                dealer.InteractsWith = new Character("placeholder");
-                receiver.InteractsWith = new Character("placeholder");
+                //dealer.InteractsWith = new Character("placeholder");
+                //receiver.InteractsWith = new Character("placeholder");
 
                 if (isDealerPlayer)
                 {

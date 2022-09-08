@@ -202,24 +202,6 @@ namespace Runedal.GameData.Characters
         /// <returns></returns>
         public bool DealDamage(double dmg)
         {
-            //handle manashield
-            double manaShieldPercentage = 0;
-            double dmgAbsorbedByMana = 0;
-            Modifiers!.ForEach(mod =>
-            {
-                if (mod.Type == Modifier.ModType.ManaShield)
-                {
-                    manaShieldPercentage += mod.Value;
-                }
-            });
-            dmgAbsorbedByMana = dmg * (manaShieldPercentage * 0.01);
-
-            //prevent exceeding dmg absorbtion actual mana value
-            if (dmgAbsorbedByMana > Mp)
-            {
-                dmgAbsorbedByMana = Mp;
-            }
-
 
             double hpAfterDmg = Hp - dmg;
 
@@ -239,24 +221,25 @@ namespace Runedal.GameData.Characters
 
         /// <summary>
         /// method decreasing character's Mp by value of cost parameter.
-        /// If mana spending is succeded, reduces character's Mp by cost
-        /// and returns true. Otherwise, does nothing and returns false;
+        /// If mana cost exceeds actual mana pool, spend all remaining mana
+        /// and return the value of mana spent
         /// </summary>
         /// <param name="cost"></param>
         /// <returns></returns>
-        public bool SpendMana(double cost)
+        public double SpendMana(double cost)
         {
-            double manaAfterCost = Mp - cost;
+            double manaAfter = Mp - cost;
+            double manaSpent;
 
-            if (manaAfterCost < 0)
+            if (manaAfter < 0)
             {
-                return false;
+                manaAfter = 0;
             }
-            else
-            {
-                Mp = manaAfterCost;
-                return true;
-            }
+
+            manaSpent = Mp - manaAfter;
+            Mp = manaAfter;
+
+            return manaSpent;
         }
 
         //method adding attack delay to action counter

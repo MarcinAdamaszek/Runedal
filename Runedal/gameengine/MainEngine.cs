@@ -1245,11 +1245,13 @@ namespace Runedal.GameEngine
             }
 
             //check if player has enough mana to craft a spell
-            if (!Data.Player!.SpendMana(100))
+            if (Data.Player!.Mp < 100)
             {
                 PrintMessage("Nie masz wystarczającej ilości many aby to zrobić");
                 return;
             }
+
+            Data.Player.SpendMana(100);
 
             //choose proper spell
             craftedSpell = Data.Spells!.Find(spell => spell.Name!.ToLower() == spellName)!;
@@ -1521,7 +1523,7 @@ namespace Runedal.GameEngine
             }
 
             //spend caster's mana
-            caster.Mp -= spell.ManaCost;
+            caster.SpendMana(spell.ManaCost);
 
             //apply effect/modifiers
             if (hasSpellLanded)
@@ -1693,6 +1695,28 @@ namespace Runedal.GameEngine
         {
             bool isDealerPlayer = dealer.GetType() == typeof(Player);
             bool isReceiverPlayer = receiver.GetType() == typeof(Player);
+
+            //handle manashield
+            if (receiver.Modifiers!.Exists(mod => mod.Type == Modifier.ModType.ManaShield))
+            {
+                double manaShieldPercentage = 0;
+                double dmgAbsorbtionValue = 0;
+                double dmgAbsorbedByMana = 0;
+                receiver.Modifiers!.ForEach(mod =>
+                {
+                    if (mod.Type == Modifier.ModType.ManaShield)
+                    {
+                        manaShieldPercentage += mod.Value;
+                    }
+                });
+                dmgAbsorbtionValue = (int)(dmg * (manaShieldPercentage * 0.01));
+
+                //spend receiver mana and get actual mana spend value
+                dmgAbsorbedByMana = receiver.SpendMana(dmgAbsorbtionValue);
+                
+                dmg -= (int)dmgAbsorbedByMana;
+            }
+
             bool isDmgLethal = receiver.DealDamage(dmg);
 
             //print appropriate messages to user about dmg dealing

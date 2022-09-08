@@ -95,6 +95,7 @@ namespace Runedal.GameEngine
         public List<AttackInstance> AttackInstances { get; set; }
         public List<CharAction> Actions { get; set; }
         public Location TeleportLocation { get; set; }
+        public bool IsPaused { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -139,6 +140,22 @@ namespace Runedal.GameEngine
                 command = commandParts[0];
                 argument1 = commandParts[1];
                 argument2 = commandParts[2];
+            }
+
+            //prevent doing anything ingame when game is paused
+            //and handle unpausing
+            if (IsPaused)
+            {
+                if (command == "pause")
+                {
+                    PauseHandler();
+                    return;
+                }
+                else
+                {
+                    PrintMessage("Nie możesz nic zrobić w trakcie pauzy", MessageType.SystemFeedback);
+                    return;
+                }
             }
 
             //match user input to proper engine action
@@ -212,6 +229,9 @@ namespace Runedal.GameEngine
                 case "stop":
                     StopHandler();
                     break;
+                case "pause":
+                    PauseHandler();
+                    break;
                 case "1":
                 case "2":
                 case "3":
@@ -234,6 +254,23 @@ namespace Runedal.GameEngine
 
 
         //==============================================COMMAND HANDLERS=============================================
+
+        //method handling game pausing
+        private void PauseHandler()
+        {
+            if (IsPaused)
+            {
+                PrintMessage("Gra wznowiona", MessageType.SystemFeedback);
+                IsPaused = false;
+                GameClock.Start();
+            }
+            else
+            {
+                PrintMessage("Gra zatrzymana", MessageType.SystemFeedback);
+                IsPaused = true;
+                GameClock.Stop();
+            }
+        }
 
         //method moving player to next location
         private void ChangeLocationHandler(string direction)

@@ -2116,6 +2116,22 @@ namespace Runedal.GameEngine
         {
             PrintMessage("Skończyło się działanie " + effect.Description, MessageType.EffectOff);
             Data.Player!.Effects!.Remove(effect);
+
+            //ensure player will be attacked by aggressive monsters in his
+            //current location if the effect was invis
+            if (effect.Name == "Powłoka_nur'zhel(SE)")
+            {
+                Data.Player!.CurrentLocation!.Characters!.ForEach(character =>
+                {
+                    if (character.GetType() == typeof(Monster))
+                    {
+                        if ((character as Monster)!.Aggressiveness == Monster.AggressionType.Aggressive)
+                        {
+                            AttackCharacter((Monster)character, Data.Player!);
+                        }
+                    }
+                });
+            }
         }
 
         //method breaking trade state and printing proper message

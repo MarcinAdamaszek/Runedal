@@ -19,7 +19,7 @@ namespace Runedal.GameData.Characters
         private const double MaxMpIntMultiplier = 30;
         private const double HpRegenStrMultiplier = 5;
         private const double MpRegenIntMultiplier = 5;
-        private const double SpeedAgiMultiplier = 0.3;
+        private const double SpeedAgiMultiplier = 0.5;
         private const double AttackStrMultiplier = 2.0;
         private const double AtkSpeedAgiMultiplier = 1.0;
         private const double AccuracyAgiMultiplier = 0.5;
@@ -28,7 +28,7 @@ namespace Runedal.GameData.Characters
         private const double MagicResistanceIntMultiplier = 1.0;
 
         //values of other multipliers
-        private const double SpeedWeightMultiplier = -0.02;
+        private const int StrWeightLimitMultiplier = 10;
 
         //fields required for proper hp/mp display in gui
         private double _HpPercentage;
@@ -555,17 +555,13 @@ namespace Runedal.GameData.Characters
             //attribute modifier
             double agilityModifier = GetEffectiveAgility() * SpeedAgiMultiplier;
 
-            //weight modifier
-            double weightModifier = GetCarryWeight() * SpeedWeightMultiplier;
-            weightModifier += (Strength * 0.05);
-
             //add modifiers to effective stat
-            effectiveSpeed += agilityModifier += weightModifier;
+            effectiveSpeed += agilityModifier;
 
             //prevent effectiveSpeed from dropping below 0
-            if (effectiveSpeed < 0)
+            if (effectiveSpeed < 20)
             {
-                effectiveSpeed = 0;
+                effectiveSpeed = 20;
             }
 
             return effectiveSpeed;
@@ -757,6 +753,12 @@ namespace Runedal.GameData.Characters
             Inventory!.ForEach(item => carryWeight += item.Weight);
 
             return carryWeight;
+        }
+
+        //method returning player's weight limit
+        public int GetWeightLimit()
+        {
+            return 1000 + (GetEffectiveStrength() * StrWeightLimitMultiplier);
         }
 
         //property changed event handler

@@ -161,13 +161,8 @@ namespace Runedal.GameEngine
             //match user input to proper engine action
             switch (command)
             {
-                case "n":
-                case "e":
-                case "s":
-                case "w":
-                case "u":
-                case "d":
-                    ChangeLocationHandler(command);
+                case "go":
+                    GoHandler(argument1);
                     break;
                 case "attack":
                 case "a":
@@ -273,7 +268,7 @@ namespace Runedal.GameEngine
         }
 
         //method moving player to next location
-        private void ChangeLocationHandler(string direction)
+        private void GoHandler(string direction)
         {
             string directionString = string.Empty;
             bool passage = Data.Player!.CurrentLocation!.GetPassage(direction);
@@ -316,13 +311,18 @@ namespace Runedal.GameEngine
                 //if the passage is open
                 if (passage)
                 {
-                    PrintMessage("Idziesz " + directionString, MessageType.Action);
+                    //calculate action points cost
+                    int weightAboveLimit = Data.Player!.GetCarryWeight() - Data.Player!.GetWeightLimit();
 
-                    //remove player from previous location
-                    Data.Player.CurrentLocation!.Characters!.Remove(Data.Player);
+                    if (weightAboveLimit < 0)
+                    {
+                        weightAboveLimit = 0;
+                    }
 
-                    //change player's current location
-                    AddCharacterToLocation(nextLocation, Data.Player!);
+                    int actionPoints = (int)((500 + weightAboveLimit) / Data.Player.GetEffectiveSpeed()) * 10;
+
+                    CharAction locationChange = new LocationChange(Data.Player!, nextLocation, directionString, actionPoints);
+                    AddAction(locationChange);
                 }
                 else
                 {
@@ -1473,6 +1473,18 @@ namespace Runedal.GameEngine
 
 
         //==============================================MANIPULATION METHODS=============================================
+
+        //method performing action of location change
+        private void ChangePlayerLocation(Location nextLocation, string directionString)
+        {
+            PrintMessage("Idziesz " + directionString, MessageType.Action);
+
+            //remove player from previous location
+            Data.Player!.CurrentLocation!.Characters!.Remove(Data.Player);
+
+            //change player's current location
+            AddCharacterToLocation(nextLocation, Data.Player!);
+        }
 
         //method for crafting a spell
         private void CraftSpell(Spell spellToCraft)
@@ -3384,8 +3396,15 @@ namespace Runedal.GameEngine
                 }
 
                 //perform the action:
+                //if it's location change
+                if (action.GetType() == typeof(LocationChange))
+                {
+                    LocationChange locationChange = (LocationChange)action;
+                    ChangePlayerLocation(locationChange.nextLocation, locationChange.DirectionString);
+                }
+
                 //if it's item use
-                if (action.GetType() == typeof(ItemUse))
+                else if (action.GetType() == typeof(ItemUse))
                 {
                     ItemUse itemUse = (ItemUse)action;
                     

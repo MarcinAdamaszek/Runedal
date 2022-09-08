@@ -1530,7 +1530,7 @@ namespace Runedal.GameEngine
                 //apply special effects
                 spell.SpecialEffects.ForEach(eff =>
                 {
-                    ApplySpecialEffect(target, eff);
+                    ApplySpecialEffect(target, eff, spell.Name!);
                 });
             }
             else
@@ -1549,6 +1549,12 @@ namespace Runedal.GameEngine
             if (spell.Power > 0)
             {
                 DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
+            }
+
+            //break player's invis if the spell was other than invis
+            if (spell.Name != "Powłoka_nur'zhel")
+            {
+                BreakInvisibility();
             }
         }
 
@@ -1704,6 +1710,13 @@ namespace Runedal.GameEngine
                 double lifestealMultiplier = lifestealPercentValue * 0.01;
                 double lifestealHeal = Math.Round(lifestealMultiplier * dmg);
                 dealer.Heal(lifestealHeal);
+                PrintMessage("ULECZONO " + lifestealHeal, MessageType.Gain);
+            }
+
+            //break invis if it's player dealing or receiving the dmg
+            if (dealer == Data.Player! || receiver == Data.Player)
+            {
+                BreakInvisibility();
             }
 
             //if receiver is an npc character - respond with counterattack
@@ -1778,32 +1791,44 @@ namespace Runedal.GameEngine
         {
             location.AddCharacter(character);
             character.CurrentLocation = location;
+            bool isPlayerInvisible = Data.Player!.Modifiers!.Exists(mod => mod.Type == Modifier.ModType.Invisibility);
 
+            //if added character is player
             if (character.GetType() == typeof(Player))
             {
+
+                //display location info to user
                 LocationInfo(Data.Player!.CurrentLocation!);
 
-                location.Characters!.ForEach(ch =>
+                //handle aggressive monsters present in location
+                //to attack player (except when player is invisible)
+                if (!isPlayerInvisible)
                 {
-                    if (ch.GetType() == typeof(Monster))
+                    location.Characters!.ForEach(ch =>
                     {
-                        if ((ch as Monster)!.Aggressiveness == Monster.AggressionType.Aggressive)
+                        if (ch.GetType() == typeof(Monster))
                         {
-                            AttackCharacter((ch as CombatCharacter)!, (character as CombatCharacter)!);
+                            if ((ch as Monster)!.Aggressiveness == Monster.AggressionType.Aggressive)
+                            {
+                                AttackCharacter((ch as CombatCharacter)!, (character as CombatCharacter)!);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
             else if (Data.Player!.CurrentLocation == location)
             {
                 PrintMessage("W lokacji pojawia się postać: " + character.Name);
 
                 //if added character is aggressive monster, attack player immediately
-                if (character.GetType() == typeof(Monster))
+                if (!isPlayerInvisible)
                 {
-                    if ((character as Monster)!.Aggressiveness == Monster.AggressionType.Aggressive)
+                    if (character.GetType() == typeof(Monster))
                     {
-                        AttackCharacter((character as CombatCharacter)!, Data.Player!);
+                        if ((character as Monster)!.Aggressiveness == Monster.AggressionType.Aggressive)
+                        {
+                            AttackCharacter((character as CombatCharacter)!, Data.Player!);
+                        }
                     }
                 }
             }
@@ -1978,8 +2003,7 @@ namespace Runedal.GameEngine
                     }
                 });
 
-                //if the effect is stun, clear the description from all extra signs
-                //extept "Ogłuszenie" phrase
+                //if the effect is stun/invisibility, clear the description from all extra signs
                 if (objectName == "Ogłuszenie" || objectName == "Niewidzialność")
                 {
                     description = Regex.Replace(description, @"[^a-zA-ZśćąęłźżŚĆĄĘŁŹŻ]", "");
@@ -2031,10 +2055,10 @@ namespace Runedal.GameEngine
         }
 
         //method applying special effects to combat character
-        private void ApplySpecialEffect(CombatCharacter target, SpecialEffect effect)
+        private void ApplySpecialEffect(CombatCharacter target, SpecialEffect effect, string parentName)
         {
             Modifier specialMod = new Modifier();
-
+            parentName += "(SE)";
 
             if (effect.Type == SpecialEffect.EffectType.Heal)
             {
@@ -2048,15 +2072,15 @@ namespace Runedal.GameEngine
             }
             else if (effect.Type == SpecialEffect.EffectType.Stun)
             {
-                specialMod = (new Modifier(Modifier.ModType.Stun, 0, effect.Duration, "Ogłuszenie"));
+                specialMod = (new Modifier(Modifier.ModType.Stun, 0, effect.Duration, parentName));
             }
             else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
             {
-                specialMod = (new Modifier(Modifier.ModType.Lifesteal, effect.Value, effect.Duration, "Kradzież życia", true));
+                specialMod = (new Modifier(Modifier.ModType.Lifesteal, effect.Value, effect.Duration, parentName, true));
             }
             else if (effect.Type == SpecialEffect.EffectType.Invisibility)
             {
-                specialMod = (new Modifier(Modifier.ModType.Invisibility, effect.Value, effect.Duration, "Niewidzialność", true));
+                specialMod = (new Modifier(Modifier.ModType.Invisibility, effect.Value, effect.Duration, parentName, true));
             }
             else if (effect.Type == SpecialEffect.EffectType.Teleport)
             {
@@ -2109,6 +2133,46 @@ namespace Runedal.GameEngine
             PrintMessage("Przestajesz rozmawiać z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
             Data.Player.InteractsWith = new Character("placeholder");
             Data.Player!.CurrentState = Player.State.Idle;
+        }
+
+        //method for breaking invis buff
+        private void BreakInvisibility() 
+        {
+            List<EffectOnPlayer> effectsToRemove = new List<EffectOnPlayer>();
+            List<Modifier> modsToRemove = new List<Modifier>();
+
+            //if there is any effect with name of invisibility spel "powłoka_nur'zhel"
+            if (Data.Player!.Effects!.Exists(eff => eff.Name == "Powłoka_nur'zhel"))
+            {
+
+                //get all effects with that name
+                Data.Player!.Effects.ForEach(eff =>
+                {
+                    if (eff.Name == "Powłoka_nur'zhel" || eff.Name == "Powłoka_nur'zhel(SE)")
+                    {
+                        effectsToRemove.Add(eff);
+                    }
+                });
+
+                //get all modifiers with that name
+                Data.Player!.Modifiers!.ForEach(mod =>
+                {
+                    if (mod.Parent == "Powłoka_nur'zhel" || mod.Parent == "Powłoka_nur'zhel(SE)")
+                    {
+                        modsToRemove.Add(mod);
+                    }
+                });
+
+                //remove all gathered effects and modifiers
+                effectsToRemove.ForEach(eff =>
+                {
+                    RemoveEffect(eff);
+                });
+                modsToRemove.ForEach(mod =>
+                {
+                    Data.Player!.RemoveModifier(mod);
+                });
+            }
         }
 
         //method checking if player is trading/talking and breaking the state if so
@@ -2689,6 +2753,10 @@ namespace Runedal.GameEngine
             {
                 effectDescription = "Kradzież życia(+" + effect.Value + "_%) " + "{" + effect.Duration + " sek.}";
             }
+            else if (effect.Type == SpecialEffect.EffectType.Invisibility)
+            {
+                effectDescription = "Niewidzialność " + "{" + effect.Duration + " sek.}";
+            }
 
             return effectDescription;
         }
@@ -2738,6 +2806,12 @@ namespace Runedal.GameEngine
             }
 
             description = modType + "(" + valueSign + modifier.Value + percentSign + ")";
+
+            //special description for special modifiers
+            if (modifier.Type == Modifier.ModType.Invisibility)
+            {
+                description = modType;
+            }
             return description;
         }
 
@@ -2817,6 +2891,15 @@ namespace Runedal.GameEngine
                     break;
                 case (Modifier.ModType.MagicResistance):
                     modType = "Odporność na magię";
+                    break;
+                case (Modifier.ModType.Lifesteal):
+                    modType = "Kradzież życia";
+                    break;
+                case (Modifier.ModType.Invisibility):
+                    modType = "Niewidzialność";
+                    break;
+                case (Modifier.ModType.Stun):
+                    modType = "Obezwładnienie";
                     break;
             }
             return modType;

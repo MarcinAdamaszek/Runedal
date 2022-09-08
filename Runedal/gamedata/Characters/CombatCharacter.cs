@@ -202,6 +202,25 @@ namespace Runedal.GameData.Characters
         /// <returns></returns>
         public bool DealDamage(double dmg)
         {
+            //handle manashield
+            double manaShieldPercentage = 0;
+            double dmgAbsorbedByMana = 0;
+            Modifiers!.ForEach(mod =>
+            {
+                if (mod.Type == Modifier.ModType.ManaShield)
+                {
+                    manaShieldPercentage += mod.Value;
+                }
+            });
+            dmgAbsorbedByMana = dmg * (manaShieldPercentage * 0.01);
+
+            //prevent exceeding dmg absorbtion actual mana value
+            if (dmgAbsorbedByMana > Mp)
+            {
+                dmgAbsorbedByMana = Mp;
+            }
+
+
             double hpAfterDmg = Hp - dmg;
 
             if (hpAfterDmg < 0)

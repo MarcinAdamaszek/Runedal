@@ -1215,6 +1215,18 @@ namespace Runedal.GameEngine
                 {
                     spellName = "wampirza_dusza";
                 }
+
+                //verde-dara
+                else if (firstRune == runeNames[2] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[2])
+                {
+                    spellName = "błogosławieństwo";
+                }
+
+                //xitan-dara
+                else if (firstRune == runeNames[3] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[3])
+                {
+                    spellName = "tarcza_mentalna";
+                }
             }
 
             //check if player possesses required runes
@@ -2072,15 +2084,19 @@ namespace Runedal.GameEngine
             }
             else if (effect.Type == SpecialEffect.EffectType.Stun)
             {
-                specialMod = (new Modifier(Modifier.ModType.Stun, 0, effect.Duration, parentName));
+                specialMod = new Modifier(Modifier.ModType.Stun, 0, effect.Duration, parentName);
             }
             else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
             {
-                specialMod = (new Modifier(Modifier.ModType.Lifesteal, effect.Value, effect.Duration, parentName, true));
+                specialMod = new Modifier(Modifier.ModType.Lifesteal, effect.Value, effect.Duration, parentName, true);
             }
             else if (effect.Type == SpecialEffect.EffectType.Invisibility)
             {
-                specialMod = (new Modifier(Modifier.ModType.Invisibility, effect.Value, effect.Duration, parentName, true));
+                specialMod = new Modifier(Modifier.ModType.Invisibility, effect.Value, effect.Duration, parentName);
+            }
+            else if (effect.Type == SpecialEffect.EffectType.ManaShield)
+            {
+                specialMod = new Modifier(Modifier.ModType.ManaShield, effect.Value, effect.Duration, parentName, true);
             }
             else if (effect.Type == SpecialEffect.EffectType.Teleport)
             {
@@ -2717,7 +2733,7 @@ namespace Runedal.GameEngine
             //assign proper default target name
             if (spell.DefaultTarget == Spell.Target.Self)
             {
-                defaultTarget += "Rzucający";
+                defaultTarget += "Ty";
             }
             else
             {
@@ -2772,6 +2788,10 @@ namespace Runedal.GameEngine
             else if (effect.Type == SpecialEffect.EffectType.Invisibility)
             {
                 effectDescription = "Niewidzialność " + "{" + effect.Duration + " sek.}";
+            }
+            else if (effect.Type == SpecialEffect.EffectType.ManaShield)
+            {
+                effectDescription = "Tarcza MP(+" + effect.Value + "_%) " + "{" + effect.Duration + " sek.}";
             }
 
             return effectDescription;
@@ -2916,6 +2936,9 @@ namespace Runedal.GameEngine
                     break;
                 case (Modifier.ModType.Stun):
                     modType = "Obezwładnienie";
+                    break;
+                case (Modifier.ModType.ManaShield):
+                    modType = "Tarcza MP";
                     break;
             }
             return modType;

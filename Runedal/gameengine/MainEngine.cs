@@ -30,6 +30,7 @@ namespace Runedal.GameEngine
             this.Rand = new Random();
             this.AttackInstances = new List<AttackInstance>();
             this.Actions = new List<CharAction>();
+            this.TeleportLocation = new Location();
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
@@ -93,6 +94,7 @@ namespace Runedal.GameEngine
         public Random Rand { get; set; }
         public List<AttackInstance> AttackInstances { get; set; }
         public List<CharAction> Actions { get; set; }
+        public Location TeleportLocation { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -1191,7 +1193,7 @@ namespace Runedal.GameEngine
                 //akull-xitan
                 else if (firstRune == runeNames[1] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[1])
                 {
-                    spellName = "Demoniczny_portal";
+                    spellName = "demoniczny_portal";
                 }
 
 
@@ -1245,7 +1247,6 @@ namespace Runedal.GameEngine
             int spellNumber;
             int numberOfSpells = Data.Player!.RememberedSpells!.Count;
             int[] numbers = new int[numberOfSpells];
-            //string[] numbersAsStrings = new string[numberOfSpells];
 
             //break trade/talk state if needed
             ResetPlayerState();
@@ -1293,6 +1294,14 @@ namespace Runedal.GameEngine
                     //if the spell is a buff/heal etc. (default target is self)
                     if (spellToCast.DefaultTarget == Spell.Target.Self)
                     {
+
+                        //if the spell is 'Demoniczny_portal'
+                        if (spellToCast.Name == "Demoniczny_portal")
+                        {
+                            PrintMessage("Musisz wybrać miejsce, do którego chcesz się przenieść", MessageType.SystemFeedback);
+                            return;
+                        }
+
                         target = Data.Player;
                     }
                     else
@@ -1332,7 +1341,7 @@ namespace Runedal.GameEngine
                 }
 
                 //else, if player typed second argument (target name)
-                else
+                else if (spellToCast.Name != "Demoniczny_portal")
                 {
                     //prevent casting self-spells on enemy
                     if (spellToCast.DefaultTarget == Spell.Target.Self)
@@ -1369,8 +1378,26 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            //PrintMessage(spellToCast.Name!);
-            //PrintMessage(target.Name!);
+            //change target to self for teleport spell, and set castLocation to location
+            //of player's choice
+            if (spellToCast.Name == "Demoniczny_portal")
+            {
+                
+                int locationIndex = Data.Locations!.FindIndex(loc => loc.Name!.ToLower() == targetName);
+                if (locationIndex != -1)
+                {
+                    TeleportLocation = Data.Locations![locationIndex];
+                }
+                else
+                {
+                    PrintMessage("Nie istnieje lokacja " + targetName, MessageType.SystemFeedback);
+                    return;
+                }
+
+                target = Data.Player!;
+            }
+            
+            //add action to queue
             CharAction spellcast = new SpellCast(Data.Player, target, spellToCast);
             AddAction(spellcast);
         }
@@ -1450,7 +1477,14 @@ namespace Runedal.GameEngine
             //print message about spell being cast depending on who is caster
             if (caster == Data.Player!)
             {
-                PrintMessage("Rzucasz czar " + spell.Name + " w postać: " + target.Name, MessageType.Action);
+                if (spell.Name == "Demoniczny_portal")
+                {
+                    PrintMessage("Rzucasz czar " + spell.Name, MessageType.Action);
+                }
+                else
+                {
+                    PrintMessage("Rzucasz czar " + spell.Name + " w postać: " + target.Name, MessageType.Action);
+                }
             }
             else if (target == Data.Player!)
             {
@@ -2007,6 +2041,20 @@ namespace Runedal.GameEngine
             else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
             {
                 specialMod = (new Modifier(Modifier.ModType.Lifesteal, effect.Value, effect.Duration, "Kradzież życia", true));
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Teleport)
+            {
+                //remove player from it's current location
+                Data.Player!.CurrentLocation!.Characters!.Remove(Data.Player);
+
+                PrintMessage("Czujesz jak świat wokół Ciebie zaczyna wirować, rozmywać się i znikać." +
+                    " Widzisz rzeczy, których nie sposób opisać słowami, a Twoje wnętrzności skręcają" +
+                    " się tak mocno, że ledwo udaje Ci się powstrzymać wymioty. Nagle upadasz na ziemię, i" +
+                    " powoli zaczynasz rozpoznawać otoczenie.", MessageType.Action);
+
+                //Add player to destined location
+                AddCharacterToLocation(TeleportLocation, Data.Player!);
+                return;
             }
 
             //apply special modifier depending on target type

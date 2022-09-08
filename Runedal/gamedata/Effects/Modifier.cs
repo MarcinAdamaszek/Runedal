@@ -52,7 +52,8 @@ namespace Runedal.GameData.Effects
             Evasion,
             MagicResistance,
             Stun,
-            Lifesteal
+            Lifesteal,
+            Invisibility
         }
 
         //type of modifier 

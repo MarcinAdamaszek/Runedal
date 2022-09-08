@@ -1204,6 +1204,11 @@ namespace Runedal.GameEngine
                     spellName = "demoniczny_portal";
                 }
 
+                //akull-dara
+                else if (firstRune == runeNames[1] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[1])
+                {
+                    spellName = "powłoka_nur'zhel";
+                }
 
                 //verde-xitan
                 else if (firstRune == runeNames[2] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[2])
@@ -1975,9 +1980,9 @@ namespace Runedal.GameEngine
 
                 //if the effect is stun, clear the description from all extra signs
                 //extept "Ogłuszenie" phrase
-                if (objectName == "Ogłuszenie")
+                if (objectName == "Ogłuszenie" || objectName == "Niewidzialność")
                 {
-                    description = Regex.Replace(description, @"[^Ogłuszenie]", "");
+                    description = Regex.Replace(description, @"[^a-zA-ZśćąęłźżŚĆĄĘŁŹŻ]", "");
                 }
 
                 //clear description from trailing comma and prepare item effect object
@@ -2048,6 +2053,10 @@ namespace Runedal.GameEngine
             else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
             {
                 specialMod = (new Modifier(Modifier.ModType.Lifesteal, effect.Value, effect.Duration, "Kradzież życia", true));
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Invisibility)
+            {
+                specialMod = (new Modifier(Modifier.ModType.Invisibility, effect.Value, effect.Duration, "Niewidzialność", true));
             }
             else if (effect.Type == SpecialEffect.EffectType.Teleport)
             {

@@ -21,7 +21,8 @@ namespace Runedal.GameData.Effects
             Heal,
             Stun,
             Lifesteal,
-            Teleport
+            Teleport,
+            Invisibility
         }
         
         public int Value { get; set; }

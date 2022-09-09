@@ -169,6 +169,10 @@ namespace Runedal.GameEngine
                 case "a":
                     AttackHandler(argument1);
                     break;
+                case "flee":
+                case "f":
+                    FleeHandler(argument1);
+                    break;
                 case "cast":
                     CastHandler(argument1, argument2);
                     break;
@@ -1119,6 +1123,69 @@ namespace Runedal.GameEngine
 
         }
 
+        //method for handling 'flee' command
+        private void FleeHandler(string direction)
+        {
+            //prevent fleeing when not fighting
+            if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
+            {
+                PrintMessage("Nie masz przed czymu uciekać..", MessageType.SystemFeedback);
+                return;
+            }
+
+            if (direction == String.Empty)
+            {
+                PrintMessage("Musisz wybrać kierunek ucieczki!", MessageType.Action);
+                return;
+            }
+
+            string directionToFlee = string.Empty;
+
+            switch (direction)
+            {
+                case "north":
+                case "n":
+                    directionToFlee = "n";
+                    break;
+                case "east":
+                case "e":
+                    directionToFlee = "e";
+                    break;
+                case "south":
+                case "s":
+                    directionToFlee = "s";
+                    break;
+                case "west":
+                case "w":
+                    directionToFlee = "w";
+                    break;
+                case "up":
+                case "u":
+                    directionToFlee = "u";
+                    break;
+                case "down":
+                case "d":
+                    directionToFlee = "d";
+                    break;
+                default:
+                    PrintMessage("Nie ma takiego kierunku jak \"" + direction + "\"", MessageType.SystemFeedback);
+                    return;
+            }
+
+            Location escapeDestination;
+
+            if (GetNextLocation(directionToFlee, out escapeDestination))
+            {
+                FleeAttempt fleeAttempt = new FleeAttempt(Data.Player!, escapeDestination, 30);
+                AddAction(fleeAttempt);
+            }
+            else
+            {
+                PrintMessage("Tam nie uciekniesz, to ślepa uliczka!", MessageType.SystemFeedback);
+            }
+            
+        }
+
         //method for spending attribute pointsd
         private void PointHandler(string attribute)
         {
@@ -1478,12 +1545,22 @@ namespace Runedal.GameEngine
 
 
 
+
         //==============================================MANIPULATION METHODS=============================================
 
-        //method performing action of location change
+        ///<summary>
+        /// method performing action of location change and displaying 
+        /// message saying that player is walking towards chosen direction
+        /// if the message is dispensable - put "none" as second argument
+        /// </summary>
+        /// <param name="nextLocation"></param>
+        /// <param name="directionString"></param>
         private void ChangePlayerLocation(Location nextLocation, string directionString)
         {
-            PrintMessage("Idziesz " + directionString, MessageType.Action);
+            if (directionString != "none")
+            {
+                PrintMessage("Idziesz " + directionString, MessageType.Action);
+            }
 
             //remove player from previous location
             Data.Player!.CurrentLocation!.Characters!.Remove(Data.Player);
@@ -2027,6 +2104,63 @@ namespace Runedal.GameEngine
                 return true;
             }
             return false;
+        }
+
+        private void TryToFlee(Location escapeDestination)
+        {
+            CombatCharacter fastestOpponent = new CombatCharacter();
+            fastestOpponent.Speed = 0;
+
+            //find the fastest opponent
+            Data.Player!.Opponents.ForEach(opp =>
+            {
+                if (opp.GetEffectiveSpeed() > fastestOpponent.GetEffectiveSpeed())
+                {
+                    fastestOpponent = opp;
+                }
+            });
+
+            double playerChance = Math.Pow(Data.Player!.GetEffectiveSpeed(), 1.5);
+            double opponentChance = Math.Pow(fastestOpponent.GetEffectiveSpeed(), 1.5);
+            double fleeChance = Math.Round(playerChance / opponentChance / 2, 2);
+
+            PrintMessage("Próbujesz ucieczki!", MessageType.Action);
+
+            if (TryOutChance(fleeChance))
+            {
+                PrintMessage("Udało Ci się uciec!");
+                ChangePlayerLocation(escapeDestination, "none");
+
+                //remove all attack instances related to player
+                List<AttackInstance> instancesToRemove = new List<AttackInstance>();
+                AttackInstances.ForEach(ins =>
+                {
+                    if (ins.Attacker == Data.Player || ins.Receiver == Data.Player)
+                    {
+                        instancesToRemove.Add(ins);
+                    }
+                });
+                instancesToRemove.ForEach(ins =>
+                {
+                    
+                    //remove player from monster's opponents list
+                    if (ins.Receiver == Data.Player!)
+                    {
+                        ins.Attacker.RemoveOpponent(ins.Receiver);
+                    }
+
+                    AttackInstances.Remove(ins);
+                });
+
+                //Remove all player opponents and remove he's combat state
+                Data.Player!.Opponents.Clear();
+                Data.Player!.CurrentState = CombatCharacter.State.Idle;
+            }
+            else
+            {
+                PrintMessage("Nie udaje Ci się uciec przed " + fastestOpponent.Name + "!");
+                ApplySpecialEffect(Data.Player!, new SpecialEffect(SpecialEffect.EffectType.Stun, 10), "Nieudana ucieczka");
+            }
         }
 
         //method handling adding gold to player's pool
@@ -3497,6 +3631,13 @@ namespace Runedal.GameEngine
                 {
                     LocationChange locationChange = (LocationChange)action;
                     ChangePlayerLocation(locationChange.nextLocation, locationChange.DirectionString);
+                }
+
+                //if it's flee attempt
+                else if (action.GetType() == typeof(FleeAttempt))
+                {
+                    FleeAttempt fleeAttempt = (FleeAttempt)action;
+                    TryToFlee(fleeAttempt.EscapeDestination);
                 }
 
                 //if it's item use

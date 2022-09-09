@@ -10,6 +10,12 @@ namespace Runedal.GameData.Effects
     {
         private EffectType _Type;
         public SpecialEffect() { }
+        public SpecialEffect(EffectType type, int duration, int value = 0)
+        {
+            Type = type;
+            Duration = duration;
+            Value = value;
+        }
         public SpecialEffect(SpecialEffect sp) 
         {
             Type = sp.Type;

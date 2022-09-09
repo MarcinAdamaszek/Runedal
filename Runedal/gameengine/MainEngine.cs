@@ -2533,8 +2533,13 @@ namespace Runedal.GameEngine
             //print player's gold pool and weight
             if (character.GetType() == typeof(Player))
             {
-                string goldAndWeight = "||  Złoto: " + Convert.ToString(Data.Player!.Gold!) + "        |  Obciążenie: " +
+                string goldAndWeight = "||  Złoto: " + Convert.ToString(Data.Player!.Gold!) + "     |  Obciążenie: " +
                     Data.Player!.GetCarryWeight();
+
+                if (Data.Player.GetWeightLimit() < Data.Player!.GetCarryWeight())
+                {
+                    goldAndWeight += "  (Przeciążenie!)";
+                }
 
                 int remainingSpaces = borderSize - goldAndWeight.Length - 2;
 
@@ -2746,7 +2751,7 @@ namespace Runedal.GameEngine
             //if the weight cap is exceeded
             if (player.GetCarryWeight() > player.GetWeightLimit())
             {
-                rows[11] += " (Przekroczono!)";
+                rows[11] += " (Przeciążenie!)";
             }
 
             //fill remaining space

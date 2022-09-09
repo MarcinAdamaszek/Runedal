@@ -2530,10 +2530,21 @@ namespace Runedal.GameEngine
             //print bottom table border
             PrintMessage(horizontalBorder);
 
-            //print player's gold pool
+            //print player's gold pool and weight
             if (character.GetType() == typeof(Player))
             {
-                PrintMessage("Złoto: " + Convert.ToString(Data.Player!.Gold!));
+                string goldAndWeight = "||  Złoto: " + Convert.ToString(Data.Player!.Gold!) + "        |  Obciążenie: " +
+                    Data.Player!.GetCarryWeight();
+
+                int remainingSpaces = borderSize - goldAndWeight.Length - 2;
+
+                for (int i = 0; i < remainingSpaces; i++)
+                {
+                    goldAndWeight += " ";
+                }
+                goldAndWeight += "||";
+
+                PrintMessage(goldAndWeight);
             }
 
             //separate gold display from worn items display
@@ -2660,9 +2671,9 @@ namespace Runedal.GameEngine
             const int halfSize = 42;
             const int rowsSize = 13;
             const int numberOfAttributes = 3;
-            int remainingSpace = 0;
-            int i = 1;
-            int j = 0;
+            int remainingSpace;
+            int i;
+            int j;
             int[] diffs = new int[numberOfAttributes];
             string[] rows = new string[rowsSize];
             string[] attributes = new string[numberOfAttributes];
@@ -2725,10 +2736,18 @@ namespace Runedal.GameEngine
             rows[4] += "Celność: " + Math.Floor(player.GetEffectiveAccuracy());
             rows[5] += "Obrona: " + Math.Floor(player.GetEffectiveDefense());
             rows[6] += "Uniki: " + Math.Floor(player.GetEffectiveEvasion());
-            rows[7] += "Trafienia krytyczne: " + Math.Floor(player.GetEffectiveCritical());
+            rows[7] += "Trafienia krytyczne: " + Math.Floor(player.GetEffectiveCritical()) +
+                " (" + (int)Math.Sqrt(player.GetEffectiveCritical()) + "%)";
             rows[8] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
             rows[9] += "Regeneracja HP " + Math.Floor(player.GetEffectiveHpRegen());
             rows[10] += "Regeneracja MP: " + Math.Floor(player.GetEffectiveMpRegen());
+            rows[11] += "Maks. udźwig: " + player.GetWeightLimit();
+
+            //if the weight cap is exceeded
+            if (player.GetCarryWeight() > player.GetWeightLimit())
+            {
+                rows[11] += " (Przekroczono!)";
+            }
 
             //fill remaining space
             for (i = 1; i < rowsSize - 1; i++)

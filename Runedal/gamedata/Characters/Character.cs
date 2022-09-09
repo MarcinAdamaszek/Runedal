@@ -83,7 +83,7 @@ namespace Runedal.GameData.Characters
             //if there is already another item with the same name in character's inventory, add to it's quantity 
             if (itemIndex != -1)
             {
-                Inventory![itemIndex].Quantity += quantity;
+                Inventory![itemIndex].ChangeQuantity(quantity);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace Runedal.GameData.Characters
                 itemToRemove = Inventory[itemIndex];
                 if (quantity < itemToRemove.Quantity)
                 {
-                    itemToRemove.Quantity -= quantity;
+                    itemToRemove.ChangeQuantity(- quantity);
                     return true;
                 }
                 else if (quantity == itemToRemove.Quantity)

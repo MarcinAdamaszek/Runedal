@@ -40,17 +40,25 @@ namespace Runedal.GameData.Items
             Description = it.Description;
             Weight = it.Weight;
             Price = it.Price;
+            RealWeight = it.Weight * quantity;
 
             //create deep copy of modifiers collection
             Modifiers = it.Modifiers!.ConvertAll(mod => new Modifier(mod));
         }
 
         public int Weight { get; set; }
+        public int RealWeight { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
 
         //list of modifiers which change player's statistics and/or attributes
         public List<Modifier>? Modifiers { get; set; }
+
+        public void ChangeQuantity(int quantity)
+        {
+            Quantity += quantity;
+            RealWeight += quantity * Weight;
+        }
 
     }
 }

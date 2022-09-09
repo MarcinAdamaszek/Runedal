@@ -1175,7 +1175,7 @@ namespace Runedal.GameEngine
                         spellName = "kula_ognia";
                         break;
                     case "akull":
-                        spellName = "fala_mrozu";
+                        spellName = "eksplozja";
                         break;
                     case "verde":
                         spellName = "zdrewniała_skóra";
@@ -1215,25 +1215,25 @@ namespace Runedal.GameEngine
                 //zjarrit-verde
                 else if (firstRune == runeNames[0] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[0])
                 {
-                    spellName = "szał_berserkera";
+                    spellName = "amok";
                 }
 
                 //zjarrit-xitan
                 else if (firstRune == runeNames[0] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[0])
                 {
-                    spellName = "szpon_demona";
+                    spellName = "kula_chaosu";
                 }
 
                 //zjarrit-dara
                 else if (firstRune == runeNames[0] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[0])
                 {
-                    spellName = "duch_paladyna";
+                    spellName = "dusza_paladyna";
                 }
 
                 //akull-verde
                 else if (firstRune == runeNames[1] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[1])
                 {
-                    spellName = "duch_zabójcy";
+                    spellName = "wcielenie_zabójcy";
                 }
 
                 //akull-xitan
@@ -1251,7 +1251,7 @@ namespace Runedal.GameEngine
                 //verde-xitan
                 else if (firstRune == runeNames[2] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[2])
                 {
-                    spellName = "wampirza_dusza";
+                    spellName = "ostrze_wampira";
                 }
 
                 //verde-dara
@@ -1264,6 +1264,11 @@ namespace Runedal.GameEngine
                 else if (firstRune == runeNames[3] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[3])
                 {
                     spellName = "tarcza_mentalna";
+                }
+                else
+                {
+                    PrintMessage("Runy zaiskrzyły, ale nic się nie stało..");
+                    return;
                 }
             }
 

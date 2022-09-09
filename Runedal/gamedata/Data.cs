@@ -9,6 +9,9 @@ using System.IO;
 using Runedal.GameData.Characters;
 using Runedal.GameData.Items;
 using System.Text.Json.Serialization;
+using Runedal.GameData.Effects;
+using static Runedal.GameData.Items.Weapon;
+using System.Xml.Linq;
 
 namespace Runedal.GameData
 {
@@ -225,6 +228,22 @@ namespace Runedal.GameData
         {
             foreach (var item in itemsArray)
             {
+                //if it's weapon, add modifiers depending on weapon type
+                if (itemsArray.GetType() == typeof(Weapon[]))
+                {
+                    Weapon weapon = (Weapon)item;
+                    if (weapon.Type == WeaponType.Dagger)
+                    {
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, 30, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, 20, 0, weapon.Name!, true));
+                    }
+                    else if (weapon.Type == WeaponType.Blunt)
+                    {
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -30, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -50, 0, weapon.Name!, true));
+                    }
+                }
+
                 Items!.Add(item);
             }
         }

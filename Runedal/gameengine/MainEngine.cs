@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Numerics;
 using Runedal.GameData.Actions;
 using Runedal.GameData.Effects;
+using System.Windows.Controls.Primitives;
 
 namespace Runedal.GameEngine
 {
@@ -1208,7 +1209,7 @@ namespace Runedal.GameEngine
                 //zjarrit-akull combination
                 if (firstRune == runeNames[0] && secondRune == runeNames[1] || firstRune == runeNames[1] && secondRune == runeNames[0])
                 {
-                    spellName = "podmuch_pary";
+                    spellName = "eksplozja";
                 }
 
                 //zjarrit-verde
@@ -2622,8 +2623,23 @@ namespace Runedal.GameEngine
             }
             else if (itemToDescribe.GetType() == typeof(Weapon))
             {
-                attack = "Atak: " + (itemToDescribe as Weapon)!.Attack;
-                itemType += "Broń biała";
+                Weapon weaponToDescribe = (Weapon)itemToDescribe;
+
+                attack = "Atak: " + weaponToDescribe!.Attack;
+
+                //determine weapon type
+                if (weaponToDescribe.Type == Weapon.WeaponType.Dagger)
+                {
+                    itemType += "Broń krótka";
+                }
+                else if (weaponToDescribe.Type == Weapon.WeaponType.Blade)
+                {
+                    itemType += "Broń sieczna";
+                }
+                else if (weaponToDescribe.Type == Weapon.WeaponType.Blunt)
+                {
+                    itemType += "Broń obuchowa";
+                }
             }
             else if (itemToDescribe.GetType() == typeof(RuneStone))
             {

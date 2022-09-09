@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Runedal.GameData.Effects;
 
 namespace Runedal.GameData.Items
 {
@@ -10,7 +11,7 @@ namespace Runedal.GameData.Items
     {
 
         //default constructor for json deserializer
-        public Weapon() : base() { }
+        public Weapon() : base()  { }
 
         //constructor for placeholder items worn by Player when player wears no item
         public Weapon(string placeholder) : base(placeholder)
@@ -27,7 +28,14 @@ namespace Runedal.GameData.Items
         {
             Attack = wp.Attack;
         }
+        public enum WeaponType
+        {
+            Dagger,
+            Blade,
+            Blunt
+        }
 
+        public WeaponType Type { get; set; }
         public int Attack { get; set; }
     }
 }

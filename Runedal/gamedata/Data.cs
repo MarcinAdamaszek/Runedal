@@ -229,18 +229,70 @@ namespace Runedal.GameData
             foreach (var item in itemsArray)
             {
                 //if it's weapon, add modifiers depending on weapon type
-                if (itemsArray.GetType() == typeof(Weapon[]))
+                if (item.GetType() == typeof(Weapon))
                 {
                     Weapon weapon = (Weapon)item;
                     if (weapon.Type == WeaponType.Dagger)
                     {
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, 30, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, 20, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, 30, 0, weapon.Name!, true));
                     }
                     else if (weapon.Type == WeaponType.Blunt)
                     {
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -30, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -50, 0, weapon.Name!, true));
+                    }
+                }
+
+                //if it's armor, add modifiers depending on it's weight
+                if (item.GetType() == typeof(Armor)) 
+                {
+                    Armor armor = (Armor)item;
+
+                    if (armor.Type == Armor.ArmorType.Torso)
+                    {
+                        if (armor.Weight >= 500)
+                        {
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -20, 0, armor.Name!, true));
+                        }
+                        else if (armor.Weight < 500 && armor.Weight >= 200)
+                        {
+                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
+                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -20, 0, armor.Name!, true));
+                        }
+                    }
+                    if (armor.Type == Armor.ArmorType.Pants)
+                    {
+                        if (armor.Weight >= 400)
+                        {
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -15, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -5, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
+                        }
+                        else if (armor.Weight < 400 && armor.Weight >= 150)
+                        {
+                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
+                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
+                        }
+                    }
+                    if (armor.Type == Armor.ArmorType.Helmet || armor.Type == Armor.ArmorType.Gloves || armor.Type == Armor.ArmorType.Gloves)
+                    {
+                        if (armor.Weight >= 250)
+                        {
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -10, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -3, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
+                        }
+                        else if (armor.Weight < 250 && armor.Weight >= 100)
+                        {
+                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
+                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
+                        }
                     }
                 }
 

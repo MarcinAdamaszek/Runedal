@@ -2615,11 +2615,62 @@ namespace Runedal.GameEngine
             }
             else if (itemToDescribe.GetType() == typeof(Armor))
             {
+                Armor armorToDescribe = (Armor)itemToDescribe;
 
                 //set string for polish armor type
-                itemType += GetPolishArmorType((itemToDescribe as Armor)!.Type);
+                itemType += GetPolishArmorType(armorToDescribe.Type);
 
-                defense = "Obrona: " + (itemToDescribe as Armor)!.Defense;
+                defense = "Obrona: " + armorToDescribe.Defense;
+
+                //add info about armor weight type
+                if (armorToDescribe.Type == Armor.ArmorType.Torso)
+                {
+                    if (armorToDescribe.Weight >= 500)
+                    {
+                        itemType += " (ciężka zbroja)";
+                    }
+                    else if (armorToDescribe.Weight < 500 && armorToDescribe.Weight >= 200)
+                    {
+                        itemType += " (lekka zbroja)";
+                    }
+                    else
+                    {
+                        itemType += " (szata)";
+                    }
+                }
+                if (armorToDescribe.Type == Armor.ArmorType.Pants)
+                {
+                    if (armorToDescribe.Weight >= 400)
+                    {
+                        itemType += " (ciężka zbroja)";
+                    }
+                    else if (armorToDescribe.Weight < 400 && armorToDescribe.Weight >= 150)
+                    {
+                        itemType += " (lekka zbroja)";
+                    }
+                    else
+                    {
+                        itemType += " (szata)";
+                    }
+                }
+                if (armorToDescribe.Type == Armor.ArmorType.Helmet || armorToDescribe.Type == Armor.ArmorType.Gloves ||
+                    armorToDescribe.Type == Armor.ArmorType.Gloves)
+                {
+                    if (armorToDescribe.Weight >= 250)
+                    {
+                        itemType += " (ciężka zbroja)";
+                    }
+                    else if (armorToDescribe.Weight < 250 && armorToDescribe.Weight >= 100)
+                    {
+                        itemType += " (lekka zbroja)";
+                    }
+                    else
+                    {
+                        itemType += " (szata)";
+                    }
+                }
+
+
             }
             else if (itemToDescribe.GetType() == typeof(Weapon))
             {

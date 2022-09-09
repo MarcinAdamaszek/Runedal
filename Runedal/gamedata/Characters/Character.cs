@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Runedal.GameData.Locations;
 using Runedal.GameData.Items;
 using System.Windows.Documents;
 

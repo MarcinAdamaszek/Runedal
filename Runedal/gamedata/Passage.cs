@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Runedal.GameData.Locations
+namespace Runedal.GameData
 {
     public class Passage
     {

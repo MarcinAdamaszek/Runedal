@@ -1,5 +1,4 @@
 ﻿using Runedal.GameData.Characters;
-using Runedal.GameData.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Runedal.GameData;
 using Runedal.GameData.Characters;
 using Runedal.GameData.Items;
 
 
-namespace Runedal.GameData.Locations
+namespace Runedal.GameData
 {
     public class Location : Entity
     {
@@ -25,9 +24,9 @@ namespace Runedal.GameData.Locations
         }
         public Location(int[] coordinates, string[] descriptive, bool[] openBools) : base(descriptive)
         {
-            this.X = coordinates[0];
-            this.Y = coordinates[1];
-            this.Z = coordinates[2];
+            X = coordinates[0];
+            Y = coordinates[1];
+            Z = coordinates[2];
             NorthPassage = openBools[0];
             EastPassage = openBools[1];
             SouthPassage = openBools[2];
@@ -56,7 +55,7 @@ namespace Runedal.GameData.Locations
         public List<Character>? Characters { get; set; }
 
         //list of characters to load into the location at game launch
-        public Dictionary<string, int>? CharsToAdd { get; set;}
+        public Dictionary<string, int>? CharsToAdd { get; set; }
 
         //list of items lying on the ground
         public List<Item>? Items { get; set; }
@@ -106,12 +105,12 @@ namespace Runedal.GameData.Locations
         //methods for adding and removing characters
         public void AddCharacter(Character character)
         {
-            this.Characters!.Add(character);
+            Characters!.Add(character);
             character.CurrentLocation = this;
         }
         public void RemoveCharacter(Character character)
         {
-            this.Characters!.Remove(character);
+            Characters!.Remove(character);
         }
         public bool GetPassage(string direction)
         {

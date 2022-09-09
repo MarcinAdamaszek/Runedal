@@ -8,7 +8,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Runedal.GameData;
-using Runedal.GameData.Locations;
 using Runedal.GameData.Characters;
 using Runedal.GameData.Items;
 using System.Windows.Media.Effects;

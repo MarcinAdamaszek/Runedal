@@ -2574,15 +2574,15 @@ namespace Runedal.GameEngine
             //set delimeter, borderSize and descriptionRow depending on withPrice parameter
             if (withPrice)
             {
-                delimeter = "||-----------------------------------------------------------||";
-                descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
-                borderSize = 63;
+                delimeter = "||------------------------------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                                     | Ilość: | Cena:  ||\n" + delimeter;
+                borderSize = 70;
             }
             else
             {
-                delimeter = "||--------------------------------------------------||";
-                descriptionRow = "|| Przedmiot:                              | Ilość: ||\n" + delimeter;
-                borderSize = 54;
+                delimeter = "||---------------------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                                     | Ilość: ||\n" + delimeter;
+                borderSize = 61;
             }
 
             //create string representing top/bottom table borders
@@ -2593,15 +2593,15 @@ namespace Runedal.GameEngine
 
             if (!withPrice)
             {
-                descriptionTable = "********************** EKWIPUNEK *********************";
+                descriptionTable = "************************** EKWIPUNEK *************************";
             }
             else if (character.GetType() == typeof(Player))
             {
-                descriptionTable = "*********************** TWÓJ EKWIPUNEK ************************";
+                descriptionTable = "************************** TWÓJ EKWIPUNEK ****************************";
             }
             else
             {
-                descriptionTable = "********************* EKWIPUNEK HANDLARZA *********************";
+                descriptionTable = "************************ EKWIPUNEK HANDLARZA *************************";
             }
 
             //print talbe description and top table border
@@ -2611,7 +2611,7 @@ namespace Runedal.GameEngine
             foreach (var item in character.Inventory!)
             {
                 //calculate sizes of spaces in table rows to mantain neat table layout
-                nameColumnSize = 40 - item.Name!.Length;
+                nameColumnSize = 47 - item.Name!.Length;
                 quantityColumnSize = 7 - Convert.ToString(item.Quantity).Length;
                 spaceAfterName = string.Empty;
                 spaceAfterQuantity = string.Empty;
@@ -2672,7 +2672,7 @@ namespace Runedal.GameEngine
             //print player's gold pool and weight
             if (character.GetType() == typeof(Player))
             {
-                string goldAndWeight = "||  Złoto: " + Convert.ToString(Data.Player!.Gold!) + "     |  Obciążenie: " +
+                string goldAndWeight = "|| Złoto: " + Convert.ToString(Data.Player!.Gold!) + "     | Obciążenie: " +
                     Data.Player!.GetCarryWeight();
 
                 if (Data.Player.GetWeightLimit() < Data.Player!.GetCarryWeight())

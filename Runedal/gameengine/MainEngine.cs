@@ -2571,8 +2571,8 @@ namespace Runedal.GameEngine
             string descriptionTable = string.Empty;
             string tableRow = string.Empty;
             string horizontalBorder = string.Empty;
-            string delimeter = "||-----------------------------------------------------------||";
-            string descriptionRow = "|| Przedmiot:                              | Ilość: | Cena:  ||\n" + delimeter;
+            string delimeter = string.Empty;
+            string descriptionRow = string.Empty;
             int nameColumnSize = 0;
             int quantityColumnSize = 0;
             int priceColumnSize = 0;
@@ -2582,15 +2582,15 @@ namespace Runedal.GameEngine
             //set delimeter, borderSize and descriptionRow depending on withPrice parameter
             if (withPrice)
             {
-                delimeter = "||------------------------------------------------------------------||";
-                descriptionRow = "|| Przedmiot:                                     | Ilość: | Cena:  ||\n" + delimeter;
-                borderSize = 70;
+                delimeter = "||------------------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                         | Ilość: | Cena:  ||\n" + delimeter;
+                borderSize = 58;
             }
             else
             {
-                delimeter = "||---------------------------------------------------------||";
-                descriptionRow = "|| Przedmiot:                                     | Ilość: ||\n" + delimeter;
-                borderSize = 61;
+                delimeter = "||---------------------------------------------||";
+                descriptionRow = "|| Przedmiot:                         | Ilość: ||\n" + delimeter;
+                borderSize = 49;
             }
 
             //create string representing top/bottom table borders
@@ -2601,15 +2601,15 @@ namespace Runedal.GameEngine
 
             if (!withPrice)
             {
-                descriptionTable = "************************** EKWIPUNEK *************************";
+                descriptionTable = "******************* EKWIPUNEK *******************";
             }
             else if (character.GetType() == typeof(Player))
             {
-                descriptionTable = "************************** TWÓJ EKWIPUNEK ****************************";
+                descriptionTable = "******************** TWÓJ EKWIPUNEK **********************";
             }
             else
             {
-                descriptionTable = "************************ EKWIPUNEK HANDLARZA *************************";
+                descriptionTable = "****************** EKWIPUNEK HANDLARZA *******************";
             }
 
             //print talbe description and top table border
@@ -2619,7 +2619,7 @@ namespace Runedal.GameEngine
             foreach (var item in character.Inventory!)
             {
                 //calculate sizes of spaces in table rows to mantain neat table layout
-                nameColumnSize = 47 - item.Name!.Length;
+                nameColumnSize = 35 - item.Name!.Length;
                 quantityColumnSize = 7 - Convert.ToString(item.Quantity).Length;
                 spaceAfterName = string.Empty;
                 spaceAfterQuantity = string.Empty;
@@ -2685,7 +2685,7 @@ namespace Runedal.GameEngine
 
                 if (Data.Player.GetWeightLimit() < Data.Player!.GetCarryWeight())
                 {
-                    goldAndWeight += "  (Przeciążenie!)";
+                    goldAndWeight += "  (!)";
                 }
 
                 int remainingSpaces = borderSize - goldAndWeight.Length - 2;
@@ -2706,22 +2706,33 @@ namespace Runedal.GameEngine
             if (!withPrice)
             {
                 string[] itemSlots = new string[6];
-                int i;
+                int i, j;
 
-                itemSlots[0] = "Broń: " + (character as Player)!.Weapon!.Name!;
-                itemSlots[1] = "Hełm: " + (character as Player)!.Helmet!.Name!;
-                itemSlots[2] = "Tors: " + (character as Player)!.Torso!.Name!;
-                itemSlots[3] = "Spodnie: " + (character as Player)!.Pants!.Name!;
-                itemSlots[4] = "Rękawice: " + (character as Player)!.Gloves!.Name!;
-                itemSlots[5] = "Buty: " + (character as Player)!.Shoes!.Name!;
+                itemSlots[0] = "|| Broń: " + (character as Player)!.Weapon!.Name!;
+                itemSlots[1] = "|| Hełm: " + (character as Player)!.Helmet!.Name!;
+                itemSlots[2] = "|| Tors: " + (character as Player)!.Torso!.Name!;
+                itemSlots[3] = "|| Spodnie: " + (character as Player)!.Pants!.Name!;
+                itemSlots[4] = "|| Rękawice: " + (character as Player)!.Gloves!.Name!;
+                itemSlots[5] = "|| Buty: " + (character as Player)!.Shoes!.Name!;
 
                 //if item slot was empty (meaning was filled with placeholder)
                 //swap 'placeholder' string to 'brak'
                 for (i = 0; i < itemSlots.Length; i++)
                 {
                     itemSlots[i] = Regex.Replace(itemSlots[i], @"\bplaceholder\b", "brak");
+
+                    //fill remaining spaces in table row
+                    while (itemSlots[i].Length <= horizontalBorder.Length - 3)
+                    {
+                        itemSlots[i] += " ";
+                    }
+                    itemSlots[i] += "||";
+
+
                     PrintMessage(itemSlots[i]);
                 }
+
+                PrintMessage(horizontalBorder);
             }
         }
 
@@ -3028,7 +3039,7 @@ namespace Runedal.GameEngine
         //method printing player's statistics
         private void StatsInfo()
         {
-            const int halfSize = 42;
+            const int halfSize = 28;
             const int rowsSize = 13;
             const int numberOfAttributes = 3;
             int remainingSpace;
@@ -3057,22 +3068,47 @@ namespace Runedal.GameEngine
                 attributes[i] += diffs[i] + ")";
             }
 
+            //shorten the exp numbers if they reached
+            //enormous values using 'K' notation
+            ulong actualExp = player.Experience;
+            ulong nextLevelCap = player.NextLvlExpCap;
+            string actualExpString = string.Empty;
+            string nextLevelCapString = Convert.ToString(nextLevelCap);
 
+            if (actualExp >= 100000)
+            {
+                actualExp /= 1000;
+                actualExpString = Convert.ToString(actualExp) + "K";
+            }
+            else
+            {
+                actualExpString = Convert.ToString(player.Experience);
+            }
+
+            if (nextLevelCap >= 100000)
+            {
+                nextLevelCap /= 1000;
+                nextLevelCapString = Convert.ToString(nextLevelCap) + "K";
+            }
+            else
+            {
+                nextLevelCapString = Convert.ToString(player.Experience);
+            }
 
             //format left side of the table
-            rows[0] = "**********************************STATYSTYKI POSTACI**********************************";
-            rows[1] = "||     Poziom: " + player.Level;
-            rows[2] = "||     Doświadczenie: " + player.Experience;
-            rows[3] = "||     Następny poziom: " + player.NextLvlExpCap;
-            rows[4] = "||     Pkt. Atrybutów: " + player.AttributePoints;
-            rows[5] = "||-----------------------------------";
-            rows[6] = "||     Siła: " + attributes[0];
-            rows[7] = "||     Zręczność: " + attributes[1];
-            rows[8] = "||     Inteligencja: " + attributes[2]; ;
-            rows[9] = "||-----------------------------------";
-            rows[10] = "||     Maks. HP: " + player.EffectiveMaxHp;
-            rows[11] = "||     Maks. MP: " + player.EffectiveMaxMp;
-            rows[12] = "======================================================================================";
+            rows[0] = "********************STATYSTYKI POSTACI********************";
+            rows[1] = "|| Poziom: " + player.Level;
+            rows[2] = "|| Dośw.: " + actualExpString;
+            rows[3] = "|| Awans za: " + nextLevelCapString;
+            rows[4] = "|| Pkt. Atrybutów: " + player.AttributePoints;
+            rows[5] = "||-----------------------";
+            rows[6] = "|| Siła: " + attributes[0];
+            rows[7] = "|| Zręczność: " + attributes[1];
+            rows[8] = "|| Inteligencja: " + attributes[2]; ;
+            rows[9] = "||-----------------------";
+            rows[10] = "|| Maks. HP: " + player.EffectiveMaxHp;
+            rows[11] = "|| Maks. MP: " + player.EffectiveMaxMp;
+            rows[12] = "==========================================================";
 
             //fill remaining space with space-characters
             for (i = 1; i < rowsSize - 1; i++)
@@ -3080,28 +3116,29 @@ namespace Runedal.GameEngine
                 remainingSpace = halfSize - rows[i].Length;
 
                 //fill with spaces
-                for (j = 0; j < remainingSpace; j++)
+                for (j = 0; j < remainingSpace - 3; j++)
                 {
                     rows[i] += " ";
                 }
 
                 //add middle vertical border
-                rows[i] += "|     ";
+                rows[i] += "| ";
             }
 
             //add right side (combat statistics)
-            rows[1] += "Szybkość: " + Math.Floor(player.GetEffectiveSpeed());
-            rows[2] += "Atak: " + Math.Floor(player.GetEffectiveAttack());
-            rows[3] += "Szybkość Ataku: " + Math.Floor(player.GetEffectiveAtkSpeed());
-            rows[4] += "Celność: " + Math.Floor(player.GetEffectiveAccuracy());
+            
+            rows[1] += "Atak: " + Math.Floor(player.GetEffectiveAttack());
+            rows[2] += "Szybkość Ataku: " + Math.Floor(player.GetEffectiveAtkSpeed());
+            rows[3] += "Celność: " + Math.Floor(player.GetEffectiveAccuracy());
+            rows[4] += "Traf. krytyczne: " + Math.Floor(player.GetEffectiveCritical()) +
+                " (" + (int)Math.Sqrt(player.GetEffectiveCritical()) + "%)";
             rows[5] += "Obrona: " + Math.Floor(player.GetEffectiveDefense());
             rows[6] += "Uniki: " + Math.Floor(player.GetEffectiveEvasion());
-            rows[7] += "Trafienia krytyczne: " + Math.Floor(player.GetEffectiveCritical()) +
-                " (" + (int)Math.Sqrt(player.GetEffectiveCritical()) + "%)";
-            rows[8] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
+            rows[7] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
+            rows[8] += "Szybkość: " + Math.Floor(player.GetEffectiveSpeed());
             rows[9] += "Regeneracja HP " + Math.Floor(player.GetEffectiveHpRegen());
             rows[10] += "Regeneracja MP: " + Math.Floor(player.GetEffectiveMpRegen());
-            rows[11] += "Maks. udźwig: " + player.GetWeightLimit();
+            rows[11] += "Udźwig: " + player.GetWeightLimit();
 
             //if the weight cap is exceeded
             if (player.GetCarryWeight() > player.GetWeightLimit())
@@ -3136,10 +3173,10 @@ namespace Runedal.GameEngine
             int i, j;
             int remainingSpace;
             int tableWidth = 53;
-            int numberOfRows = character.RememberedSpells!.Count + 2;
+            int numberOfRows = character.MaxSpellsRemembered + 2;
             string[] tableRows = new string[numberOfRows];
 
-            tableRows[0] = "******************* TWOJE CZARY *********************";
+            tableRows[0] = "**************** ZAPAMIĘTANE CZARY ******************";
 
             //bottom border of the table
             for (i = 0; i < tableWidth; i++)
@@ -3150,7 +3187,17 @@ namespace Runedal.GameEngine
             //fill interior of the table with character's spells
             for (i = 1; i < numberOfRows - 1; i++)
             {
-                tableRows[i] += "||   " + i + ". " + character.RememberedSpells[i - 1].Name;
+                tableRows[i] += "||   " + i + ". ";
+
+            }
+
+
+            for (i = 1; i < numberOfRows - 1; i++)
+            {
+                if (Data.Player!.RememberedSpells.Count > i - 1)
+                {
+                    tableRows[i] += Data.Player!.RememberedSpells[i - 1].Name;
+                }
 
                 //fill remaining space in every row with white space characters
                 remainingSpace = tableWidth - tableRows[i].Length - 2;

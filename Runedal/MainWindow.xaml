@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Runedal"
         mc:Ignorable="d"
-        Title="Runedal" MinHeight="500" MinWidth="770" ResizeMode="CanResizeWithGrip"  Background="Gray">
+        Title="Runedal" MinHeight="500" MinWidth="930" ResizeMode="CanResizeWithGrip"  Background="Gray">
     <Grid FocusManager.FocusedElement="{Binding ElementName=inputBox}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>

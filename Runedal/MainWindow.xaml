@@ -5,18 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Runedal"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="600" MinWidth="700" ResizeMode="CanResizeWithGrip"  Background="Gray">
+        Title="Runedal" MinHeight="500" MinWidth="770" ResizeMode="CanResizeWithGrip"  Background="Gray">
     <Grid FocusManager.FocusedElement="{Binding ElementName=inputBox}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="410"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="0.8*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
-        
+
+        <!--miniMap box displaying map around player's current location-->
+        <RichTextBox Name="minimapBox" 
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         Grid.RowSpan="3"
+                         Height="425"
+                         VerticalAlignment="Top"
+                         Background="Olive"
+                         Foreground="Black"
+                         Margin="10"
+                         FontSize="14"
+                         IsReadOnly ="True"
+                         Focusable="False"
+                         FontFamily="Consolas"
+                         >
+
+            <!--sets the line spacing of minimapBox-->
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0.4"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+
         <!--outputBox for displaing user input and game engine output-->
         <RichTextBox Name="outputBox" 
                          Grid.Row="0"
@@ -45,7 +69,7 @@
                      FontFamily="Consolas"
                      FontSize="14"
                      Background="Black"
-                     Margin="10"
+                     Margin="10, 2"
                      Foreground="#FFC3C3C3"
                      KeyUp="inputBox_KeyUp"
                      TextWrapping="Wrap"
@@ -65,7 +89,7 @@
             <!--hp bar-->
             <ProgressBar Name="hpBar" Value="{Binding HpPercentage}" Grid.Column="0" Margin="10, 0, 10, 5" Foreground="#FFD20D16" BorderBrush="Black" Background="Black" />
             <TextBlock Text="HP" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 10, 5" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
-            <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 5">
+            <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 6">
                 <TextBlock Name="hpLabel" Text="{Binding Hp}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="hpSlashLabel" Text=" / " Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="maxHpLabel" Text="{Binding EffectiveMaxHp}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
@@ -74,7 +98,7 @@
             <!--mp bar-->
             <ProgressBar Name="mpBar" Value="{Binding MpPercentage}" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" Foreground="#FF1330D2" Background="Black"/>
             <TextBlock Text="MP" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
-            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 0">
+            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 2, 10, 0">
                 <TextBlock Name="mpLabel" Text="{Binding Mp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="mpSlashLabel" Text=" / " Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="maxMpLabel" Text="{Binding EffectiveMaxMp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>

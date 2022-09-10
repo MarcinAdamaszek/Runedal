@@ -18,6 +18,10 @@ using System.Numerics;
 using Runedal.GameData.Actions;
 using Runedal.GameData.Effects;
 using System.Windows.Controls.Primitives;
+using System.Diagnostics.Contracts;
+using System.Windows.Automation.Provider;
+using System.Windows.Interop;
+using System.Windows.Controls;
 
 namespace Runedal.GameEngine
 {
@@ -42,6 +46,7 @@ namespace Runedal.GameEngine
             Data.LoadItems();
             Data.LoadSpells();
             Data.InitializeEverything();
+            PrintMap();
 
             GameClock.Start();
 
@@ -1566,6 +1571,9 @@ namespace Runedal.GameEngine
 
             //change player's current location
             AddCharacterToLocation(nextLocation, Data.Player!);
+
+            //change minimap display
+            PrintMap();
         }
 
         //method for crafting a spell
@@ -2875,6 +2883,148 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method printing map around player's current location
+        //in form of ascii art (or unicode art to be more precise)
+        private void PrintMap()
+        {
+            Location center = Data.Player!.CurrentLocation!;
+            const string enDash = "\x2500";
+            const string circle = "\x25A1";
+            const string player = "\x25A0";
+            const string upAndDown = "\x2195";
+            const int rangeSize = 12;
+            
+            int i, j, k;
+            int[] horizontalRange = new int[rangeSize + 1];
+            int[] verticalRange = new int[rangeSize + 1];
+            string[] mapLines = new string[rangeSize * 2];
+            int lowestX = center.X - rangeSize / 2;
+            int lowestY = center.Y - rangeSize / 2;
+            int currentZ = center.Z;
+
+            
+            //fill horizontalRange
+            for (i = 0; i < rangeSize + 1; i++)
+            {
+                horizontalRange[i] = lowestX + i;
+                verticalRange[i] = lowestY + i;
+            }
+
+            k = 0;
+
+            //fill every second line containing hipothetical locations
+            for (i = 0; i < rangeSize; i++)
+            {
+                for (j = 0; j < rangeSize; j++)
+                {
+                    if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ))
+                    {
+                        //if it's player's current location, sign it with 'player sign'
+                        if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
+                        {
+                            mapLines[k] += player;
+                        }
+                        else
+                        {
+
+                            //otherwise, if there is another location in the same Z axis
+                            //directly connected to this one
+                            if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ - 1) ||
+                                IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
+                            {
+                                mapLines[k] += upAndDown;
+                            }
+                            else
+                            {
+                                mapLines[k] += circle;
+                            }
+                        }
+                        
+                    }
+                    else
+                    {
+                        mapLines[k] += " ";
+                    }
+
+                    if (IsThereALocation(horizontalRange[j] + 1, verticalRange[i], currentZ) && IsThereALocation(horizontalRange[j], verticalRange[i], currentZ)) 
+                    {
+                        mapLines[k] += " " + enDash + " ";
+                    }
+                    else
+                    {
+                            mapLines[k] += "   ";
+                    }
+                }
+
+                if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ))
+                {
+                    //if it's player's current location, sign it with 'player sign'
+                    if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
+                    {
+                        mapLines[k] += player;
+                    }
+                    else
+                    {
+
+                        //otherwise, if there is another location in the same Z axis
+                        //directly connected to this one
+                        if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ - 1) ||
+                            IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
+                        {
+                            mapLines[k] += upAndDown;
+                        }
+                        else
+                        {
+                            mapLines[k] += circle;
+                        }
+                    }
+
+                }
+
+
+                k += 2;
+            }
+
+            //fill the rest of in-between lines containing vertical passages
+            //connecting adjacent locations
+            k = 1;
+            for (i = 0; i < rangeSize; i++)
+            {
+                for (j = 0; j < rangeSize; j++)
+                {
+                    if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ) && IsThereALocation(horizontalRange[j], verticalRange[i] + 1, currentZ))
+                    {
+                        mapLines[k] += "|";
+                    }
+                    else
+                    {
+                        mapLines[k] += " ";
+                    }
+
+                    mapLines[k] += "   ";
+                }
+
+
+                k += 2;
+            }
+
+            //reverse the order of lines
+            Array.Reverse(mapLines);
+
+            //clear previous location centered minimap
+            Window.minimapBox.SelectAll();
+            Window.minimapBox.Selection.Text = "";
+
+            //display new location centered minimap
+            for (i = 1; i < mapLines.Length; i++)
+            {
+                TextRange tr = new(this.Window.minimapBox.Document.ContentEnd, this.Window.minimapBox.Document.ContentEnd);
+                tr.Text = "\n" + mapLines[i];
+                tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+                Window.minimapBox.ScrollToEnd();
+            }
+        }
+
         //method printing player's statistics
         private void StatsInfo()
         {
@@ -3068,7 +3218,32 @@ namespace Runedal.GameEngine
 
 
 
+
         //==============================================HELPER METHODS=============================================
+
+        //method determining if location with specified coordinates exists
+        private bool IsThereALocation(int X, int Y)
+        {
+            if (Data.Locations!.Exists(loc => loc.X == X && loc.Y == Y))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool IsThereALocation(int X, int Y, int Z)
+        {
+            if (Data.Locations!.Exists(loc => loc.X == X && loc.Y == Y && loc.Z == Z))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         //method returning formatted string representing special effect description
         private string GetSpecialEffectDescription(SpecialEffect effect)
@@ -3264,7 +3439,7 @@ namespace Runedal.GameEngine
             switch (direction)
             {
                 case "n":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY + 1 && loc.Z == currentZ);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX && loc.Y == currentY + 1 && loc.Z == currentZ);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];
@@ -3272,7 +3447,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 case "e":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1 && loc.Z == currentZ);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX + 1 && loc.Y == currentY && loc.Z == currentZ);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];
@@ -3280,7 +3455,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 case "s":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.Y == currentY - 1 && loc.Z == currentZ);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX && loc.Y == currentY - 1 && loc.Z == currentZ);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];
@@ -3288,7 +3463,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 case "w":
-                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1 && loc.Z == currentZ);
+                    locationIndex = Data.Locations!.FindIndex(loc => loc.X == currentX - 1 && loc.Y == currentY && loc.Z == currentZ);
                     if (locationIndex != -1)
                     {
                         nextLocation = Data.Locations![locationIndex];

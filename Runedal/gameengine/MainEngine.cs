@@ -1053,6 +1053,8 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            Actions.Clear();
+
             ResetPlayerState();
         }
 

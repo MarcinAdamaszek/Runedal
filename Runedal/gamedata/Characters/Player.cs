@@ -29,6 +29,9 @@ namespace Runedal.GameData.Characters
 
         //values of other multipliers
         private const int StrWeightLimitMultiplier = 10;
+        private const double WeightPenaltyHpRegenMultiplier = 0.1;
+        private const double WeightPenaltyMpRegenMultiplier = 0.1;
+        private const double WeightPenaltyCombatStatsMultiplier = 0.8;
 
         //fields required for proper hp/mp display in gui
         private double _HpPercentage;
@@ -530,6 +533,13 @@ namespace Runedal.GameData.Characters
             double effectiveHpRegen = this.HpRegen + ApplyModifiers(Modifier.ModType.HpRegen);
             double strengthModifier = HpRegenStrMultiplier * GetEffectiveStrength();
             effectiveHpRegen += strengthModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveHpRegen *= WeightPenaltyHpRegenMultiplier;
+            }
+
             if (effectiveHpRegen < 1)
             {
                 effectiveHpRegen = 1;
@@ -541,6 +551,13 @@ namespace Runedal.GameData.Characters
             double effectiveMpRegen = this.MpRegen + ApplyModifiers(Modifier.ModType.MpRegen);
             double intelligenceModifier = MpRegenIntMultiplier * GetEffectiveIntelligence();
             effectiveMpRegen += intelligenceModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveMpRegen *= WeightPenaltyMpRegenMultiplier;
+            }
+
             if (effectiveMpRegen < 1)
             {
                 effectiveMpRegen = 1;
@@ -579,6 +596,13 @@ namespace Runedal.GameData.Characters
 
             //add modifiers to effective stat
             effectiveAttack += strengthModifier += weaponModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveAttack *= WeightPenaltyCombatStatsMultiplier;
+            }
+
             if (effectiveAttack < 1)
             {
                 effectiveAttack = 1;
@@ -591,6 +615,13 @@ namespace Runedal.GameData.Characters
             double effectiveAtkSpeed = this.AtkSpeed + ApplyModifiers(Modifier.ModType.AtkSpeed);
             double agilityModifier = GetEffectiveAgility() * AtkSpeedAgiMultiplier;
             effectiveAtkSpeed += agilityModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveAtkSpeed *= WeightPenaltyCombatStatsMultiplier;
+            }
+
             if (effectiveAtkSpeed < 1)
             {
                 effectiveAtkSpeed = 1;
@@ -602,6 +633,13 @@ namespace Runedal.GameData.Characters
             double effectiveAccuracy = this.Accuracy + ApplyModifiers(Modifier.ModType.Accuracy);
             double agilityModifier = GetEffectiveAgility() * AccuracyAgiMultiplier;
             effectiveAccuracy += agilityModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveAccuracy *= WeightPenaltyCombatStatsMultiplier;
+            }
+
             if (effectiveAccuracy < 1)
             {
                 effectiveAccuracy = 1;
@@ -613,6 +651,13 @@ namespace Runedal.GameData.Characters
             double effectiveCritical = this.Critical + ApplyModifiers(Modifier.ModType.Critical);
             double agilityModifier = GetEffectiveAgility() * CriticalAgiMultiplier;
             effectiveCritical += agilityModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveCritical *= WeightPenaltyCombatStatsMultiplier;
+            }
+
             if (effectiveCritical < 1)
             {
                 effectiveCritical = 1;
@@ -635,6 +680,13 @@ namespace Runedal.GameData.Characters
             double effectiveEvasion = this.Evasion + ApplyModifiers(Modifier.ModType.Evasion);
             double agilityModifier = GetEffectiveAgility() * EvasionAgiMultiplier;
             effectiveEvasion += agilityModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveEvasion *= WeightPenaltyCombatStatsMultiplier;
+            }
+
             if (effectiveEvasion < 1)
             {
                 effectiveEvasion = 1;
@@ -646,6 +698,13 @@ namespace Runedal.GameData.Characters
             double effectiveMagicResistance = this.MagicResistance + ApplyModifiers(Modifier.ModType.MagicResistance);
             double intelligenceModifier = GetEffectiveIntelligence() * MagicResistanceIntMultiplier;
             effectiveMagicResistance += intelligenceModifier;
+
+            //apply overweight penalty if present
+            if (GetCarryWeight() > GetWeightLimit())
+            {
+                effectiveMagicResistance *= WeightPenaltyCombatStatsMultiplier;
+            }
+
             if (effectiveMagicResistance < 1)
             {
                 effectiveMagicResistance = 1;
@@ -758,7 +817,7 @@ namespace Runedal.GameData.Characters
         //method returning player's weight limit
         public int GetWeightLimit()
         {
-            return 100; /*1000 + (GetEffectiveStrength() * StrWeightLimitMultiplier);*/
+            return 1000 + (GetEffectiveStrength() * StrWeightLimitMultiplier);
         }
 
         //property changed event handler

@@ -47,6 +47,7 @@
                          Background="Black"
                          Foreground="White"
                          Margin="10"
+                         Padding="0, 0, 0, 5"
                          FontSize="14"
                          IsReadOnly ="True"
                          Focusable="False"

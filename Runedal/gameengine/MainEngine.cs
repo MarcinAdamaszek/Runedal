@@ -1260,7 +1260,7 @@ namespace Runedal.GameEngine
                         spellName = "kula_ognia";
                         break;
                     case "akull":
-                        spellName = "eksplozja";
+                        spellName = "fala_mrozu";
                         break;
                     case "verde":
                         spellName = "zdrewniała_skóra";
@@ -1336,7 +1336,7 @@ namespace Runedal.GameEngine
                 //verde-xitan
                 else if (firstRune == runeNames[2] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[2])
                 {
-                    spellName = "ostrze_wampira";
+                    spellName = "wampirze_ostrze";
                 }
 
                 //verde-dara

@@ -1985,7 +1985,7 @@ namespace Runedal.GameEngine
             if (Data.Player!.GainExperience(experience))
             {
                 PrintMessage("***Zdobywasz nowy poziom!***", MessageType.Action);
-                Data.Player!.AddAttributePoints((Data.Player!.Level - previousLevel) * 3);
+                Data.Player!.AddAttributePoints((Data.Player!.Level - previousLevel) * 4);
             }
         }
 

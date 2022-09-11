@@ -98,6 +98,7 @@ namespace Runedal
                     inputBox.CaretIndex = inputBox.Text.Length;
                 }
             }
+
         }
 
         

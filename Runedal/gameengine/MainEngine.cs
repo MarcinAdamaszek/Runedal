@@ -35,6 +35,7 @@ namespace Runedal.GameEngine
             this.AttackInstances = new List<AttackInstance>();
             this.Actions = new List<CharAction>();
             this.TeleportLocation = new Location();
+            this.LastoutputBoxContent = new List<TextRange>();
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
@@ -100,6 +101,7 @@ namespace Runedal.GameEngine
         public List<AttackInstance> AttackInstances { get; set; }
         public List<CharAction> Actions { get; set; }
         public Location TeleportLocation { get; set; }
+        public List<TextRange> LastoutputBoxContent { get; set; }
         public bool IsPaused { get; set; }
 
         //method processing user input commands
@@ -110,6 +112,8 @@ namespace Runedal.GameEngine
             string argument1 = string.Empty;
             string argument2 = string.Empty;
             string[] commandParts;
+
+            
 
             //get user input from inputBox
             userCommand = Window.inputBox.Text;
@@ -3584,52 +3588,122 @@ namespace Runedal.GameEngine
         //method displaying communicates in outputBox of the gui
         private void PrintMessage(string msg, MessageType type = MessageType.Default)
         {
+            // Maximum of blocks in the document
+            int MaxBlocks = 100;
 
-            //color text of the message before displaying
-            TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
-            tr.Text = "\n" + msg;
+            // Maximum of lines in one block (paragraph)
+            int InlinesPerBlock = 20;
 
+            SolidColorBrush brush = Brushes.LightGray;
             switch (type)
             {
                 case (MessageType.Default):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
+                    brush = Brushes.LightGray;
                     break;
                 case (MessageType.UserCommand):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
+                    brush = Brushes.Aqua;
                     break;
                 case (MessageType.SystemFeedback):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
+                    brush = Brushes.DarkSalmon;
                     break;
                 case (MessageType.Action):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                    brush = Brushes.LightSkyBlue;
                     break;
                 case (MessageType.Gain):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
+                    brush = Brushes.Yellow;
                     break;
                 case (MessageType.Loss):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
+                    brush = Brushes.Goldenrod;;
                     break;
                 case (MessageType.EffectOn):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
+                    brush = Brushes.MediumSpringGreen;
                     break;
                 case (MessageType.EffectOff):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
+                    brush = Brushes.SeaGreen;
                     break;
                 case (MessageType.Speech):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
+                    brush = Brushes.DarkKhaki;
                     break;
                 case (MessageType.DealDmg):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Chartreuse);
+                    brush = Brushes.Chartreuse;
                     break;
                 case (MessageType.ReceiveDmg):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Crimson);
+                    brush = Brushes.Crimson;
                     break;
                 case (MessageType.CriticalHit):
-                    tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Magenta);
+                    brush = Brushes.Magenta;
                     break;
             }
 
+            // Get the latest block in the document and try to append a new message to it
+            if (Window.outputBox.Document.Blocks.LastBlock is Paragraph paragraph)
+            {
+                var nl = Environment.NewLine;
+
+                // If the current block already contains the maximum count of lines create a new paragraph
+                if (paragraph.Inlines.Count >= InlinesPerBlock)
+                {
+                    nl = string.Empty;
+                    paragraph = new Paragraph();
+                    Window.outputBox.Document.Blocks.Add(paragraph);
+                }
+                paragraph.Inlines.Add(new Run(nl + msg) { Foreground = brush });
+            }
+
+            if (Window.outputBox.Document.Blocks.Count >= MaxBlocks)
+            {
+                // When the number of lines more that (MaxBlocks-1)*InlinesPerBlock  remove the first block in the document
+                Window.outputBox.Document.Blocks.Remove(Window.outputBox.Document.Blocks.FirstBlock);
+            }
+
             Window.outputBox.ScrollToEnd();
+
+
+
+            ////color text of the message before displaying
+            //TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
+            //tr.Text = "\n" + msg;
+
+            //switch (type)
+            //{
+            //    case (MessageType.Default):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
+            //        break;
+            //    case (MessageType.UserCommand):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
+            //        break;
+            //    case (MessageType.SystemFeedback):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
+            //        break;
+            //    case (MessageType.Action):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+            //        break;
+            //    case (MessageType.Gain):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
+            //        break;
+            //    case (MessageType.Loss):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
+            //        break;
+            //    case (MessageType.EffectOn):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
+            //        break;
+            //    case (MessageType.EffectOff):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
+            //        break;
+            //    case (MessageType.Speech):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
+            //        break;
+            //    case (MessageType.DealDmg):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Chartreuse);
+            //        break;
+            //    case (MessageType.ReceiveDmg):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Crimson);
+            //        break;
+            //    case (MessageType.CriticalHit):
+            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Magenta);
+            //        break;
+            //}
+
         }
 
         /// <summary>

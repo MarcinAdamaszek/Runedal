@@ -101,6 +101,12 @@ namespace Runedal
 
         }
 
+        public void InitializePlayerDataContext(Player player)
+        {
+            Player = player;
+            DataContext = player;
+        }
+
         
     }
 }

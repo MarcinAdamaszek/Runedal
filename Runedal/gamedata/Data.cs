@@ -58,44 +58,50 @@ namespace Runedal.GameData
         }
 
         //method loading StackingEffects array of string representing object names which effects stack on player
-        private void LoadStackingEffects()
+        public void LoadStackingEffects()
         {
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\StackingEffects.json");
             StackingEffects = JsonSerializer.Deserialize<string[]>(JsonString, Options)!;
+        }
+
+        //method loading player
+        public void LoadPlayer(string playerName)
+        {
+            //load player from json file
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Player.json");
+            Player[] playerArray = JsonSerializer.Deserialize<Player[]>(JsonString, Options)!;
+
+
+            AddCharactersToList(playerArray);
+            Player = playerArray[0];
+
+            //give name to player
+            Player.Name = playerName;
+
+            //put player in his starting location
+            Location startingLocation = Locations!.Find(loc => loc.Name!.ToLower() == Player!.Start!.ToLower())!;
+            Player!.CurrentLocation = startingLocation;
+            startingLocation.AddCharacter(Player);
         }
 
         //method loading characters from json file
         public void LoadCharacters()
         {
 
-            //load player from json file
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Player.json");
-            Player[] playerArray = JsonSerializer.Deserialize<Player[]>(JsonString, Options)!;
-
-            
-            PopulateCharactersList(playerArray);
-            Player = playerArray[0];
-
-            //put player in his starting location
-            Location startingLocation = Locations!.Find(loc => loc.Name!.ToLower() == Player.Start.ToLower())!;
-            Player.CurrentLocation = startingLocation;
-            startingLocation.AddCharacter(Player);
-
             //load traders from json
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Traders.json");
             Character[] tradersArray = JsonSerializer.Deserialize<Trader[]>(JsonString, Options)!;
-            PopulateCharactersList(tradersArray);
+            AddCharactersToList(tradersArray);
 
             //load monsters
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\monsters.json");
             Character[] monstersArray = JsonSerializer.Deserialize<Monster[]>(JsonString, Options)!;
-            PopulateCharactersList(monstersArray);
+            AddCharactersToList(monstersArray);
 
             //load heroes
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Heroes.json");
             Character[] heroesArray = JsonSerializer.Deserialize<Hero[]>(JsonString, Options)!;
-            PopulateCharactersList(heroesArray);
-
+            AddCharactersToList(heroesArray);
 
         } 
 
@@ -123,22 +129,22 @@ namespace Runedal.GameData
             //load consumables
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Consumables.json");
             Item[] consumablesArray = JsonSerializer.Deserialize<Consumable[]>(JsonString, Options)!;
-            PopulateItems(consumablesArray);
+            AddItemsToList(consumablesArray);
 
             //load weapons
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons.json");
             Item[] weaponsArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
-            PopulateItems(weaponsArray);
+            AddItemsToList(weaponsArray);
 
             //load armors
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors.json");
             Item[] armorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
-            PopulateItems(armorsArray);
+            AddItemsToList(armorsArray);
 
             //load runes
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Runes.json");
             Item[] runesArray = JsonSerializer.Deserialize<RuneStone[]>(JsonString, Options)!;
-            PopulateItems(runesArray);
+            AddItemsToList(runesArray);
 
             ////load ranged
             //JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Ranged.json");
@@ -159,8 +165,8 @@ namespace Runedal.GameData
             }
         }
 
-        //method filling locations with characters, characters with items, initializing hps etc
-        public void InitializeEverything()
+        //method initializing hp/mp values
+        public void InitializeHpMpValues()
         {
             //fill every combat-character's hp/mp pools accordingly to their effective max hp/mp
             Characters!.ForEach(character =>
@@ -170,21 +176,62 @@ namespace Runedal.GameData
                     (character as CombatCharacter)!.InitializeHpMp();
                 }
             });
-
-            //fill every location with it's starting characters
-            //and it's characters inventories with starting items
-            Locations!.ForEach(location =>
-            {
-                PopulateLocation(location);
-                location.Characters!.ForEach(character => FillInventory(character));
-            });
-
-            //load stacking effects
-            LoadStackingEffects();
         }
 
+        public void PopulateLocationsAndCharacters()
+        {
+            AddSpellsToCharacters();
+
+            Character character = new Character();
+            int i;
+
+            Locations!.ForEach(location =>
+            {
+
+                foreach (KeyValuePair<string, int> kvp in location.CharsToAdd!)
+                {
+                    character = Characters!.Find(character => character.Name!.ToLower() == kvp.Key.ToLower())!;
+
+                    if (character.GetType() == typeof(Monster))
+                    {
+                        for (i = 0; i < kvp.Value; i++)
+                        {
+                            location.AddCharacter(new Monster((character as Monster)!));
+                        }
+                    }
+                    else if (character.GetType() == typeof(Trader))
+                    {
+                        for (i = 0; i < kvp.Value; i++)
+                        {
+                            location.AddCharacter(new Trader((character as Trader)!));
+                        }
+                    }
+                    else if (character.GetType() == typeof(Hero))
+                    {
+                        for (i = 0; i < kvp.Value; i++)
+                        {
+                            location.AddCharacter(new Hero((character as Hero)!));
+                        }
+                    }
+                }
+
+                //fill character's inventories
+                location.Characters!.ForEach(character => FillInventory(character));
+
+            });
+        }
+
+        
+
+
+
+
+
+
+        //==========================================HELPER METHODS========================================
+
         //helper method for pushing loaded characters objects into Characters list
-        private void PopulateCharactersList(Character[] charactersArray)
+        public void AddCharactersToList(Character[] charactersArray)
         {
             //Location startingLocation;
 
@@ -194,72 +241,8 @@ namespace Runedal.GameData
             }
         }
 
-        //method filling npc combat-characters with spells
-        private void AddSpellsToCharacters()
-        {
-            int i;
-            int spellIndex;
-
-            Characters!.ForEach(character =>
-            {
-                if (character.GetType() == typeof(Monster) || character.GetType() == typeof(Hero))
-                {
-                    CombatCharacter combatNpc = (CombatCharacter)character;
-
-                    if (combatNpc.StartingSpells.Length > 0)
-                    {
-                        for (i = 0; i < combatNpc.StartingSpells.Length; i++)
-                        {
-                            spellIndex = Spells!.FindIndex(sp => sp.Name!.ToLower() == combatNpc.StartingSpells[i].ToLower());
-
-                            if (spellIndex != -1)
-                            {
-                                combatNpc.RememberedSpells.Add(new Spell(Spells![spellIndex]));
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        private void PopulateLocation(Location location)
-        {
-            AddSpellsToCharacters();
-
-            Character character = new Character();
-            int i;
-
-            foreach (KeyValuePair<string, int> kvp in location.CharsToAdd!)
-            {
-                character = Characters!.Find(character => character.Name!.ToLower() == kvp.Key.ToLower())!;
-
-                if (character.GetType() == typeof(Monster))
-                {
-                    for (i = 0; i < kvp.Value; i++)
-                    {
-                        location.AddCharacter(new Monster((character as Monster)!));
-                    }
-                }
-                else if (character.GetType() == typeof(Trader))
-                {
-                    for (i = 0; i < kvp.Value; i++)
-                    {
-                        location.AddCharacter(new Trader((character as Trader)!));
-                    }
-                }
-                else if (character.GetType() == typeof(Hero))
-                {
-                    for (i = 0; i < kvp.Value; i++)
-                    {
-                        location.AddCharacter(new Hero((character as Hero)!));
-                    }
-                }
-            }
-
-        }
-
         //helper method for pushing loaded items objects into Items list
-        private void PopulateItems(Item[] itemsArray)
+        private void AddItemsToList(Item[] itemsArray)
         {
             foreach (var item in itemsArray)
             {
@@ -280,7 +263,7 @@ namespace Runedal.GameData
                 }
 
                 //if it's armor, add modifiers depending on it's weight
-                if (item.GetType() == typeof(Armor)) 
+                if (item.GetType() == typeof(Armor))
                 {
                     Armor armor = (Armor)item;
 
@@ -335,16 +318,44 @@ namespace Runedal.GameData
             }
         }
 
+        //method filling npc combat-characters with spells
+        private void AddSpellsToCharacters()
+        {
+            int i;
+            int spellIndex;
+
+            Characters!.ForEach(character =>
+            {
+                if (character.GetType() == typeof(Monster) || character.GetType() == typeof(Hero))
+                {
+                    CombatCharacter combatNpc = (CombatCharacter)character;
+
+                    if (combatNpc.StartingSpells.Length > 0)
+                    {
+                        for (i = 0; i < combatNpc.StartingSpells.Length; i++)
+                        {
+                            spellIndex = Spells!.FindIndex(sp => sp.Name!.ToLower() == combatNpc.StartingSpells[i].ToLower());
+
+                            if (spellIndex != -1)
+                            {
+                                combatNpc.RememberedSpells.Add(new Spell(Spells![spellIndex]));
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         //method for filling trader inventories with proper items
         private void FillInventory(Character character)
         {
             Item itemToAdd;
 
-            foreach(KeyValuePair<string, int> kvp in character.Items!)
+            foreach (KeyValuePair<string, int> kvp in character.Items!)
             {
                 itemToAdd = Items!.Find(item => item.Name!.ToLower() == kvp.Key.ToLower())!;
                 character.AddItem(itemToAdd, kvp.Value);
             }
-        } 
+        }
     }
 }

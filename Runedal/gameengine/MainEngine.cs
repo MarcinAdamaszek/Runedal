@@ -36,20 +36,17 @@ namespace Runedal.GameEngine
             this.Actions = new List<CharAction>();
             this.TeleportLocation = new Location();
             this.LastoutputBoxContent = new List<TextRange>();
+            this.IsInGame = false;
+            this.IsPlayerChoosingAName = false;
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
             GameClock.Interval = TimeSpan.FromMilliseconds(100);
             GameClock.Tick += GameClockTick!;
 
-            Data.LoadLocations();
-            Data.LoadCharacters();
-            Data.LoadItems();
-            Data.LoadSpells();
-            Data.InitializeEverything();
-            PrintMap();
+            PrintWelcomeScreen();
 
-            GameClock.Start();
+            StartNewGame("Czesiek");
 
 
             //Data.Locations!.Find(loc => loc.Name == "Karczma").Characters.ForEach(ch =>
@@ -103,6 +100,49 @@ namespace Runedal.GameEngine
         public Location TeleportLocation { get; set; }
         public List<TextRange> LastoutputBoxContent { get; set; }
         public bool IsPaused { get; set; }
+        public bool IsInGame { get; set; }
+        public bool IsPlayerChoosingAName { get; set; }
+
+        //method launching the welcome screen of the game
+        private void PrintWelcomeScreen()
+        {
+            const int runedalWidth = 54;
+            int i, j;
+            string[] runedalAscii = new string[18];
+
+            for (i = 0; i < runedalAscii.Length; i++)
+            {
+                runedalAscii[i] = String.Empty;
+            }
+
+            runedalAscii[5] = "  _____  _    _ _   _ ______ _____          _   ";
+            runedalAscii[6] = " |  __ \\| |  | | \\ | |  ____|  __ \\   /\\   | | ";
+            runedalAscii[7] = " | |__) | |  | |  \\| | |__  | |  | | /  \\  | |  ";
+            runedalAscii[8] = " |  _  /| |  | | . ` |  __| | |  | |/ /\\ \\ | |  ";
+            runedalAscii[9] = " | | \\ \\| |__| | |\\  | |____| |__| / ____ \\| |_";
+            runedalAscii[10] = " |_|  \\_\\\\____/|_| \\_|______|_____/_/    \\_\\______|";
+            runedalAscii[11] = "                                                           ";
+
+
+
+            for (j = 0; j < runedalAscii.Length; j++)
+            {
+                i = runedalAscii[j].Length;
+                while (i < runedalWidth)
+                {
+                    runedalAscii[j] += "*";
+                    i++;
+                }
+
+                PrintMessage(runedalAscii[j]);
+            }
+        }
+
+        //method printing menu of the game
+        private void PrintMainMenu()
+        {
+
+        }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -150,6 +190,39 @@ namespace Runedal.GameEngine
                 argument1 = commandParts[1];
                 argument2 = commandParts[2];
             }
+
+            //handle name choosing
+            if (IsPlayerChoosingAName)
+            {
+                if (command == "back")
+                {
+                    IsPlayerChoosingAName = false;
+                    PrintMainMenu();
+                }
+                else
+                {
+                    IsPlayerChoosingAName = false;
+                    StartNewGame(command);
+                }
+
+                return;
+            }
+
+            //handle game menu before starting the game
+            if (!IsInGame)
+            {
+                switch (command)
+                {
+                    case "new":
+                        PrintMessage("Podaj imię dla swojej postaci (wielkość liter bez znaczenia): ");
+                        IsPlayerChoosingAName = true;
+                        break;
+
+                }
+
+                return;
+            }
+
 
             //prevent doing anything ingame when game is paused
             //and handle unpausing
@@ -265,6 +338,51 @@ namespace Runedal.GameEngine
                     return;
             }
         }
+
+        //method starting a new game
+        public void StartNewGame(string playerName)
+        {
+            IsInGame = true;
+
+            //initialize all data collections
+            Data.LoadLocations();
+            Data.LoadCharacters();
+            Data.LoadItems();
+            Data.LoadSpells();
+
+            //load player into game
+            Data.LoadPlayer(playerName);
+
+            //method filling hp/mp pools of all combat characters
+            //with their maxhp/mp values
+            Data.InitializeHpMpValues();
+
+            //load all characters into locations and items/spells into characters
+            Data.PopulateLocationsAndCharacters();
+            Data.LoadStackingEffects();
+
+            //connect hp/mp/action bars to values of player object
+            Window.InitializePlayerDataContext(Data.Player!);
+
+            GameClock.Start();
+
+            PrintMap();
+            LocationInfo(Data.Player!.CurrentLocation!);
+        }
+
+
+
+
+
+
+
+
+        //==============================================MENU HANDLERS=============================================
+
+
+
+
+
 
 
 

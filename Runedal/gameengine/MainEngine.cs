@@ -1710,7 +1710,7 @@ namespace Runedal.GameEngine
             {
                 if (target == Data.Player!)
                 {
-                    PrintMessage("Odpierasz czar " + spell.Name + "!", MessageType.Action);
+                    PrintMessage("Odpierasz czar " + spell.Name + "!");
                 }
                 else if (caster == Data.Player)
                 {
@@ -1757,7 +1757,7 @@ namespace Runedal.GameEngine
             }
             else if (attacked == Data.Player)
             {
-                PrintMessage("Zostałeś zaatakowany przez: " + attacker.Name + "!", MessageType.Action);
+                PrintMessage("Zostałeś zaatakowany przez: " + attacker.Name + "!");
             }
             else if (attacked.CurrentLocation! == Data.Player!.CurrentLocation)
             {

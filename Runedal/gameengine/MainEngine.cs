@@ -22,6 +22,7 @@ using System.Diagnostics.Contracts;
 using System.Windows.Automation.Provider;
 using System.Windows.Interop;
 using System.Windows.Controls;
+using System.Reflection.Emit;
 
 namespace Runedal.GameEngine
 {
@@ -47,6 +48,7 @@ namespace Runedal.GameEngine
             PrintWelcomeScreen();
 
             StartNewGame("Czesiek");
+            GivePlayerExperience(100);
 
 
             //Data.Locations!.Find(loc => loc.Name == "Karczma").Characters.ForEach(ch =>
@@ -1395,7 +1397,8 @@ namespace Runedal.GameEngine
             //handle lack of argument
             if (attribute == string.Empty)
             {
-                PrintMessage("Musisz podać nazwę atrybutu", MessageType.SystemFeedback);
+                PrintMessage("Musisz podać nazwę atrybutu " +
+                    "(strength, agility, intelligence (lub str, agi, int))", MessageType.SystemFeedback);
                 return;
             }
 
@@ -2019,9 +2022,35 @@ namespace Runedal.GameEngine
                 }
                 effectsToRemove.ForEach(eff => RemoveEffect(eff));
 
+                //give player death penalty
+                Data.Player!.Experience = 0;
+
+                //delevel player
+                if (Data.Player!.Level > 1)
+                {
+                    Data.Player!.Level -= 1;
+
+                    Data.Player!.Strength--;
+                    Data.Player.Agility--;
+                    Data.Player.Intelligence--;
+
+                    if (Data.Player!.AttributePoints >= 4)
+                    {
+                        Data.Player!.AttributePoints = 0;
+                    }
+                    else
+                    {
+                        Data.Player!.AttributePoints -= 4;
+                    }
+
+                    Data.Player.NextLvlExpCap = Convert.ToUInt64(Math.Pow(Data.Player.Level * 5, 1.5));
+
+                }
+
                 //respawn player
                 PrintMessage("Odradzasz się..", MessageType.Action);
                 AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma")!, Data.Player!);
+                
                 Data.Player!.Hp = Data.Player.MaxHp * 0.4;
                 Data.Player!.Mp = 0;
             }
@@ -2173,7 +2202,7 @@ namespace Runedal.GameEngine
         //method adding certain amount to player's experience pool
         private void GivePlayerExperience(int lvl)
         {
-            ulong experience = Convert.ToUInt64(lvl * 100);
+            ulong experience = Convert.ToUInt64(lvl * 15);
             int previousLevel = Data.Player!.Level;
 
             PrintMessage("Zdobywasz " + experience + " doświadczenia", MessageType.Action);
@@ -3315,7 +3344,7 @@ namespace Runedal.GameEngine
             }
             else
             {
-                nextLevelCapString = Convert.ToString(player.Experience);
+                nextLevelCapString = Convert.ToString(player.NextLvlExpCap);
             }
 
             //format left side of the table

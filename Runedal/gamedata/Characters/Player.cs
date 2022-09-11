@@ -54,7 +54,7 @@ namespace Runedal.GameData.Characters
 
             Level = 1;
             Experience = 0;
-            NextLvlExpCap = 500;
+            NextLvlExpCap = 50;
         }
         public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold)
             : base(descriptive, combatStats, responses, gold)
@@ -64,7 +64,7 @@ namespace Runedal.GameData.Characters
             Agility = attributeStats[2];
             Level = 1;
             Experience = 0;
-            NextLvlExpCap = 500;
+            NextLvlExpCap = 50;
 
             //initialize items worn with placeholders
             Torso = new Armor(Armor.ArmorType.Torso, "placeholder");
@@ -274,7 +274,7 @@ namespace Runedal.GameData.Characters
         public void LevelUp()
         {
             Level++;
-            NextLvlExpCap = Convert.ToUInt64(Level * 500);
+            NextLvlExpCap = Convert.ToUInt64(Math.Pow(Level * 5, 1.5));
             Strength += 1;
             Agility += 1;
             Intelligence += 1;

@@ -1373,13 +1373,13 @@ namespace Runedal.GameEngine
             }
 
             //check if player has enough mana to craft a spell
-            if (Data.Player!.Mp < 100)
+            if (Data.Player!.Mp < 200)
             {
-                PrintMessage("Nie masz wystarczającej ilości many aby to zrobić");
+                PrintMessage("Nie masz wystarczającej ilości many aby to zrobić (potrzeba 200)");
                 return;
             }
 
-            Data.Player.SpendMana(100);
+            Data.Player.SpendMana(200);
 
             //choose proper spell
             craftedSpell = Data.Spells!.Find(spell => spell.Name!.ToLower() == spellName)!;

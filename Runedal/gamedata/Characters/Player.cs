@@ -222,7 +222,7 @@ namespace Runedal.GameData.Characters
                 {
                     _Intelligence = value;
                     EffectiveMaxMp = GetEffectiveMaxMp();
-                    MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(Intelligence) / 3);
+                    MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(GetEffectiveIntelligence()) / 3);
                     if (MaxSpellsRemembered < 1)
                     {
                         MaxSpellsRemembered = 1;
@@ -458,6 +458,7 @@ namespace Runedal.GameData.Characters
             else if (mod.Type == Modifier.ModType.MaxMp || mod.Type == Modifier.ModType.Intelligence)
             {
                 EffectiveMaxMp = GetEffectiveMaxMp();
+                MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(GetEffectiveIntelligence()) / 3);
             }
         }
         public override void RemoveModifier(Modifier mod)
@@ -470,6 +471,13 @@ namespace Runedal.GameData.Characters
             else if (mod.Type == Modifier.ModType.MaxMp || mod.Type == Modifier.ModType.Intelligence)
             {
                 EffectiveMaxMp = GetEffectiveMaxMp();
+                MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(GetEffectiveIntelligence()) / 3);
+
+                //prevent player from keeping extra spells after max spells remembered drop
+                if (RememberedSpells.Count > MaxSpellsRemembered)
+                {
+                    RememberedSpells.Remove(RememberedSpells.Last());
+                }
             }
         }
 

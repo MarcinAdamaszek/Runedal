@@ -171,6 +171,7 @@ namespace Runedal.GameEngine
             switch (command)
             {
                 case "go":
+                case "g":
                     GoHandler(argument1);
                     break;
                 case "attack":
@@ -182,6 +183,7 @@ namespace Runedal.GameEngine
                     FleeHandler(argument1);
                     break;
                 case "cast":
+                case "c":
                     CastHandler(argument1, argument2);
                     break;
                 case "trade":
@@ -201,9 +203,11 @@ namespace Runedal.GameEngine
                     LookHandler(argument1);
                     break;
                 case "use":
+                case "u":
                     UseHandler(argument1);
                     break;
                 case "wear":
+                case "w":
                     WearHandler(argument1);
                     break;
                 case "takeoff":
@@ -211,6 +215,7 @@ namespace Runedal.GameEngine
                     TakeoffHandler(argument1);
                     break;
                 case "drop":
+                case "d":
                     DropHandler(argument1, argument2);
                     break;
                 case "pickup":
@@ -223,9 +228,11 @@ namespace Runedal.GameEngine
                     InventoryHandler(Data.Player!, false);
                     break;
                 case "stats":
+                case "st":
                     StatsHandler();
                     break;
                 case "spells":
+                case "sp":
                     SpellsHandler();
                     break;
                 case "point":
@@ -235,6 +242,7 @@ namespace Runedal.GameEngine
                     CraftHandler(argument1, argument2);
                     break;
                 case "stop":
+                case "s":
                     StopHandler();
                     break;
                 case "pause":
@@ -253,7 +261,7 @@ namespace Runedal.GameEngine
                     OptionHandler(command);
                     break;
                 default:
-                    PrintMessage("Że co?", MessageType.SystemFeedback);
+                    PrintMessage("Chyba Ci się coś pomyliło..", MessageType.SystemFeedback);
                     return;
             }
         }
@@ -1041,7 +1049,7 @@ namespace Runedal.GameEngine
                     }
                     break;
                 default:
-                    PrintMessage("Nie możesz zdjąć " + slotName + ". Prawidłowe nazwy to: helmet, torso, pants, gloves, shoes", MessageType.SystemFeedback);
+                    PrintMessage("Nie możesz zdjąć \"" + slotName + "\". Prawidłowe nazwy to: helmet, torso, pants, gloves, shoes", MessageType.SystemFeedback);
                     break;
             }
         }

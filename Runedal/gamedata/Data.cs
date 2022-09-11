@@ -102,12 +102,18 @@ namespace Runedal.GameData
         //method loading locations from json file
         public void LoadLocations()
         {
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\locations.json");
-            Location[] locationsArray = JsonSerializer.Deserialize<Location[]>(JsonString, Options)!;
+            string[] locationFilepaths = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Locations\");
 
-            foreach (var loc in locationsArray)
+            foreach (string path in locationFilepaths)
             {
-                Locations!.Add(loc);
+                JsonString = JsonToString(path);
+                Location[] locationsArray = JsonSerializer.Deserialize<Location[]>(JsonString, Options)!;
+
+
+                foreach (var loc in locationsArray)
+                {
+                    Locations!.Add(loc);
+                }
             }
         }
 

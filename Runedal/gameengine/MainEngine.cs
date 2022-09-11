@@ -420,6 +420,12 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            if (direction == string.Empty)
+            {
+                PrintMessage("Musisz podać kierunek w którym chcesz się udać (n, e, s, w, u, d)", MessageType.SystemFeedback);
+                return;
+            }
+
             ResetPlayerState();
 
             switch (direction)
@@ -608,6 +614,13 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            //handle lack of argument
+            if (characterName == string.Empty)
+            {
+                PrintMessage("Musisz podać imię postaci", MessageType.SystemFeedback);
+                return;
+            }
+
             ResetPlayerState();
 
             //check if the character of specified name exists in player's current location
@@ -647,6 +660,13 @@ namespace Runedal.GameEngine
             if (Data.Player!.CurrentState == Player.State.Combat)
             {
                 PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return;
+            }
+
+            //handle lack of argument
+            if (characterName == string.Empty)
+            {
+                PrintMessage("Musisz podać imię postaci", MessageType.SystemFeedback);
                 return;
             }
 
@@ -744,6 +764,13 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            //handle lack of argument
+            if (itemName == string.Empty)
+            {
+                PrintMessage("Musisz podać nazwę przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
+
             Trader trader = (Data.Player!.InteractsWith as Trader)!;
             int itemIndex = -1;
             int itemQuantity = 1;
@@ -824,6 +851,13 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            //handle lack of argument
+            if (itemName == string.Empty)
+            {
+                PrintMessage("Musisz podać nazwę przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
+
             Trader trader = (Data.Player!.InteractsWith as Trader)!;
             int itemIndex = -1;
             int itemQuantity = 1;
@@ -901,7 +935,7 @@ namespace Runedal.GameEngine
             //if 'use' was typed without any argument
             if (itemName == string.Empty)
             {
-                PrintMessage("Co chcesz użyć?", MessageType.SystemFeedback);
+                PrintMessage("Musisz podać nazwę przedmiotu", MessageType.SystemFeedback);
                 return;
             }
 
@@ -941,6 +975,13 @@ namespace Runedal.GameEngine
             int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
             int itemQuantity;
             Item itemToRemove = new Item();
+
+            //handle lack of argument
+            if (itemName == string.Empty)
+            {
+                PrintMessage("Musisz podać nazwę przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
 
             ResetPlayerState();
 
@@ -1018,6 +1059,13 @@ namespace Runedal.GameEngine
             int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == itemName);
             int itemQuantity;
             Item itemToPickup = new Item();
+
+            //handle lack of argument
+            if (itemName == string.Empty)
+            {
+                PrintMessage("Musisz podać nazwę przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
 
             ResetPlayerState();
 
@@ -1099,6 +1147,13 @@ namespace Runedal.GameEngine
         //method handling 'wear' command
         private void WearHandler(string itemName)
         {
+            //handle lack of argument
+            if (itemName == string.Empty)
+            {
+                PrintMessage("Musisz podać nazwę przedmiotu", MessageType.SystemFeedback);
+                return;
+            }
+
             int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
 
             if (itemIndex == -1)
@@ -1128,6 +1183,14 @@ namespace Runedal.GameEngine
         //method for handling 'takeoff' command
         private void TakeoffHandler(string slotName)
         {
+            //handle lack of argument
+            if (slotName == string.Empty)
+            {
+                PrintMessage("Musisz podać typ zakładanego przedmiotu (weapon, helmet, torso, pants, gloves, shoes)",
+                    MessageType.SystemFeedback);
+                return;
+            }
+
             switch (slotName)
             {
                 case "weapon":
@@ -1167,7 +1230,8 @@ namespace Runedal.GameEngine
                     }
                     break;
                 default:
-                    PrintMessage("Nie możesz zdjąć \"" + slotName + "\". Prawidłowe nazwy to: helmet, torso, pants, gloves, shoes", MessageType.SystemFeedback);
+                    PrintMessage("\"" + slotName + "\" Nie jest prawidłowym typem zakładanego przedmiotu. " +
+                        "Prawidłowe typy to: weapon, helmet, torso, pants, gloves, shoes", MessageType.SystemFeedback);
                     break;
             }
         }
@@ -1326,7 +1390,14 @@ namespace Runedal.GameEngine
         private void PointHandler(string attribute)
         {
             Player player = Data.Player!;
-            string attributeWord = string.Empty;
+            string attributeWord;
+
+            //handle lack of argument
+            if (attribute == string.Empty)
+            {
+                PrintMessage("Musisz podać nazwę atrybutu", MessageType.SystemFeedback);
+                return;
+            }
 
             if (player.AttributePoints < 1)
             {
@@ -1368,6 +1439,12 @@ namespace Runedal.GameEngine
             string spellName = string.Empty;
             string[] runeNames = new string[5] { "zjarrit", "akull", "verde", "xitan", "dara" };
             Spell craftedSpell = new Spell();
+
+            if (firstRune == String.Empty)
+            {
+                PrintMessage("Musisz podać nazwę runy", MessageType.SystemFeedback);
+                return;
+            }
 
             //choose spell depending on single rune choice
             if (secondRune == string.Empty)

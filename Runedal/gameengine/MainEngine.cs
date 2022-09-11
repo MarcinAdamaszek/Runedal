@@ -489,17 +489,9 @@ namespace Runedal.GameEngine
             string description = string.Empty;
             entityName = entityName.ToLower();
 
-            ////if player is in combat state
-            //if (Data.Player!.CurrentState == Player.State.Combat)
-            //{
-            //    PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
-            //    return;
-            //}
-
             //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
             {
-                ResetPlayerState();
                 LocationInfo(Data.Player!.CurrentLocation!);
             }
             else
@@ -540,7 +532,6 @@ namespace Runedal.GameEngine
                 index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
                 if (index != -1)
                 {
-                    ResetPlayerState();
                     CharacterInfo(Data.Player!.CurrentLocation!.Characters[index]);
                     return;
                 }

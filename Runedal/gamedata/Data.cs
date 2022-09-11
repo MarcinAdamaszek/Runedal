@@ -177,7 +177,7 @@ namespace Runedal.GameData
             LoadStackingEffects();
         }
 
-        //helper method for pushing loaded characters objects into Characters list and assigning them into their starting location
+        //helper method for pushing loaded characters objects into Characters list
         private void PopulateCharactersList(Character[] charactersArray)
         {
             //Location startingLocation;
@@ -188,8 +188,38 @@ namespace Runedal.GameData
             }
         }
 
+        //method filling npc combat-characters with spells
+        private void AddSpellsToCharacters()
+        {
+            int i;
+            int spellIndex;
+
+            Characters!.ForEach(character =>
+            {
+                if (character.GetType() == typeof(Monster) || character.GetType() == typeof(Hero))
+                {
+                    CombatCharacter combatNpc = (CombatCharacter)character;
+
+                    if (combatNpc.StartingSpells.Length > 0)
+                    {
+                        for (i = 0; i < combatNpc.StartingSpells.Length; i++)
+                        {
+                            spellIndex = Spells!.FindIndex(sp => sp.Name!.ToLower() == combatNpc.StartingSpells[i].ToLower());
+
+                            if (spellIndex != -1)
+                            {
+                                combatNpc.RememberedSpells.Add(new Spell(Spells![spellIndex]));
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         private void PopulateLocation(Location location)
         {
+            AddSpellsToCharacters();
+
             Character character = new Character();
             int i;
 

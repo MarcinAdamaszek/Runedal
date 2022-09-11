@@ -1607,6 +1607,7 @@ namespace Runedal.GameEngine
             double spellDmg;
             double landRate;
             double casterDmgFactor;
+            double casterChanceFactor;
             
             //prevent casting the spell when it's cost is higher than caster's actual mana value
             if (caster.Mp < spell.ManaCost)
@@ -1623,9 +1624,22 @@ namespace Runedal.GameEngine
             {
                 landRate = 1 / (Math.Sqrt(target.GetEffectiveMagicResistance() * 0.01));
 
-                //if caster if a player, include intelligence multiplier
-                landRate += (caster as Player)!.GetEffectiveIntelligence() * 0.002;
+                //calculate spell damage, using slightly different formulas
+                //for player and other combat characters (intelligence factor
+                //for player, and level factor for other characters)
+                if (caster == Data.Player!)
+                {
+                    casterChanceFactor = (caster as Player)!.GetEffectiveIntelligence();
+                }
+                else
+                {
+                    casterChanceFactor = caster.Level * 1.5;
+                }
+
+                landRate += casterChanceFactor * 0.002;
+
             }
+
             hasSpellLanded = TryOutChance(landRate);
 
             //calculate spell damage, using slightly different formulas
@@ -1637,7 +1651,7 @@ namespace Runedal.GameEngine
             }
             else
             {
-                casterDmgFactor = caster.Level;
+                casterDmgFactor = caster.Level * 1.5;
             }
 
             spellDmg = (spell.Power * Math.Sqrt(casterDmgFactor)) /
@@ -3275,17 +3289,6 @@ namespace Runedal.GameEngine
         //==============================================HELPER METHODS=============================================
 
         //method determining if location with specified coordinates exists
-        private bool IsThereALocation(int X, int Y)
-        {
-            if (Data.Locations!.Exists(loc => loc.X == X && loc.Y == Y))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         private bool IsThereALocation(int X, int Y, int Z)
         {
             if (Data.Locations!.Exists(loc => loc.X == X && loc.Y == Y && loc.Z == Z))
@@ -3841,6 +3844,7 @@ namespace Runedal.GameEngine
         //method handling attacks for every attack instance
         private void AttacksTick()
         {
+            bool isSpellCasted = false;
             bool isAttackerPlayer;
             bool isReceiverPlayer;
             bool isDmgLethal = false;
@@ -3849,6 +3853,7 @@ namespace Runedal.GameEngine
             double rawDmg;
             double dealtDmg;
             int dmgAsInt;
+            int randomSpellNumber;
             
             CombatCharacter attacker = new CombatCharacter();
             CombatCharacter receiver = new CombatCharacter();
@@ -3867,6 +3872,20 @@ namespace Runedal.GameEngine
 
                 isAttackerPlayer = attacker.GetType() == typeof(Player);
                 isReceiverPlayer = receiver.GetType() == typeof(Player);
+
+                //cast a spell once a while if it's attacking the player
+                if (isReceiverPlayer && attacker.RememberedSpells.Count > 0)
+                {
+                    isSpellCasted = TryOutChance(0.25);
+
+                    if (isSpellCasted)
+                    {
+                        randomSpellNumber = Rand.Next(0, attacker.RememberedSpells.Count);
+                        CastSpell(attacker, receiver, attacker.RememberedSpells[randomSpellNumber]);
+                        attacker.ActionCounter += 40;
+                        return;
+                    }
+                }
 
                 attacker.PerformAttack();
 

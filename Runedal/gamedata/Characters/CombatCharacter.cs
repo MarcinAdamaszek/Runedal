@@ -75,8 +75,9 @@ namespace Runedal.GameData.Characters
             RememberedSpells = new List<Spell>();
             InteractsWith = new Character("placeholder");
 
-            //create deep copy of modifiers collection
+            //create deep copies of modifiers and remembered spells collection
             Modifiers = com.Modifiers!.ConvertAll(mod => new Modifier(mod));
+            RememberedSpells = com.RememberedSpells!.ConvertAll(spell => new Spell(spell));
 
             Level = com.Level;
             MaxHp = com.MaxHp;
@@ -174,8 +175,7 @@ namespace Runedal.GameData.Characters
         //spells remembered by character
         public List<Spell> RememberedSpells { get; set; }
         public int MaxSpellsRemembered { get; set; }
-
-
+        public string[] StartingSpells { get; set; }
         public double Heal(double healAmount)
         {
             double hpAfterHeal = Hp + healAmount;

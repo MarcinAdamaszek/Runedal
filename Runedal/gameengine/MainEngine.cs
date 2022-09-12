@@ -37,7 +37,7 @@ namespace Runedal.GameEngine
             this.Actions = new List<CharAction>();
             this.TeleportLocation = new Location();
             this.LastoutputBoxContent = new List<TextRange>();
-            this.IsInGame = false;
+            this.IsInMenu = true;
             this.IsPlayerChoosingAName = false;
 
             //set game clock for game time
@@ -45,10 +45,11 @@ namespace Runedal.GameEngine
             GameClock.Interval = TimeSpan.FromMilliseconds(100);
             GameClock.Tick += GameClockTick!;
 
+            LoadGameObjects();
             PrintWelcomeScreen();
 
-            StartNewGame("Czesiek");
-            GivePlayerExperience(100);
+            //StartNewGame("Czesiek");
+            //GivePlayerExperience(100);
 
 
             //Data.Locations!.Find(loc => loc.Name == "Karczma").Characters.ForEach(ch =>
@@ -102,49 +103,8 @@ namespace Runedal.GameEngine
         public Location TeleportLocation { get; set; }
         public List<TextRange> LastoutputBoxContent { get; set; }
         public bool IsPaused { get; set; }
-        public bool IsInGame { get; set; }
+        public bool IsInMenu { get; set; }
         public bool IsPlayerChoosingAName { get; set; }
-
-        //method launching the welcome screen of the game
-        private void PrintWelcomeScreen()
-        {
-            const int runedalWidth = 54;
-            int i, j;
-            string[] runedalAscii = new string[18];
-
-            for (i = 0; i < runedalAscii.Length; i++)
-            {
-                runedalAscii[i] = String.Empty;
-            }
-
-            runedalAscii[5] = "  _____  _    _ _   _ ______ _____          _   ";
-            runedalAscii[6] = " |  __ \\| |  | | \\ | |  ____|  __ \\   /\\   | | ";
-            runedalAscii[7] = " | |__) | |  | |  \\| | |__  | |  | | /  \\  | |  ";
-            runedalAscii[8] = " |  _  /| |  | | . ` |  __| | |  | |/ /\\ \\ | |  ";
-            runedalAscii[9] = " | | \\ \\| |__| | |\\  | |____| |__| / ____ \\| |_";
-            runedalAscii[10] = " |_|  \\_\\\\____/|_| \\_|______|_____/_/    \\_\\______|";
-            runedalAscii[11] = "                                                           ";
-
-
-
-            for (j = 0; j < runedalAscii.Length; j++)
-            {
-                i = runedalAscii[j].Length;
-                while (i < runedalWidth)
-                {
-                    runedalAscii[j] += "*";
-                    i++;
-                }
-
-                PrintMessage(runedalAscii[j]);
-            }
-        }
-
-        //method printing menu of the game
-        private void PrintMainMenu()
-        {
-
-        }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -165,9 +125,6 @@ namespace Runedal.GameEngine
             userCommand = Regex.Replace(userCommand, @"^\s+", "");
             userCommand = Regex.Replace(userCommand, @"\s+", " ");
             userCommand = Regex.Replace(userCommand, @"\s+$", "");
-
-            //print userCommand in outputBox for user to see
-            PrintMessage(userCommand, MessageType.UserCommand);
 
             //format to lowercase
             userCommand = userCommand.ToLower();
@@ -193,38 +150,55 @@ namespace Runedal.GameEngine
                 argument2 = commandParts[2];
             }
 
+            //handle game menu before starting the game
+            if (IsInMenu)
+            {
+                switch (command)
+                {
+                    case "1":
+                        FirstOptionHandler();
+                        IsInMenu = false;
+                        break;
+                    case "2":
+
+                        IsInMenu = false;
+                        break;
+                    case "3":
+
+                        IsInMenu = false;
+                        break;
+                    case "4":
+
+                        IsInMenu = false;
+                        break;
+                    case "5":
+
+                        IsInMenu = false;
+                        break;
+                }
+
+                return;
+            }
+
+            //print userCommand in outputBox for user to see
+            PrintMessage(userCommand, MessageType.UserCommand);
+
             //handle name choosing
             if (IsPlayerChoosingAName)
             {
-                if (command == "back")
+                if (command == "b")
                 {
+                    IsInMenu = true;
                     IsPlayerChoosingAName = false;
                     PrintMainMenu();
                 }
                 else
                 {
-                    IsPlayerChoosingAName = false;
-                    StartNewGame(command);
+                    VerifyPlayerName(command, argument1);
                 }
 
                 return;
             }
-
-            //handle game menu before starting the game
-            if (!IsInGame)
-            {
-                switch (command)
-                {
-                    case "new":
-                        PrintMessage("Podaj imię dla swojej postaci (wielkość liter bez znaczenia): ");
-                        IsPlayerChoosingAName = true;
-                        break;
-
-                }
-
-                return;
-            }
-
 
             //prevent doing anything ingame when game is paused
             //and handle unpausing
@@ -341,16 +315,108 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method starting a new game
-        public void StartNewGame(string playerName)
+        //method launching the welcome screen of the game
+        private void PrintWelcomeScreen()
         {
-            IsInGame = true;
+            const int runedalWidth = 54;
+            int i, j;
+            string[] runedalAscii = new string[18];
 
+            for (i = 0; i < runedalAscii.Length; i++)
+            {
+                runedalAscii[i] = String.Empty;
+            }
+
+            runedalAscii[5] = "  _____  _    _ _   _ ______ _____          _      ";
+            runedalAscii[6] = " |  __ \\| |  | | \\ | |  ____|  __ \\   /\\   | |     ";
+            runedalAscii[7] = " | |__) | |  | |  \\| | |__  | |  | | /  \\  | |     ";
+            runedalAscii[8] = " |  _  /| |  | | . ` |  __| | |  | |/ /\\ \\ | |     ";
+            runedalAscii[9] = " | | \\ \\| |__| | |\\  | |____| |__| / ____ \\| |_    ";
+            runedalAscii[10] = " |_|  \\_\\\\____/|_| \\_|______|_____/_/    \\_\\______|";
+            runedalAscii[11] = "                                                   ";
+
+
+
+            for (j = 0; j < runedalAscii.Length; j++)
+            {
+                i = runedalAscii[j].Length;
+                while (i < runedalWidth)
+                {
+                    runedalAscii[j] += "*";
+                    i++;
+                }
+
+                PrintMessage(runedalAscii[j], MessageType.SystemFeedback);
+            }
+
+            PrintMessage("\n*************** WITAJ W GRZE RUNEDAL! *****************\n", MessageType.Gain);
+            PrintMessage("        Tekstowym rpg, w którym odkrywasz świat,");
+            PrintMessage("               walczysz i rozwijasz swoją ");
+            PrintMessage("                postać w unikalny sposób! \n");
+            PrintMessage("               (Naciśnij dowolny klawisz)");
+        }
+
+        //method loading all objects into list collections in Data.cs
+        private void LoadGameObjects()
+        {
             //initialize all data collections
             Data.LoadLocations();
             Data.LoadCharacters();
             Data.LoadItems();
             Data.LoadSpells();
+        }
+
+        //method printing menu of the game
+        public void PrintMainMenu()
+        {
+            ClearOutputBox();
+
+            PrintMessage("********************** MENU GŁÓWNE ***********************\n", MessageType.Gain);
+            PrintMessage("                  Aby wybrać opcję menu,");
+            PrintMessage("           wpisz jedną z cyfr (1, 2, 3, 4 lub 5)");
+            PrintMessage("                     i naciśnij enter.\n");
+            PrintMessage("                      1. NOWA GRA", MessageType.Loss);
+            PrintMessage("                      2. WCZYTAJ GRĘ", MessageType.Loss);
+            PrintMessage("                      3. JAK GRAĆ?", MessageType.Loss);
+            PrintMessage("                      4. KOMENDY", MessageType.Loss);
+            PrintMessage("                      5. WYJDŹ Z GRY", MessageType.Loss);
+        }
+
+        //method veryfing player's name
+        public void VerifyPlayerName(string playerName, string secondArgument)
+        {
+            var regex = @"^[\w']{3,40}$";
+            bool isMatch = Regex.IsMatch(playerName, regex);
+
+            if (isMatch && secondArgument == string.Empty)
+            {
+                StartNewGame(playerName);
+                IsPlayerChoosingAName = false;
+            }
+            else
+            {
+                ClearOutputBox();
+
+                PrintMessage("********************** NOWA GRA ***********************\n", MessageType.Gain);
+                PrintMessage("               Podałeś niepoprawne imię!\n", MessageType.ReceiveDmg);
+                PrintMessage("         Imię musi zawierać od 3 do 40 znaków,");
+                PrintMessage("         oraz składać się tylko z liter, cyfr,");
+                PrintMessage("               lub znaków podkreślnika(_)");
+                PrintMessage("                     i  apostrofu(')\n");
+
+                PrintMessage("             Wpisz imię dla swojej postaci");
+                PrintMessage("      (lub wpisz \"b\" aby powrócić do menu głównego)");
+                PrintMessage("                    i naciśnij enter\n");
+            }
+
+            //FirstOptionHandler();
+            return;
+        }
+
+        //method starting a new game
+        public void StartNewGame(string playerName)
+        {
+            
 
             //load player into game
             Data.LoadPlayer(playerName);
@@ -368,11 +434,19 @@ namespace Runedal.GameEngine
 
             GameClock.Start();
 
+            ClearOutputBox();
+            PrintMessage("************* NOWA GRA ROZPOCZĘTA! *************\n", MessageType.DealDmg);
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
         }
 
-
+        //method clearing the outputBox
+        private void ClearOutputBox()
+        {
+            Window.outputBox.SelectAll();
+            Window.outputBox.Selection.Text = "";
+            Window.outputBox.Document.Blocks.Add(new Paragraph());
+        }
 
 
 
@@ -381,7 +455,21 @@ namespace Runedal.GameEngine
 
         //==============================================MENU HANDLERS=============================================
 
-
+        //chosing a name for character ()
+        private void FirstOptionHandler()
+        {
+            ClearOutputBox();
+            PrintMessage("********************** NOWA GRA ***********************\n", MessageType.Gain);
+            PrintMessage("              Wpisz imię dla swojej postaci");
+            PrintMessage("      (lub wpisz \"b\" aby powrócić do menu głównego)");
+            PrintMessage("                   i naciśnij enter\n");
+            PrintMessage("                        Uwaga!", MessageType.Action);
+            PrintMessage("         Imię musi zawierać od 3 do 40 znaków,");
+            PrintMessage("         oraz składać się tylko z liter, cyfr,");
+            PrintMessage("              lub znaku podkreślnika(_)");
+            PrintMessage("                   lub  apostrofu(')");
+            IsPlayerChoosingAName = true;
+        }
 
 
 
@@ -1056,7 +1144,27 @@ namespace Runedal.GameEngine
             //handle lack of argument
             if (itemName == string.Empty)
             {
-                PrintMessage("Musisz podać nazwę przedmiotu", MessageType.SystemFeedback);
+                List<Item> itemsToPickup = new List<Item>();
+
+                Data.Player!.CurrentLocation.Items.ForEach(item =>
+                {
+                    itemsToPickup.Add(item);
+                });
+
+                if (itemsToPickup.Count > 0)
+                {
+                    itemsToPickup.ForEach(item => 
+                    {
+                        PrintMessage("Podnosisz " + item.Quantity + " " + item.Name, MessageType.Action);
+                        AddItemToPlayer(item.Name!, item.Quantity);
+                        Data.Player!.CurrentLocation!.RemoveItem(item.Name!, item.Quantity);
+                    });
+                }
+                else
+                {
+                    PrintMessage("Nie ma tu niczego co można podnieść", MessageType.SystemFeedback);
+                }
+
                 return;
             }
 
@@ -2695,7 +2803,9 @@ namespace Runedal.GameEngine
         private void AddItemToLocation(Location location, string itemName, int quantity)
         {
             Item itemToAdd = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+
             location.AddItem(itemToAdd, quantity);
+
             if (location == Data.Player!.CurrentLocation)
             {
                 PrintMessage("W lokacji pojawia się przedmiot: " + itemToAdd.Name + "(" + quantity + ")");
@@ -2808,19 +2918,19 @@ namespace Runedal.GameEngine
         //method printing character's inventory
         private void InventoryInfo(Character character, bool withPrice = true)
         {
-            string spaceAfterName = string.Empty;
-            string spaceAfterQuantity = string.Empty;
+            string spaceAfterName;
+            string spaceAfterQuantity;
             string spaceAfterPrice = string.Empty;
-            string descriptionTable = string.Empty;
-            string tableRow = string.Empty;
+            string descriptionTable;
+            string tableRow;
             string horizontalBorder = string.Empty;
-            string delimeter = string.Empty;
-            string descriptionRow = string.Empty;
-            int nameColumnSize = 0;
-            int quantityColumnSize = 0;
-            int priceColumnSize = 0;
+            string delimeter;
+            string descriptionRow;
+            int nameColumnSize;
+            int quantityColumnSize;
+            int priceColumnSize;
             int price = 0;
-            int borderSize = 0;
+            int borderSize;
 
             //set delimeter, borderSize and descriptionRow depending on withPrice parameter
             if (withPrice)
@@ -2949,7 +3059,7 @@ namespace Runedal.GameEngine
             if (!withPrice)
             {
                 string[] itemSlots = new string[6];
-                int i, j;
+                int i;
 
                 itemSlots[0] = "|| Broń: " + (character as Player)!.Weapon!.Name!;
                 itemSlots[1] = "|| Hełm: " + (character as Player)!.Helmet!.Name!;
@@ -3143,7 +3253,7 @@ namespace Runedal.GameEngine
         {
             Location center = Data.Player!.CurrentLocation!;
             const string enDash = "\x2500";
-            const string circle = "\x25A1";
+            const string emptySquare = "\x25A1";
             const string player = "\x25A0";
             const string upAndDown = "\x2195";
             const int rangeSize = 12;
@@ -3190,7 +3300,7 @@ namespace Runedal.GameEngine
                             }
                             else
                             {
-                                mapLines[k] += circle;
+                                mapLines[k] += emptySquare;
                             }
                         }
                         
@@ -3210,30 +3320,30 @@ namespace Runedal.GameEngine
                     }
                 }
 
-                if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ))
-                {
-                    //if it's player's current location, sign it with 'player sign'
-                    if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
-                    {
-                        mapLines[k] += player;
-                    }
-                    else
-                    {
+                //if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ))
+                //{
+                //    //if it's player's current location, sign it with 'player sign'
+                //    if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
+                //    {
+                //        mapLines[k] += player;
+                //    }
+                //    else
+                //    {
 
-                        //otherwise, if there is another location in the same Z axis
-                        //directly connected to this one
-                        if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ - 1) ||
-                            IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
-                        {
-                            mapLines[k] += upAndDown;
-                        }
-                        else
-                        {
-                            mapLines[k] += circle;
-                        }
-                    }
+                //        //otherwise, if there is another location in the same Z axis
+                //        //directly connected to this one
+                //        if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ - 1) ||
+                //            IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
+                //        {
+                //            mapLines[k] += upAndDown;
+                //        }
+                //        else
+                //        {
+                //            mapLines[k] += emptySquare;
+                //        }
+                //    }
 
-                }
+                //}
 
 
                 k += 2;
@@ -3274,7 +3384,7 @@ namespace Runedal.GameEngine
             {
                 TextRange tr = new(this.Window.minimapBox.Document.ContentEnd, this.Window.minimapBox.Document.ContentEnd);
                 tr.Text = "\n" + mapLines[i];
-                tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+                tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.White);
                 Window.minimapBox.ScrollToEnd();
             }
         }

@@ -29,13 +29,15 @@ namespace Runedal
         {
             InitializeComponent();
             Engine = new MainEngine(this);
-            Player = Engine.Data.Player!;
+            //Player = Engine.Data.Player!;
             CommandHistory = new List<string>();
             WasDownPressed = false;
             WasUpPressed = false;
+            IsWelcomeScreenOn = true;
             CommandIndex = -1;
+            inputBox.IsReadOnly = true;
 
-            DataContext = Player;
+            //DataContext = Player;
         }
 
         public string Input { get; set; } = string.Empty;
@@ -45,12 +47,22 @@ namespace Runedal
         public int CommandIndex { get; set; }
         public bool WasDownPressed { get; set; }
         public bool WasUpPressed { get; set; }
+        public bool IsWelcomeScreenOn { get; set; }
 
 
         //handling user input on pressing and releasing Enter key
         private void inputBox_KeyUp(object sender, KeyEventArgs e)
-        
         {
+
+            //handle welcome screen
+            if (IsWelcomeScreenOn)
+            {
+                Engine.PrintMainMenu();
+                inputBox.IsReadOnly = false;
+                inputBox.Focus();
+                IsWelcomeScreenOn = false;
+                return;
+            }
 
             if (e.Key == Key.Enter && inputBox.Text != String.Empty)
             {

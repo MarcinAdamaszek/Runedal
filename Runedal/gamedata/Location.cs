@@ -64,9 +64,9 @@ namespace Runedal.GameData
         public int Gold { get; set; }
 
         //methods for adding and removing items
-        public void AddItem(Item item, int quantity)
+        public void AddItem(Item addedItem, int quantity)
         {
-            int itemIndex = Items!.FindIndex(item => item.Name!.ToLower() == item.Name.ToLower());
+            int itemIndex = Items!.FindIndex(item => item.Name!.ToLower() == addedItem.Name!.ToLower());
             Item itemToAdd;
 
             if (itemIndex != -1)
@@ -75,7 +75,7 @@ namespace Runedal.GameData
             }
             else
             {
-                itemToAdd = new Item(item, quantity);
+                itemToAdd = new Item(addedItem, quantity);
                 Items.Add(itemToAdd);
             }
         }

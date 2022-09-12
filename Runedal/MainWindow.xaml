@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Runedal"
         mc:Ignorable="d"
-        Title="Runedal" MinHeight="500" MinWidth="930" ResizeMode="CanResizeWithGrip"  Background="Gray">
-    <Grid FocusManager.FocusedElement="{Binding ElementName=inputBox}">
+        Title="Runedal" MinHeight="500" MinWidth="930" ResizeMode="CanResizeWithGrip"  Background="#FF6F4127">
+    <Grid Name="mainGrid" FocusManager.FocusedElement="{Binding ElementName=inputBox}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="410"/>
@@ -24,9 +24,10 @@
                          Grid.RowSpan="3"
                          Height="425"
                          VerticalAlignment="Top"
-                         Background="Olive"
-                         Foreground="Black"
-                         Margin="10"
+                         Background="DarkGreen"
+                         Foreground="White"
+                         BorderBrush="Black"
+                         Margin="5, 10, 15, 10"
                          FontSize="14"
                          IsReadOnly ="True"
                          Focusable="False"
@@ -46,6 +47,7 @@
                          Grid.Row="0"
                          Background="Black"
                          Foreground="White"
+                         BorderBrush="Black"
                          Margin="10"
                          Padding="0, 0, 0, 5"
                          FontSize="14"
@@ -73,6 +75,7 @@
                      Margin="10, 2"
                      Foreground="#FFC3C3C3"
                      KeyUp="inputBox_KeyUp"
+                     BorderBrush="Black"
                      TextWrapping="Wrap"
                      Padding="4"/>
 
@@ -97,7 +100,7 @@
             </StackPanel>
             
             <!--mp bar-->
-            <ProgressBar Name="mpBar" Value="{Binding MpPercentage}" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" Foreground="#FF1330D2" Background="Black"/>
+            <ProgressBar Name="mpBar" Value="{Binding MpPercentage}" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" Foreground="#FF1330D2" BorderBrush="Black" Background="Black"/>
             <TextBlock Text="MP" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
             <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 2, 10, 0">
                 <TextBlock Name="mpLabel" Text="{Binding Mp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
@@ -106,7 +109,7 @@
             </StackPanel>
             
             <!--action cooldown bar-->
-            <ProgressBar Name="actionBar" Value="{Binding ActionCounter}" Grid.Column="1" Grid.Row="0" Margin="10, 0, 10, 5" Maximum="200" Foreground="Orange" Background="Black"/>
+            <ProgressBar Name="actionBar" Value="{Binding ActionCounter}" Grid.Column="1" Grid.Row="0" Margin="10, 0, 10, 5" Maximum="200" Foreground="Orange" BorderBrush="Black" Background="Black"/>
             <!--<TextBlock Text="AP" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>-->
 
             <!--shadow bar (not yet determined)-->

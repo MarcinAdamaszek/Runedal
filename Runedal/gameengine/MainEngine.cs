@@ -23,6 +23,7 @@ using System.Windows.Automation.Provider;
 using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Reflection.Emit;
+using System.Diagnostics;
 
 namespace Runedal.GameEngine
 {
@@ -45,6 +46,7 @@ namespace Runedal.GameEngine
             GameClock.Interval = TimeSpan.FromMilliseconds(100);
             GameClock.Tick += GameClockTick!;
 
+            
             LoadGameObjects();
             PrintWelcomeScreen();
 
@@ -105,6 +107,7 @@ namespace Runedal.GameEngine
         public bool IsPaused { get; set; }
         public bool IsInMenu { get; set; }
         public bool IsPlayerChoosingAName { get; set; }
+        public bool IsInManual { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -168,7 +171,7 @@ namespace Runedal.GameEngine
                         IsInMenu = false;
                         break;
                     case "4":
-
+                        FourthOptionHandler();
                         IsInMenu = false;
                         break;
                     case "5":
@@ -182,6 +185,13 @@ namespace Runedal.GameEngine
 
             //print userCommand in outputBox for user to see
             PrintMessage(userCommand, MessageType.UserCommand);
+
+            //handle manual screen
+            if (IsInManual)
+            {
+                PrintMainMenu();
+                return;
+            }
 
             //handle name choosing
             if (IsPlayerChoosingAName)
@@ -232,19 +242,22 @@ namespace Runedal.GameEngine
                     FleeHandler(argument1);
                     break;
                 case "cast":
-                case "c":
+                case "ca":
                     CastHandler(argument1, argument2);
                     break;
                 case "trade":
+                case "tr":
                     TradeHandler(argument1);
                     break;
                 case "talk":
+                case "ta":
                     TalkHandler(argument1);
                     break;
                 case "buy":
                     BuyHandler(argument1, argument2);
                     break;
                 case "sell":
+                case "se":
                     SellHandler(argument1, argument2);
                     break;
                 case "look":
@@ -260,7 +273,7 @@ namespace Runedal.GameEngine
                     WearHandler(argument1);
                     break;
                 case "takeoff":
-                case "off":
+                case "of":
                     TakeoffHandler(argument1);
                     break;
                 case "drop":
@@ -268,7 +281,6 @@ namespace Runedal.GameEngine
                     DropHandler(argument1, argument2);
                     break;
                 case "pickup":
-                case "pick":
                 case "p":
                     PickupHandler(argument1, argument2);
                     break;
@@ -285,9 +297,11 @@ namespace Runedal.GameEngine
                     SpellsHandler();
                     break;
                 case "point":
+                case "po":
                     PointHandler(argument1);
                     break;
                 case "craft":
+                case "cr":
                     CraftHandler(argument1, argument2);
                     break;
                 case "stop":
@@ -295,7 +309,11 @@ namespace Runedal.GameEngine
                     StopHandler();
                     break;
                 case "pause":
+                case "pa":
                     PauseHandler();
+                    break;
+                case "help":
+                    HelpHandler(argument1);
                     break;
                 case "1":
                 case "2":
@@ -310,7 +328,7 @@ namespace Runedal.GameEngine
                     OptionHandler(command);
                     break;
                 default:
-                    PrintMessage("Chyba Ci się coś pomyliło..", MessageType.SystemFeedback);
+                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wpisz 'help' aby wyświetlić listę komend", MessageType.SystemFeedback);
                     return;
             }
         }
@@ -350,9 +368,11 @@ namespace Runedal.GameEngine
             }
 
             PrintMessage("\n*************** WITAJ W GRZE RUNEDAL! *****************\n", MessageType.Gain);
+
             PrintMessage("        Tekstowym rpg, w którym odkrywasz świat,");
             PrintMessage("               walczysz i rozwijasz swoją ");
             PrintMessage("                postać w unikalny sposób! \n");
+
             PrintMessage("               (Naciśnij dowolny klawisz)");
         }
 
@@ -372,9 +392,11 @@ namespace Runedal.GameEngine
             ClearOutputBox();
 
             PrintMessage("********************** MENU GŁÓWNE ***********************\n", MessageType.Gain);
+
             PrintMessage("                  Aby wybrać opcję menu,");
             PrintMessage("           wpisz jedną z cyfr (1, 2, 3, 4 lub 5)");
             PrintMessage("                     i naciśnij enter.\n");
+
             PrintMessage("                      1. NOWA GRA", MessageType.Loss);
             PrintMessage("                      2. WCZYTAJ GRĘ", MessageType.Loss);
             PrintMessage("                      3. JAK GRAĆ?", MessageType.Loss);
@@ -398,7 +420,9 @@ namespace Runedal.GameEngine
                 ClearOutputBox();
 
                 PrintMessage("********************** NOWA GRA ***********************\n", MessageType.Gain);
+
                 PrintMessage("               Podałeś niepoprawne imię!\n", MessageType.ReceiveDmg);
+
                 PrintMessage("         Imię musi zawierać od 3 do 40 znaków,");
                 PrintMessage("         oraz składać się tylko z liter, cyfr,");
                 PrintMessage("               lub znaków podkreślnika(_)");
@@ -471,6 +495,13 @@ namespace Runedal.GameEngine
             IsPlayerChoosingAName = true;
         }
 
+        //printing commands manual
+        private void FourthOptionHandler()
+        {
+            ClearOutputBox();
+            PrintManual();
+        }
+
 
 
 
@@ -478,6 +509,15 @@ namespace Runedal.GameEngine
 
 
         //==============================================COMMAND HANDLERS=============================================
+
+        //method handling help command
+        private void HelpHandler(string commandName)
+        {
+            if (commandName == string.Empty)
+            {
+                PrintManual(false);
+            }
+        }
 
         //method handling game pausing
         private void PauseHandler()
@@ -886,10 +926,10 @@ namespace Runedal.GameEngine
             }
             
             //if player set quantity to more than trader has, set it to
-            //all trader has (just buy all)
             if (trader.Inventory[itemIndex].Quantity < itemQuantity)
             {
-                itemQuantity = trader.Inventory[itemIndex].Quantity;
+                PrintMessage(trader.Name! + " nie posiada aż tyle", MessageType.SystemFeedback);
+                return;
             }
 
             //set buying price depending on quantity
@@ -973,10 +1013,10 @@ namespace Runedal.GameEngine
             }
 
             //if player set quantity to more than he has, set it to
-            //all he has (just sell all)
             if (Data.Player!.Inventory[itemIndex].Quantity < itemQuantity)
             {
-                itemQuantity = Data.Player!.Inventory[itemIndex].Quantity;
+                PrintMessage("Próbujesz sprzedać więcej niż posiadasz..", MessageType.SystemFeedback);
+                return;
             }
 
             //set buying price depending on quantity
@@ -1112,7 +1152,8 @@ namespace Runedal.GameEngine
                 //set quantity to equal to what he possesses
                 if (Data.Player!.Gold < itemQuantity)
                 {
-                    itemQuantity = Data.Player!.Gold;
+                    PrintMessage("Próbujesz wyrzucić więcej niż posiadasz..", MessageType.SystemFeedback);
+                    return;
                 }
 
                 PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
@@ -1208,7 +1249,8 @@ namespace Runedal.GameEngine
                 //location, set quantity to the amount of all gold lying on the ground
                 if (Data.Player!.CurrentLocation.Gold < itemQuantity || itemQuantity == 0)
                 {
-                    itemQuantity = Data.Player!.CurrentLocation.Gold;
+                    PrintMessage("Nie ma tu takiej ilości złota..", MessageType.SystemFeedback);
+                    return;
                 }
 
                 //if there is any gold on the ground..
@@ -1227,10 +1269,11 @@ namespace Runedal.GameEngine
             }
 
             //if player wants to pick up more quantity of items than there are in his current
-            //location, set quantity to equal actual item quantity and pick up them all
+            //location
             if (itemToPickup.Quantity < itemQuantity)
             {
-                itemQuantity = itemToPickup.Quantity;
+                PrintMessage("Za dużo..", MessageType.SystemFeedback);
+                return;
             }
 
             //if player typed pickup without quantity argument (ConvertQuantityString method
@@ -3613,6 +3656,207 @@ namespace Runedal.GameEngine
             PrintMessage(specialEffects);
         }
 
+        //method printing commands-manual
+        private void PrintManual(bool isDescriptionPrinted = true, string command = "none")
+        {
+            const int manualSize = 137;
+            string[] manualLines = new string[manualSize];
+            int i;
+            int start;
+
+            if (isDescriptionPrinted)
+            {
+                start = 0;
+                IsInManual = true;
+            }
+            else
+            {
+                start = 19;
+            }
+
+            
+
+            for (i = 0; i < manualSize; i++)
+            {
+                manualLines[i] = string.Empty;
+            }
+
+            i = 0;
+
+            if (command == "none")
+            {
+                manualLines[i++] = "        ************** KOMENDY ****************\n";
+                manualLines[i++] = "       (Wpisz cokolwiek i wciśnij enter aby wyjść)\n";
+                manualLines[i++] = "        Wszystko co robisz w grze, wykonujesz za";
+                manualLines[i++] = "        pomocą wpisywania komend. Do niektórych ";
+                manualLines[i++] = "        komend można dodać jakąś nazwę lub liczbę.";
+                manualLines[i++] = "        Na przykład komenda 'look [nazwa obiektu]'.";
+                manualLines[i++] = "        Jeśli wpiszesz samo 'look' otrzymasz opis";
+                manualLines[i++] = "        miejsca w jakim przebywasz, ale jeśli dodasz";
+                manualLines[i++] = "        nazwę obiektu, np 'look szczur' wyświetli Ci";
+                manualLines[i++] = "        się opis postaci o nazwie szczur. Komenda ";
+                manualLines[i++] = "        'buy [nazwa przedmiotu] [ilość sztuk]' służy";
+                manualLines[i++] = "        do kupowania. Jeśli wpiszesz 'buy piwo 3'";
+                manualLines[i++] = "        kupisz 3 sztuki piwa. Większość komend ma swój";
+                manualLines[i++] = "        skrót np. 'b piwo 3' zadziała tak samo jak";
+                manualLines[i++] = "        'buy piwo 3'.\n";
+                manualLines[i++] = "  >>> WYJDŹ Z GRY";
+                manualLines[i++] = "     * Komenda: 'quit'";
+                manualLines[i++] = "     * Skrót: 'q'";
+                manualLines[i++] = "           Całkowicie wyłącza grę (bez zapisywania stanu gry!!)";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> WYJDŹ DO MENU GŁÓWNEGO";
+                manualLines[i++] = "     * Komenda: 'exit'";
+                manualLines[i++] = "     * Skrót: 'e'";
+                manualLines[i++] = "           Wychodzi do menu głównego (bez zapisywania stanu gry!!)";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ZAPISZ STAN GRY";
+                manualLines[i++] = "     * Komenda: 'save'";
+                manualLines[i++] = "     * Skrót: brak";
+                manualLines[i++] = "           Zapisuje bieżący stan gry";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ZATRZYMAJ GRĘ (PAUZA)";
+                manualLines[i++] = "     * Komenda: 'pause'";
+                manualLines[i++] = "     * Skrót: 'pa'";
+                manualLines[i++] = "           Całkowicie wstrzymuje (lub wznawia gdy jest zatrzymana) grę. Wszelkie akcje w świecie gry zostają" +
+                    " zablokowane do czasu odpauzowania";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> PRZERWIJ AKCJĘ";
+                manualLines[i++] = "     * Komenda: 'stop'";
+                manualLines[i++] = "     * Skrót: 's'";
+                manualLines[i++] = "           Przerywa ostatnio zakolejkowaną akcję, handel, rozmowę lub atak";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> OBEJŻYJ";
+                manualLines[i++] = "     * Komenda: 'look [nazwa obiektu]'";
+                manualLines[i++] = "     * Skrót: 'l'";
+                manualLines[i++] = "           Ogląda obiekt o wybranej nazwie {np. 'look zardzewiały_miecz'}. Aby obejżeć lokację (rozejżeć się), " +
+                    "wpisz samą komendę 'look' bez nazwy obiektu. Możesz też spojrzeć do sąsiedniej lokacji wpisując jeden z kierunków (n, e, s, w, u, d)" +
+                    " zamiast nazwy obiektu {np. 'look n'}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> IDŹ";
+                manualLines[i++] = "     * Komenda: 'go [nazwa kierunku]'";
+                manualLines[i++] = "     * Skrót: 'g'";
+                manualLines[i++] = "           Twoja postać idzie w wybranym kierunku {np. 'go n'} (n - północ, e - wschód, s - południe, w - zachód, u - góra, d - dół)";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ATAKUJ";
+                manualLines[i++] = "     * Komenda: 'attack [nazwa przeciwnika]'";
+                manualLines[i++] = "     * Skrót: 'a'";
+                manualLines[i++] = "           Atakuje wybranego przeciwnika {np. 'attack szczur'}. Jeśli już z kimś walczysz, wystarczy samo 'attack' aby zaatakować" +
+                    " Twojego przeciwnika (lub zaatakować najsłabszego z wielu przeciwników z którymi walczysz jednocześnie)";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> UCIEKNIJ";
+                manualLines[i++] = "     * Komenda: 'flee [nazwa kierunku]'";
+                manualLines[i++] = "     * Skrót: 'f'";
+                manualLines[i++] = "           Twoja postać próbuje ucieczki we wskazanym kierunku {np. 'flee n'}. Możesz użyć jedynie w trakcie walki";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> UŻYJ PRZEDMIOTU";
+                manualLines[i++] = "     * Komenda: 'use [nazwa obiektu]'";
+                manualLines[i++] = "     * Skrót: 'u'";
+                manualLines[i++] = "           Używa wybranego obiektu {np. 'use mikstura_many'}.";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ROZMAWIAJ";
+                manualLines[i++] = "     * Komenda: 'talk [nazwa postaci]'";
+                manualLines[i++] = "     * Skrót: 'ta'";
+                manualLines[i++] = "           Rozpoczyna rozmowę z wybraną postacią {np. 'talk karczmarz'}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> HANDLUJ";
+                manualLines[i++] = "     * Komenda: 'trade [nazwa postaci]'";
+                manualLines[i++] = "     * Skrót: 'tr'";
+                manualLines[i++] = "           Rozpoczyna handel z wybraną postacią {np. 'trade karczmarz'}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> KUP";
+                manualLines[i++] = "     * Komenda: 'buy [nazwa przedmiotu] [ilość]'";
+                manualLines[i++] = "     * Skrót: 'b'";
+                manualLines[i++] = "           Kupuje jedną sztukę wybranego przedmiotu {np. buy piwo}. Możesz dodać ilość sztuk jaką " +
+                    "chcesz kupić {np. 'buy piwo 3'}. Jeśli chcesz kupić maksymalną ilość przedmiotu jaką posiada handlarz - wpisz " +
+                    "'all'  {np. 'buy piwo all' lub 'buy piwo a'}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> SPRZEDAJ";
+                manualLines[i++] = "     * Komenda: 'sell [nazwa przedmiotu] [ilość]'";
+                manualLines[i++] = "     * Skrót: 'se'";
+                manualLines[i++] = "           Sprzedaje jedną sztukę wybranego przedmiotu {np. sell piwo}. Możesz dodać ilość sztuk jaką " +
+                    "chcesz sprzedać {np. 'sell piwo 3'}. Jeśli chcesz sprzedać maksymalną ilość przedmiotu jaką posiadasz, wpisz " +
+                    "'all' {np. 'sell piwo all' lub 'sell piwo a'} (tylko co potem będziesz pił?)}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> PODNIEŚ";
+                manualLines[i++] = "     * Komenda: 'pickup [nazwa przedmiotu] [ilość]'";
+                manualLines[i++] = "     * Skrót: 'p'";
+                manualLines[i++] = "           Podnosi wszystkie przedmioty oraz złoto leżące w lokacji. Możesz dodać nazwę przedmiotu aby podnieść tylko " +
+                    "wybrany przedmiot {np. 'pickup drewniana_pałka'}. Możesz też dodać ilość sztuk {np. 'pickup złoto 10' - podniesie 10 złota}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> WYRZUĆ";
+                manualLines[i++] = "     * Komenda: 'drop [nazwa przedmiotu] [ilość]'";
+                manualLines[i++] = "     * Skrót: 'd'";
+                manualLines[i++] = "           Wyrzuca jeden wybrany przedmiot {np. 'drop drewniana_pałka'}. Możesz dodać ilość sztuk" +
+                    " {np. 'drop piwo 3' (kto to widział piwo wylewać..)}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ZAŁÓŻ PRZEDMIOT";
+                manualLines[i++] = "     * Komenda: 'wear [nazwa przedmiotu]'";
+                manualLines[i++] = "     * Skrót: 'w'";
+                manualLines[i++] = "           Zakłada wybrany przedmiot {np. 'wear skórzana_kurtka'}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ŚCIĄGNIJ PRZEDMIOT";
+                manualLines[i++] = "     * Komenda: 'takeoff [typ przedmiotu]'";
+                manualLines[i++] = "     * Skrót: 'of'";
+                manualLines[i++] = "           Ściąga przedmiot wybranego typu ('weapon' - broń, 'helmet' - hełm, 'torso' - tors, " +
+                    "'pants' - spodnie, 'gloves' - rękawice, 'shoes' - buty) {np. 'takeoff weapon'}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> RZUĆ CZAR";
+                manualLines[i++] = "     * Komenda: 'cast [numer czaru] [cel]'";
+                manualLines[i++] = "     * Skrót: 'ca'";
+                manualLines[i++] = "           Rzuca czar z listy zapamiętanych czarów {np. 'cast 1' - rzuci pierwszy czar na liście}. " +
+                    "Możesz wybrać cel w jaki chcesz rzucić czar {np. cast 1 szkielet_wojownik - rzuci pierwszy czar na liście w szkielet_wojownik}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> UTWÓRZ CZAR";
+                manualLines[i++] = "     * Komenda: 'craft [nazwa runy] [nazwa runy]'";
+                manualLines[i++] = "     * Skrót: 'cr'";
+                manualLines[i++] = "           Tworzy czar z wybranej runy lub kombinacji run {np. 'craft akull verde' - tworzy czar z run " +
+                    "'akull' i 'verde'}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> UŻYJ PUNKTU ATRYBUTU";
+                manualLines[i++] = "     * Komenda: 'point [nazwa atrybutu]'";
+                manualLines[i++] = "     * Skrót: 'po'";
+                manualLines[i++] = "           Zużywa jeden punkt atrybutu i dodaje jeden do wybranego atrybutu ('strength' - siła, " +
+                    "'agility' - zręczność, 'intelligence' - inteligencja) (lub skróty: 'str', 'agi', 'int') {np. 'point str' - dodaje jeden do siły}";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> EKWIPUNEK"; 
+                manualLines[i++] = "     * Komenda: 'inventory'";
+                manualLines[i++] = "     * Skrót: 'i'";
+                manualLines[i++] = "           Pokazuje ekwipunek Twojej postaci";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> STATYSTYKI";
+                manualLines[i++] = "     * Komenda: 'stats'";
+                manualLines[i++] = "     * Skrót: 'st'";
+                manualLines[i++] = "           Pokazuje statystyki Twojej postaci";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ZAKLĘCIA";
+                manualLines[i++] = "     * Komenda: 'spells'";
+                manualLines[i++] = "     * Skrót: 'sp'";
+                manualLines[i++] = "           Pokazuje zapamiętane czary";
+                manualLines[i++] = "";
+            }
+
+            for (i = start; i < manualLines.Length; i++)
+            {
+                if (Regex.IsMatch(manualLines[i], @"^\s+>>>"))
+                {
+                    PrintMessage(manualLines[i], MessageType.EffectOn, false);
+                }
+                else if (Regex.IsMatch(manualLines[i], @"^\s+\*\s"))
+                {
+                    PrintMessage(manualLines[i], MessageType.UserCommand, false);
+                }
+                else if (Regex.IsMatch(manualLines[i], @"^\s+\*{3,20}"))
+                {
+                    PrintMessage(manualLines[i], MessageType.Gain, false);
+                }
+                else 
+                { 
+                PrintMessage(manualLines[i], MessageType.Default, false);
+                }
+            }
+        }
+
 
 
 
@@ -3922,7 +4166,7 @@ namespace Runedal.GameEngine
         }
 
         //method displaying communicates in outputBox of the gui
-        private void PrintMessage(string msg, MessageType type = MessageType.Default)
+        private void PrintMessage(string msg, MessageType type = MessageType.Default, bool shouldScroll = true)
         {
             // Maximum of blocks in the document
             int MaxBlocks = 100;
@@ -3992,54 +4236,10 @@ namespace Runedal.GameEngine
                 Window.outputBox.Document.Blocks.Remove(Window.outputBox.Document.Blocks.FirstBlock);
             }
 
-            Window.outputBox.ScrollToEnd();
-
-
-
-            ////color text of the message before displaying
-            //TextRange tr = new(this.Window.outputBox.Document.ContentEnd, this.Window.outputBox.Document.ContentEnd);
-            //tr.Text = "\n" + msg;
-
-            //switch (type)
-            //{
-            //    case (MessageType.Default):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightGray);
-            //        break;
-            //    case (MessageType.UserCommand):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Aqua);
-            //        break;
-            //    case (MessageType.SystemFeedback):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkSalmon);
-            //        break;
-            //    case (MessageType.Action):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-            //        break;
-            //    case (MessageType.Gain):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Yellow);
-            //        break;
-            //    case (MessageType.Loss):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Goldenrod);
-            //        break;
-            //    case (MessageType.EffectOn):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.MediumSpringGreen);
-            //        break;
-            //    case (MessageType.EffectOff):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.SeaGreen);
-            //        break;
-            //    case (MessageType.Speech):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.DarkKhaki);
-            //        break;
-            //    case (MessageType.DealDmg):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Chartreuse);
-            //        break;
-            //    case (MessageType.ReceiveDmg):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Crimson);
-            //        break;
-            //    case (MessageType.CriticalHit):
-            //        tr.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Magenta);
-            //        break;
-            //}
-
+            if (shouldScroll)
+            {
+                Window.outputBox.ScrollToEnd();
+            }
         }
 
         /// <summary>

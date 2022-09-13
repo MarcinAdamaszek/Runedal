@@ -2304,7 +2304,7 @@ namespace Runedal.GameEngine
                 //attack the attacker
                 receiver.CurrentLocation!.Characters!.ForEach(character =>
                 {
-                    if (character.Name! == receiver.Name!)
+                    if (character.Name! == receiver.Name! && character != receiver)
                     {
 
                         //make sure they aren't already attacking the attacker

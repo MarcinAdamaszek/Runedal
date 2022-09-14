@@ -319,6 +319,9 @@ namespace Runedal.GameEngine
                 case "pa":
                     PauseHandler();
                     break;
+                case "autoattack":
+                    AutoattackHandler();
+                    break;
                 case "help":
                     HelpHandler();
                     break;
@@ -536,7 +539,22 @@ namespace Runedal.GameEngine
 
         //==============================================COMMAND HANDLERS=============================================
 
-        //method hanling 'manual' command
+        //mathod handling 'autoattack' command
+        private void AutoattackHandler()
+        {
+            if (IsAutoattackOn)
+            {
+                IsAutoattackOn = false;
+                PrintMessage("Automatyczny atak wyłączony", MessageType.SystemFeedback);
+            }
+            else
+            {
+                IsAutoattackOn = true;
+                PrintMessage("Automatyczny atak włączony", MessageType.SystemFeedback);
+            }
+        }
+
+        //method handling 'manual' command
         private void ManualHandler(string command)
         {
             ClearOutputBox();
@@ -1506,13 +1524,13 @@ namespace Runedal.GameEngine
             //prevent fleeing when not fighting
             if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
             {
-                PrintMessage("Nie masz przed czymu uciekać..", MessageType.SystemFeedback);
+                PrintMessage("Nie masz przed czym uciekać..", MessageType.SystemFeedback);
                 return;
             }
 
             if (direction == String.Empty)
             {
-                PrintMessage("Musisz wybrać kierunek ucieczki!", MessageType.Action);
+                PrintMessage("Musisz wybrać kierunek ucieczki!", MessageType.SystemFeedback);
                 return;
             }
 
@@ -3864,6 +3882,11 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "     * Komenda: 'save'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Zapisuje bieżący stan gry";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> WYŁĄCZ/WŁĄCZ AUTOMATYCZNY ATAK";
+                manualLines[i++] = "     * Komenda: 'autoattack'";
+                manualLines[i++] = "     * Skrót: brak";
+                manualLines[i++] = "           Wyłącza/włącza automatyczny atak Twojej postaci.";
                 manualLines[i++] = "";
             }
 

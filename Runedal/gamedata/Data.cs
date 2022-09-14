@@ -250,15 +250,15 @@ namespace Runedal.GameData
                 if (item.GetType() == typeof(Weapon))
                 {
                     Weapon weapon = (Weapon)item;
-                    if (weapon.Type == WeaponType.Dagger)
+                    if (weapon.Type == WeaponType.Blade)
                     {
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, 30, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, 30, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -25, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -30, 0, weapon.Name!, true));
                     }
                     else if (weapon.Type == WeaponType.Blunt)
                     {
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -30, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -50, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -50, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -70, 0, weapon.Name!, true));
                     }
                 }
 

@@ -40,13 +40,14 @@ namespace Runedal.GameEngine
             this.LastoutputBoxContent = new List<TextRange>();
             this.IsInMenu = true;
             this.IsPlayerChoosingAName = false;
+            this.IsAutoattackOn = true;
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
             GameClock.Interval = TimeSpan.FromMilliseconds(100);
             GameClock.Tick += GameClockTick!;
 
-            
+            //PrintManual();
             LoadGameObjects();
             PrintWelcomeScreen();
 
@@ -104,6 +105,7 @@ namespace Runedal.GameEngine
         public List<CharAction> Actions { get; set; }
         public Location TeleportLocation { get; set; }
         public List<TextRange> LastoutputBoxContent { get; set; }
+        public bool IsAutoattackOn { get; set; }
         public bool IsPaused { get; set; }
         public bool IsInMenu { get; set; }
         public bool IsPlayerChoosingAName { get; set; }
@@ -167,7 +169,7 @@ namespace Runedal.GameEngine
                         IsInMenu = false;
                         break;
                     case "3":
-
+                        ThirdOptionHandler();
                         IsInMenu = false;
                         break;
                     case "4":
@@ -184,11 +186,16 @@ namespace Runedal.GameEngine
             }
 
             //print userCommand in outputBox for user to see
-            PrintMessage(userCommand, MessageType.UserCommand);
+            if (userCommand != "help" && userCommand != "manual")
+            {
+                PrintMessage(userCommand, MessageType.UserCommand);
+            }
 
             //handle manual screen
             if (IsInManual)
             {
+                IsInManual = false;
+                IsInMenu = true;
                 PrintMainMenu();
                 return;
             }
@@ -313,7 +320,13 @@ namespace Runedal.GameEngine
                     PauseHandler();
                     break;
                 case "help":
-                    HelpHandler(argument1);
+                    HelpHandler();
+                    break;
+                case "manual":
+                    ManualHandler(argument1);
+                    break;
+                case "clear":
+                    ClearOutputBox();
                     break;
                 case "1":
                 case "2":
@@ -328,7 +341,7 @@ namespace Runedal.GameEngine
                     OptionHandler(command);
                     break;
                 default:
-                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wpisz 'help' aby wyświetlić listę komend", MessageType.SystemFeedback);
+                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wpisz 'help'", MessageType.SystemFeedback);
                     return;
             }
         }
@@ -338,20 +351,20 @@ namespace Runedal.GameEngine
         {
             const int runedalWidth = 54;
             int i, j;
-            string[] runedalAscii = new string[18];
+            string[] runedalAscii = new string[9];
 
             for (i = 0; i < runedalAscii.Length; i++)
             {
                 runedalAscii[i] = String.Empty;
             }
 
-            runedalAscii[5] = "  _____  _    _ _   _ ______ _____          _      ";
-            runedalAscii[6] = " |  __ \\| |  | | \\ | |  ____|  __ \\   /\\   | |     ";
-            runedalAscii[7] = " | |__) | |  | |  \\| | |__  | |  | | /  \\  | |     ";
-            runedalAscii[8] = " |  _  /| |  | | . ` |  __| | |  | |/ /\\ \\ | |     ";
-            runedalAscii[9] = " | | \\ \\| |__| | |\\  | |____| |__| / ____ \\| |_    ";
-            runedalAscii[10] = " |_|  \\_\\\\____/|_| \\_|______|_____/_/    \\_\\______|";
-            runedalAscii[11] = "                                                   ";
+            runedalAscii[1] = "  _____  _    _ _   _ ______ _____          _      ";
+            runedalAscii[2] = " |  __ \\| |  | | \\ | |  ____|  __ \\   /\\   | |     ";
+            runedalAscii[3] = " | |__) | |  | |  \\| | |__  | |  | | /  \\  | |     ";
+            runedalAscii[4] = " |  _  /| |  | | . ` |  __| | |  | |/ /\\ \\ | |     ";
+            runedalAscii[5] = " | | \\ \\| |__| | |\\  | |____| |__| / ____ \\| |_    ";
+            runedalAscii[6] = " |_|  \\_\\\\____/|_| \\_|______|_____/_/    \\_\\______|";
+            runedalAscii[7] = "                                                   ";
 
 
 
@@ -459,7 +472,11 @@ namespace Runedal.GameEngine
             GameClock.Start();
 
             ClearOutputBox();
-            PrintMessage("************* NOWA GRA ROZPOCZĘTA! *************\n", MessageType.DealDmg);
+
+            PrintMessage("> Witaj w świecie Runedal!. Aby zrobić cokolwiek, wpisujesz odpowiednią komendę i naciskasz enter.", MessageType.EffectOn);
+            PrintMessage("> Jeśli chcesz zobaczyć listę komend, wpisz 'help'.", MessageType.EffectOn);
+            PrintMessage("> Jeśli chcesz zobaczyć instrukcję gry - wpisz 'manual'\n", MessageType.EffectOn);
+
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
         }
@@ -495,11 +512,20 @@ namespace Runedal.GameEngine
             IsPlayerChoosingAName = true;
         }
 
+        //print game manual
+        private void ThirdOptionHandler()
+        {
+            IsInManual = true;
+            ClearOutputBox();
+            PrintManual();
+        }
+
         //printing commands manual
         private void FourthOptionHandler()
         {
+            IsInManual = true;
             ClearOutputBox();
-            PrintManual();
+            PrintCommandsCS(true);
         }
 
 
@@ -510,13 +536,20 @@ namespace Runedal.GameEngine
 
         //==============================================COMMAND HANDLERS=============================================
 
-        //method handling help command
-        private void HelpHandler(string commandName)
+        //method hanling 'manual' command
+        private void ManualHandler(string command)
         {
-            if (commandName == string.Empty)
-            {
-                PrintManual(false);
-            }
+            ClearOutputBox();
+            PrintManual(false);
+        }
+
+        //method handling 'help' command
+        private void HelpHandler()
+        {
+            ClearOutputBox();
+            PrintMessage("    **************** KOMENDY ******************\n", MessageType.Gain, false);
+            PrintMessage(" (Jeśli chcesz zobaczyć instrukcję gry, wpisz 'manual')\n", MessageType.CriticalHit, false);
+            PrintCommandsCS(false);
         }
 
         //method handling game pausing
@@ -2106,6 +2139,13 @@ namespace Runedal.GameEngine
             else if (attacked == Data.Player)
             {
                 PrintMessage("Zostałeś zaatakowany przez: " + attacker.Name + "!");
+
+                //handle auto-attack
+                if (IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
+                {
+                    AttackCharacter(attacked, attacker);
+                }
+
             }
             else if (attacked.CurrentLocation! == Data.Player!.CurrentLocation)
             {
@@ -3657,7 +3697,7 @@ namespace Runedal.GameEngine
         }
 
         //method printing commands-manual
-        private void PrintManual(bool isDescriptionPrinted = true, string command = "none")
+        private void PrintCommandsCS(bool isDescriptionPrinted = true, string command = "none")
         {
             const int manualSize = 137;
             string[] manualLines = new string[manualSize];
@@ -3667,14 +3707,11 @@ namespace Runedal.GameEngine
             if (isDescriptionPrinted)
             {
                 start = 0;
-                IsInManual = true;
             }
             else
             {
-                start = 19;
+                start = 10;
             }
-
-            
 
             for (i = 0; i < manualSize; i++)
             {
@@ -3685,47 +3722,16 @@ namespace Runedal.GameEngine
 
             if (command == "none")
             {
-                manualLines[i++] = "        ************** KOMENDY ****************\n";
-                manualLines[i++] = "       (Wpisz cokolwiek i wciśnij enter aby wyjść)\n";
+                manualLines[i++] = "        ****************** KOMENDY ******************\n";
+                manualLines[i++] = "      (wpisz cokolwiek i wciśnij enter aby wyjść do menu)\n";
                 manualLines[i++] = "        Wszystko co robisz w grze, wykonujesz za";
                 manualLines[i++] = "        pomocą wpisywania komend. Do niektórych ";
                 manualLines[i++] = "        komend można dodać jakąś nazwę lub liczbę.";
-                manualLines[i++] = "        Na przykład komenda 'look [nazwa obiektu]'.";
+                manualLines[i++] = "        Na przykład komenda 'look'.";
                 manualLines[i++] = "        Jeśli wpiszesz samo 'look' otrzymasz opis";
                 manualLines[i++] = "        miejsca w jakim przebywasz, ale jeśli dodasz";
                 manualLines[i++] = "        nazwę obiektu, np 'look szczur' wyświetli Ci";
-                manualLines[i++] = "        się opis postaci o nazwie szczur. Komenda ";
-                manualLines[i++] = "        'buy [nazwa przedmiotu] [ilość sztuk]' służy";
-                manualLines[i++] = "        do kupowania. Jeśli wpiszesz 'buy piwo 3'";
-                manualLines[i++] = "        kupisz 3 sztuki piwa. Większość komend ma swój";
-                manualLines[i++] = "        skrót np. 'b piwo 3' zadziała tak samo jak";
-                manualLines[i++] = "        'buy piwo 3'.\n";
-                manualLines[i++] = "  >>> WYJDŹ Z GRY";
-                manualLines[i++] = "     * Komenda: 'quit'";
-                manualLines[i++] = "     * Skrót: 'q'";
-                manualLines[i++] = "           Całkowicie wyłącza grę (bez zapisywania stanu gry!!)";
-                manualLines[i++] = "";
-                manualLines[i++] = "  >>> WYJDŹ DO MENU GŁÓWNEGO";
-                manualLines[i++] = "     * Komenda: 'exit'";
-                manualLines[i++] = "     * Skrót: 'e'";
-                manualLines[i++] = "           Wychodzi do menu głównego (bez zapisywania stanu gry!!)";
-                manualLines[i++] = "";
-                manualLines[i++] = "  >>> ZAPISZ STAN GRY";
-                manualLines[i++] = "     * Komenda: 'save'";
-                manualLines[i++] = "     * Skrót: brak";
-                manualLines[i++] = "           Zapisuje bieżący stan gry";
-                manualLines[i++] = "";
-                manualLines[i++] = "  >>> ZATRZYMAJ GRĘ (PAUZA)";
-                manualLines[i++] = "     * Komenda: 'pause'";
-                manualLines[i++] = "     * Skrót: 'pa'";
-                manualLines[i++] = "           Całkowicie wstrzymuje (lub wznawia gdy jest zatrzymana) grę. Wszelkie akcje w świecie gry zostają" +
-                    " zablokowane do czasu odpauzowania";
-                manualLines[i++] = "";
-                manualLines[i++] = "  >>> PRZERWIJ AKCJĘ";
-                manualLines[i++] = "     * Komenda: 'stop'";
-                manualLines[i++] = "     * Skrót: 's'";
-                manualLines[i++] = "           Przerywa ostatnio zakolejkowaną akcję, handel, rozmowę lub atak";
-                manualLines[i++] = "";
+                manualLines[i++] = "        się opis postaci o nazwie szczur.\n";
                 manualLines[i++] = "  >>> OBEJŻYJ";
                 manualLines[i++] = "     * Komenda: 'look [nazwa obiektu]'";
                 manualLines[i++] = "     * Skrót: 'l'";
@@ -3834,6 +3840,31 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "     * Skrót: 'sp'";
                 manualLines[i++] = "           Pokazuje zapamiętane czary";
                 manualLines[i++] = "";
+                manualLines[i++] = "  >>> PRZERWIJ AKCJĘ";
+                manualLines[i++] = "     * Komenda: 'stop'";
+                manualLines[i++] = "     * Skrót: 's'";
+                manualLines[i++] = "           Przerywa ostatnio zakolejkowaną akcję, handel, rozmowę lub atak";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ZATRZYMAJ/WZNÓW GRĘ (PAUZA)";
+                manualLines[i++] = "     * Komenda: 'pause'";
+                manualLines[i++] = "     * Skrót: 'pa'";
+                manualLines[i++] = "           Całkowicie wstrzymuje/wznawia grę."; 
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> WYJDŹ Z GRY";
+                manualLines[i++] = "     * Komenda: 'quit'";
+                manualLines[i++] = "     * Skrót: 'q'";
+                manualLines[i++] = "           Całkowicie wyłącza grę (bez zapisywania stanu gry!!)";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> WYJDŹ DO MENU GŁÓWNEGO";
+                manualLines[i++] = "     * Komenda: 'exit'";
+                manualLines[i++] = "     * Skrót: 'e'";
+                manualLines[i++] = "           Wychodzi do menu głównego (bez zapisywania stanu gry!!)";
+                manualLines[i++] = "";
+                manualLines[i++] = "  >>> ZAPISZ GRĘ";
+                manualLines[i++] = "     * Komenda: 'save'";
+                manualLines[i++] = "     * Skrót: brak";
+                manualLines[i++] = "           Zapisuje bieżący stan gry";
+                manualLines[i++] = "";
             }
 
             for (i = start; i < manualLines.Length; i++)
@@ -3856,6 +3887,273 @@ namespace Runedal.GameEngine
                 }
             }
         }
+
+        //method printing game manual
+        private void PrintManual(bool isExitInfoPrinted = true)
+        {
+            const int manualSize = 218;
+            string[] manualLines = new string[manualSize];
+            int i;
+
+            for (i = 0; i < manualSize; i++)
+            {
+                manualLines[i] = string.Empty;
+            }
+
+            i = 0;
+
+            string title = "      **************** INSTRUKCJA GRY *****************\n";
+            string exitInfo = "     (wpisz cokolwiek i wciśnij enter aby wyjść do menu)\n";
+
+            manualLines[i++] = "      Runedal jest grą typu RPG, w której wszystko co ";
+            manualLines[i++] = "      musisz robić, to czytać i pisać.";
+            manualLines[i++] = "      Grasz postacią, która może się poruszać z";
+            manualLines[i++] = "      lokacji do lokacji, rozmawiać, atakować i ";
+            manualLines[i++] = "      handlować z innymi postaciami, używać przedmiotów";
+            manualLines[i++] = "      czy tworzyć i rzucać zaklęcia. Zdobywasz ";
+            manualLines[i++] = "      kolejne poziomy, przedmioty i rozwijasz swoją";
+            manualLines[i++] = "      postać w dowolny sposób.";
+            manualLines[i++] = "      Wszystko robisz za pomocą wpisywania komend.";
+            manualLines[i++] = "      Aby zobaczyć listę komend, wyjdź do menu";
+            manualLines[i++] = "      i wybierz opcję 4.KOMENDY. Jeśli jesteś w grze,";
+            manualLines[i++] = "      wystarczy, że wpiszesz 'commands'.\n";
+            manualLines[i++] = "  >>> INTERFEJS UŻYTKOWNIKA\n";
+            manualLines[i++] = "      Praktycznie cała akcja gry, odbywa się w tym";
+            manualLines[i++] = "      największym, czarnym oknie, na którym";
+            manualLines[i++] = "      czytasz teraz ten tekst. To tutaj wyświetlane";
+            manualLines[i++] = "      będą opisy lokacji, dialogi czy przebiegi walk.";
+            manualLines[i++] = "      Nieco niżej znajdują się paski HP (zdrowie),";
+            manualLines[i++] = "      MP (mana) oraz pasek akcji (ten po prawej)";
+            manualLines[i++] = "      Poniżej pasków jest miejsce do wpisywania komend";
+            manualLines[i++] = "      za pomocą, których \"mówisz\" postaci (lub grze)";
+            manualLines[i++] = "      co ma robić.";
+            manualLines[i++] = "      Ten zielony prostokąt w prawym górnym rogu,";
+            manualLines[i++] = "      to mapka, która pokazuje gdzie się znajdujesz.\n";
+            manualLines[i++] = "  >>> ZATRZYMANIE/WZNOWIENIE GRY\n";
+            manualLines[i++] = "      W każdym momencie rozgrywki możesz zatrzymać grę";
+            manualLines[i++] = "      wpisując komendę 'pause'. Jeśli chcesz wznowić grę";
+            manualLines[i++] = "      znowu wpisujesz 'pause'.\n";
+            manualLines[i++] = "  >>> PORUSZANIE SIĘ\n    ";
+            manualLines[i++] = "      Świat gry jest podzielony na tzw. lokacje.";
+            manualLines[i++] = "      Każda lokacja może mieć wyjścia w sześciu";
+            manualLines[i++] = "      możliwych kierunkach: północ, południe, wschód";
+            manualLines[i++] = "      zachód, dół i góra. Możesz przemieszczać się";
+            manualLines[i++] = "      między lokacjami, używając komendy 'go' i";
+            manualLines[i++] = "      litery kierunku. Litery kierunków to: ";
+            manualLines[i++] = "      > 'n' - północ";
+            manualLines[i++] = "      > 's' - południe";
+            manualLines[i++] = "      > 'e' - wschód";
+            manualLines[i++] = "      > 'w' - zachód";
+            manualLines[i++] = "      > 'u' - góra";
+            manualLines[i++] = "      > 'd' - dół";
+            manualLines[i++] = "       Jeśli chcesc iść np. na północ";
+            manualLines[i++] = "       - wpisujesz 'go n' i naciskasz enter.\n";
+            manualLines[i++] = "  >>> PATRZENIE\n";
+            manualLines[i++] = "      W grze nie ma żadnej grafiki, więc wszystko";
+            manualLines[i++] = "      co \"widzisz\" będzie opisywane słowami.";
+            manualLines[i++] = "      Do patrzenia służy komenda 'look'. Jeżeli";
+            manualLines[i++] = "      wpiszesz 'look', wyświetli Ci się podstawowy";
+            manualLines[i++] = "      opis lokacji, w której przebywa Twoja postać:";
+            manualLines[i++] = "      nazwa lokacji, opis, możliwe kierunki wyjścia, ";
+            manualLines[i++] = "      postacie jakie się w niej znajdują oraz";
+            manualLines[i++] = "      przedmioty leżące na podłodze.";
+            manualLines[i++] = "      Można dowiedzieć się więcej o jakimś obiekcie";
+            manualLines[i++] = "      (np przedmiocie), dodając jego nazwę do komendy";
+            manualLines[i++] = "      'look'. Np. 'look piwo' wyświetli dokładny opis";
+            manualLines[i++] = "      przedmiotu o nazwie \"piwo\". Można oglądać:";
+            manualLines[i++] = "      przedmioty, postacie, czary oraz sąsiednie ";
+            manualLines[i++] = "      lokacje. Aby zajżeć do sąsiedniej lokacji,";
+            manualLines[i++] = "      wpisujesz 'look' i literę kierunku (np. 'look n')\n";
+            manualLines[i++] = "  >>> POSTACIE\n   ";
+            manualLines[i++] = "      W każdej lokacji mogą znajdować się jakieś";
+            manualLines[i++] = "      postacie. Ze wszystkimi postaciami możesz rozmawiać";
+            manualLines[i++] = "      używając komendy 'talk'. Np. 'talk karczmarz'";
+            manualLines[i++] = "      rozpocznie rozmowę z karczmarzem. Na tej samej";
+            manualLines[i++] = "      zasadzie możesz handlować (komenda 'trade') lub";
+            manualLines[i++] = "      atakować (komenda 'attack') inne postacie.\n";
+            manualLines[i++] = "  >>> PRZEDMIOTY\n";
+            manualLines[i++] = "      Jeśli wpiszesz komendę 'inventory' wyświetli Ci";
+            manualLines[i++] = "      się Twój ekwipunek, czyli wszystko co posiadasz";
+            manualLines[i++] = "      Na dole ekwipunku widzisz przedmioty które nosi";
+            manualLines[i++] = "      Twoja postać na sobie (np broń lub spodnie).";
+            manualLines[i++] = "      Możesz zakładać przedmioty, które masz w plecaku";
+            manualLines[i++] = "      za pomocą komendy 'wear' i nazwy przedmiotu. Np.";
+            manualLines[i++] = "      'wear stalowy_topór'. Aby ściągnąć przedmiot";
+            manualLines[i++] = "      używasz komendy 'takeoff' i typu przedmiotu.";
+            manualLines[i++] = "      Typy przedmiotów to:";
+            manualLines[i++] = "      > 'weapon' - broń";
+            manualLines[i++] = "      > 'helmet' - hełm";
+            manualLines[i++] = "      > 'torso' - korpus";
+            manualLines[i++] = "      > 'pants' - spodnie";
+            manualLines[i++] = "      > 'gloves' - rękawice";
+            manualLines[i++] = "      > 'shoes' - buty";
+            manualLines[i++] = "      Jeśli np. masz założoną jakąś broń i chcesz ją";
+            manualLines[i++] = "      ściągnąc, wpisujesz 'takeoff weapon'. Jeśli ";
+            manualLines[i++] = "      chcesz ściągnąć rękawice - 'takeoff gloves'. itd.\n";
+            manualLines[i++] = "  >>> HANDEL\n   ";
+            manualLines[i++] = "      Aby rozpocząć handel z postacią, używasz komendy";
+            manualLines[i++] = "      'trade' i nazwy postaci (np. 'trade karczmarz').";
+            manualLines[i++] = "      Podczas handlu, możesz używać dwóch dodatkowych";
+            manualLines[i++] = "      komend: 'buy' i 'sell'. 'buy' służy do kupowania,";
+            manualLines[i++] = "      a 'sell' do sprzedawania. Jeżeli chcesz";
+            manualLines[i++] = "      kupić/sprzedać jedną sztukę jakiegoś przedmiotu,";
+            manualLines[i++] = "      wpisujesz 'buy'/'sell' i nazwę tego przedmiotu";
+            manualLines[i++] = "      (np. 'buy piwo'). Jeśli chcesz kupić więcej niż";
+            manualLines[i++] = "      jeden, dodajesz do tego liczbę. Np. 'buy piwo 5'";
+            manualLines[i++] = "      kupi pięć sztuk piwa. Tak samo działa komenda 'sell'\n";
+            manualLines[i++] = "  >>> AKCJE\n    ";
+            manualLines[i++] = "      Niektóre czynności w grze to tzw. \"akcje\".";
+            manualLines[i++] = "      Każde wykonanie akcji powoduje że pasek akcji";
+            manualLines[i++] = "      rośnie, a Twoja postać nie może nić zrobić, dopóki";
+            manualLines[i++] = "      pasek nie spadnie do zera. Jeśli w tym czasie";
+            manualLines[i++] = "      wydasz jakąś komendę akcji, Twoja postać poczeka";
+            manualLines[i++] = "      aż pasek będzie pusty i dopiero wtedy wykona";
+            manualLines[i++] = "      polecenie. Możesz ją przed tym powstrzymać, ";
+            manualLines[i++] = "      wpisując komendę 'stop', albo inną";
+            manualLines[i++] = "      komendę akcji (wtedy postać wykona ostatnie";
+            manualLines[i++] = "      wpisane polecenie). Czynności, które są akcjami to:";
+            manualLines[i++] = "      > przejście do innej lokacji";
+            manualLines[i++] = "      > każdy pojedynczy atak";
+            manualLines[i++] = "      > rzucenie czaru";
+            manualLines[i++] = "      > utworzenie czaru";
+            manualLines[i++] = "      > użycie przedmiotu";
+            manualLines[i++] = "      Pozostałe czynności, które nie są akcjami, Twoja";
+            manualLines[i++] = "      postać wykona w każdej chwili, gdy tylko wpiszesz";
+            manualLines[i++] = "      komendę (np obejżenie czy podniesienie przedmiotu)\n";
+            manualLines[i++] = "  >>> WALKA\n    ";
+            manualLines[i++] = "      Podczas walki nie możesz przechodzić do innych";
+            manualLines[i++] = "      lokacji, rozmawiać ani handlować.";
+            manualLines[i++] = "      Możesz natomiast atakować, używać przedmiotów,";
+            manualLines[i++] = "      rzucać (lub tworzyć) czary, i próbować ucieczki.";
+            manualLines[i++] = "      Aby zaatakować jakąś postać, wpisujesz komendę";
+            manualLines[i++] = "      'attack' i nazwę postaci (np. 'attack dziki_pies').'";
+            manualLines[i++] = "      Gdy to zrobisz, Twoja postać będzie";
+            manualLines[i++] = "      atakowała tak długo, aż przeciwnik nie padnie";
+            manualLines[i++] = "      trupem, albo nie karzesz jej przestać komendą";
+            manualLines[i++] = "      'stop'. Gdy ktoś najpierw zaatakuje Ciebie, Twoja";
+            manualLines[i++] = "      postać automatycznie odpowie atakiem. Możesz ";
+            manualLines[i++] = "      wyłączyć to zachowanie, wpisując komendę ";
+            manualLines[i++] = "      'autoattack'.";
+            manualLines[i++] = "      Każda postać, gdy ją zaatakujesz, odpowie atakiem.";
+            manualLines[i++] = "      Niektóre postacie są \"społeczne\", i zaatakują Cię";
+            manualLines[i++] = "      gdy Ty zaatakujesz ich pobratymca. Ostatni typ,";
+            manualLines[i++] = "      to postacie agresywne, które same zaatakują Cię";
+            manualLines[i++] = "      gdy tylko pojawisz się w tej samej lokacji co one.\n";
+            manualLines[i++] = "  >>> UCIECZKA \n";
+            manualLines[i++] = "      Aby spróbować ucieczki, wpisujesz komendę 'flee'";
+            manualLines[i++] = "      i literę kierunku w którym chcesz uciec. Np.";
+            manualLines[i++] = "      jeśli wpiszesz 'flee n', Twoja postać ucieknie";
+            manualLines[i++] = "      na północ, a walka się zakończy. Ucieczka może się";
+            manualLines[i++] = "      nie udać - wtedy walka trwa dalej, a Twoja postać";
+            manualLines[i++] = "      zostaje ogłuszona na kilka sekund. Szanse na";
+            manualLines[i++] = "      powodzenie ucieczki zależą od szybkości postaci.";
+            manualLines[i++] = "      Jeśli jesteś szybszy od przeciwnika - Twoje szanse";
+            manualLines[i++] = "      są spore. Jeśli przeciwnik jest szybszy - Twoje";
+            manualLines[i++] = "      szanse są małe. Dlatego często nie opłaca się";
+            manualLines[i++] = "      próbować ucieczki przed szybszym przeciwnikiem.\n";
+            manualLines[i++] = "  >>> RUNY\n";
+            manualLines[i++] = "      Runy to kamienie z których tworzy się czary.";
+            manualLines[i++] = "      Istnieje 5 różnych run:";
+            manualLines[i++] = "      > \"zjarrit\"";
+            manualLines[i++] = "      > \"akull\"";
+            manualLines[i++] = "      > \"verde\"";
+            manualLines[i++] = "      > \"xitan\"";
+            manualLines[i++] = "      > \"dara\"";
+            manualLines[i++] = "      Możesz utworzyć czar jednej runy, albo z kombinacji";
+            manualLines[i++] = "      dwóch run. ";
+            manualLines[i++] = "      Aby utworzyć czar, musisz posiadać runy w plecaku,";
+            manualLines[i++] = "      i wpisać komendę 'craft' i nazwę runy (lub dwóch).";
+            manualLines[i++] = "      Np. 'craft zjarrit' - utworzy czar z runy ";
+            manualLines[i++] = "      \"zjarrit\". Natomiast 'craft verde xitan' utworzy";
+            manualLines[i++] = "      czar z kombinacji run \"verde\" i \"xitan\" itd.\n";
+            manualLines[i++] = "  >>> CZARY\n";
+            manualLines[i++] = "      Gdy tworzysz nowy czar, dodaje się on do listy";
+            manualLines[i++] = "      zapamiętanych czarów. Twoja postać może zapamiętać";
+            manualLines[i++] = "      tylko ograniczoną ilość czarów. Jeśli stworzysz";
+            manualLines[i++] = "      nowy czar gdy lista będzie pełna, ostatni czar";
+            manualLines[i++] = "      z listy zostanie zapomniany.";
+            manualLines[i++] = "      Zapamiętane na liście czary możesz rzucać używając";
+            manualLines[i++] = "      komendy 'cast' i numeru czaru na liście. Np. aby";
+            manualLines[i++] = "      rzucić pierwszy czar, wpisz 'cast 1'.";
+            manualLines[i++] = "      Jeśli jesteś w trakcie walki i rzucasz czar";
+            manualLines[i++] = "      ofensywny, Twoja postać automatycznie wyceluje";
+            manualLines[i++] = "      w tego kogo atakujesz. Jeśli chcesz wybrać cel,";
+            manualLines[i++] = "      musisz dopisać nazwę celu np. 'cast 1 dziki_pies'.";
+            manualLines[i++] = "      Czary defensywne, Twoja postać automatycznie";
+            manualLines[i++] = "      rzuca na samą siebie.";
+            manualLines[i++] = "      Każde rzucenie czaru kosztuje Cię manę, a każdy";
+            manualLines[i++] = "      czar ma swój koszt many.";
+            manualLines[i++] = "      Czary mogą zadawać obrażenia, wrzucać modyfikatory";
+            manualLines[i++] = "      (np. -30% obrony), lub specjalne efekty ";
+            manualLines[i++] = "      (np. ogłuszenie). ";
+            manualLines[i++] = "      ";
+            manualLines[i++] = "  >>> ATRYBUTY I STATYSTYKI\n";
+            manualLines[i++] = "      Wszystkie postacie w grze, posiadają szereg";
+            manualLines[i++] = "      statystyk:";
+            manualLines[i++] = "      > Szybkość - wpływa na to jak szybko Twoja postać";
+            manualLines[i++] = "      porusza się między lokacjami. Od szybkości Twojej i ";
+            manualLines[i++] = "      przeciwnika zależą też szanse na udaną ucieczkę.";
+            manualLines[i++] = "      > Atak - im większy atak, tym większe obrażenia ";
+            manualLines[i++] = "      zadaje postać podczas ataku.";
+            manualLines[i++] = "      > Szybkość ataku - im większa szybkość ataku, tym ";
+            manualLines[i++] = "      szybsze ataki (mniejsze zapełnienie paska akcji)";
+            manualLines[i++] = "      > Celność - zwiększa szansę na trafienie przeciwnika";
+            manualLines[i++] = "      > Trafienia krytyczne - im więcej, tym większa ";
+            manualLines[i++] = "      szansa na trafienie krytyczne";
+            manualLines[i++] = "      > Obrona - zmniejsza obrażenia zadawane przez ataki";
+            manualLines[i++] = "      przeciwnika.";
+            manualLines[i++] = "      > Uniki - im więcej, tym większa szansa na ";
+            manualLines[i++] = "      uniknięcie ataku przeciwnika.";
+            manualLines[i++] = "      > Odporność na magię - zmniejsza obrażenia zadawane";
+            manualLines[i++] = "      przez czary przeciwnika. Oprócz tego, zwiększa ";
+            manualLines[i++] = "      szansę na odparcie czaru.";
+            manualLines[i++] = "      > Maksymalne HP - maksymalna ilość zdrowia postaci";
+            manualLines[i++] = "      > Maksymalne MP - maksymalna ilość many postaci";
+            manualLines[i++] = "      > Regeneracja HP - im więcej, tym szybciej ";
+            manualLines[i++] = "      regeneruje się zdrowie postaci";
+            manualLines[i++] = "      > Regeneracja MP - im więcej, tym szybciej ";
+            manualLines[i++] = "      regeneruje się mana postaci";
+            manualLines[i++] = "      Twoja postać, oprócz statystyk, posiada jeszcze trzy";
+            manualLines[i++] = "      atrybuty, które zwiększają jej statystyki:";
+            manualLines[i++] = "      > Siła - zwiększa maksymalne HP, regenerację HP";
+            manualLines[i++] = "      i atak";
+            manualLines[i++] = "      > Zręczność - zwiększa szybkość, szybkość ataku, ";
+            manualLines[i++] = "      celność trafienia krytyczne i uniki.";
+            manualLines[i++] = "      > Inteligencja - zwiększa maksymalne MP, ";
+            manualLines[i++] = "      regenerację MP,odporność na magię, obrażenia ";
+            manualLines[i++] = "      zadawane z czarów, szansę na powodzenie zaklęcia ";
+            manualLines[i++] = "      oraz maksymalną ilość zapamiętanych czarów.";
+
+            PrintMessage(title, MessageType.Gain, false);
+
+            //if user came from main menu, display info about coming back
+            if (isExitInfoPrinted)
+            {
+                PrintMessage(exitInfo, MessageType.Default, false);
+            }
+
+            for (i = 0; i < manualLines.Length; i++)
+            {
+                if (Regex.IsMatch(manualLines[i], @"^\s+>>>"))
+                {
+                    PrintMessage(manualLines[i], MessageType.EffectOn, false);
+                }
+                else if (Regex.IsMatch(manualLines[i], @"^\s+\*\s"))
+                {
+                    PrintMessage(manualLines[i], MessageType.UserCommand, false);
+                }
+                else if (Regex.IsMatch(manualLines[i], @"^\s+\*{3,20}"))
+                {
+                    PrintMessage(manualLines[i], MessageType.Gain, false);
+                }
+                else
+                {
+                    PrintMessage(manualLines[i], MessageType.Default, false);
+                }
+            }
+        }
+
+
 
 
 

@@ -110,6 +110,7 @@ namespace Runedal.GameEngine
         public bool IsInMenu { get; set; }
         public bool IsPlayerChoosingAName { get; set; }
         public bool IsInManual { get; set; }
+        public bool IsSaving { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -318,6 +319,12 @@ namespace Runedal.GameEngine
                 case "pause":
                 case "pa":
                     PauseHandler();
+                    break;
+                case "save":
+                    SaveHandler(argument1);
+                    break;
+                case "load":
+                    LoadHandler(argument1);
                     break;
                 case "autoattack":
                     AutoattackHandler();
@@ -538,6 +545,32 @@ namespace Runedal.GameEngine
 
 
         //==============================================COMMAND HANDLERS=============================================
+
+        //method handling 'save' command
+        private void SaveHandler(string saveName)
+        {
+            GameClock.Stop();
+
+            if (saveName == string.Empty)
+            {
+                Data.SaveGame("test");
+            }
+
+            GameClock.Start();
+            PrintMessage("Gra zapisana", MessageType.SystemFeedback);
+        }
+
+        //method handling 'load' command
+        private void LoadHandler(string saveName)
+        {
+            GameClock.Stop();
+
+            Data.LoadGame(saveName);
+
+            GameClock.Start();
+
+            PrintMessage("Gra wczytana", MessageType.SystemFeedback);
+        }
 
         //mathod handling 'autoattack' command
         private void AutoattackHandler()

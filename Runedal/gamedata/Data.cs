@@ -221,9 +221,26 @@ namespace Runedal.GameData
             });
         }
 
+        //method saving game
+        public void SaveGame(string saveName)
+        {
+            string jsonString = JsonSerializer.Serialize(Locations, Options);
+            File.WriteAllText(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\" + saveName, jsonString);
+        }
         
+        //method loading game
+        public void LoadGame(string saveName)
+        {
+            Location[] locationsArray = JsonSerializer.Deserialize<Location[]>
+                (@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\" + saveName)!;
 
+            Locations!.Clear();
 
+            foreach (var loc in locationsArray)
+            {
+                Locations.Add(loc);
+            }
+        }
 
 
 

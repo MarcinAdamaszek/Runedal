@@ -14,4 +14,8 @@
     <Page Remove="GameData\JSONData\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="GameData\SavedGames\" />
+  </ItemGroup>
+
 </Project>

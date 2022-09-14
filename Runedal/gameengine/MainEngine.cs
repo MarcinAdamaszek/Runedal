@@ -1521,6 +1521,8 @@ namespace Runedal.GameEngine
         //method for handling 'flee' command
         private void FleeHandler(string direction)
         {
+            string directionToFlee = string.Empty;
+
             //prevent fleeing when not fighting
             if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
             {
@@ -1528,43 +1530,65 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            //if no direction is specified, pick random direction from all
+            //possible directions
             if (direction == String.Empty)
             {
-                PrintMessage("Musisz wybrać kierunek ucieczki!", MessageType.SystemFeedback);
-                return;
+                Location temp = new Location();
+                List<string> randomDirections = new List<string>();
+                string[] directionLetters = new string[6];
+
+                directionLetters[0] = "n";
+                directionLetters[1] = "e";
+                directionLetters[2] = "s";
+                directionLetters[3] = "w";
+                directionLetters[4] = "u";
+                directionLetters[5] = "d";
+
+                foreach (string letter in directionLetters)
+                {
+                    if (GetNextLocation(letter, out temp))
+                    {
+                        randomDirections.Add(letter);
+                    }
+                }
+
+                int randomDirectionNumber = Rand.Next(0, randomDirections.Count);
+
+                directionToFlee = randomDirections[randomDirectionNumber];
             }
-
-            string directionToFlee = string.Empty;
-
-            switch (direction)
+            else
             {
-                case "north":
-                case "n":
-                    directionToFlee = "n";
-                    break;
-                case "east":
-                case "e":
-                    directionToFlee = "e";
-                    break;
-                case "south":
-                case "s":
-                    directionToFlee = "s";
-                    break;
-                case "west":
-                case "w":
-                    directionToFlee = "w";
-                    break;
-                case "up":
-                case "u":
-                    directionToFlee = "u";
-                    break;
-                case "down":
-                case "d":
-                    directionToFlee = "d";
-                    break;
-                default:
-                    PrintMessage("Nie ma takiego kierunku jak \"" + direction + "\"", MessageType.SystemFeedback);
-                    return;
+                switch (direction)
+                {
+                    case "north":
+                    case "n":
+                        directionToFlee = "n";
+                        break;
+                    case "east":
+                    case "e":
+                        directionToFlee = "e";
+                        break;
+                    case "south":
+                    case "s":
+                        directionToFlee = "s";
+                        break;
+                    case "west":
+                    case "w":
+                        directionToFlee = "w";
+                        break;
+                    case "up":
+                    case "u":
+                        directionToFlee = "u";
+                        break;
+                    case "down":
+                    case "d":
+                        directionToFlee = "d";
+                        break;
+                    default:
+                        PrintMessage("Nie ma takiego kierunku jak \"" + direction + "\"", MessageType.SystemFeedback);
+                        return;
+                }
             }
 
             Location escapeDestination;
@@ -3745,7 +3769,7 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "        Wszystko co robisz w grze, wykonujesz za";
                 manualLines[i++] = "        pomocą wpisywania komend. Do niektórych ";
                 manualLines[i++] = "        komend można dodać jakąś nazwę lub liczbę.";
-                manualLines[i++] = "        Na przykład komenda 'look'.";
+                manualLines[i++] = "        Na przykład komenda 'look' to patrzenie.";
                 manualLines[i++] = "        Jeśli wpiszesz samo 'look' otrzymasz opis";
                 manualLines[i++] = "        miejsca w jakim przebywasz, ale jeśli dodasz";
                 manualLines[i++] = "        nazwę obiektu, np 'look szczur' wyświetli Ci";
@@ -3771,7 +3795,7 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "  >>> UCIEKNIJ";
                 manualLines[i++] = "     * Komenda: 'flee [nazwa kierunku]'";
                 manualLines[i++] = "     * Skrót: 'f'";
-                manualLines[i++] = "           Twoja postać próbuje ucieczki we wskazanym kierunku {np. 'flee n'}. Możesz użyć jedynie w trakcie walki";
+                manualLines[i++] = "           Twoja postać próbuje ucieczki we losowym kierunku. Możesz wskazać kierunek ucieczki {np. 'flee n'}.";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> UŻYJ PRZEDMIOTU";
                 manualLines[i++] = "     * Komenda: 'use [nazwa obiektu]'";
@@ -3791,16 +3815,16 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "  >>> KUP";
                 manualLines[i++] = "     * Komenda: 'buy [nazwa przedmiotu] [ilość]'";
                 manualLines[i++] = "     * Skrót: 'b'";
-                manualLines[i++] = "           Kupuje jedną sztukę wybranego przedmiotu {np. buy piwo}. Możesz dodać ilość sztuk jaką " +
-                    "chcesz kupić {np. 'buy piwo 3'}. Jeśli chcesz kupić maksymalną ilość przedmiotu jaką posiada handlarz - wpisz " +
-                    "'all'  {np. 'buy piwo all' lub 'buy piwo a'}";
+                manualLines[i++] = "           Kupuje jedną sztukę wybranego przedmiotu {np. 'buy piwo'}. Możesz dodać ilość sztuk jaką " +
+                    "chcesz kupić {np. 'buy piwo 3'}. Jeśli chcesz kupić wszystko co ma handlarz - wpisz " +
+                    "'all' lub 'a' {np. 'buy piwo all' lub 'buy piwo a'}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> SPRZEDAJ";
                 manualLines[i++] = "     * Komenda: 'sell [nazwa przedmiotu] [ilość]'";
                 manualLines[i++] = "     * Skrót: 'se'";
                 manualLines[i++] = "           Sprzedaje jedną sztukę wybranego przedmiotu {np. sell piwo}. Możesz dodać ilość sztuk jaką " +
-                    "chcesz sprzedać {np. 'sell piwo 3'}. Jeśli chcesz sprzedać maksymalną ilość przedmiotu jaką posiadasz, wpisz " +
-                    "'all' {np. 'sell piwo all' lub 'sell piwo a'} (tylko co potem będziesz pił?)}";
+                    "chcesz sprzedać {np. 'sell piwo 3'}. Jeśli chcesz sprzedać wszystko co posiadasz, wpisz " +
+                    "'all' lub 'a' {np. 'sell piwo all' lub 'sell piwo a'} (tylko co potem będziesz pił?)}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> PODNIEŚ";
                 manualLines[i++] = "     * Komenda: 'pickup [nazwa przedmiotu] [ilość]'";
@@ -3936,10 +3960,10 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      czy tworzyć i rzucać zaklęcia. Zdobywasz ";
             manualLines[i++] = "      kolejne poziomy, przedmioty i rozwijasz swoją";
             manualLines[i++] = "      postać w dowolny sposób.";
-            manualLines[i++] = "      Wszystko robisz za pomocą wpisywania komend.";
+            manualLines[i++] = "      Grą sterujesz za pomocą wpisywania komend.";
             manualLines[i++] = "      Aby zobaczyć listę komend, wyjdź do menu";
             manualLines[i++] = "      i wybierz opcję 4.KOMENDY. Jeśli jesteś w grze,";
-            manualLines[i++] = "      wystarczy, że wpiszesz 'commands'.\n";
+            manualLines[i++] = "      wystarczy, że wpiszesz 'help'.\n";
             manualLines[i++] = "  >>> INTERFEJS UŻYTKOWNIKA\n";
             manualLines[i++] = "      Praktycznie cała akcja gry, odbywa się w tym";
             manualLines[i++] = "      największym, czarnym oknie, na którym";

@@ -17,6 +17,7 @@ namespace Runedal.GameData.Characters
         {
             Items = new Dictionary<string, int>();
             Inventory = new List<Item>();
+            //AssignId();
         }
         
         //constructor for placeholder
@@ -34,6 +35,7 @@ namespace Runedal.GameData.Characters
             Questions = dialogues[2];
             Answers = dialogues[3];
             Gold = gold;
+            //AssignId();
         }
 
         //copy constructor
@@ -48,7 +50,12 @@ namespace Runedal.GameData.Characters
             Questions = ch.Questions;
             Answers = ch.Answers;
             Gold = ch.Gold;
+            //AssignId();
         }
+
+
+
+        public ulong Id { get; set; }
 
         //Amount of gold and list of items in the characters inventory
         public int Gold { get; set; }
@@ -71,6 +78,9 @@ namespace Runedal.GameData.Characters
         
         //set and quantity of items to load into character's inventory on game launch
         public Dictionary<string, int>? Items { get; set; }
+
+        //list of id's assigned to all existing monsters
+        //public static List<int> TakenIds { get; set; } = new List<int>();
 
         //method for adding items into character's inventory
         public void AddItem(Item newItem, int quantity = 1)

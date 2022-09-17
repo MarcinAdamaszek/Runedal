@@ -24,6 +24,8 @@ using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Reflection.Emit;
 using System.Diagnostics;
+using System.Windows.Markup;
+using System.IO;
 
 namespace Runedal.GameEngine
 {
@@ -40,6 +42,15 @@ namespace Runedal.GameEngine
             this.LastoutputBoxContent = new List<TextRange>();
             this.IsInMenu = true;
             this.IsPlayerChoosingAName = false;
+            this.IsInGame = false;
+            this.IsLoading = false;
+            this.IsSaving = false;
+            this.IsNewSave = false;
+            this.IsExitConfirmation = false;
+            this.IsSaveConfirmation = false;
+
+            this.GameSavePath = string.Empty;
+
             this.IsAutoattackOn = true;
 
             //set game clock for game time
@@ -81,7 +92,7 @@ namespace Runedal.GameEngine
         }
 
         //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
-        enum MessageType
+        public enum MessageType
         {
             Default,
             UserCommand,
@@ -105,12 +116,20 @@ namespace Runedal.GameEngine
         public List<CharAction> Actions { get; set; }
         public Location TeleportLocation { get; set; }
         public List<TextRange> LastoutputBoxContent { get; set; }
+        public string GameSavePath { get; set; }
         public bool IsAutoattackOn { get; set; }
         public bool IsPaused { get; set; }
         public bool IsInMenu { get; set; }
         public bool IsPlayerChoosingAName { get; set; }
         public bool IsInManual { get; set; }
         public bool IsSaving { get; set; }
+        public bool IsNewSave { get; set; }
+        public bool IsLoading { get; set; }
+        public bool IsInGame { get; set; }
+        public bool IsSaveConfirmation { get; set; }
+        public bool IsExitConfirmation { get; set; }
+        public bool IsFromGameSaving { get; set; }
+        public bool IsFromGameLoading { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -156,6 +175,22 @@ namespace Runedal.GameEngine
                 argument2 = commandParts[2];
             }
 
+            if (IsExitConfirmation)
+            {
+                if (command == "1")
+                {
+                    Window.Close();
+                }
+                else if (command == "2")
+                {
+                    IsExitConfirmation = false;
+                    IsInMenu = true;
+                    ClearOutputBox();
+                    PrintMainMenu();
+                }
+                return;
+            }
+
             //handle game menu before starting the game
             if (IsInMenu)
             {
@@ -166,7 +201,7 @@ namespace Runedal.GameEngine
                         IsInMenu = false;
                         break;
                     case "2":
-
+                        SecondOptionHandler();
                         IsInMenu = false;
                         break;
                     case "3":
@@ -178,7 +213,11 @@ namespace Runedal.GameEngine
                         IsInMenu = false;
                         break;
                     case "5":
-
+                        FifthOptionHandler();
+                        IsInMenu = false;
+                        break;
+                    case "6":
+                        SixthOptionHandler();
                         IsInMenu = false;
                         break;
                 }
@@ -186,10 +225,82 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            //print userCommand in outputBox for user to see
-            if (userCommand != "help" && userCommand != "manual")
+            //handle saving game
+            if (IsSaving)
             {
-                PrintMessage(userCommand, MessageType.UserCommand);
+                //handle new save
+                if (IsNewSave)
+                {
+
+                    //handle confirmation
+                    if (IsSaveConfirmation)
+                    {
+                        if (command == "1")
+                        {
+                            SaveGame("", true);
+                            IsSaving = false;
+                            IsNewSave = false;
+                            IsInMenu = true;
+                            IsSaveConfirmation = false;
+                            ClearOutputBox();
+                            PrintMainMenu(true);
+                        }
+                        else if (command == "2")
+                        {
+                            IsNewSave = false;
+                            IsSaveConfirmation = false;
+                            ClearOutputBox();
+                            SaveHandler();
+                        }
+                        return;
+                    }
+
+                    HandleNewSaveName(command);
+                    return;
+                }
+
+
+                if (command == "b")
+                {
+                    IsSaving = false;
+                    ClearOutputBox();
+                    if (IsInGame)
+                    {
+                        LocationInfo(Data.Player!.CurrentLocation!);
+                    }
+                    else
+                    {
+                        IsInMenu = false;
+                        PrintMainMenu();
+                    }
+                }
+                else if (command == "1")
+                {
+                    IsNewSave = true;
+                    PrintNewSaveScreen();
+                }
+                else
+                {
+                    SaveGame(command);
+                }
+                return;
+            }
+
+            //handle loading game
+            if (IsLoading)
+            {
+                if (command == "b")
+                {
+                    IsLoading = false;
+                    IsInMenu = true;
+                    ClearOutputBox();
+                    PrintMainMenu();
+                }
+                else
+                {
+                    LoadGame(command);
+                }
+                return;
             }
 
             //handle manual screen
@@ -216,6 +327,13 @@ namespace Runedal.GameEngine
                 }
 
                 return;
+            }
+
+            //print userCommand in outputBox for user to see
+            if (userCommand != "help" && userCommand != "manual" &&
+                userCommand != "load" && userCommand != "save")
+            {
+                PrintMessage(userCommand, MessageType.UserCommand);
             }
 
             //prevent doing anything ingame when game is paused
@@ -321,10 +439,7 @@ namespace Runedal.GameEngine
                     PauseHandler();
                     break;
                 case "save":
-                    SaveHandler(argument1);
-                    break;
-                case "load":
-                    LoadHandler(argument1);
+                    SaveHandler(true);
                     break;
                 case "autoattack":
                     AutoattackHandler();
@@ -351,7 +466,7 @@ namespace Runedal.GameEngine
                     OptionHandler(command);
                     break;
                 default:
-                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wpisz 'help'", MessageType.SystemFeedback);
+                    PrintMessage("Nie rozumiem. Wpisz 'help' aby zobaczyć komendy, lub wciśnij esc aby zobaczyć menu.", MessageType.SystemFeedback);
                     return;
             }
         }
@@ -410,21 +525,40 @@ namespace Runedal.GameEngine
         }
 
         //method printing menu of the game
-        public void PrintMainMenu()
+        public void PrintMainMenu(bool gameSaveSuccess = false)
         {
             ClearOutputBox();
 
-            PrintMessage("********************** MENU GŁÓWNE ***********************\n", MessageType.Gain);
+            PrintMessage("*********************** MENU GŁÓWNE ***********************\n", MessageType.Gain);
 
-            PrintMessage("                  Aby wybrać opcję menu,");
-            PrintMessage("           wpisz jedną z cyfr (1, 2, 3, 4 lub 5)");
-            PrintMessage("                     i naciśnij enter.\n");
+            PrintMessage("                   Aby wybrać opcję menu,");
+            if (IsInGame)
+            {
+                PrintMessage("          wpisz jedną z cyfr (1, 2, 3, 4, 5 lub 6)");
+            }
+            else
+            {
+                PrintMessage("            wpisz jedną z cyfr (1, 2, 3, 4 lub 5)");
+            }
+            PrintMessage("                      i naciśnij enter.\n");
 
-            PrintMessage("                      1. NOWA GRA", MessageType.Loss);
-            PrintMessage("                      2. WCZYTAJ GRĘ", MessageType.Loss);
-            PrintMessage("                      3. JAK GRAĆ?", MessageType.Loss);
-            PrintMessage("                      4. KOMENDY", MessageType.Loss);
-            PrintMessage("                      5. WYJDŹ Z GRY", MessageType.Loss);
+            PrintMessage("                       1. NOWA GRA", MessageType.Loss);
+            PrintMessage("                       2. WCZYTAJ GRĘ", MessageType.Loss);
+            PrintMessage("                       3. JAK GRAĆ?", MessageType.Loss);
+            PrintMessage("                       4. KOMENDY", MessageType.Loss);
+            PrintMessage("                       5. WYJDŹ Z GRY", MessageType.Loss);
+
+            if (IsInGame)
+            {
+                PrintMessage("                       6. ZAPISZ GRĘ", MessageType.Loss);
+                PrintMessage("\n\n", MessageType.Default, false);
+                PrintMessage("               (Wciśnij esc aby wrócić do gry)\n\n", MessageType.Action, false);
+            }
+
+            if (gameSaveSuccess)
+            {
+                PrintMessage("                       Gra zapisana!", MessageType.EffectOn);
+            }
         }
 
         //method veryfing player's name
@@ -442,18 +576,19 @@ namespace Runedal.GameEngine
             {
                 ClearOutputBox();
 
-                PrintMessage("********************** NOWA GRA ***********************\n", MessageType.Gain);
+                PrintMessage("************************ NOWA GRA *************************\n", MessageType.Gain);
 
-                PrintMessage("               Podałeś niepoprawne imię!\n", MessageType.ReceiveDmg);
+                PrintMessage("             (Wciśnij esc aby wrócić do menu)\n", MessageType.Action);
 
-                PrintMessage("         Imię musi zawierać od 3 do 40 znaków,");
-                PrintMessage("         oraz składać się tylko z liter, cyfr,");
-                PrintMessage("               lub znaków podkreślnika(_)");
-                PrintMessage("                     i  apostrofu(')\n");
+                PrintMessage("                 Podałeś niepoprawne imię!\n", MessageType.ReceiveDmg);
 
-                PrintMessage("             Wpisz imię dla swojej postaci");
-                PrintMessage("      (lub wpisz \"b\" aby powrócić do menu głównego)");
-                PrintMessage("                    i naciśnij enter\n");
+                PrintMessage("           Imię musi zawierać od 3 do 40 znaków,");
+                PrintMessage("           oraz składać się tylko z liter, cyfr,");
+                PrintMessage("                 lub znaków podkreślnika(_)");
+                PrintMessage("                      i  apostrofu(')\n");
+
+                PrintMessage("                Wpisz imię dla swojej postaci");
+                PrintMessage("                     i naciśnij enter\n");
             }
 
             //FirstOptionHandler();
@@ -463,7 +598,7 @@ namespace Runedal.GameEngine
         //method starting a new game
         public void StartNewGame(string playerName)
         {
-            
+            IsInGame = true;
 
             //load player into game
             Data.LoadPlayer(playerName);
@@ -486,18 +621,161 @@ namespace Runedal.GameEngine
             PrintMessage("> Witaj w świecie Runedal!. Aby zrobić cokolwiek, wpisujesz odpowiednią komendę i naciskasz enter.", MessageType.EffectOn);
             PrintMessage("> Jeśli chcesz zobaczyć listę komend, wpisz 'help'.", MessageType.EffectOn);
             PrintMessage("> Jeśli chcesz zobaczyć instrukcję gry - wpisz 'manual'\n", MessageType.EffectOn);
+            PrintMessage("> Jeśli chcesz wyjść do menu głównego - wciśnij esc\n", MessageType.EffectOn);
 
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
         }
 
         //method clearing the outputBox
-        private void ClearOutputBox()
+        public void ClearOutputBox()
         {
             Window.outputBox.SelectAll();
             Window.outputBox.Selection.Text = "";
             Window.outputBox.Document.Blocks.Add(new Paragraph());
         }
+
+        //method saving game
+        private void SaveGame(string saveNumber, bool IsPathSpecified = false, bool isQuickSave = false)
+        {
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string savePath = string.Empty;
+            int i;
+
+            if (isQuickSave)
+            {
+                savePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\SzybkiZapis";
+            }
+
+            if (IsPathSpecified)
+            {
+                savePath = GameSavePath;
+            }
+
+            for (i = 0; i < saveFiles.Length; i++)
+            {
+                if (saveNumber == Convert.ToString(i + 2))
+                {
+                    IsSaving = false;
+                    savePath = saveFiles[i];
+                    break;
+                }
+            }
+
+            if (savePath == string.Empty)
+            {
+                return;
+            }
+
+            GameClock.Stop();
+
+            //here save the game
+            Data.SaveGame(savePath);
+
+            if (IsInMenu)
+            {
+                ClearOutputBox();
+                PrintMainMenu(true);
+            }
+            else if (isQuickSave)
+            {
+                PrintMessage("Gra zapisana!", MessageType.SystemFeedback);
+            }
+            else
+            {
+                ClearOutputBox();
+                PrintMessage("Gra zapisana!", MessageType.SystemFeedback);
+                LocationInfo(Data.Player!.CurrentLocation!);
+            }
+
+            GameClock.Start();
+
+        }
+
+        //method loading game
+        private void LoadGame(string saveNumber)
+        {
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            int chosenNumber = -1;
+            int i;
+
+            for (i = 0; i < saveFiles.Length; i++)
+            {
+                if (saveNumber == Convert.ToString(i + 1))
+                {
+                    chosenNumber = i;
+                    break;
+                }
+            }
+
+            if (chosenNumber == -1)
+            {
+                return;
+            }
+
+            IsInGame = true;
+            IsLoading = false;
+
+            GameClock.Stop();
+
+            Data.LoadGame(saveFiles[chosenNumber]);
+
+            //reassign window's player variable
+            Window.InitializePlayerDataContext(Data.Player!);
+
+            PrintMap();
+            GameClock.Start();
+            ClearOutputBox();
+            PrintMessage("Zapis \"" + Path.GetFileName(saveFiles[chosenNumber]) + "\" wczytany", MessageType.SystemFeedback);
+            LocationInfo(Data.Player!.CurrentLocation!);
+        }
+
+        //method handling new save game
+        private void PrintNewSaveScreen()
+        {
+            ClearOutputBox();
+            PrintMessage("************************ NOWY ZAPIS ************************\n", MessageType.Gain);
+            PrintMessage("                Jak ma się nazywać nowy zapis? ", MessageType.Default, false);
+            PrintMessage("                (Wpisz nazwę i  wciśnij enter)", MessageType.Default, false);
+            IsNewSave = true;
+        }
+
+        //method handling saving for user-chosen save name
+        private void HandleNewSaveName(string saveName)
+        {
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            int i;
+
+            for (i = 0; i < saveFiles.Length; i++)
+            {
+                if (Path.GetFileName(saveFiles[i]) == saveName)
+                {
+                    ClearOutputBox();
+                    PrintMessage("************************* UWAGA! *************************\n", MessageType.CriticalHit, false);
+                    PrintMessage("             (Wciśnij esc aby wrócić do menu)\n", MessageType.Action, false);
+                    PrintMessage("             Zapis o tej nazwie już istnieje.", MessageType.Default, false);
+                    PrintMessage("          Zapisanie stanu gry spowoduje utratę", MessageType.Default, false);
+                    PrintMessage("                    poprzedniego zapisu.", MessageType.Default, false);
+                    PrintMessage("                     Zapisać mimo to?", MessageType.Default, false);
+                    PrintMessage("             (wpisz 1 lub 2 i naciśnij enter)", MessageType.Default, false);
+                    PrintMessage("                         1. TAK", MessageType.Loss, false);
+                    PrintMessage("                         2. NIE", MessageType.Loss, false);
+
+                    IsSaveConfirmation = true;
+                    GameSavePath = saveFiles[i];
+
+                    return;
+                }
+            }
+
+            GameSavePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\" + saveName;
+            IsSaving = false;
+            IsNewSave = false;
+            SaveGame("", true);
+        }
+
+
+
 
 
 
@@ -510,16 +788,22 @@ namespace Runedal.GameEngine
         private void FirstOptionHandler()
         {
             ClearOutputBox();
-            PrintMessage("********************** NOWA GRA ***********************\n", MessageType.Gain);
-            PrintMessage("              Wpisz imię dla swojej postaci");
-            PrintMessage("      (lub wpisz \"b\" aby powrócić do menu głównego)");
-            PrintMessage("                   i naciśnij enter\n");
-            PrintMessage("                        Uwaga!", MessageType.Action);
-            PrintMessage("         Imię musi zawierać od 3 do 40 znaków,");
-            PrintMessage("         oraz składać się tylko z liter, cyfr,");
-            PrintMessage("              lub znaku podkreślnika(_)");
-            PrintMessage("                   lub  apostrofu(')");
+            PrintMessage("************************ NOWA GRA *************************\n", MessageType.Gain);
+            PrintMessage("             (Wciśnij esc aby wrócić do menu)\n", MessageType.Action);
+            PrintMessage("              Wpisz imię dla swojej postaci\n");
+            PrintMessage("                          Uwaga!", MessageType.Action);
+            PrintMessage("            Imię musi zawierać od 3 do 40 znaków,", MessageType.Default);
+            PrintMessage("            oraz składać się tylko z liter, cyfr,", MessageType.Default);
+            PrintMessage("                  lub znaku podkreślnika(_)", MessageType.Default);
+            PrintMessage("                      lub  apostrofu(')", MessageType.Default);
             IsPlayerChoosingAName = true;
+        }
+
+        //loading a game
+        private void SecondOptionHandler()
+        {
+            IsInMenu = false;
+            LoadHandler();
         }
 
         //print game manual
@@ -538,6 +822,36 @@ namespace Runedal.GameEngine
             PrintCommandsCS(true);
         }
 
+        //quit the game
+        private void FifthOptionHandler()
+        {
+            if (IsInGame)
+            {
+                IsExitConfirmation = true;
+                ClearOutputBox();
+                PrintMessage("************************** UWAGA ****************************\n", MessageType.CriticalHit, false);
+                PrintMessage("              (Wcisnij esc aby wrócić do menu)\n", MessageType.Action, false);
+                //PrintMessage("              Jesteś teraz w trakcie rozgrywki.", MessageType.Action, false);
+                PrintMessage("              Jeśli teraz wyjdziesz, stan gry ", MessageType.Action, false);
+                PrintMessage("                    NIE zostanie zapisany.", MessageType.Action, false);
+                PrintMessage("                   Czy chcesz wyjść mimo to?", MessageType.Action, false);
+                PrintMessage("          (aby wybrać, wpisz 1 lub 2 i naciśnij enter)\n", MessageType.Action, false);
+                PrintMessage("                          1. TAK", MessageType.Loss, false);
+                PrintMessage("                          2. NIE\n", MessageType.Loss, false);
+            }
+            else
+            {
+                Window.Close();
+            }
+        }
+
+        //save game
+        private void SixthOptionHandler()
+        {
+            ClearOutputBox();
+            SaveHandler();
+        }
+
 
 
 
@@ -547,29 +861,70 @@ namespace Runedal.GameEngine
         //==============================================COMMAND HANDLERS=============================================
 
         //method handling 'save' command
-        private void SaveHandler(string saveName)
+        private void SaveHandler(bool IsQuickSave = false)
         {
-            GameClock.Stop();
 
-            if (saveName == string.Empty)
+            if (IsQuickSave)
             {
-                Data.SaveGame("test");
+                SaveGame("", false, true);
+                return;
             }
 
-            GameClock.Start();
-            PrintMessage("Gra zapisana", MessageType.SystemFeedback);
+            IsSaving = true;
+
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string[] savesToChoose = new string[saveFiles.Length];
+            int i;
+
+            for (i = 0; i < savesToChoose.Length; i++)
+            {
+                savesToChoose[i] = (i + 2) + ". " + Path.GetFileName(saveFiles[i]);
+            }
+
+            ClearOutputBox();
+
+            PrintMessage("*********************** ZAPISZ GRĘ ************************\n", MessageType.Gain, false);
+            PrintMessage("            (Wciśnij esc aby powrócić do menu)\n", MessageType.Action, false);
+
+            PrintMessage("         Aby wybrać zapis gry, wpisz odpowiedni numer", MessageType.Default, false);
+            PrintMessage("                     i naciśnij enter:\n", MessageType.Default, false);
+
+            PrintMessage("                       1. NOWY ZAPIS\n", MessageType.Loss, false);
+            foreach (var save in savesToChoose)
+            {
+                PrintMessage("                       " + save, MessageType.Loss, false);
+            }
+
         }
 
         //method handling 'load' command
-        private void LoadHandler(string saveName)
+        private void LoadHandler()
         {
+            IsLoading = true;
+
             GameClock.Stop();
 
-            Data.LoadGame(saveName);
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string[] savesToChoose = new string[saveFiles.Length];
+            int i;
 
-            GameClock.Start();
+            for (i = 0; i < savesToChoose.Length; i++)
+            {
+                savesToChoose[i] = (i + 1) + ". " + Path.GetFileName(saveFiles[i]);
+            }
 
-            PrintMessage("Gra wczytana", MessageType.SystemFeedback);
+            ClearOutputBox();
+
+            PrintMessage("*********************** WCZYTAJ GRĘ ***********************\n", MessageType.Gain, false);
+            PrintMessage("             (Wciśnij esc aby powrócić do menu)\n", MessageType.Action, false);
+
+            PrintMessage("          Aby wybrać zapis gry, wpisz odpowiedni numer", MessageType.Default, false);
+            PrintMessage("                     i naciśnij enter:\n", MessageType.Default, false);
+
+            foreach (var save in savesToChoose)
+            {
+                PrintMessage("                          " + save, MessageType.Loss, false);
+            }
         }
 
         //mathod handling 'autoattack' command
@@ -810,7 +1165,7 @@ namespace Runedal.GameEngine
         private void TradeHandler(string characterName)
         {
             int index = -1;
-            Character tradingCharacter = new Character();
+            Character tradingCharacter = new Character("placeholder");
 
             //if player is in combat state
             if (Data.Player!.CurrentState == Player.State.Combat)
@@ -1507,7 +1862,7 @@ namespace Runedal.GameEngine
                 //if player if fighting with multiple opponents
                 else
                 {
-                    CombatCharacter weakestOpponent = new CombatCharacter();
+                    CombatCharacter weakestOpponent = new CombatCharacter("placeholder");
                     weakestOpponent.Level = 9999999;
                     bool opponentFound = false;
 
@@ -1926,7 +2281,7 @@ namespace Runedal.GameEngine
                         //choose the weakest target from his opponents
                         else
                         {
-                            CombatCharacter weakestOpponent = new CombatCharacter();
+                            CombatCharacter weakestOpponent = new CombatCharacter("placeholder");
                             weakestOpponent.Level = 9999999;
 
                             //find the opponent with the lowest level
@@ -2328,6 +2683,9 @@ namespace Runedal.GameEngine
                     AddItemToLocation(character.CurrentLocation!, item.Name!, item.Quantity);
                 });
                 AddGoldToLocation(character.CurrentLocation!, character.Gold);
+
+                //erase npc's id from takeIds list
+                Data.TakenIds!.Remove(character.Id);
             }
         }
 
@@ -2624,7 +2982,7 @@ namespace Runedal.GameEngine
 
         private void TryToFlee(Location escapeDestination)
         {
-            CombatCharacter fastestOpponent = new CombatCharacter();
+            CombatCharacter fastestOpponent = new CombatCharacter("placeholder");
             fastestOpponent.Speed = 0;
 
             //find the fastest opponent
@@ -2989,7 +3347,7 @@ namespace Runedal.GameEngine
         //==============================================DESCRIPTION METHODS=============================================
 
         //method describing location to user
-        private void LocationInfo(Location currentLocation)
+        public void LocationInfo(Location currentLocation)
         {
             //Location currentLocation = Data.Player!.CurrentLocation!;
             Location nextLocation = new Location();
@@ -3797,21 +4155,20 @@ namespace Runedal.GameEngine
 
             if (command == "none")
             {
-                manualLines[i++] = "        ****************** KOMENDY ******************\n";
-                manualLines[i++] = "      (wpisz cokolwiek i wciśnij enter aby wyjść do menu)\n";
-                manualLines[i++] = "        Wszystko co robisz w grze, wykonujesz za";
-                manualLines[i++] = "        pomocą wpisywania komend. Do niektórych ";
-                manualLines[i++] = "        komend można dodać jakąś nazwę lub liczbę.";
-                manualLines[i++] = "        Na przykład komenda 'look' to patrzenie.";
-                manualLines[i++] = "        Jeśli wpiszesz samo 'look' otrzymasz opis";
-                manualLines[i++] = "        miejsca w jakim przebywasz, ale jeśli dodasz";
-                manualLines[i++] = "        nazwę obiektu, np 'look szczur' wyświetli Ci";
-                manualLines[i++] = "        się opis postaci o nazwie szczur.\n";
+                manualLines[i++] = "************************* KOMENDY *************************\n";
+                manualLines[i++] = "             (Wciśnij esc aby wrócić do menu)\n";
+                manualLines[i++] = "         Grą sterujesz wpisując komendy. Do niektórych";
+                manualLines[i++] = "         komend można dodać jakąś nazwę lub liczbę.";
+                manualLines[i++] = "         Na przykład komenda 'look' to patrzenie.";
+                manualLines[i++] = "         Jeśli wpiszesz samo 'look' otrzymasz opis";
+                manualLines[i++] = "         miejsca w jakim przebywasz, ale jeśli dodasz";
+                manualLines[i++] = "         nazwę obiektu, np 'look szczur' wyświetli Ci";
+                manualLines[i++] = "         się opis postaci o nazwie szczur.\n";
                 manualLines[i++] = "  >>> OBEJŻYJ";
                 manualLines[i++] = "     * Komenda: 'look [nazwa obiektu]'";
                 manualLines[i++] = "     * Skrót: 'l'";
                 manualLines[i++] = "           Ogląda obiekt o wybranej nazwie {np. 'look zardzewiały_miecz'}. Aby obejżeć lokację (rozejżeć się), " +
-                    "wpisz samą komendę 'look' bez nazwy obiektu. Możesz też spojrzeć do sąsiedniej lokacji wpisując jeden z kierunków (n, e, s, w, u, d)" +
+                    "wpisz samą komendę 'look'. Możesz też spojrzeć do sąsiedniej lokacji wpisując jeden z kierunków (n, e, s, w, u, d)" +
                     " zamiast nazwy obiektu {np. 'look n'}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> IDŹ";
@@ -3925,17 +4282,7 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "     * Skrót: 'pa'";
                 manualLines[i++] = "           Całkowicie wstrzymuje/wznawia grę."; 
                 manualLines[i++] = "";
-                manualLines[i++] = "  >>> WYJDŹ Z GRY";
-                manualLines[i++] = "     * Komenda: 'quit'";
-                manualLines[i++] = "     * Skrót: 'q'";
-                manualLines[i++] = "           Całkowicie wyłącza grę (bez zapisywania stanu gry!!)";
-                manualLines[i++] = "";
-                manualLines[i++] = "  >>> WYJDŹ DO MENU GŁÓWNEGO";
-                manualLines[i++] = "     * Komenda: 'exit'";
-                manualLines[i++] = "     * Skrót: 'e'";
-                manualLines[i++] = "           Wychodzi do menu głównego (bez zapisywania stanu gry!!)";
-                manualLines[i++] = "";
-                manualLines[i++] = "  >>> ZAPISZ GRĘ";
+                manualLines[i++] = "  >>> SZYBKI ZAPIS";
                 manualLines[i++] = "     * Komenda: 'save'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Zapisuje bieżący stan gry";
@@ -3945,10 +4292,23 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Wyłącza/włącza automatyczny atak Twojej postaci.";
                 manualLines[i++] = "";
+                manualLines[i++] = "  >>> INSTRUKCJA";
+                manualLines[i++] = "     * Komenda: 'manual'";
+                manualLines[i++] = "     * Skrót: brak";
+                manualLines[i++] = "           Pokazuje instrukcję gry";
+                manualLines[i++] = "  >>> CZYSZCZENIE EKRANU";
+                manualLines[i++] = "     * Komenda: 'clear'";
+                manualLines[i++] = "     * Skrót: brak";
+                manualLines[i++] = "           Wymazuje całą, dotychczasową treść ekranu gry";
             }
 
             for (i = start; i < manualLines.Length; i++)
             {
+                if (isDescriptionPrinted && i == 1)
+                {
+                    PrintMessage(manualLines[i], MessageType.Action, false);
+                    continue;
+                }
                 if (Regex.IsMatch(manualLines[i], @"^\s+>>>"))
                 {
                     PrintMessage(manualLines[i], MessageType.EffectOn, false);
@@ -3957,7 +4317,7 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage(manualLines[i], MessageType.UserCommand, false);
                 }
-                else if (Regex.IsMatch(manualLines[i], @"^\s+\*{3,20}"))
+                else if (Regex.IsMatch(manualLines[i], @"^\*{3,20}"))
                 {
                     PrintMessage(manualLines[i], MessageType.Gain, false);
                 }
@@ -3982,8 +4342,8 @@ namespace Runedal.GameEngine
 
             i = 0;
 
-            string title = "      **************** INSTRUKCJA GRY *****************\n";
-            string exitInfo = "     (wpisz cokolwiek i wciśnij enter aby wyjść do menu)\n";
+            string title = "********************** INSTRUKCJA GRY *********************\n";
+            string exitInfo = "           (Wciśnij esc aby wrócić do menu)\n";
 
             manualLines[i++] = "      Runedal jest grą typu RPG, w której wszystko co ";
             manualLines[i++] = "      musisz robić, to czytać i pisać.";
@@ -4209,7 +4569,7 @@ namespace Runedal.GameEngine
             //if user came from main menu, display info about coming back
             if (isExitInfoPrinted)
             {
-                PrintMessage(exitInfo, MessageType.Default, false);
+                PrintMessage(exitInfo, MessageType.Action, false);
             }
 
             for (i = 0; i < manualLines.Length; i++)
@@ -4222,7 +4582,7 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage(manualLines[i], MessageType.UserCommand, false);
                 }
-                else if (Regex.IsMatch(manualLines[i], @"^\s+\*{3,20}"))
+                else if (Regex.IsMatch(manualLines[i], @"^\s\*{3,20}"))
                 {
                     PrintMessage(manualLines[i], MessageType.Gain, false);
                 }
@@ -4544,7 +4904,7 @@ namespace Runedal.GameEngine
         }
 
         //method displaying communicates in outputBox of the gui
-        private void PrintMessage(string msg, MessageType type = MessageType.Default, bool shouldScroll = true)
+        public void PrintMessage(string msg, MessageType type = MessageType.Default, bool shouldScroll = true)
         {
             // Maximum of blocks in the document
             int MaxBlocks = 100;
@@ -4766,8 +5126,8 @@ namespace Runedal.GameEngine
             int dmgAsInt;
             int randomSpellNumber;
             
-            CombatCharacter attacker = new CombatCharacter();
-            CombatCharacter receiver = new CombatCharacter();
+            CombatCharacter attacker = new CombatCharacter("placeholder");
+            CombatCharacter receiver = new CombatCharacter("placeholder");
 
             for (i = 0; i < AttackInstances.Count; i++)
             {

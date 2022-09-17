@@ -53,6 +53,20 @@ namespace Runedal
         //handling user input on pressing and releasing Enter key
         private void inputBox_KeyUp(object sender, KeyEventArgs e)
         {
+            //testing area
+            if (e.Key == Key.Q)
+            {
+                Engine.PrintMessage("IsInMenu: " + Engine.IsInMenu);
+                Engine.PrintMessage("IsInGame: " + Engine.IsInGame + "\n");
+                
+                Engine.PrintMessage("IsLoading: " + Engine.IsLoading);
+                Engine.PrintMessage("IsSaving: " + Engine.IsSaving);
+                Engine.PrintMessage("IsNewSave: " + Engine.IsNewSave);
+                Engine.PrintMessage("IsInManual: " + Engine.IsInManual + "\n");
+
+                Engine.PrintMessage("IsPlayerChoosingAName: " + Engine.IsPlayerChoosingAName);
+                Engine.PrintMessage("IsConfirmationScreen: " + Engine.IsSaveConfirmation);
+            }
 
             //handle welcome screen
             if (IsWelcomeScreenOn)
@@ -62,6 +76,71 @@ namespace Runedal
                 inputBox.Focus();
                 IsWelcomeScreenOn = false;
                 return;
+            }
+
+            
+            if (e.Key == Key.Escape)
+            {
+                if (Engine.IsInMenu && Engine.IsInGame)
+                {
+                    Engine.IsInMenu = false;
+                    Engine.ClearOutputBox();
+                    Engine.LocationInfo(Engine.Data.Player!.CurrentLocation!);
+                    return;
+                }
+
+                if (Engine.IsInManual)
+                {
+                    Engine.IsInManual = false;
+                    Engine.IsInMenu = true;
+                    Engine.ClearOutputBox();
+                    Engine.PrintMainMenu();
+                    return;
+                }
+                if (Engine.IsLoading)
+                {
+                    Engine.IsLoading = false;
+                    Engine.IsInMenu = true;
+                    Engine.ClearOutputBox();
+                    Engine.PrintMainMenu();
+                    return;
+                }
+                if (Engine.IsSaving)
+                {
+                    Engine.IsSaving = false;
+                    Engine.IsNewSave = false;
+                    Engine.IsSaveConfirmation = false;
+                    Engine.IsInMenu = true;
+                    Engine.ClearOutputBox();
+                    Engine.PrintMainMenu();
+                    return;
+                }
+                if (Engine.IsPlayerChoosingAName)
+                {
+                    Engine.IsPlayerChoosingAName = false;
+                    Engine.IsInMenu = true;
+                    Engine.ClearOutputBox();
+                    Engine.PrintMainMenu();
+                    return;
+                }
+                if (Engine.IsExitConfirmation)
+                {
+                    Engine.IsExitConfirmation = false;
+
+                    Engine.IsInMenu = true;
+                    Engine.ClearOutputBox();
+                    Engine.PrintMainMenu();
+                    return;
+                }
+
+
+                if (Engine.IsInGame)
+                {
+                    Engine.IsInMenu = true;
+                    Engine.ClearOutputBox();
+                    Engine.PrintMainMenu();
+                    return;
+                }
             }
 
             if (e.Key == Key.Enter && inputBox.Text != String.Empty)

@@ -11,6 +11,8 @@ using System.Text.Json.Serialization;
 using Runedal.GameData.Effects;
 using static Runedal.GameData.Items.Weapon;
 using System.Xml.Linq;
+using AutoMapper;
+using System.Runtime.CompilerServices;
 
 namespace Runedal.GameData
 {
@@ -21,6 +23,7 @@ namespace Runedal.GameData
             //make json deserializer ignore letter cases in property names
             Options = new JsonSerializerOptions()
             {
+                WriteIndented = true,
                 PropertyNameCaseInsensitive = true,
                 Converters =
                 {
@@ -33,6 +36,7 @@ namespace Runedal.GameData
             Monsters = new List<Monster>();
             Items = new List<Item>();
             Spells = new List<Spell>();
+            TakenIds = new List<ulong>();
             PriceMultiplier = 1.2;
         }
         public double PriceMultiplier { get; set; }
@@ -45,6 +49,7 @@ namespace Runedal.GameData
         public List<Monster>? Monsters { get; set; }
         public List<Item>? Items { get; set; }
         public List<Spell>? Spells { get; set; }
+        public List<ulong>? TakenIds { get; set; }
         public Player? Player { get; set; }
       
         
@@ -196,21 +201,28 @@ namespace Runedal.GameData
                     {
                         for (i = 0; i < kvp.Value; i++)
                         {
-                            location.AddCharacter(new Monster((character as Monster)!));
+                            Monster monster = new Monster((character as Monster)!);
+                            monster.Id = GetNewId();
+                            location.AddCharacter(monster);
+
                         }
                     }
                     else if (character.GetType() == typeof(Trader))
                     {
                         for (i = 0; i < kvp.Value; i++)
                         {
-                            location.AddCharacter(new Trader((character as Trader)!));
+                            Trader trader = new Trader((character as Trader)!);
+                            trader.Id = GetNewId();
+                            location.AddCharacter(trader);
                         }
                     }
                     else if (character.GetType() == typeof(Hero))
                     {
                         for (i = 0; i < kvp.Value; i++)
                         {
-                            location.AddCharacter(new Hero((character as Hero)!));
+                            Hero hero = new Hero((character as Hero)!);
+                            hero.Id = GetNewId();
+                            location.AddCharacter(hero);
                         }
                     }
                 }
@@ -222,24 +234,144 @@ namespace Runedal.GameData
         }
 
         //method saving game
-        public void SaveGame(string saveName)
+        public void SaveGame(string savePath)
         {
-            string jsonString = JsonSerializer.Serialize(Locations, Options);
-            File.WriteAllText(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\" + saveName, jsonString);
+            GameSave save = new GameSave();
+            Player player = Player!;
+
+            //save takenids list
+            save.TakenIds = TakenIds!;
+
+            //remove player from his location 
+            player.CurrentLocation!.Characters!.Remove(player);
+
+            //save player current location as location with only
+            //coordinates to restore later by matching with original
+            //location
+            Location playerLocation = new Location();
+            playerLocation.X = player.CurrentLocation.X;
+            playerLocation.Y = player.CurrentLocation.Y;
+            playerLocation.Z = player.CurrentLocation.Z;
+
+            player.CurrentLocation = playerLocation;
+
+            //add player to gamesave
+            save.Player = player;
+            save.PlayerHp = player.Hp;
+
+            Locations!.ForEach(loc =>
+            {
+                loc.CharsIds.Clear();
+
+                loc.Characters!.ForEach(character =>
+                {
+
+                    //clear currentLocation reference to avoid circural
+                    //reference
+                    character.CurrentLocation = null;
+
+                    //add ids of characters to charIds
+                    loc.CharsIds.Add(character.Id);
+
+                    if (character.GetType() == typeof(Monster))
+                    {
+                        save.Monsters.Add((character as Monster)!);
+                    }
+                    else if (character.GetType() == typeof(Hero))
+                    {
+                        save.Heroes.Add((character as Hero)!);
+                    }
+                    else if (character.GetType() == typeof(Trader))
+                    {
+                        save.Traders.Add((character as Trader)!);
+                    }
+                });
+            });
+
+            //save locations to gamesave
+            save.Locations = Locations;
+
+            //remember to reassign currentlocation references to every character in the locations
+
+            JsonString = JsonSerializer.Serialize(save, Options);
+            File.WriteAllText(savePath, JsonString);
+
+            //after saving game reassign currentLocation references for every character
+            //and restore player position by finding location with the same x, y, and z
+            //as previously saved temporary player's current location
+            Locations.ForEach(loc =>
+            {
+                loc.Characters!.ForEach(character =>
+                {
+                    character.CurrentLocation = loc;
+                });
+            });
+            Location temp = Locations.Find(loc =>
+            
+                loc.X == player.CurrentLocation!.X &&
+                loc.Y == player.CurrentLocation!.Y &&
+                loc.Z == player.CurrentLocation!.Z
+            )!;
+
+            temp.AddCharacter(player);
         }
         
-        //method loading game
-        public void LoadGame(string saveName)
+        //method loading gamesave
+        public void LoadGame(string savePath)
         {
-            Location[] locationsArray = JsonSerializer.Deserialize<Location[]>
-                (@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\" + saveName)!;
+            JsonString = File.ReadAllText(savePath);
 
+            GameSave save = JsonSerializer.Deserialize<GameSave>(JsonString, Options)!;
+
+            //clear locations
             Locations!.Clear();
 
-            foreach (var loc in locationsArray)
+            //add all locations from gamesave
+            save.Locations!.ForEach(loc =>
             {
+
+                //clear location "flat" characters
+                loc.Characters!.Clear();
+
+                loc.CharsIds.ForEach(charId =>
+                {
+                    if (save.Traders!.Exists(tr => tr.Id == charId))
+                    {
+                        loc.AddCharacter(save.Traders.Find(tr => tr.Id == charId)!);
+                    }
+                    else if (save.Monsters!.Exists(tr => tr.Id == charId))
+                    {
+                        loc.AddCharacter(save.Monsters.Find(tr => tr.Id == charId)!);
+                    }
+                    else if (save.Heroes!.Exists(tr => tr.Id == charId))
+                    {
+                        loc.AddCharacter(save.Heroes.Find(tr => tr.Id == charId)!);
+                    }
+
+                });
+
                 Locations.Add(loc);
-            }
+            });
+
+            //reassign currentLOcation for every character
+            Locations.ForEach(loc =>
+            {
+                loc.Characters!.ForEach(character =>
+                {
+                    character.CurrentLocation = loc;
+                });
+            });
+
+            //reassign player object to it's reference in data
+            Player = save.Player;
+            Player!.Hp = save.PlayerHp;
+
+            //load player to his location
+            Location playerLocation = Locations.Find(loc => loc.X == Player!.CurrentLocation!.X &&
+            loc.Y == save.Player!.CurrentLocation!.Y && loc.Z == Player.CurrentLocation!.Z)!;
+            playerLocation.AddCharacter(Player!);
+
+            
         }
 
 
@@ -269,13 +401,13 @@ namespace Runedal.GameData
                     Weapon weapon = (Weapon)item;
                     if (weapon.Type == WeaponType.Blade)
                     {
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -25, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -20, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -30, 0, weapon.Name!, true));
                     }
                     else if (weapon.Type == WeaponType.Blunt)
                     {
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -50, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -70, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -40, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -60, 0, weapon.Name!, true));
                     }
                 }
 
@@ -373,6 +505,20 @@ namespace Runedal.GameData
                 itemToAdd = Items!.Find(item => item.Name!.ToLower() == kvp.Key.ToLower())!;
                 character.AddItem(itemToAdd, kvp.Value);
             }
+        }
+
+        //method finding new id for a character
+        private ulong GetNewId()
+        {
+            ulong newId = 1;
+
+            //if Id already exists, increment it until new, original number is found
+            while (TakenIds!.Exists(id => id == newId))
+            {
+                newId++;
+            }
+            TakenIds.Add(newId);
+            return newId;
         }
     }
 }

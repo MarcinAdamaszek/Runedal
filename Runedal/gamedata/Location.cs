@@ -20,6 +20,7 @@ namespace Runedal.GameData
             WestPassage = true;
             Characters = new List<Character>();
             Items = new List<Item>();
+            CharsIds = new List<ulong>();
             Gold = 0;
         }
         public Location(int[] coordinates, string[] descriptive, bool[] openBools) : base(descriptive)
@@ -35,6 +36,7 @@ namespace Runedal.GameData
             DownPassage = openBools[5];
             Characters = new List<Character>();
             Items = new List<Item>();
+            CharsIds = new List<ulong>();
             Gold = 0;
         }
 
@@ -56,6 +58,9 @@ namespace Runedal.GameData
 
         //list of characters to load into the location at game launch
         public Dictionary<string, int>? CharsToAdd { get; set; }
+
+        //list of charcter's id numbers to load from game save
+        public List<ulong> CharsIds { get; set; }
 
         //list of items lying on the ground
         public List<Item>? Items { get; set; }

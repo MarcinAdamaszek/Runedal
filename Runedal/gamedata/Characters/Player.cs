@@ -52,9 +52,9 @@ namespace Runedal.GameData.Characters
 
             Effects = new List<EffectOnPlayer>();
 
-            Level = 1;
-            Experience = 0;
-            NextLvlExpCap = 50;
+            //Level = 1;
+            //Experience = 0;
+            //NextLvlExpCap = 50;
         }
         public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold)
             : base(descriptive, combatStats, responses, gold)

@@ -175,7 +175,7 @@ namespace Runedal.GameData.Characters
         //spells remembered by character
         public List<Spell> RememberedSpells { get; set; }
         public int MaxSpellsRemembered { get; set; }
-        public string[] StartingSpells { get; set; }
+        public string[]? StartingSpells { get; set; }
         public double Heal(double healAmount)
         {
             double hpAfterHeal = Hp + healAmount;

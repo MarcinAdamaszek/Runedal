@@ -1656,6 +1656,7 @@ namespace Runedal.GameEngine
                     itemsToPickup.Add(item);
                 });
 
+                //if there are any items in player's current location
                 if (itemsToPickup.Count > 0)
                 {
                     itemsToPickup.ForEach(item => 
@@ -1664,6 +1665,22 @@ namespace Runedal.GameEngine
                         AddItemToPlayer(item.Name!, item.Quantity);
                         Data.Player!.CurrentLocation!.RemoveItem(item.Name!, item.Quantity);
                     });
+
+                    //pick up the gold also
+                    if (Data.Player!.CurrentLocation.Gold > 0)
+                    {
+                        PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " złota", MessageType.Action);
+                        AddGoldToPlayer(Data.Player!.CurrentLocation.Gold);
+                        Data.Player!.CurrentLocation.Gold = 0;
+                    }
+                }
+
+                //else, if there are no items but only gold on the ground
+                else if (Data.Player!.CurrentLocation.Gold > 0)
+                {
+                    PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " złota", MessageType.Action);
+                    AddGoldToPlayer(Data.Player!.CurrentLocation.Gold);
+                    Data.Player!.CurrentLocation.Gold = 0;
                 }
                 else
                 {

@@ -54,19 +54,19 @@ namespace Runedal
         private void inputBox_KeyUp(object sender, KeyEventArgs e)
         {
             //testing area
-            if (e.Key == Key.Q)
-            {
-                Engine.PrintMessage("IsInMenu: " + Engine.IsInMenu);
-                Engine.PrintMessage("IsInGame: " + Engine.IsInGame + "\n");
+            //if (e.Key == Key.Q)
+            //{
+            //    Engine.PrintMessage("IsInMenu: " + Engine.IsInMenu);
+            //    Engine.PrintMessage("IsInGame: " + Engine.IsInGame + "\n");
                 
-                Engine.PrintMessage("IsLoading: " + Engine.IsLoading);
-                Engine.PrintMessage("IsSaving: " + Engine.IsSaving);
-                Engine.PrintMessage("IsNewSave: " + Engine.IsNewSave);
-                Engine.PrintMessage("IsInManual: " + Engine.IsInManual + "\n");
+            //    Engine.PrintMessage("IsLoading: " + Engine.IsLoading);
+            //    Engine.PrintMessage("IsSaving: " + Engine.IsSaving);
+            //    Engine.PrintMessage("IsNewSave: " + Engine.IsNewSave);
+            //    Engine.PrintMessage("IsInManual: " + Engine.IsInManual + "\n");
 
-                Engine.PrintMessage("IsPlayerChoosingAName: " + Engine.IsPlayerChoosingAName);
-                Engine.PrintMessage("IsConfirmationScreen: " + Engine.IsSaveConfirmation);
-            }
+            //    Engine.PrintMessage("IsPlayerChoosingAName: " + Engine.IsPlayerChoosingAName);
+            //    Engine.PrintMessage("IsConfirmationScreen: " + Engine.IsSaveConfirmation);
+            //}
 
             //handle welcome screen
             if (IsWelcomeScreenOn)

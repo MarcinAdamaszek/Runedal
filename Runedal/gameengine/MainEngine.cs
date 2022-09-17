@@ -422,6 +422,10 @@ namespace Runedal.GameEngine
                 case "sp":
                     SpellsHandler();
                     break;
+                case "effects":
+                case "e":
+                    EffectsHandler();
+                    break;
                 case "point":
                 case "po":
                     PointHandler(argument1);
@@ -2400,6 +2404,42 @@ namespace Runedal.GameEngine
             //add action to queue
             CharAction spellcast = new SpellCast(Data.Player, target, spellToCast);
             AddAction(spellcast);
+        }
+
+        //method for handling 'effects' command
+        private void EffectsHandler()
+        {
+            List<EffectOnPlayer> playerEffects = Data.Player!.Effects!;
+            string effectLine = string.Empty;
+
+            if (playerEffects.Count == 0)
+            {
+                PrintMessage("W tej chwili żaden efekt na Ciebie nie wpływa", MessageType.SystemFeedback);
+                return;
+            }
+
+            playerEffects.ForEach(eff =>
+            {
+                effectLine = "* " + eff.Name + ": ";
+
+                //add modifiers descriptions to effectLine
+                Data.Player!.Modifiers!.ForEach(mod =>
+                {
+                    if (mod.Parent == eff.Name)
+                    {
+                        effectLine += GetModDescription(mod) + ", ";
+                    }
+                });
+
+                //remove trailing comma after last modifier
+                effectLine = Regex.Replace(effectLine, @",\s$", "");
+
+                //add effect duration
+                effectLine += " {" + Data.Player!.Modifiers!.Find(mod => mod.Parent == eff.Name)!.DurationInTicks / 10 + " sek.}";
+
+                //print effect
+                PrintMessage(effectLine, MessageType.EffectOn);
+            });
         }
 
 
@@ -4688,7 +4728,7 @@ namespace Runedal.GameEngine
         }
 
         //method returning formatted string representing effect description (it's modifiers and duration)
-        private string GetEffectDescription(List<Modifier> modifiers)
+        private string GetEffectDescription(List<Modifier> modifiers, bool withRealDuration = false)
         {
             string effect = string.Empty;
 
@@ -4701,7 +4741,16 @@ namespace Runedal.GameEngine
 
                 //remove trailing comma and add duration
                 effect = Regex.Replace(effect, @",\s$", "");
-                effect += " {" + modifiers[0].Duration + " sek.}";
+
+                //print starting or actual duration depending on second argument
+                if (withRealDuration)
+                {
+                    effect += " {" + (modifiers[0].DurationInTicks / 10) + " sek.}";
+                }
+                else
+                {
+                    effect += " {" + modifiers[0].Duration + " sek.}";
+                }
             }
             else
             {

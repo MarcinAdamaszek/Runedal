@@ -446,7 +446,7 @@ namespace Runedal.GameData
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
                         }
                     }
-                    if (armor.Type == Armor.ArmorType.Helmet || armor.Type == Armor.ArmorType.Gloves || armor.Type == Armor.ArmorType.Gloves)
+                    if (armor.Type == Armor.ArmorType.Helmet || armor.Type == Armor.ArmorType.Gloves || armor.Type == Armor.ArmorType.Shoes)
                     {
                         if (armor.Weight >= 250)
                         {

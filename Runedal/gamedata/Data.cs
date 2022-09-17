@@ -99,7 +99,7 @@ namespace Runedal.GameData
             AddCharactersToList(tradersArray);
 
             //load monsters
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\monsters.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Monsters.json");
             Character[] monstersArray = JsonSerializer.Deserialize<Monster[]>(JsonString, Options)!;
             AddCharactersToList(monstersArray);
 
@@ -142,9 +142,15 @@ namespace Runedal.GameData
             AddItemsToList(weaponsArray);
 
             //load armors
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors.json");
-            Item[] armorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
-            AddItemsToList(armorsArray);
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\ArmorsRobe.json");
+            Item[] robeArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
+            AddItemsToList(robeArmorsArray);
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\ArmorsLight.json");
+            Item[] lightArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
+            AddItemsToList(lightArmorsArray);
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\ArmorsHeavy.json");
+            Item[] heavyArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
+            AddItemsToList(heavyArmorsArray);
 
             //load runes
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Runes.json");
@@ -426,9 +432,7 @@ namespace Runedal.GameData
                         }
                         else if (armor.Weight < 500 && armor.Weight >= 200)
                         {
-                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
-                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -20, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
                         }
                     }
                     if (armor.Type == Armor.ArmorType.Pants)
@@ -441,24 +445,22 @@ namespace Runedal.GameData
                         }
                         else if (armor.Weight < 400 && armor.Weight >= 150)
                         {
-                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
-                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
                         }
                     }
                     if (armor.Type == Armor.ArmorType.Helmet || armor.Type == Armor.ArmorType.Gloves || armor.Type == Armor.ArmorType.Shoes)
                     {
                         if (armor.Weight >= 250)
                         {
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -10, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -3, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -7, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -2, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -7, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 250 && armor.Weight >= 100)
                         {
                             //armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
                             //armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -5, 0, armor.Name!, true));
                         }
                     }
                 }
@@ -502,8 +504,11 @@ namespace Runedal.GameData
 
             foreach (KeyValuePair<string, int> kvp in character.Items!)
             {
-                itemToAdd = Items!.Find(item => item.Name!.ToLower() == kvp.Key.ToLower())!;
-                character.AddItem(itemToAdd, kvp.Value);
+                if (Items!.Exists(it => it.Name!.ToLower() == kvp.Key.ToLower()))
+                {
+                    itemToAdd = Items!.Find(item => item.Name!.ToLower() == kvp.Key.ToLower())!;
+                    character.AddItem(itemToAdd, kvp.Value);
+                }
             }
         }
 

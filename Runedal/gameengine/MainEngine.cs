@@ -469,6 +469,9 @@ namespace Runedal.GameEngine
                 case "10":
                     OptionHandler(command);
                     break;
+                case "iwannagrow":
+                        GivePlayerExperience(10);
+                    break;
                 default:
                     PrintMessage("Nie rozumiem. Wpisz 'help' aby zobaczyć komendy, lub wciśnij esc aby zobaczyć menu.", MessageType.SystemFeedback);
                     return;

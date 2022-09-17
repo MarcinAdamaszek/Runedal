@@ -644,7 +644,7 @@ namespace Runedal.GameEngine
 
             if (isQuickSave)
             {
-                savePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\SzybkiZapis";
+                savePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\AUTO_ZAPIS";
             }
 
             if (IsPathSpecified)
@@ -878,7 +878,7 @@ namespace Runedal.GameEngine
 
             for (i = 0; i < savesToChoose.Length; i++)
             {
-                savesToChoose[i] = (i + 2) + ". " + Path.GetFileName(saveFiles[i]);
+                savesToChoose[i] = Path.GetFileName(saveFiles[i]);
             }
 
             ClearOutputBox();
@@ -890,11 +890,17 @@ namespace Runedal.GameEngine
             PrintMessage("                     i naciśnij enter:\n", MessageType.Default, false);
 
             PrintMessage("                       1. NOWY ZAPIS\n", MessageType.Loss, false);
+
+            i = 2;
+
             foreach (var save in savesToChoose)
             {
-                PrintMessage("                       " + save, MessageType.Loss, false);
+                if (save != "AUTO_ZAPIS")
+                {
+                    PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
+                    i++;
+                }
             }
-
         }
 
         //method handling 'load' command
@@ -910,7 +916,7 @@ namespace Runedal.GameEngine
 
             for (i = 0; i < savesToChoose.Length; i++)
             {
-                savesToChoose[i] = (i + 1) + ". " + Path.GetFileName(saveFiles[i]);
+                savesToChoose[i] = Path.GetFileName(saveFiles[i]);
             }
 
             ClearOutputBox();
@@ -921,10 +927,29 @@ namespace Runedal.GameEngine
             PrintMessage("          Aby wybrać zapis gry, wpisz odpowiedni numer", MessageType.Default, false);
             PrintMessage("                     i naciśnij enter:\n", MessageType.Default, false);
 
-            foreach (var save in savesToChoose)
+            if (savesToChoose.Contains("AUTO_ZAPIS"))
             {
-                PrintMessage("                          " + save, MessageType.Loss, false);
+                PrintMessage("                       1. AUTO_ZAPIS", MessageType.Loss, false);
+                i = 2;
+                foreach (var save in savesToChoose)
+                {
+                    if (save != "AUTO_ZAPIS")
+                    {
+                        PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
+                        i++;
+                    }
+                }
             }
+            else
+            {
+                i = 1;
+                foreach (var save in savesToChoose)
+                {
+                        PrintMessage("                        " + i + save, MessageType.Loss, false);
+                }
+            }
+
+            
         }
 
         //mathod handling 'autoattack' command

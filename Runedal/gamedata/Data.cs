@@ -437,13 +437,13 @@ namespace Runedal.GameData
                     }
                     if (armor.Type == Armor.ArmorType.Pants)
                     {
-                        if (armor.Weight >= 400)
+                        if (armor.Weight >= 450)
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -15, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -5, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
                         }
-                        else if (armor.Weight < 400 && armor.Weight >= 150)
+                        else if (armor.Weight < 450 && armor.Weight >= 150)
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
                         }

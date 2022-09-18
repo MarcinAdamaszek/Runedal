@@ -426,6 +426,7 @@ namespace Runedal.GameData
                     {
                         if (armor.Weight >= 500)
                         {
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -10, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -20, 0, armor.Name!, true));
@@ -439,6 +440,7 @@ namespace Runedal.GameData
                     {
                         if (armor.Weight >= 450)
                         {
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -7, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -15, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -5, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
@@ -452,6 +454,7 @@ namespace Runedal.GameData
                     {
                         if (armor.Weight >= 250)
                         {
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -5, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -7, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -2, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -7, 0, armor.Name!, true));

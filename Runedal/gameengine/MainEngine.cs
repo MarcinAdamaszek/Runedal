@@ -3694,6 +3694,10 @@ namespace Runedal.GameEngine
         private void CharacterInfo(Character character)
         {
             PrintMessage("[ " + character.Name + " ]");
+            if (character.GetType() == typeof(Monster) || character.GetType() == typeof(Hero))
+            {
+                PrintMessage("Poziom: " + (character as CombatCharacter)!.Level);
+            }
             PrintMessage(character.Description!);
         }
 

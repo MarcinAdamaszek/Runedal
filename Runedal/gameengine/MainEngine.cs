@@ -3581,7 +3581,14 @@ namespace Runedal.GameEngine
                 //only if it's trade mode and price is needed
                 if (withPrice)
                 {
-                    priceColumnSize = 7 - Convert.ToString(item.Price).Length;
+                    if (character == Data.Player!)
+                    {
+                        priceColumnSize = 7 - Convert.ToString(item.Price).Length;
+                    }
+                    else
+                    {
+                        priceColumnSize = 7 - Convert.ToString(CalculateTraderPrice(item.Name)).Length;
+                    }
                     spaceAfterPrice = string.Empty;
                     for (int i = 0; i < priceColumnSize; i++)
                     {

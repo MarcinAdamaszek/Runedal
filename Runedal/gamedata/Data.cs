@@ -493,7 +493,7 @@ namespace Runedal.GameData
                 {
                     CombatCharacter combatNpc = (CombatCharacter)character;
 
-                    if (combatNpc.StartingSpells.Length > 0)
+                    if (combatNpc.StartingSpells!.Length > 0)
                     {
                         for (i = 0; i < combatNpc.StartingSpells.Length; i++)
                         {

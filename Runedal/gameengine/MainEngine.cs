@@ -2438,7 +2438,7 @@ namespace Runedal.GameEngine
                 effectLine = Regex.Replace(effectLine, @",\s$", "");
 
                 //add effect duration
-                effectLine += " {" + Data.Player!.Modifiers!.Find(mod => mod.Parent == eff.Name)!.DurationInTicks / 10 + " sek.}";
+                effectLine += " " + TimeValueFromSeconds(Data.Player!.Modifiers!.Find(mod => mod.Parent == eff.Name)!.DurationInTicks / 10);
 
                 //print effect
                 PrintMessage(effectLine, MessageType.EffectOn);
@@ -3158,6 +3158,10 @@ namespace Runedal.GameEngine
             PrintMessage(item.UseActivityName! + " " + item.Name!, MessageType.Action);
             RemoveItemFromPlayer(item.Name!);
             ApplyEffect(item.Modifiers!, item.Name!);
+            if (item.AdditionalEffect!.Count > 0)
+            {
+                ApplyEffect(item.AdditionalEffect!, item.Name! + "(Dodatkowy)");
+            }
         }
 
         //method applying effects to player
@@ -3172,8 +3176,18 @@ namespace Runedal.GameEngine
             if (modifiers.Count > 0)
             {
 
-                //get duration for new effect from first modifier in the list
-                durationInTicks = modifiers[0].DurationInTicks;
+                //get duration for new effect from the longest lasting modifier in the list
+                Modifier longestDurationMod = new Modifier();
+                longestDurationMod.DurationInTicks = 0;
+                modifiers.ForEach(mod =>
+                {
+                    if (mod.DurationInTicks > longestDurationMod.DurationInTicks)
+                    {
+                        longestDurationMod = mod;
+                    }
+                });
+
+                durationInTicks = longestDurationMod.DurationInTicks;
 
                 //set ParentEffect for each mod and add it's description to description string
                 modifiers!.ForEach(mod =>
@@ -3716,6 +3730,7 @@ namespace Runedal.GameEngine
             string itemType = string.Empty;
             string modifiers = string.Empty;
             string effect = string.Empty;
+            string additionalEffect = string.Empty;
             string attack = string.Empty;
             string defense = string.Empty;
             string range = string.Empty;
@@ -3734,6 +3749,10 @@ namespace Runedal.GameEngine
 
                 //add modifiers descriptions to effect description for every modifier present in the item
                 effect += GetEffectDescription(itemToDescribe.Modifiers!);
+                if ((itemToDescribe as Consumable)!.AdditionalEffect!.Count > 0)
+                {
+                    additionalEffect += "Dodatkowe działanie: " + GetEffectDescription((itemToDescribe as Consumable)!.AdditionalEffect!);
+                }
             }
             else if (itemToDescribe.GetType() == typeof(Armor))
             {
@@ -3840,6 +3859,10 @@ namespace Runedal.GameEngine
             if (effect != string.Empty)
             {
                 PrintMessage(effect);
+            }
+            if (additionalEffect != string.Empty)
+            {
+                PrintMessage(additionalEffect);
             }
             if (defense != string.Empty)
             {
@@ -4723,19 +4746,19 @@ namespace Runedal.GameEngine
             }
             else if (effect.Type == SpecialEffect.EffectType.Stun)
             {
-                effectDescription = "Ogłuszenie {" + effect.Duration + " sek.}";
+                effectDescription = "Ogłuszenie " + TimeValueFromSeconds(effect.Duration);
             }
             else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
             {
-                effectDescription = "Kradzież życia(+" + effect.Value + "_%) " + "{" + effect.Duration + " sek.}";
+                effectDescription = "Kradzież życia(+" + effect.Value + "_%) " + TimeValueFromSeconds(effect.Duration);
             }
             else if (effect.Type == SpecialEffect.EffectType.Invisibility)
             {
-                effectDescription = "Niewidzialność " + "{" + effect.Duration + " sek.}";
+                effectDescription = "Niewidzialność " + TimeValueFromSeconds(effect.Duration);
             }
             else if (effect.Type == SpecialEffect.EffectType.ManaShield)
             {
-                effectDescription = "Tarcza MP(+" + effect.Value + "_%) " + "{" + effect.Duration + " sek.}";
+                effectDescription = "Tarcza MP(+" + effect.Value + "_%) " + TimeValueFromSeconds(effect.Duration);
             }
 
             return effectDescription;
@@ -4759,11 +4782,11 @@ namespace Runedal.GameEngine
                 //print starting or actual duration depending on second argument
                 if (withRealDuration)
                 {
-                    effect += " {" + (modifiers[0].DurationInTicks / 10) + " sek.}";
+                    effect += " " + TimeValueFromSeconds((modifiers[0].DurationInTicks / 10));
                 }
                 else
                 {
-                    effect += " {" + modifiers[0].Duration + " sek.}";
+                    effect += " " + TimeValueFromSeconds(modifiers[0].Duration);
                 }
             }
             else
@@ -4999,6 +5022,41 @@ namespace Runedal.GameEngine
 
             quantityValue = parsedQuantity;
             return true;
+        }
+
+        //method converting seconds number to time value in hours, minutes and seconds
+        private string TimeValueFromSeconds(int seconds)
+        {
+            int hours = 0;
+            int minutes = 0;
+            string time = string.Empty;
+
+            while (seconds >= 3600)
+            {
+                seconds -= 3600;
+                hours++;
+            }
+
+            while (seconds >= 60)
+            {
+                seconds -= 60;
+                minutes++;
+            }
+
+            if (hours == 0 && minutes == 0)
+            {
+                time = "{" + seconds + " sek.}";    
+            }
+            else if (hours == 0)
+            {
+                time = "{" + minutes + " min. " + seconds + " sek.}"; 
+            }
+            else
+            {
+                time = "{" + hours + " h " + minutes + " min. " + seconds + " sek.}";
+            }
+
+            return time;
         }
 
         //method printing characters line in form of speech

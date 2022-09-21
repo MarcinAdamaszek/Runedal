@@ -2094,7 +2094,7 @@ namespace Runedal.GameEngine
         {
             bool isCombinationDouble = false;
             string spellName = string.Empty;
-            string[] runeNames = new string[5] { "zjarrit", "akull", "verde", "xitan", "dara" };
+            string[] runeNames = new string[5] { "iskarr", "akull", "verde", "xitan", "dara" };
             Spell craftedSpell = new Spell();
 
             if (firstRune == String.Empty)
@@ -2108,7 +2108,7 @@ namespace Runedal.GameEngine
             {
                 switch (firstRune)
                 {
-                    case "zjarrit":
+                    case "iskarr":
                         spellName = "kula_ognia";
                         break;
                     case "akull":

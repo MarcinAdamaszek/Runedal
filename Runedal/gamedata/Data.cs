@@ -73,7 +73,7 @@ namespace Runedal.GameData
         public void LoadPlayer(string playerName)
         {
             //load player from json file
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Player.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Player.json");
             Player[] playerArray = JsonSerializer.Deserialize<Player[]>(JsonString, Options)!;
 
 
@@ -94,17 +94,17 @@ namespace Runedal.GameData
         {
 
             //load traders from json
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Traders.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Traders.json");
             Character[] tradersArray = JsonSerializer.Deserialize<Trader[]>(JsonString, Options)!;
             AddCharactersToList(tradersArray);
 
             //load monsters
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Monsters.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Monsters.json");
             Character[] monstersArray = JsonSerializer.Deserialize<Monster[]>(JsonString, Options)!;
             AddCharactersToList(monstersArray);
 
             //load heroes
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Heroes.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Heroes.json");
             Character[] heroesArray = JsonSerializer.Deserialize<Hero[]>(JsonString, Options)!;
             AddCharactersToList(heroesArray);
 
@@ -137,18 +137,27 @@ namespace Runedal.GameData
             AddItemsToList(consumablesArray);
 
             //load weapons
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons.json");
-            Item[] weaponsArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
-            AddItemsToList(weaponsArray);
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsDaggers.json");
+            Item[] daggersArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
+            AddItemsToList(daggersArray);
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsBlades.json");
+            Item[] bladesArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
+            AddItemsToList(bladesArray);
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsBlunts.json");
+            Item[] bluntsArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
+            AddItemsToList(bluntsArray);
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsStaves.json");
+            Item[] stavesArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
+            AddItemsToList(bluntsArray);
 
             //load armors
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\ArmorsRobe.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors\ArmorsRobe.json");
             Item[] robeArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
             AddItemsToList(robeArmorsArray);
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\ArmorsLight.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors\ArmorsLight.json");
             Item[] lightArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
             AddItemsToList(lightArmorsArray);
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\ArmorsHeavy.json");
+            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors\ArmorsHeavy.json");
             Item[] heavyArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
             AddItemsToList(heavyArmorsArray);
 

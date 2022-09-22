@@ -86,6 +86,7 @@ namespace Runedal
                     Engine.IsInMenu = false;
                     Engine.ClearOutputBox();
                     Engine.LocationInfo(Engine.Data.Player!.CurrentLocation!);
+                    Engine.GameClock.Start();
                     return;
                 }
 
@@ -137,6 +138,7 @@ namespace Runedal
                 if (Engine.IsInGame)
                 {
                     Engine.IsInMenu = true;
+                    Engine.GameClock.Stop();
                     Engine.ClearOutputBox();
                     Engine.PrintMainMenu();
                     return;

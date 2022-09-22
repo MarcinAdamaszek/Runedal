@@ -2927,7 +2927,7 @@ namespace Runedal.GameEngine
             if (Data.Player!.GainExperience(experience))
             {
                 PrintMessage("***Zdobywasz nowy poziom!***", MessageType.Action);
-                Data.Player!.AddAttributePoints((Data.Player!.Level - previousLevel) * 4);
+                Data.Player!.AddAttributePoints((Data.Player!.Level - previousLevel) * 5);
             }
         }
 

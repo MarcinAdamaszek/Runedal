@@ -147,6 +147,7 @@ namespace Runedal
 
             if (e.Key == Key.Enter && inputBox.Text != String.Empty)
             {
+
                 if (inputBox.Text != String.Empty)
                 {
                     CommandIndex = 0;

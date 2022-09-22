@@ -627,7 +627,7 @@ namespace Runedal.GameEngine
 
             PrintMessage("> Witaj w świecie Runedal!. Aby zrobić cokolwiek, wpisujesz odpowiednią komendę i naciskasz enter.", MessageType.EffectOn);
             PrintMessage("> Jeśli chcesz zobaczyć listę komend, wpisz 'help'.", MessageType.EffectOn);
-            PrintMessage("> Jeśli chcesz zobaczyć instrukcję gry - wpisz 'manual'\n", MessageType.EffectOn);
+            PrintMessage("> Jeśli chcesz zobaczyć instrukcję gry - wpisz 'manual'", MessageType.EffectOn);
             PrintMessage("> Jeśli chcesz wyjść do menu głównego - wciśnij esc\n", MessageType.EffectOn);
 
             PrintMap();

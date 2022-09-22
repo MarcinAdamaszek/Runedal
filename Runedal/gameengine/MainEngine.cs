@@ -2666,13 +2666,6 @@ namespace Runedal.GameEngine
             else if (attacked == Data.Player)
             {
                 PrintMessage("Zostałeś zaatakowany przez: " + attacker.Name + "!");
-
-                //handle auto-attack
-                if (IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
-                {
-                    AttackCharacter(attacked, attacker);
-                }
-
             }
             else if (attacked.CurrentLocation! == Data.Player!.CurrentLocation)
             {
@@ -5407,6 +5400,12 @@ namespace Runedal.GameEngine
 
                     dmgAsInt = Convert.ToInt32(dealtDmg);
                     isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt);
+                }
+
+                //handle auto-attack
+                if (isReceiverPlayer && IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
+                {
+                    AttackCharacter(Data.Player!, attacker);
                 }
             }
         }

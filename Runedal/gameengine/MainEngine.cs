@@ -1086,7 +1086,6 @@ namespace Runedal.GameEngine
         {
             int index = -1;
             string description = string.Empty;
-            entityName = entityName.ToLower();
 
             //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
@@ -1111,7 +1110,7 @@ namespace Runedal.GameEngine
                 }
 
                 //search player's remembered spells
-                index = Data.Player!.RememberedSpells.FindIndex(spell => spell.Name!.ToLower() == entityName);
+                index = Data.Player!.RememberedSpells.FindIndex(spell => FlattenPolishChars(spell.Name!.ToLower()) == FlattenPolishChars(entityName));
                 if (index != -1)
                 {
                     SpellInfo(Data.Player!.RememberedSpells[index]);
@@ -1119,7 +1118,7 @@ namespace Runedal.GameEngine
                 }
 
                 //search location for items on the ground
-                index = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == entityName);
+                index = Data.Player!.CurrentLocation!.Items!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(entityName));
                 if (index != -1)
                 {
                     ItemInfo(entityName);
@@ -1128,7 +1127,8 @@ namespace Runedal.GameEngine
 
 
                 //else search characters of current location and player's inventory for entity with name matching the argument
-                index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == entityName);
+                index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => FlattenPolishChars(character.Name!.ToLower()) 
+                == FlattenPolishChars(entityName));
                 if (index != -1)
                 {
                     CharacterInfo(Data.Player!.CurrentLocation!.Characters[index]);
@@ -1137,7 +1137,7 @@ namespace Runedal.GameEngine
                 else
                 {
                     //else search player's inventory for item with name matching the argument
-                    index = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName.ToLower());
+                    index = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(entityName));
                     if (index != -1)
                     {
                         ItemInfo(Data.Player!.Inventory[index].Name!);
@@ -1145,7 +1145,8 @@ namespace Runedal.GameEngine
                     }
                     else if (Data.Player!.CurrentState == Player.State.Trade)
                     {
-                        index = Data.Player!.InteractsWith!.Inventory!.FindIndex(item => item.Name!.ToLower() == entityName.ToLower());
+                        index = Data.Player!.InteractsWith!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower())
+                        == FlattenPolishChars(entityName));
                         if (index != -1)
                         {
                             ItemInfo(Data.Player!.InteractsWith!.Inventory![index].Name!);
@@ -1157,27 +1158,27 @@ namespace Runedal.GameEngine
                 //search for the item in player worn items
                 string wornItemName = "placeholder";
 
-                if (Data.Player!.Weapon!.Name!.ToLower() == entityName.ToLower())
+                if (FlattenPolishChars(Data.Player!.Weapon!.Name!.ToLower()) == FlattenPolishChars(entityName))
                 {
                     wornItemName = Data.Player!.Weapon!.Name;
                 }
-                else if (Data.Player!.Helmet!.Name!.ToLower() == entityName.ToLower())
+                else if (FlattenPolishChars(Data.Player!.Helmet!.Name!.ToLower()) == FlattenPolishChars(entityName))
                 {
                     wornItemName = Data.Player!.Helmet!.Name;
                 }
-                else if (Data.Player!.Torso!.Name!.ToLower() == entityName.ToLower())
+                else if (FlattenPolishChars(Data.Player!.Torso!.Name!.ToLower()) == FlattenPolishChars(entityName))
                 {
                     wornItemName = Data.Player!.Torso!.Name;
                 }
-                else if (Data.Player!.Pants!.Name!.ToLower() == entityName.ToLower())
+                else if (FlattenPolishChars(Data.Player!.Pants!.Name!.ToLower()) == FlattenPolishChars(entityName))
                 {
                     wornItemName = Data.Player!.Pants!.Name;
                 }
-                else if (Data.Player!.Gloves!.Name!.ToLower() == entityName.ToLower())
+                else if (FlattenPolishChars(Data.Player!.Gloves!.Name!.ToLower()) == FlattenPolishChars(entityName))
                 {
                     wornItemName = Data.Player!.Gloves!.Name;
                 }
-                else if (Data.Player!.Shoes!.Name!.ToLower() == entityName.ToLower())
+                else if (FlattenPolishChars(Data.Player!.Shoes!.Name!.ToLower()) == FlattenPolishChars(entityName))
                 {
                     wornItemName = Data.Player!.Shoes!.Name;
                 }
@@ -1216,7 +1217,8 @@ namespace Runedal.GameEngine
             ResetPlayerState();
 
             //check if the character of specified name exists in player's current location
-            index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
+            index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => FlattenPolishChars(character.Name!.ToLower())
+            == FlattenPolishChars(characterName));
             if (index != -1)
             {
                 tradingCharacter = Data.Player!.CurrentLocation!.Characters![index];
@@ -1263,7 +1265,7 @@ namespace Runedal.GameEngine
             }
 
             int index = Data.Player!.CurrentLocation!.Characters!.FindIndex(
-                character => character.Name!.ToLower() == characterName.ToLower());
+                character => FlattenPolishChars(character.Name!.ToLower()) == FlattenPolishChars(characterName));
 
 
             ResetPlayerState();
@@ -1368,7 +1370,7 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             int buyingPrice;
 
-            itemIndex = trader.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            itemIndex = trader.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName));
 
             //check if the item exists in trader's inventory
             if (itemIndex == -1)
@@ -1455,7 +1457,7 @@ namespace Runedal.GameEngine
             int itemQuantity = 1;
             int sellingPrice = 0;
 
-            itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            itemIndex = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName));
 
             //check if the item exists in player's inventory
             if (itemIndex == -1)
@@ -1531,9 +1533,9 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            if (Data.Player!.Inventory!.Exists(item => item.Name!.ToLower() == itemName.ToLower()))
+            if (Data.Player!.Inventory!.Exists(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName)))
             {
-                itemToUse = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+                itemToUse = Data.Items!.Find(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName))!;
 
                 if (itemToUse.GetType() == typeof(Consumable))
                 {
@@ -1564,7 +1566,8 @@ namespace Runedal.GameEngine
         //method handling 'drop' command
         private void DropHandler(string itemName, string quantity)
         {
-            int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            int itemIndex = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower())
+            == FlattenPolishChars(itemName));
             int itemQuantity;
             Item itemToRemove = new Item();
 
@@ -1649,7 +1652,8 @@ namespace Runedal.GameEngine
         //method handling 'pickup' command
         private void PickupHandler(string itemName, string quantity)
         {
-            int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => item.Name!.ToLower() == itemName);
+            int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower())
+            == FlattenPolishChars(itemName));
             int itemQuantity;
             Item itemToPickup = new Item();
 
@@ -1786,7 +1790,8 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            int itemIndex = Data.Player!.Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
+            int itemIndex = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower())
+            == FlattenPolishChars(itemName));
 
             if (itemIndex == -1)
             {
@@ -1794,7 +1799,8 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            Item itemToWear = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Item itemToWear = Data.Items!.Find(item => 
+            FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName))!;
             
             if (itemToWear.GetType() == typeof(Armor))
             {
@@ -1935,7 +1941,8 @@ namespace Runedal.GameEngine
 
             //else if player wanted to attack specific character (typed attack with 1 argument)
             int characterIndex = Data.Player!.CurrentLocation!.Characters!
-                .FindIndex(character => character.Name!.ToLower() == characterName.ToLower());
+                .FindIndex(character => FlattenPolishChars(character.Name!.ToLower())
+                == FlattenPolishChars(characterName));
 
             if (characterIndex == -1)
             {
@@ -2210,14 +2217,16 @@ namespace Runedal.GameEngine
             }
 
             //check if player possesses required runes
-            if (!Data.Player!.Inventory!.Exists(item => item.Name!.ToLower() == firstRune))
+            if (!Data.Player!.Inventory!.Exists(item => FlattenPolishChars(item.Name!.ToLower())
+            == FlattenPolishChars(firstRune)))
             {
                 PrintMessage("Nie posiadasz runy " + firstRune, MessageType.SystemFeedback);
                 return;
             }
             if (isCombinationDouble)
             {
-                if (!Data.Player!.Inventory!.Exists(item => item.Name!.ToLower() == secondRune))
+                if (!Data.Player!.Inventory!.Exists(item => FlattenPolishChars(item.Name!.ToLower()) ==
+                    FlattenPolishChars(secondRune)))
                 {
                     PrintMessage("Nie posiadasz runy " + secondRune, MessageType.SystemFeedback);
                     return;
@@ -2234,7 +2243,8 @@ namespace Runedal.GameEngine
             Data.Player.SpendMana(200);
 
             //choose proper spell
-            craftedSpell = Data.Spells!.Find(spell => spell.Name!.ToLower() == spellName)!;
+            craftedSpell = Data.Spells!.Find(spell => FlattenPolishChars(spell.Name!.ToLower())
+            == FlattenPolishChars(spellName))!;
 
             //add spellcraft action to the queue
             CharAction SpellCraft = new SpellCraft(Data.Player!, craftedSpell);
@@ -2358,7 +2368,8 @@ namespace Runedal.GameEngine
                     }
 
                     int characterIndex = Data.Player!.CurrentLocation!.Characters!.
-                        FindIndex(character => character.Name!.ToLower() == targetName);
+                        FindIndex(character => FlattenPolishChars(character.Name!.ToLower())
+                        == FlattenPolishChars(targetName));
 
                     //if there is no character with specified name
                     if (characterIndex == -1)
@@ -2390,7 +2401,8 @@ namespace Runedal.GameEngine
             if (spellToCast.Name == "Demoniczny_portal")
             {
                 
-                int locationIndex = Data.Locations!.FindIndex(loc => loc.Name!.ToLower() == targetName);
+                int locationIndex = Data.Locations!.FindIndex(loc => 
+                FlattenPolishChars(loc.Name!.ToLower()) == FlattenPolishChars(targetName));
                 if (locationIndex != -1)
                 {
                     TeleportLocation = Data.Locations![locationIndex];
@@ -2964,7 +2976,8 @@ namespace Runedal.GameEngine
         //method handling adding items to player's inventory
         private void AddItemToPlayer(string itemName, int quantity)
         {
-            Item itemToAdd = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Item itemToAdd = Data.Items!.Find(item => FlattenPolishChars(item.Name!.ToLower())
+            == FlattenPolishChars(itemName.ToLower()))!;
             Data.Player!.AddItem(itemToAdd, quantity);
             PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + itemToAdd.Name, MessageType.Gain);
         }
@@ -2974,7 +2987,8 @@ namespace Runedal.GameEngine
         {
 
             //find item in data to have it's proper (first letter capitalized) name string to display in message for player
-            Item itemToRemove = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Item itemToRemove = Data.Items!.Find(item =>
+            FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName.ToLower()))!;
 
             if (Data.Player!.RemoveItem(itemName, quantity))
             {
@@ -2989,7 +3003,8 @@ namespace Runedal.GameEngine
         //method for wearing a weapon-type items by player
         private void WearWeaponOnPlayer(string itemName)
         {
-            Weapon weaponToWear = (Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower()) as Weapon)!;
+            Weapon weaponToWear = (Data.Items!.Find(item => FlattenPolishChars(item.Name!.ToLower())
+            == FlattenPolishChars(itemName.ToLower())) as Weapon)!;
 
             TakeOffWeaponFromPlayer();
 
@@ -3000,7 +3015,8 @@ namespace Runedal.GameEngine
         //method for wearing armor type items by player
         private void WearArmorOnPlayer(string itemName)
         {
-            Armor armorToWear = (Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower()) as Armor)!;
+            Armor armorToWear = (Data.Items!.Find(item => 
+            FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName.ToLower())) as Armor)!;
             Armor.ArmorType armorType = armorToWear.Type;
             string wornArmorName = string.Empty;
 
@@ -3149,7 +3165,8 @@ namespace Runedal.GameEngine
         public void UseConsumable(Consumable item)
         {
             //prevent using non-existent item
-            if (!Data.Player!.Inventory!.Exists(it => it.Name!.ToLower() == item.Name!.ToLower()))
+            if (!Data.Player!.Inventory!.Exists(it =>
+            FlattenPolishChars(it.Name!.ToLower()) == FlattenPolishChars(item.Name!.ToLower())))
             {
                 PrintMessage("Nie posiadasz przedmiotu " + item.Name! + "!", MessageType.SystemFeedback);
                 return;
@@ -3410,14 +3427,16 @@ namespace Runedal.GameEngine
         //method adding items to non-player characters
         private void AddItemToNpc(Character character, string itemName, int quantity)
         {
-            Item itemToAdd = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Item itemToAdd = Data.Items!.Find(item =>
+            FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName.ToLower()))!;
             character.AddItem(itemToAdd, quantity);
         }
 
         //method adding items to location
         private void AddItemToLocation(Location location, string itemName, int quantity)
         {
-            Item itemToAdd = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Item itemToAdd = Data.Items!.Find(item => 
+            FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName.ToLower()))!;
 
             location.AddItem(itemToAdd, quantity);
 
@@ -3735,7 +3754,8 @@ namespace Runedal.GameEngine
             string defense = string.Empty;
             string range = string.Empty;
             string sign = string.Empty;
-            Item itemToDescribe = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Item itemToDescribe = Data.Items!.Find(item => FlattenPolishChars(item.Name!.ToLower())
+            == FlattenPolishChars(itemName.ToLower()))!;
 
             //set item's weight and type
             weight = "Waga: " + Convert.ToString(itemToDescribe.Weight);
@@ -4827,6 +4847,20 @@ namespace Runedal.GameEngine
             return description;
         }
 
+        private string FlattenPolishChars(string polishName)
+        {
+            polishName = Regex.Replace(polishName, @"[ą]", "a");
+            polishName = Regex.Replace(polishName, @"[ć]", "c");
+            polishName = Regex.Replace(polishName, @"[ę]", "e");
+            polishName = Regex.Replace(polishName, @"[ł]", "l");
+            polishName = Regex.Replace(polishName, @"[ń]", "n");
+            polishName = Regex.Replace(polishName, @"[ó]", "o");
+            polishName = Regex.Replace(polishName, @"[ś]", "s");
+            polishName = Regex.Replace(polishName, @"[źż]", "z");
+
+            return polishName;
+        }
+
         //method returning polish string representing specified type of ArmorType type
         private string GetPolishArmorType(Armor.ArmorType type)
         {
@@ -4993,7 +5027,8 @@ namespace Runedal.GameEngine
         //helper method for calculating selling price (trader price) of the item
         private int CalculateTraderPrice(string itemName)
         {
-            Item itemToEvaluate = Data.Items!.Find(item => item.Name!.ToLower() == itemName.ToLower())!;
+            Item itemToEvaluate = Data.Items!.Find(item =>
+            FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName.ToLower()))!;
 
             double doublePrice = Convert.ToDouble(itemToEvaluate.Price);
             int roundedPrice = Convert.ToInt32(Math.Round(doublePrice * Data!.PriceMultiplier));

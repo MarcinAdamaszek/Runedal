@@ -2720,8 +2720,14 @@ namespace Runedal.GameEngine
             //if it's player dying
             if (character == Data.Player!)
             {
-                PrintMessage("Nogi odmawiają Ci posłuszeństwa, wzrok traci ostrość a dźwięki dochodzą jakby z oddali. " +
-                "Upadasz na kolana, a potem na twarz. Czujesz, że to koniec i powoli odpływasz w nicość.. umierasz.", MessageType.Action);
+                Character death = new Character("Śmierć");
+                PrintMessage("Twój wzrok traci ostrość, a dzwięki dochodzą jakby z oddali. Przed Tobą pojawia się wysoka na 2 metry " +
+                    "postać w czarnej szacie z kapturem, z której rękawów wystają jedynie białe, kościane dłonie. W prawej ręce, postać" +
+                    " trzyma wielką kosę o srebrzysto-niebieskim ostrzu, tak cienkim, że wydaje się nierealne");
+                PrintSpeech(death, "JA CHYBA NIE W PORĘ? NO CÓŻ, TRUDNO..");
+                PrintMessage("Postać pokazuje Ci pokaźną klepsydrę z napisem \"" + Data.Player!.Name! + "\" wyrytym srebrnymi literami, w której " +
+                    "ostatnie ziarenka złotego piasku przesypują się do dolnej połowy, po czym bierze zamach, a Ty widzisz tylko srebrzysto-" +
+                    "niebieski błysk..");
 
                 //remove all effects from player
                 List<EffectOnPlayer> effectsToRemove = new List<EffectOnPlayer>();

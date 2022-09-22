@@ -397,11 +397,20 @@ namespace Runedal.GameData
         //helper method for pushing loaded characters objects into Characters list
         public void AddCharactersToList(Character[] charactersArray)
         {
-            //Location startingLocation;
-
-            foreach (var character in charactersArray)
+            if (charactersArray.GetType() == typeof(Monster[]))
             {
-                Characters!.Add(character);
+                foreach (var character in charactersArray)
+                {
+                    character.Gold = (character as Monster)!.Level * 5;
+                    Characters!.Add(character);
+                }
+            }
+            else
+            {
+                foreach (var character in charactersArray)
+                {
+                    Characters!.Add(character);
+                }
             }
         }
 

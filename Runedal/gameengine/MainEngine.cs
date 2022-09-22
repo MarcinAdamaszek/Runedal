@@ -3917,6 +3917,7 @@ namespace Runedal.GameEngine
             const string emptySquare = "\x25A1";
             const string player = "\x25A0";
             const string upAndDown = "\x2195";
+            const string traderLoc = "\x2302";
             const int rangeSize = 12;
             
             int i, j, k;
@@ -3944,6 +3945,9 @@ namespace Runedal.GameEngine
                 {
                     if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ))
                     {
+                        Location examinedLocation = Data.Locations!.Find(loc => loc.X == horizontalRange[j] &&
+                            loc.Y == verticalRange[i] && loc.Z == currentZ)!;
+
                         //if it's player's current location, sign it with 'player sign'
                         if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
                         {
@@ -3958,6 +3962,11 @@ namespace Runedal.GameEngine
                                 IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
                             {
                                 mapLines[k] += upAndDown;
+                            }
+                            else if (examinedLocation.Characters!.Exists(character => 
+                            character.GetType() == typeof(Trader)))
+                            {
+                                mapLines[k] += traderLoc;
                             }
                             else
                             {

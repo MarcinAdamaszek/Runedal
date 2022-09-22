@@ -2764,7 +2764,7 @@ namespace Runedal.GameEngine
 
                 //respawn player
                 PrintMessage("Odradzasz się..", MessageType.Action);
-                AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma")!, Data.Player!);
+                AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma_Pod_Wilczym_Kłem")!, Data.Player!);
                 
                 Data.Player!.Hp = Data.Player.MaxHp * 0.4;
                 Data.Player!.Mp = 0;

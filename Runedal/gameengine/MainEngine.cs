@@ -1282,8 +1282,11 @@ namespace Runedal.GameEngine
             //if there is no talking option with character
             if (talkingCharacter.Questions!.Length == 0)
             {
-                PrintMessage(talkingCharacter.Name + ": " + 
-                    talkingCharacter.PassiveResponses![Rand.Next(talkingCharacter.PassiveResponses.Length)], MessageType.Speech);
+                if (talkingCharacter.PassiveResponses!.Length > 0)
+                {
+                    PrintMessage(talkingCharacter.Name + ": " +
+                        talkingCharacter.PassiveResponses![Rand.Next(talkingCharacter.PassiveResponses.Length)], MessageType.Speech);
+                }
                 return;
             }
 
@@ -2654,8 +2657,11 @@ namespace Runedal.GameEngine
             //print npcs aggressive response when it attacks
             if (attacker != Data.Player)
             {
-                int randomIndex = Rand.Next(0, attacker.AggressiveResponses!.Length);
-                PrintSpeech(attacker, attacker.AggressiveResponses[randomIndex]);
+                if (attacker.AggressiveResponses!.Length > 0)
+                {
+                    int randomIndex = Rand.Next(0, attacker.AggressiveResponses!.Length);
+                    PrintSpeech(attacker, attacker.AggressiveResponses[randomIndex]);
+                }
             }
 
             //print appropriate message depending on player's position in attacker/attacked configuration

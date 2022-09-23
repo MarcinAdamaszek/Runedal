@@ -406,7 +406,7 @@ namespace Runedal.GameData
             {
                 foreach (var character in charactersArray)
                 {
-                    character.Gold = (character as Monster)!.Level * 5;
+                    character.Gold = (character as Monster)!.Level * 3;
                     Characters!.Add(character);
                 }
             }

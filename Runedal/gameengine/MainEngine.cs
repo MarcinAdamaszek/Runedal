@@ -2469,6 +2469,94 @@ namespace Runedal.GameEngine
 
         //==============================================MANIPULATION METHODS=============================================
 
+        private void TryChanceToDrop(CombatCharacter dyingChar)
+        {
+            int quantityBase = Convert.ToInt32(Math.Sqrt(dyingChar.Level / 2));
+            int lowTierQuantity;
+            double lowTierLimit = 20;
+            double mediumTierLimit = dyingChar.Level * 10;
+            double highTierLimit = dyingChar.Level * 100;
+
+            Item lowTierItem = new Item("placeholder");
+            Item mediumTierItem = new Item("placeholder");
+            Item highTierItem = new Item("placeholder");
+
+            List<Item> lowTierPool = new List<Item>();
+            List<Item> mediumTierPool = new List<Item>();
+            List<Item> highTierPool = new List<Item>();
+
+            //if quantityBase is lower than 1 set it to 1
+            if (quantityBase < 1)
+            {
+                quantityBase = 1;
+            }
+            lowTierQuantity = Rand.Next(1, quantityBase);
+
+            //search for all low tier items and put them is separate pool
+            //and then pick random out of it
+            Data.Items!.ForEach(it =>
+            {
+                if (it.Price < lowTierLimit)
+                {
+                    lowTierPool.Add(it);
+                }
+            });
+            if (lowTierPool.Count > 0)
+            {
+                lowTierItem = lowTierPool[Rand.Next(0, lowTierPool.Count)];
+            }
+
+            //same for medium and high tiers
+            Data.Items!.ForEach(it =>
+            {
+                if (it.Price < mediumTierLimit && it.Price >= lowTierLimit)
+                {
+                    mediumTierPool.Add(it);
+                }
+            });
+            if (mediumTierPool.Count > 0)
+            {
+                mediumTierItem = mediumTierPool[Rand.Next(0, mediumTierPool.Count)];
+            }
+
+            //high tier
+            Data.Items!.ForEach(it =>
+            {
+                if (it.Price < highTierLimit && it.Price >= mediumTierLimit)
+                {
+                    highTierPool.Add(it);
+                }
+            });
+            if (highTierPool.Count > 0)
+            {
+                highTierItem = highTierPool[Rand.Next(0, highTierPool.Count)];
+            }
+
+            double lowTierChance = 0.3;
+            double mediumTierChance = 0.03;
+            double highTierChance = 0.003;
+
+            //try dropping low tier item
+            if (lowTierItem.Name != "placeholder" && TryOutChance(lowTierChance))
+            {
+                AddItemToLocation(dyingChar.CurrentLocation!, lowTierItem.Name!, lowTierQuantity);
+            }
+
+            //try dropping medium tier item
+            if (mediumTierItem.Name != "placeholder" && TryOutChance(mediumTierChance) && 
+                dyingChar.Level > 2)
+            {
+                AddItemToLocation(dyingChar.CurrentLocation!, mediumTierItem.Name!, 1);
+            }
+
+            //try dropping high tier item
+            if (highTierItem.Name != "placeholder" && TryOutChance(highTierChance) &&
+                dyingChar.Level > 5)
+            {
+                AddItemToLocation(dyingChar.CurrentLocation!, highTierItem.Name!, 1);
+            }
+        }
+
         ///<summary>
         /// method performing action of location change and displaying 
         /// message saying that player is walking towards chosen direction
@@ -2779,6 +2867,9 @@ namespace Runedal.GameEngine
                     PrintMessage(character.Name + " ginie");
                 }
 
+                //try chance to drop extra items
+                TryChanceToDrop(character);
+
                 //drop character's items
                 character.Inventory!.ForEach(item =>
                 {
@@ -2877,18 +2968,22 @@ namespace Runedal.GameEngine
 
                 //also, if the monster is social type, make his 'comrades'
                 //attack the attacker
-                receiver.CurrentLocation!.Characters!.ForEach(character =>
+                if (receiver.GetType() == typeof(Monster))
                 {
-                    if (character.Name! == receiver.Name! && character != receiver)
+                    receiver.CurrentLocation!.Characters!.ForEach(character =>
                     {
-
-                        //make sure they aren't already attacking the attacker
-                        if (!AttackInstances.Exists(ins => ins.Attacker == character && ins.Receiver == dealer)) 
+                        if (character.Name! == receiver.Name! && character != receiver &&
+                        (receiver as Monster)!.Aggressiveness == Monster.AggressionType.Social)
                         {
-                            AttackCharacter((character as CombatCharacter)!, dealer);
+
+                            //make sure they aren't already attacking the attacker
+                            if (!AttackInstances.Exists(ins => ins.Attacker == character && ins.Receiver == dealer))
+                            {
+                                AttackCharacter((character as CombatCharacter)!, dealer);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             if (isDmgLethal)

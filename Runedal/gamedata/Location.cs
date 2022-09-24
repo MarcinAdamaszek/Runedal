@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Runedal.GameData.Characters;
+using Runedal.GameData.Effects;
 using Runedal.GameData.Items;
 
 
@@ -39,6 +40,23 @@ namespace Runedal.GameData
             CharsIds = new List<ulong>();
             Gold = 0;
         }
+        public Location(Location lc) : base(lc)
+        {
+            NorthPassage = lc.NorthPassage;
+            EastPassage = lc.EastPassage;
+            SouthPassage = lc.SouthPassage;
+            WestPassage = lc.WestPassage;
+            UpPassage = lc.UpPassage;
+            DownPassage = lc.DownPassage;
+            X = lc.X;
+            Y = lc.Y;
+            Z = lc.Z;
+            Characters = new List<Character>();
+            CharsToAdd = lc.CharsToAdd;
+            CharsIds = new List<ulong>();
+            Items = new List<Item>();
+            Gold = lc.Gold;
+        }
 
         //location coordinates
         public int X { get; set; }
@@ -60,7 +78,7 @@ namespace Runedal.GameData
         public Dictionary<string, int>? CharsToAdd { get; set; }
 
         //list of charcter's id numbers to load from game save
-        public List<ulong> CharsIds { get; set; }
+        public List<ulong>? CharsIds { get; set; }
 
         //list of items lying on the ground
         public List<Item>? Items { get; set; }

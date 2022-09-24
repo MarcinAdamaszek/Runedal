@@ -42,7 +42,7 @@ namespace Runedal
 
         public string Input { get; set; } = string.Empty;
         public MainEngine Engine { get; set; }
-        public Player Player { get; set; }
+        public Player? Player { get; set; }
         public List<string> CommandHistory { get; set; }
         public int CommandIndex { get; set; }
         public bool WasDownPressed { get; set; }

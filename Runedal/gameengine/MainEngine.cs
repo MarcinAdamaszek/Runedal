@@ -26,6 +26,8 @@ using System.Reflection.Emit;
 using System.Diagnostics;
 using System.Windows.Markup;
 using System.IO;
+using System.Xaml.Schema;
+using System.Threading;
 
 namespace Runedal.GameEngine
 {
@@ -60,6 +62,7 @@ namespace Runedal.GameEngine
 
             //PrintManual();
             LoadGameObjects();
+            PrepareNewGameLoad();
             PrintWelcomeScreen();
 
             //StartNewGame("Czesiek");
@@ -529,6 +532,24 @@ namespace Runedal.GameEngine
             Data.LoadCharacters();
             Data.LoadItems();
             Data.LoadSpells();
+            Data.LoadStackingEffects();
+        }
+
+        //method creating new json file serving as new game load
+        private void PrepareNewGameLoad()
+        {
+            //load player into game
+            Data.LoadPlayer("Czesiek");
+
+            //method filling hp/mp pools of all combat characters
+            //with their maxhp/mp values
+            Data.InitializeHpMpValues();
+
+            //load all characters into locations and items/spells into characters
+            Data.PopulateLocationsAndCharacters();
+
+            //save newgame json file
+            Data.SaveGame(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\NewGame.json");
         }
 
         //method printing menu of the game
@@ -607,19 +628,13 @@ namespace Runedal.GameEngine
         {
             IsInGame = true;
 
-            //load player into game
-            Data.LoadPlayer(playerName);
-
-            //method filling hp/mp pools of all combat characters
-            //with their maxhp/mp values
-            Data.InitializeHpMpValues();
-
-            //load all characters into locations and items/spells into characters
-            Data.PopulateLocationsAndCharacters();
-            Data.LoadStackingEffects();
+            Data.LoadGame(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\NewGame.json");
 
             //connect hp/mp/action bars to values of player object
             Window.InitializePlayerDataContext(Data.Player!);
+
+            //name player's character with the name he has chosen
+            Data.Player!.Name = playerName;
 
             GameClock.Start();
 
@@ -2469,6 +2484,30 @@ namespace Runedal.GameEngine
 
         //==============================================MANIPULATION METHODS=============================================
 
+        private void TryGivingRune()
+        {
+            
+
+
+
+            //first gather all 5 runes in separate list
+            List<Item> runes = new List<Item>();
+            Data.Items!.ForEach(it =>
+            {
+                if (it.GetType() == typeof(RuneStone))
+                {
+                    //add only these, which player doesn't own yet
+                    if (!Data.Player!.Inventory!.Exists(playerIt => playerIt.Name! == it.Name!))
+                    {
+                        runes.Add(it);
+                    }
+                }
+            });
+
+            
+
+        }
+
         private void TryChanceToDrop(CombatCharacter dyingChar)
         {
             int quantityBase = Convert.ToInt32(Math.Sqrt(dyingChar.Level / 2));
@@ -2534,7 +2573,7 @@ namespace Runedal.GameEngine
 
             double lowTierChance = 0.3;
             double mediumTierChance = 0.03;
-            double highTierChance = 0.003;
+            double highTierChance = 0.005;
 
             //try dropping low tier item
             if (lowTierItem.Name != "placeholder" && TryOutChance(lowTierChance))

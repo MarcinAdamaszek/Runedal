@@ -30,7 +30,8 @@ namespace Runedal.GameData
                     new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
                 }
             };
-            
+
+            LocationPrototypes = new List<Location>();
             Locations = new List<Location>();
             Characters = new List<Character>();
             Monsters = new List<Monster>();
@@ -44,6 +45,7 @@ namespace Runedal.GameData
         public string? JsonString { get; set; }
         public string[]? StackingEffects { get; set; }
         public JsonSerializerOptions Options { get; set; }
+        public List<Location>? LocationPrototypes { get; set; }
         public List<Location>? Locations { get; set; }
         public List<Character>? Characters { get; set; }
         public List<Monster>? Monsters { get; set; }
@@ -76,6 +78,7 @@ namespace Runedal.GameData
             JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Player.json");
             Player[] playerArray = JsonSerializer.Deserialize<Player[]>(JsonString, Options)!;
 
+            Player = null;
 
             AddCharactersToList(playerArray);
             Player = playerArray[0];
@@ -203,6 +206,15 @@ namespace Runedal.GameData
             });
         }
 
+        //method loading real locations to be used in game
+        public void LoadRealLocations()
+        {
+            LocationPrototypes!.ForEach(loc =>
+            {
+                Locations!.Add(new Location(loc));
+            });
+        }
+
         public void PopulateLocationsAndCharacters()
         {
             AddSpellsToCharacters();
@@ -281,7 +293,7 @@ namespace Runedal.GameData
 
             Locations!.ForEach(loc =>
             {
-                loc.CharsIds.Clear();
+                loc.CharsIds!.Clear();
 
                 loc.Characters!.ForEach(character =>
                 {
@@ -353,7 +365,7 @@ namespace Runedal.GameData
                 //clear location "flat" characters
                 loc.Characters!.Clear();
 
-                loc.CharsIds.ForEach(charId =>
+                loc.CharsIds!.ForEach(charId =>
                 {
                     if (save.Traders!.Exists(tr => tr.Id == charId))
                     {

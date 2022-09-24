@@ -199,6 +199,9 @@ namespace Runedal.GameData.Characters
         
         //player's available attribute points gained every lvl-up
         public int AttributePoints { get; set; }
+
+        //number of runes already given to player for int progression
+        public int RunesAlreadyReceived { get; set; }
         
         //player character attributes influencing other statistics
         public int Strength

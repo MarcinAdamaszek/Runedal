@@ -15,11 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="GameData\SavedGames\" />
+    <Folder Include="GameData\Json\SavedGames\" />
   </ItemGroup>
 
 </Project>

@@ -660,13 +660,13 @@ namespace Runedal.GameEngine
         //method saving game
         private void SaveGame(string saveNumber, bool IsPathSpecified = false, bool isQuickSave = false)
         {
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
             string savePath = string.Empty;
             int i;
 
             if (isQuickSave)
             {
-                savePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\AUTO_ZAPIS";
+                savePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\AUTO_ZAPIS";
             }
 
             if (IsPathSpecified)
@@ -676,7 +676,7 @@ namespace Runedal.GameEngine
 
             for (i = 0; i < saveFiles.Length; i++)
             {
-                if (saveNumber == Convert.ToString(i + 2))
+                if (saveNumber == Convert.ToString(i + 1))
                 {
                     IsSaving = false;
                     savePath = saveFiles[i];
@@ -717,7 +717,7 @@ namespace Runedal.GameEngine
         //method loading game
         private void LoadGame(string saveNumber)
         {
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
             int chosenNumber = -1;
             int i;
 
@@ -883,7 +883,7 @@ namespace Runedal.GameEngine
         //==============================================COMMAND HANDLERS=============================================
 
         //method handling 'save' command
-        private void SaveHandler(bool IsQuickSave = false)
+        private void SaveHandler(bool IsQuickSave = false) 
         {
 
             if (IsQuickSave)
@@ -894,7 +894,7 @@ namespace Runedal.GameEngine
 
             IsSaving = true;
 
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
             string[] savesToChoose = new string[saveFiles.Length];
             int i;
 
@@ -932,7 +932,7 @@ namespace Runedal.GameEngine
 
             GameClock.Stop();
 
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
             string[] savesToChoose = new string[saveFiles.Length];
             int i;
 

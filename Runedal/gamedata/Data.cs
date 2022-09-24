@@ -11,7 +11,6 @@ using System.Text.Json.Serialization;
 using Runedal.GameData.Effects;
 using static Runedal.GameData.Items.Weapon;
 using System.Xml.Linq;
-using AutoMapper;
 using System.Runtime.CompilerServices;
 
 namespace Runedal.GameData

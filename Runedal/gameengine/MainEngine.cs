@@ -592,6 +592,8 @@ namespace Runedal.GameEngine
             {
                 PrintMessage("                       Gra zapisana!", MessageType.EffectOn);
             }
+
+            PrintMessage("\n                TRYB PEŁNOEKRANOWY - KLAWISZ \"F11\"", MessageType.Action, false);
         }
 
         //method veryfing player's name

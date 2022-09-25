@@ -36,6 +36,7 @@ namespace Runedal
             IsWelcomeScreenOn = true;
             CommandIndex = -1;
             inputBox.IsReadOnly = true;
+            IsFullScreen = true;
 
             //DataContext = Player;
         }
@@ -48,6 +49,7 @@ namespace Runedal
         public bool WasDownPressed { get; set; }
         public bool WasUpPressed { get; set; }
         public bool IsWelcomeScreenOn { get; set; }
+        public bool IsFullScreen { get; set; }
 
 
         //handling user input on pressing and releasing Enter key
@@ -67,6 +69,12 @@ namespace Runedal
             //    Engine.PrintMessage("IsPlayerChoosingAName: " + Engine.IsPlayerChoosingAName);
             //    Engine.PrintMessage("IsConfirmationScreen: " + Engine.IsSaveConfirmation);
             //}
+
+            //handle fullscreen on/off
+            if (e.Key == Key.F11)
+            {
+                SwitchFullScreenMode();
+            }
 
             //handle welcome screen
             if (IsWelcomeScreenOn)
@@ -200,7 +208,21 @@ namespace Runedal
             Player = player;
             DataContext = player;
         }
-
+        public void SwitchFullScreenMode()
+        {
+            if (IsFullScreen)
+            {
+                IsFullScreen = false;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                IsFullScreen = true;
+                this.WindowState = WindowState.Maximized;
+                this.WindowStyle = WindowStyle.None;
+            }
+        }
         
     }
 }

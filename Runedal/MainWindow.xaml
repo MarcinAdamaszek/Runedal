@@ -5,7 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Runedal"
         mc:Ignorable="d"
-        Title="Runedal" MinHeight="500" MinWidth="930" ResizeMode="CanResizeWithGrip"  Background="#FF6F4127">
+        Background="{DynamicResource backgroundImage}"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="Runedal" MinHeight="500" MinWidth="930" ResizeMode="CanResizeWithGrip">
+    
+    <Window.Resources>
+        <ImageSource x:Key="imgSource">C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Resources\Images\wall-3341768.jpg</ImageSource>
+        <ImageBrush x:Key="backgroundImage" ImageSource="{DynamicResource imgSource}" Opacity="0.5"></ImageBrush>
+    </Window.Resources>
+    
+    
     <Grid Name="mainGrid" FocusManager.FocusedElement="{Binding ElementName=inputBox}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -116,5 +126,9 @@
             <ProgressBar Visibility="Hidden" Name="shadowBar" Value="{Binding ActionCounter}" Grid.Column="1" Grid.Row="1" Margin="10, 5, 10, 0" Maximum="200" Foreground="Orange" Background="Black"/>
             <TextBlock Visibility="Hidden" Text="AP" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
         </Grid>
+
+        <!--<Button Grid.Row="2" Grid.Column="1" >
+            
+        </Button>-->
     </Grid>
 </Window>

@@ -17,6 +17,7 @@ namespace Runedal.GameData
 {
     public class Data
     {
+        public const string JsonDirectoryPath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\";
         public Data() 
         {
             //make json deserializer ignore letter cases in property names
@@ -66,7 +67,7 @@ namespace Runedal.GameData
         //method loading StackingEffects array of string representing object names which effects stack on player
         public void LoadStackingEffects()
         {
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\StackingEffects.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"StackingEffects.json");
             StackingEffects = JsonSerializer.Deserialize<string[]>(JsonString, Options)!;
         }
 
@@ -74,7 +75,7 @@ namespace Runedal.GameData
         public void LoadPlayer(string playerName)
         {
             //load player from json file
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Player.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Characters\Player.json");
             Player[] playerArray = JsonSerializer.Deserialize<Player[]>(JsonString, Options)!;
 
             Player = null;
@@ -96,17 +97,17 @@ namespace Runedal.GameData
         {
 
             //load traders from json
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Traders.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Characters\Traders.json");
             Character[] tradersArray = JsonSerializer.Deserialize<Trader[]>(JsonString, Options)!;
             AddCharactersToList(tradersArray);
 
             //load monsters
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Monsters.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Characters\Monsters.json");
             Character[] monstersArray = JsonSerializer.Deserialize<Monster[]>(JsonString, Options)!;
             AddCharactersToList(monstersArray);
 
             //load heroes
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Characters\Heroes.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Characters\Heroes.json");
             Character[] heroesArray = JsonSerializer.Deserialize<Hero[]>(JsonString, Options)!;
             AddCharactersToList(heroesArray);
 
@@ -116,7 +117,7 @@ namespace Runedal.GameData
         public void LoadLocations()
         {
             string[] locationFilepaths;
-            string[] locationDirectoriesPaths = Directory.GetDirectories(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Locations\");
+            string[] locationDirectoriesPaths = Directory.GetDirectories(JsonDirectoryPath + @"Locations\");
 
             foreach (string dirPath in locationDirectoriesPaths)
             {
@@ -139,37 +140,37 @@ namespace Runedal.GameData
         public void LoadItems()
         {
             //load consumables
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Consumables.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Consumables.json");
             Item[] consumablesArray = JsonSerializer.Deserialize<Consumable[]>(JsonString, Options)!;
             AddItemsToList(consumablesArray);
 
             //load weapons
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsDaggers.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Weapons\WeaponsDaggers.json");
             Item[] daggersArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
             AddItemsToList(daggersArray);
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsBlades.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Weapons\WeaponsBlades.json");
             Item[] bladesArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
             AddItemsToList(bladesArray);
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsBlunts.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Weapons\WeaponsBlunts.json");
             Item[] bluntsArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
             AddItemsToList(bluntsArray);
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Weapons\WeaponsStaves.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Weapons\WeaponsStaves.json");
             Item[] stavesArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
             AddItemsToList(bluntsArray);
 
             //load armors
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors\ArmorsRobe.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Armors\ArmorsRobe.json");
             Item[] robeArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
             AddItemsToList(robeArmorsArray);
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors\ArmorsLight.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Armors\ArmorsLight.json");
             Item[] lightArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
             AddItemsToList(lightArmorsArray);
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Armors\ArmorsHeavy.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Armors\ArmorsHeavy.json");
             Item[] heavyArmorsArray = JsonSerializer.Deserialize<Armor[]>(JsonString, Options)!;
             AddItemsToList(heavyArmorsArray);
 
             //load runes
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Runes.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Runes.json");
             Item[] runesArray = JsonSerializer.Deserialize<RuneStone[]>(JsonString, Options)!;
             AddItemsToList(runesArray);
 
@@ -183,7 +184,7 @@ namespace Runedal.GameData
         public void LoadSpells()
         {
             //load consumables
-            JsonString = JsonToString(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\Spells.json");
+            JsonString = JsonToString(JsonDirectoryPath + @"Spells.json");
             Spell[] spellsArray = JsonSerializer.Deserialize<Spell[]>(JsonString, Options)!;
 
             foreach (var spell in spellsArray)

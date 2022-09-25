@@ -549,7 +549,7 @@ namespace Runedal.GameEngine
             Data.PopulateLocationsAndCharacters();
 
             //save newgame json file
-            Data.SaveGame(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\NewGame.json");
+            Data.SaveGame(Data.JsonDirectoryPath + @"NewGame.json");
         }
 
         //method printing menu of the game
@@ -628,7 +628,7 @@ namespace Runedal.GameEngine
         {
             IsInGame = true;
 
-            Data.LoadGame(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\NewGame.json");
+            Data.LoadGame(Data.JsonDirectoryPath + @"NewGame.json");
 
             //connect hp/mp/action bars to values of player object
             Window.InitializePlayerDataContext(Data.Player!);
@@ -660,13 +660,13 @@ namespace Runedal.GameEngine
         //method saving game
         private void SaveGame(string saveNumber, bool IsPathSpecified = false, bool isQuickSave = false)
         {
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
             string savePath = string.Empty;
             int i;
 
             if (isQuickSave)
             {
-                savePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\AUTO_ZAPIS";
+                savePath = Data.JsonDirectoryPath + @"SavedGames\AUTO_ZAPIS";
             }
 
             if (IsPathSpecified)
@@ -717,7 +717,7 @@ namespace Runedal.GameEngine
         //method loading game
         private void LoadGame(string saveNumber)
         {
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
             int chosenNumber = -1;
             int i;
 
@@ -765,7 +765,7 @@ namespace Runedal.GameEngine
         //method handling saving for user-chosen save name
         private void HandleNewSaveName(string saveName)
         {
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
             int i;
 
             for (i = 0; i < saveFiles.Length; i++)
@@ -790,7 +790,7 @@ namespace Runedal.GameEngine
                 }
             }
 
-            GameSavePath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\SavedGames\" + saveName;
+            GameSavePath = Data.JsonDirectoryPath + @"SavedGames\" + saveName;
             IsSaving = false;
             IsNewSave = false;
             SaveGame("", true);
@@ -894,7 +894,7 @@ namespace Runedal.GameEngine
 
             IsSaving = true;
 
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
             string[] savesToChoose = new string[saveFiles.Length];
             int i;
 
@@ -932,7 +932,7 @@ namespace Runedal.GameEngine
 
             GameClock.Stop();
 
-            string[] saveFiles = Directory.GetFiles(@"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Json\SavedGames\");
+            string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
             string[] savesToChoose = new string[saveFiles.Length];
             int i;
 
@@ -3129,7 +3129,7 @@ namespace Runedal.GameEngine
             Item itemToRemove = Data.Items!.Find(item =>
             FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName.ToLower()))!;
 
-            if (Data.Player!.RemoveItem(itemName, quantity))
+            if (Data.Player!.RemoveItem(itemToRemove.Name!, quantity))
             {
                 PrintMessage("Straciłeś " + Convert.ToString(quantity) + " " + itemToRemove.Name, MessageType.Loss);
             }

@@ -33,6 +33,11 @@ namespace Runedal.GameEngine
 {
     public class MainEngine
     {
+        private const int firstIntThreshold = 30;
+        private const int secondIntThreshold = 50;
+        private const int thirdIntThreshold = 100;
+        private const int fourthIntThreshold = 160;
+        private const int fifthIntThreshold = 280;
         public MainEngine(MainWindow window)
         { 
             this.Window = window;
@@ -2484,10 +2489,50 @@ namespace Runedal.GameEngine
 
         //==============================================MANIPULATION METHODS=============================================
 
-        private void TryGivingRune()
+        //method simulating rune drop when monster dies and player achieves certain requirements
+        private void TryRuneDrop()
         {
             
 
+            if (Data.Player!.RunesAlreadyReceived == 0)
+            {
+                if (Data.Player!.Intelligence < firstIntThreshold)
+                {
+                    return;
+                }
+            }
+            else if (Data.Player!.RunesAlreadyReceived == 1)
+            {
+                if (Data.Player!.Intelligence >= firstIntThreshold 
+                    && Data.Player.Intelligence < secondIntThreshold)
+                {
+                    return;
+                }
+            }
+            else if (Data.Player!.RunesAlreadyReceived == 2)
+            {
+                if (Data.Player!.Intelligence >= secondIntThreshold 
+                    && Data.Player.Intelligence < thirdIntThreshold)
+                {
+                    return;
+                }
+            }
+            else if (Data.Player!.RunesAlreadyReceived == 3)
+            {
+                if (Data.Player!.Intelligence >= thirdIntThreshold 
+                    && Data.Player.Intelligence < fourthIntThreshold)
+                {
+                    return;
+                }
+            }
+            else if (Data.Player!.RunesAlreadyReceived == 4)
+            {
+                if (Data.Player!.Intelligence >= fourthIntThreshold 
+                    && Data.Player.Intelligence < fifthIntThreshold)
+                {
+                    return;
+                }
+            }
 
 
             //first gather all 5 runes in separate list
@@ -2504,10 +2549,23 @@ namespace Runedal.GameEngine
                 }
             });
 
-            
+            //prevent doing anything if player already has all runes
+            if (runes.Count == 0)
+            {
+                return;
+            }
 
+            //choose random rune index
+            int randomRuneIndex = Rand.Next(0, runes.Count);
+
+            //simulate monster dropping the rune
+            AddItemToLocation(Data.Player!.CurrentLocation!, runes[randomRuneIndex].Name!, 1);
+
+            //increment RunesAlreadyReceived
+            Data.Player!.RunesAlreadyReceived++;
         }
 
+        //method triggering the drop chance for every monster dying
         private void TryChanceToDrop(CombatCharacter dyingChar)
         {
             int quantityBase = Convert.ToInt32(Math.Sqrt(dyingChar.Level / 2));
@@ -2905,6 +2963,9 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage(character.Name + " ginie");
                 }
+
+                //try to drop a rune
+                TryRuneDrop();
 
                 //try chance to drop extra items
                 TryChanceToDrop(character);

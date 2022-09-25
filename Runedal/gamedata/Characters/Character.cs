@@ -85,6 +85,11 @@ namespace Runedal.GameData.Characters
         //method for adding items into character's inventory
         public void AddItem(Item newItem, int quantity = 1)
         {
+            if (quantity == 0)
+            {
+                return;
+            }
+
             int itemIndex = -1;
 
             itemIndex = Inventory!.FindIndex(item => item.Name!.ToLower() == newItem.Name!.ToLower());
@@ -108,6 +113,11 @@ namespace Runedal.GameData.Characters
         /// inventory in the first place</returns>
         public bool RemoveItem(string itemName, int quantity = 1)
         {
+            if (quantity == 0)
+            {
+                return false;
+            }
+
             int itemIndex = Inventory!.FindIndex(item => item.Name!.ToLower() == itemName.ToLower());
             Item itemToRemove;
 

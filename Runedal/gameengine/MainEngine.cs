@@ -2635,6 +2635,13 @@ namespace Runedal.GameEngine
             double mediumTierChance = 0.03;
             double highTierChance = 0.005;
 
+            //modify chance drop for heroes(bosses)
+            if (dyingChar.GetType() == typeof(Hero))
+            {
+                mediumTierChance = 1.0;
+                highTierChance = 0.3;
+            }
+
             //try dropping low tier item
             if (lowTierItem.Name != "placeholder" && TryOutChance(lowTierChance))
             {

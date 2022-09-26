@@ -422,6 +422,14 @@ namespace Runedal.GameData
                     Characters!.Add(character);
                 }
             }
+            else if (charactersArray.GetType() == typeof(Hero[]))
+            {
+                foreach (var character in charactersArray)
+                {
+                    character.Gold = (character as Hero)!.Level * 10;
+                    Characters!.Add(character);
+                }
+            }
             else
             {
                 foreach (var character in charactersArray)

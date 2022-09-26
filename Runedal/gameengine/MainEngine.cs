@@ -4182,7 +4182,7 @@ namespace Runedal.GameEngine
                     }
                     else
                     {
-                            mapLines[k] += "  ";
+                            mapLines[k] += "   ";
                     }
                 }
 
@@ -4833,8 +4833,10 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      Aby spróbować ucieczki, wpisujesz komendę 'flee'";
             manualLines[i++] = "      i literę kierunku w którym chcesz uciec. Np.";
             manualLines[i++] = "      jeśli wpiszesz 'flee n', Twoja postać ucieknie";
-            manualLines[i++] = "      na północ, a walka się zakończy. Ucieczka może się";
-            manualLines[i++] = "      nie udać - wtedy walka trwa dalej, a Twoja postać";
+            manualLines[i++] = "      na północ, a walka się zakończy. Możesz też wpisać";
+            manualLines[i++] = "      samo 'flee', a Twoja postać ucieknie w losowo";
+            manualLines[i++] = "      wybranym kierunku. Ucieczka może się nie udać";
+            manualLines[i++] = "       - wtedy walka trwa dalej, a Twoja postać";
             manualLines[i++] = "      zostaje ogłuszona na kilka sekund. Szanse na";
             manualLines[i++] = "      powodzenie ucieczki zależą od szybkości postaci.";
             manualLines[i++] = "      Jeśli jesteś szybszy od przeciwnika - Twoje szanse";
@@ -4844,7 +4846,7 @@ namespace Runedal.GameEngine
             manualLines[i++] = "  >>> RUNY\n";
             manualLines[i++] = "      Runy to kamienie z których tworzy się czary.";
             manualLines[i++] = "      Istnieje 5 różnych run:";
-            manualLines[i++] = "      > \"zjarrit\"";
+            manualLines[i++] = "      > \"iskarr\"";
             manualLines[i++] = "      > \"akull\"";
             manualLines[i++] = "      > \"verde\"";
             manualLines[i++] = "      > \"xitan\"";
@@ -4853,8 +4855,8 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      dwóch run. ";
             manualLines[i++] = "      Aby utworzyć czar, musisz posiadać runy w plecaku,";
             manualLines[i++] = "      i wpisać komendę 'craft' i nazwę runy (lub dwóch).";
-            manualLines[i++] = "      Np. 'craft zjarrit' - utworzy czar z runy ";
-            manualLines[i++] = "      \"zjarrit\". Natomiast 'craft verde xitan' utworzy";
+            manualLines[i++] = "      Np. 'craft iskarr' - utworzy czar z runy ";
+            manualLines[i++] = "      \"iskarr\". Natomiast 'craft verde xitan' utworzy";
             manualLines[i++] = "      czar z kombinacji run \"verde\" i \"xitan\" itd.\n";
             manualLines[i++] = "  >>> CZARY\n";
             manualLines[i++] = "      Gdy tworzysz nowy czar, dodaje się on do listy";
@@ -4908,9 +4910,9 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      > Siła - zwiększa maksymalne HP, regenerację HP";
             manualLines[i++] = "      i atak";
             manualLines[i++] = "      > Zręczność - zwiększa szybkość, szybkość ataku, ";
-            manualLines[i++] = "      celność trafienia krytyczne i uniki.";
+            manualLines[i++] = "      celność, trafienia krytyczne i uniki.";
             manualLines[i++] = "      > Inteligencja - zwiększa maksymalne MP, ";
-            manualLines[i++] = "      regenerację MP,odporność na magię, obrażenia ";
+            manualLines[i++] = "      regenerację MP, odporność na magię, obrażenia ";
             manualLines[i++] = "      zadawane z czarów, szansę na powodzenie zaklęcia ";
             manualLines[i++] = "      oraz maksymalną ilość zapamiętanych czarów.";
 

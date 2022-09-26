@@ -5563,9 +5563,14 @@ namespace Runedal.GameEngine
                     if (isSpellCasted)
                     {
                         randomSpellNumber = Rand.Next(0, attacker.RememberedSpells.Count);
-                        CastSpell(attacker, receiver, attacker.RememberedSpells[randomSpellNumber]);
-                        attacker.ActionCounter += 40;
-                        return;
+
+                        //if char has enough mana for the spell
+                        if (attacker.Mp >= attacker.RememberedSpells[randomSpellNumber].ManaCost)
+                        {
+                            CastSpell(attacker, receiver, attacker.RememberedSpells[randomSpellNumber]);
+                            attacker.ActionCounter += 40;
+                            return;
+                        }
                     }
                 }
 

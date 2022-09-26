@@ -1033,7 +1033,7 @@ namespace Runedal.GameEngine
         private void GoHandler(string direction)
         {
             string directionString = string.Empty;
-            bool passage = Data.Player!.CurrentLocation!.GetPassage(direction);
+            bool innerPassage = Data.Player!.CurrentLocation!.GetPassage(direction);
             Location nextLocation = new Location();
 
             //if player is in combat state
@@ -1077,7 +1077,7 @@ namespace Runedal.GameEngine
             {
 
                 //if the passage is open
-                if (passage)
+                if (innerPassage)
                 {
                     //calculate action points cost
                     int weightAboveLimit = Data.Player!.GetCarryWeight() - Data.Player!.GetWeightLimit();

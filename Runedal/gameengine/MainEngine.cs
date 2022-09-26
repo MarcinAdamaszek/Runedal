@@ -4182,7 +4182,7 @@ namespace Runedal.GameEngine
                     }
                     else
                     {
-                            mapLines[k] += "   ";
+                            mapLines[k] += "  ";
                     }
                 }
 

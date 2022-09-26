@@ -13,6 +13,135 @@
     <Window.Resources>
         <ImageSource x:Key="imgSource">C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Resources\Images\wall-3341768.jpg</ImageSource>
         <ImageBrush x:Key="backgroundImage" ImageSource="{DynamicResource imgSource}" Opacity="0.5"></ImageBrush>
+
+        <Style x:Key="ProgressBar"
+       TargetType="{x:Type ProgressBar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ProgressBar}">
+                        <Grid MinHeight="14"
+              MinWidth="200"
+              Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Determinate" />
+                                    <VisualState x:Name="Indeterminate">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Duration="00:00:00"
+                                                 Storyboard.TargetName="PART_Indicator"
+                                                 Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush>Transparent</SolidColorBrush>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="PART_Track"
+                  CornerRadius="7"
+                  BorderThickness="3">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
+                                </Border.BorderBrush>
+                            </Border>
+                            <Border x:Name="PART_Indicator"
+                  CornerRadius="7"
+                  BorderThickness="3"
+                  HorizontalAlignment="Left"
+                  Background="{TemplateBinding Foreground}">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                   EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="Black"
+                                  Offset="0.0" />
+                                                <GradientStop Color="Black"
+                                  Offset="1.0" />
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+
+                                </Border.BorderBrush>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="black"/>
+                </Setter.Value>
+            </Setter>
+            <!--<Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="White"/>
+                </Setter.Value>
+            </Setter>-->
+        </Style>
+        
+        <!--Style for outputBox-->
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        <Style x:Key="{x:Type TextBoxBase}" TargetType="{x:Type TextBoxBase}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RichTextBoxStyle" TargetType="{x:Type RichTextBox}">
+            <Style.Resources>
+                <Style x:Key="{x:Type FlowDocument}" TargetType="{x:Type FlowDocument}">
+                    <Setter Property="OverridesDefaultStyle" Value="true"/>
+                </Style>
+                <Style x:Key="{x:Type Hyperlink}" BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="{x:Type Hyperlink}">
+                    <Style.Triggers>
+                    </Style.Triggers>
+                </Style>
+            </Style.Resources>
+            <Setter Property="MinWidth" Value="10"/>
+            <Style.BasedOn>
+                <StaticResource ResourceKey="{x:Type TextBoxBase}"/>
+            </Style.BasedOn>
+        </Style>
+        
     </Window.Resources>
     
     
@@ -28,7 +157,7 @@
         </Grid.RowDefinitions>
 
         <!--miniMap box displaying map around player's current location-->
-        <RichTextBox Name="minimapBox" 
+        <RichTextBox Style="{DynamicResource RichTextBoxStyle}" Name="minimapBox" 
                          Grid.Row="0"
                          Grid.Column="1"
                          Grid.RowSpan="3"
@@ -37,11 +166,13 @@
                          Background="DarkGreen"
                          Foreground="White"
                          BorderBrush="Black"
+                         BorderThickness="3"
                          Margin="5, 10, 15, 10"
                          FontSize="14"
                          IsReadOnly ="True"
                          Focusable="False"
                          FontFamily="Consolas"
+                         Cursor="Arrow"
                          >
 
             <!--sets the line spacing of minimapBox-->
@@ -53,11 +184,11 @@
         </RichTextBox>
 
         <!--outputBox for displaing user input and game engine output-->
-        <RichTextBox Name="outputBox" 
+        <RichTextBox Style="{DynamicResource RichTextBoxStyle}" Name="outputBox" 
                          Grid.Row="0"
                          Background="Black"
                          Foreground="White"
-                         BorderBrush="Black"
+                         BorderBrush="Indigo"
                          Margin="10"
                          Padding="0, 0, 0, 5"
                          FontSize="14"
@@ -65,6 +196,7 @@
                          Focusable="False"
                          FontFamily="Consolas"
                          VerticalScrollBarVisibility="Visible"
+                         Cursor="Arrow"
                          >
             
                 <!--sets the line spacing of outputBox-->
@@ -101,16 +233,20 @@
             </Grid.ColumnDefinitions>
 
             <!--hp bar-->
-            <ProgressBar Name="hpBar" Value="{Binding HpPercentage}" Grid.Column="0" Margin="10, 0, 10, 5" Foreground="#FFD20D16" BorderBrush="Black" Background="Black" />
+
+            <ProgressBar Name="hpBar" Value="{Binding HpPercentage}" Grid.Column="0" Margin="10, 0, 10, 5" 
+                             Foreground="#FFD20D16"  Style="{StaticResource ProgressBar}"/>
+
             <TextBlock Text="HP" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 10, 5" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
             <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 0, 10, 6">
                 <TextBlock Name="hpLabel" Text="{Binding Hp}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="hpSlashLabel" Text=" / " Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
                 <TextBlock Name="maxHpLabel" Text="{Binding EffectiveMaxHp}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
             </StackPanel>
-            
+
             <!--mp bar-->
-            <ProgressBar Name="mpBar" Value="{Binding MpPercentage}" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0" Foreground="#FF1330D2" BorderBrush="Black" Background="Black"/>
+            <ProgressBar Name="mpBar" Value="{Binding MpPercentage}" Grid.Column="0" Grid.Row="1" Margin="10, 5, 10, 0"
+                         Foreground="#FF1330D2" BorderBrush="Black" Background="Black" Style="{StaticResource ProgressBar}"/>
             <TextBlock Text="MP" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 5, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>
             <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10, 2, 10, 0">
                 <TextBlock Name="mpLabel" Text="{Binding Mp}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="White"/>
@@ -119,7 +255,8 @@
             </StackPanel>
             
             <!--action cooldown bar-->
-            <ProgressBar Name="actionBar" Value="{Binding ActionCounter}" Grid.Column="1" Grid.Row="0" Margin="10, 0, 10, 5" Maximum="200" Foreground="Orange" BorderBrush="Black" Background="Black"/>
+            <ProgressBar Name="actionBar" Value="{Binding ActionCounter}" Grid.Column="1" Grid.Row="0" Margin="10, 0, 10, 5" Maximum="200" 
+                         Foreground="Orange" BorderBrush="Black" Background="Black" Style="{StaticResource ProgressBar}"/>
             <!--<TextBlock Text="AP" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 10, 0" FontSize="16" Foreground="White" FontWeight="Bold" FontFamily="Lato Semibold"/>-->
 
             <!--shadow bar (not yet determined)-->

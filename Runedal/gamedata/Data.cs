@@ -156,7 +156,7 @@ namespace Runedal.GameData
             AddItemsToList(bluntsArray);
             JsonString = JsonToString(JsonDirectoryPath + @"Weapons\WeaponsStaves.json");
             Item[] stavesArray = JsonSerializer.Deserialize<Weapon[]>(JsonString, Options)!;
-            AddItemsToList(bluntsArray);
+            AddItemsToList(stavesArray);
 
             //load armors
             JsonString = JsonToString(JsonDirectoryPath + @"Armors\ArmorsRobe.json");

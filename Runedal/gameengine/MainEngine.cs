@@ -2090,7 +2090,7 @@ namespace Runedal.GameEngine
 
             if (player.AttributePoints < 1)
             {
-                PrintMessage("Nie masz żadnych punktów atrybutów!", MessageType.SystemFeedback);
+                PrintMessage("Nie masz już więcej punktów atrybutów!", MessageType.SystemFeedback);
                 return;
             }
 

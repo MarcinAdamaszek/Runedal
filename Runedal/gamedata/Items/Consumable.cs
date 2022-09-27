@@ -15,14 +15,20 @@ namespace Runedal.GameData.Items
             {
                 AdditionalEffect = new List<Modifier>();
             }
+            if (SpecialEffects == null)
+            {
+                SpecialEffects = new List<SpecialEffect>();
+            }
         } 
         public Consumable(string[] descriptive, int[] stats, string useActivityName) : base(descriptive, stats) 
         {
             UseActivityName = useActivityName;
             AdditionalEffect = new List<Modifier>();
+            SpecialEffects = new List<SpecialEffect>();
         }
 
         public string? UseActivityName { get; set; }
         public List<Modifier>? AdditionalEffect { get; set; }
+        public List<SpecialEffect> SpecialEffects { get; set; }
     }
 }

@@ -3154,6 +3154,7 @@ namespace Runedal.GameEngine
 
                 //display location info to user
                 LocationInfo(Data.Player!.CurrentLocation!);
+                PrintMap();
 
                 //handle aggressive monsters present in location
                 //to attack player (except when player is invisible)
@@ -3398,10 +3399,21 @@ namespace Runedal.GameEngine
 
             PrintMessage(item.UseActivityName! + " " + item.Name!, MessageType.Action);
             RemoveItemFromPlayer(item.Name!);
-            ApplyEffect(item.Modifiers!, item.Name!);
+
+            if (item.Modifiers!.Count > 0)
+            {
+                ApplyEffect(item.Modifiers!, item.Name!);
+            }
             if (item.AdditionalEffect!.Count > 0)
             {
                 ApplyEffect(item.AdditionalEffect!, item.Name! + "(Dodatkowy)");
+            }
+            if (item.SpecialEffects.Count > 0)
+            {
+                item.SpecialEffects.ForEach(eff =>
+                {
+                    ApplySpecialEffect(Data.Player!, eff, item.Name!);
+                });
             }
         }
 
@@ -3534,6 +3546,19 @@ namespace Runedal.GameEngine
                     " Widzisz rzeczy, których nie sposób opisać słowami, a Twoje wnętrzności skręcają" +
                     " się tak mocno, że ledwo udaje Ci się powstrzymać wymioty. Nagle upadasz na ziemię, i" +
                     " powoli zaczynasz rozpoznawać otoczenie.", MessageType.Action);
+
+                //if it's portal-orb item, set proper teleport destination
+                if (Regex.Match(parentName, @"^[Kk]ula_portalowa_").Success)
+                {
+                    string cityName = Regex.Replace(parentName, @"^[Kk]ula_portalowa_", "");
+
+                    switch (cityName)
+                    {
+                        case "Derillon(SE)":
+                            TeleportLocation = Data.Locations!.Find(loc => loc.Name!.ToLower() == "ulica_derillon")!;
+                            break;
+                    }
+                }
 
                 //Add player to destined location
                 AddCharacterToLocation(TeleportLocation, Data.Player!);

@@ -2830,7 +2830,7 @@ namespace Runedal.GameEngine
             }
 
             //break player's invis if the spell was other than invis
-            if (spell.Name != "Powłoka_nur'zhel")
+            if (caster == Data.Player! && spell.Name != "Powłoka_nur'zhel")
             {
                 BreakInvisibility();
             }
@@ -2958,6 +2958,7 @@ namespace Runedal.GameEngine
                 //respawn player
                 PrintMessage("Odradzasz się..", MessageType.Action);
                 AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma_Pod_Wilczym_Kłem")!, Data.Player!);
+                PrintMap();
                 
                 Data.Player!.Hp = Data.Player.MaxHp * 0.4;
                 Data.Player!.Mp = 0;
@@ -3093,6 +3094,12 @@ namespace Runedal.GameEngine
                         }
                     });
                 }
+            }
+
+            //handle auto-attack
+            else if (IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
+            {
+                AttackCharacter(Data.Player!, dealer);
             }
 
             if (isDmgLethal)
@@ -5067,7 +5074,8 @@ namespace Runedal.GameEngine
             description = modType + "(" + valueSign + modifier.Value + percentSign + ")";
 
             //special description for special modifiers
-            if (modifier.Type == Modifier.ModType.Invisibility)
+            if (modifier.Type == Modifier.ModType.Invisibility ||
+                modifier.Type == Modifier.ModType.Stun)
             {
                 description = modType;
             }
@@ -5624,12 +5632,6 @@ namespace Runedal.GameEngine
 
                     dmgAsInt = Convert.ToInt32(dealtDmg);
                     isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt);
-                }
-
-                //handle auto-attack
-                if (isReceiverPlayer && IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
-                {
-                    AttackCharacter(Data.Player!, attacker);
                 }
             }
         }

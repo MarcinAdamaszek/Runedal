@@ -3161,6 +3161,13 @@ namespace Runedal.GameEngine
                                 AttackCharacter((ch as CombatCharacter)!, (character as CombatCharacter)!);
                             }
                         }
+                        else if (ch.GetType() == typeof(Hero))
+                        {
+                            if ((ch as Hero)!.Aggressiveness == Monster.AggressionType.Aggressive)
+                            {
+                                AttackCharacter((ch as CombatCharacter)!, (character as CombatCharacter)!);
+                            }
+                        }
                     });
                 }
             }

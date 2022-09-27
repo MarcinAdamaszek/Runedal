@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Runedal.GameData.Characters.Monster;
 
 namespace Runedal.GameData.Characters
 {
@@ -18,7 +19,8 @@ namespace Runedal.GameData.Characters
         //copy constructor
         public Hero(Hero hero) : base(hero)
         {
-
+            Aggressiveness = hero.Aggressiveness;
         }
+        public AggressionType Aggressiveness { get; set; }
     }
 }

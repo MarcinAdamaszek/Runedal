@@ -3326,8 +3326,6 @@ namespace Runedal.GameEngine
 
             if (TryOutChance(fleeChance))
             {
-                PrintMessage("Udało Ci się uciec!");
-                ChangePlayerLocation(escapeDestination, "none");
 
                 //remove all attack instances related to player
                 List<AttackInstance> instancesToRemove = new List<AttackInstance>();
@@ -3353,6 +3351,9 @@ namespace Runedal.GameEngine
                 //Remove all player opponents and remove he's combat state
                 Data.Player!.Opponents.Clear();
                 Data.Player!.CurrentState = CombatCharacter.State.Idle;
+
+                PrintMessage("Udało Ci się uciec!");
+                ChangePlayerLocation(escapeDestination, "none");
             }
             else
             {

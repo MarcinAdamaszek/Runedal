@@ -413,6 +413,12 @@ namespace Runedal.GameData.Characters
             //combine base stat value and value of all its modifiers
             double effectiveSpeed = this.Speed + ApplyModifiers(Modifier.ModType.Speed);
 
+            //make speed 0 if character is stunned (to allow 99% escape chance for player)
+            if (Modifiers!.Exists(mod => mod.Type == Modifier.ModType.Stun))
+            {
+                effectiveSpeed = 1;
+            }
+
             return effectiveSpeed;
         }
         public virtual double GetEffectiveAttack()

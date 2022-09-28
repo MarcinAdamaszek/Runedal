@@ -277,7 +277,7 @@ namespace Runedal.GameData.Characters
         public void LevelUp()
         {
             Level++;
-            NextLvlExpCap = Convert.ToUInt64(Math.Pow(Level * 5, 1.5));
+            NextLvlExpCap = Convert.ToUInt64(Math.Pow(Level * 15, 1.4));
             Strength += 1;
             Agility += 1;
             Intelligence += 1;

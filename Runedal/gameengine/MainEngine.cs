@@ -62,7 +62,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(100);
+            GameClock.Interval = TimeSpan.FromMilliseconds(50);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -1911,7 +1911,7 @@ namespace Runedal.GameEngine
                 if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
                 {
                     int combatCharIndex = Data.Player!.CurrentLocation!.Characters!.FindIndex(
-                        character => character is CombatCharacter);
+                        character => character is CombatCharacter && character != Data.Player!);
                     if (combatCharIndex != -1)
                     {
                         AttackCharacter(Data.Player!, 
@@ -2929,28 +2929,29 @@ namespace Runedal.GameEngine
 
                 //give player death penalty
                 Data.Player!.Experience = 0;
+                PrintMessage("Tracisz całe zebrane doświadczenie!");
 
                 //delevel player
-                if (Data.Player!.Level > 1)
-                {
-                    Data.Player!.Level -= 1;
+                //if (Data.Player!.Level > 1)
+                //{
+                //    Data.Player!.Level -= 1;
 
-                    Data.Player!.Strength--;
-                    Data.Player.Agility--;
-                    Data.Player.Intelligence--;
+                //    Data.Player!.Strength--;
+                //    Data.Player.Agility--;
+                //    Data.Player.Intelligence--;
 
-                    if (Data.Player!.AttributePoints >= 4)
-                    {
-                        Data.Player!.AttributePoints = 0;
-                    }
-                    else
-                    {
-                        Data.Player!.AttributePoints -= 4;
-                    }
+                //    if (Data.Player!.AttributePoints >= 4)
+                //    {
+                //        Data.Player!.AttributePoints = 0;
+                //    }
+                //    else
+                //    {
+                //        Data.Player!.AttributePoints -= 4;
+                //    }
 
-                    Data.Player.NextLvlExpCap = Convert.ToUInt64(Math.Pow(Data.Player.Level * 5, 1.5));
+                //    Data.Player.NextLvlExpCap = Convert.ToUInt64(Math.Pow(Data.Player.Level * 5, 1.5));
 
-                }
+                //}
 
                 //respawn player
                 PrintMessage("Odradzasz się..", MessageType.Action);

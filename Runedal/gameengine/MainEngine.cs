@@ -4004,6 +4004,7 @@ namespace Runedal.GameEngine
             string modifiers = string.Empty;
             string effect = string.Empty;
             string additionalEffect = string.Empty;
+            string specialEffects = string.Empty;
             string attack = string.Empty;
             string defense = string.Empty;
             string range = string.Empty;
@@ -4026,6 +4027,14 @@ namespace Runedal.GameEngine
                 if ((itemToDescribe as Consumable)!.AdditionalEffect!.Count > 0)
                 {
                     additionalEffect += "Dodatkowe działanie: " + GetEffectDescription((itemToDescribe as Consumable)!.AdditionalEffect!);
+                }
+                if ((itemToDescribe as Consumable)!.SpecialEffects.Count > 0)
+                {
+                    specialEffects = "Efekty specjalne: ";
+                    (itemToDescribe as Consumable)!.SpecialEffects.ForEach(eff =>
+                    {
+                        specialEffects += GetSpecialEffectDescription(eff) + ", ";
+                    });
                 }
             }
             else if (itemToDescribe.GetType() == typeof(Armor))
@@ -4137,6 +4146,11 @@ namespace Runedal.GameEngine
             if (additionalEffect != string.Empty)
             {
                 PrintMessage(additionalEffect);
+            }
+            if (specialEffects != string.Empty)
+            {
+                specialEffects = Regex.Replace(specialEffects, @",\s$", "");
+                PrintMessage(specialEffects);
             }
             if (defense != string.Empty)
             {
@@ -5044,6 +5058,10 @@ namespace Runedal.GameEngine
             else if (effect.Type == SpecialEffect.EffectType.ManaShield)
             {
                 effectDescription = "Tarcza MP(+" + effect.Value + "_%) " + TimeValueFromSeconds(effect.Duration);
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Teleport)
+            {
+                effectDescription = "Teleport";
             }
 
             return effectDescription;

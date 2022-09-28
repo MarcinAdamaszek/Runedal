@@ -2919,6 +2919,9 @@ namespace Runedal.GameEngine
                     "ostatnie ziarenka złotego piasku przesypują się do dolnej połowy, po czym bierze zamach, a Ty widzisz tylko srebrzysto-" +
                     "niebieski błysk..");
 
+                //remove queued action
+                Actions.Clear();
+
                 //remove all effects from player
                 List<EffectOnPlayer> effectsToRemove = new List<EffectOnPlayer>();
                 for (i = 0; i < (character as Player)!.Effects!.Count; i++)

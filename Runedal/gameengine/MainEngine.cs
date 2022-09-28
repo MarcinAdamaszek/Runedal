@@ -348,7 +348,7 @@ namespace Runedal.GameEngine
             //and handle unpausing
             if (IsPaused)
             {
-                if (command == "pause")
+                if (command == "pause" || command == "pa")
                 {
                     PauseHandler();
                     return;
@@ -3737,7 +3737,7 @@ namespace Runedal.GameEngine
             }
 
             //remove the last comma 
-            exitsInfo = Regex.Replace(exitsInfo, @",$", "");
+            exitsInfo = Regex.Replace(exitsInfo, @", $", "");
 
             if (isDetailed)
             {

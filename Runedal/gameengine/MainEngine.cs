@@ -1929,8 +1929,17 @@ namespace Runedal.GameEngine
                 //if there are no opponents currently fighting with player
                 if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
                 {
-                    PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
-                    return;
+                    int combatCharIndex = Data.Player!.CurrentLocation!.Characters!.FindIndex(
+                        character => character is CombatCharacter);
+                    if (combatCharIndex != -1)
+                    {
+                        AttackCharacter(Data.Player!, 
+                            (CombatCharacter)Data.Player!.CurrentLocation!.Characters[combatCharIndex]);
+                    }
+                    else
+                    {
+                        PrintMessage("Nie ma tu nikogo do zaatakowania", MessageType.SystemFeedback);
+                    }
                 }
 
                 //if player is fighting only with single opponent, attack that opponent
@@ -2887,6 +2896,10 @@ namespace Runedal.GameEngine
 
             //erase character from it's current location
             character.CurrentLocation!.RemoveCharacter(character);
+
+            //remove all characters opponents and interactors
+            character.Opponents.Clear();
+            character.InteractsWith = new Character("placeholder");
 
             //remove all attack instances related to dying character
             List<AttackInstance> instancesToRemove = new List<AttackInstance>();

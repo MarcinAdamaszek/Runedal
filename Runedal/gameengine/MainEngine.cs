@@ -1032,7 +1032,7 @@ namespace Runedal.GameEngine
         //method moving player to next location
         private void GoHandler(string direction)
         {
-            string directionString = string.Empty;
+            
             bool innerPassage = Data.Player!.CurrentLocation!.GetPassage(direction);
             Location nextLocation = new Location();
 
@@ -1051,27 +1051,7 @@ namespace Runedal.GameEngine
 
             ResetPlayerState();
 
-            switch (direction)
-            {
-                case "n":
-                    directionString = "na północ";
-                    break;
-                case "e":
-                    directionString = "na wschód";
-                    break;
-                case "s":
-                    directionString = "na południe";
-                    break;
-                case "w":
-                    directionString = "na zachód";
-                    break;
-                case "u":
-                    directionString = "do góry";
-                    break;
-                case "d":
-                    directionString = "w dół";
-                    break;
-            }
+            string directionString = GetPolishDirectionName(direction);
 
             if (GetNextLocation(direction, out nextLocation))
             {
@@ -1127,6 +1107,7 @@ namespace Runedal.GameEngine
                         return;
                     }
 
+                    PrintMessage("Spoglądasz " + GetPolishDirectionName(entityName), MessageType.Action);
                     LocationInfo(nextLocation);
                     return;
                 }
@@ -5119,6 +5100,37 @@ namespace Runedal.GameEngine
                 description = modType;
             }
             return description;
+        }
+
+        //method returning polish string representing direction in which player does something
+        //(ie goes or looks)
+        private string GetPolishDirectionName(string directionLetter)
+        {
+            string directionString = string.Empty;
+
+            switch (directionLetter)
+            {
+                case "n":
+                    directionString = "na północ";
+                    break;
+                case "e":
+                    directionString = "na wschód";
+                    break;
+                case "s":
+                    directionString = "na południe";
+                    break;
+                case "w":
+                    directionString = "na zachód";
+                    break;
+                case "u":
+                    directionString = "do góry";
+                    break;
+                case "d":
+                    directionString = "w dół";
+                    break;
+            }
+
+            return directionString;
         }
 
         private string FlattenPolishChars(string polishName)

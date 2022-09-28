@@ -2882,6 +2882,7 @@ namespace Runedal.GameEngine
             character.CurrentLocation!.RemoveCharacter(character);
 
             //remove all characters opponents and interactors
+            character.CurrentState = CombatCharacter.State.Idle;
             character.Opponents.Clear();
             character.InteractsWith = new Character("placeholder");
 

@@ -2562,9 +2562,9 @@ namespace Runedal.GameEngine
         {
             int quantityBase = Convert.ToInt32(Math.Sqrt(dyingChar.Level / 2));
             int lowTierQuantity;
-            double lowTierLimit = 20;
-            double mediumTierLimit = dyingChar.Level * 10;
-            double highTierLimit = dyingChar.Level * 100;
+            double lowTierLimit = 17;
+            double mediumTierLimit = dyingChar.Level * 25;
+            double highTierLimit = dyingChar.Level * 200;
 
             Item lowTierItem = new Item("placeholder");
             Item mediumTierItem = new Item("placeholder");
@@ -2600,7 +2600,10 @@ namespace Runedal.GameEngine
             {
                 if (it.Price < mediumTierLimit && it.Price >= lowTierLimit)
                 {
-                    mediumTierPool.Add(it);
+                    if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success)
+                    {
+                        mediumTierPool.Add(it);
+                    }
                 }
             });
             if (mediumTierPool.Count > 0)
@@ -2621,7 +2624,7 @@ namespace Runedal.GameEngine
                 highTierItem = highTierPool[Rand.Next(0, highTierPool.Count)];
             }
 
-            double lowTierChance = 0.3;
+            double lowTierChance = 0.4;
             double mediumTierChance = 0.03;
             double highTierChance = 0.005;
 

@@ -21,7 +21,7 @@ namespace Runedal.GameData.Characters
         private const double MpRegenIntMultiplier = 8;
         private const double SpeedAgiMultiplier = 0.5;
         private const double AttackStrMultiplier = 2.5;
-        private const double AtkSpeedAgiMultiplier = 1.0;
+        private const double AtkSpeedAgiMultiplier = 1.5;
         private const double AccuracyAgiMultiplier = 1.5;
         private const double CriticalAgiMultiplier = 2.0;
         private const double EvasionAgiMultiplier = 0.5;

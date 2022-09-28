@@ -1108,7 +1108,7 @@ namespace Runedal.GameEngine
                     }
 
                     PrintMessage("Spoglądasz " + GetPolishDirectionName(entityName), MessageType.Action);
-                    LocationInfo(nextLocation);
+                    LocationInfo(nextLocation, false);
                     return;
                 }
 
@@ -3708,7 +3708,7 @@ namespace Runedal.GameEngine
         //==============================================DESCRIPTION METHODS=============================================
 
         //method describing location to user
-        public void LocationInfo(Location currentLocation)
+        public void LocationInfo(Location currentLocation, bool isDetailed = true)
         {
             //Location currentLocation = Data.Player!.CurrentLocation!;
             Location nextLocation = new Location();
@@ -3717,7 +3717,7 @@ namespace Runedal.GameEngine
             string charactersInfo = "Postacie: ";
             string exitsInfo = "Wyjścia: ";
             string[] directionsLetters = { "n", "e", "s", "w", "u", "d" };
-            string[] directionsStrings = { " północ,", " wschód,", " południe,", " zachód,", " góra,", " dół," };
+            string[] directionsStrings = { " północ", " wschód", " południe", " zachód", " góra", " dół" };
             int currentX = currentLocation.X;
             int currentY = currentLocation.Y;
 
@@ -3732,14 +3732,17 @@ namespace Runedal.GameEngine
                 //if the location exists
                 if (GetNextLocation(directionsLetters[i], out nextLocation))
                 {
-                    exitsInfo += directionsStrings[i];
+                    exitsInfo += directionsStrings[i] + "(" + nextLocation.Name! + ")" + ", ";
                 }
             }
 
             //remove the last comma 
             exitsInfo = Regex.Replace(exitsInfo, @",$", "");
 
-            PrintMessage(exitsInfo);
+            if (isDetailed)
+            {
+                PrintMessage(exitsInfo);
+            }
 
             //add character names to their info strings for each character of specific type present in player's current location
             currentLocation.Characters!.ForEach((character) =>

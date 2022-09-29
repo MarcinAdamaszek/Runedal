@@ -363,6 +363,13 @@ namespace Runedal.GameEngine
             //match user input to proper engine action
             switch (command)
             {
+
+                //for testing
+                case "loc":
+                    PrintMessage("Z = " + Data.Player!.CurrentLocation!.Z + "\n" +
+                        "Y = " + Data.Player!.CurrentLocation!.Y + "\n" + 
+                        "X = " + Data.Player!.CurrentLocation!.X);
+                    break;
                 case "go":
                 case "g":
                     GoHandler(argument1);
@@ -1272,6 +1279,7 @@ namespace Runedal.GameEngine
 
 
             ResetPlayerState();
+            BreakInvisibility();
 
             //if character not found in current location
             if (index == -1)

@@ -557,8 +557,11 @@ namespace Runedal.GameEngine
             //with their maxhp/mp values
             Data.InitializeHpMpValues();
 
-            //load all characters into locations and items/spells into characters
-            Data.PopulateLocationsAndCharacters();
+            //fill inventories of all characters with their items
+            Data.PopulateInventories();
+
+            //load all characters into locations
+            Data.PopulateLocations();
 
             //save newgame json file
             Data.SaveGame(Data.JsonDirectoryPath + @"NewGame.json");

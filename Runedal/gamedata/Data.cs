@@ -215,7 +215,7 @@ namespace Runedal.GameData
             });
         }
 
-        public void PopulateLocationsAndCharacters()
+        public void PopulateLocations()
         {
             AddSpellsToCharacters();
 
@@ -260,8 +260,17 @@ namespace Runedal.GameData
                 }
 
                 //fill character's inventories
-                location.Characters!.ForEach(character => FillInventory(character));
+                //location.Characters!.ForEach(character => FillInventory(character));
 
+            });
+        }
+
+        //method filling inventories of all characters with their items
+        public void PopulateInventories()
+        {
+            Characters!.ForEach(character =>
+            {
+                FillInventory(character);
             });
         }
 

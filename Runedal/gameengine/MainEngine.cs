@@ -363,13 +363,6 @@ namespace Runedal.GameEngine
             //match user input to proper engine action
             switch (command)
             {
-
-                //for testing
-                case "loc":
-                    PrintMessage("Z = " + Data.Player!.CurrentLocation!.Z + "\n" +
-                        "Y = " + Data.Player!.CurrentLocation!.Y + "\n" + 
-                        "X = " + Data.Player!.CurrentLocation!.X);
-                    break;
                 case "go":
                 case "g":
                     GoHandler(argument1);
@@ -487,6 +480,16 @@ namespace Runedal.GameEngine
                 case "iwannagrow":
                         GivePlayerExperience(10);
                     break;
+
+                //for testing
+                case "loc":
+                    PrintMessage("Z = " + Data.Player!.CurrentLocation!.Z + "\n" +
+                        "Y = " + Data.Player!.CurrentLocation!.Y + "\n" +
+                        "X = " + Data.Player!.CurrentLocation!.X);
+                    break;
+                case "allchars":
+                    PrintMessage("Wszystkich postaci w grze: " + Data.AllCharactersTestProp.Count);
+                    break;
                 default:
                     PrintMessage("Nie rozumiem. Wpisz 'help' aby zobaczyć komendy, lub wciśnij esc aby zobaczyć menu.", MessageType.SystemFeedback);
                     return;
@@ -541,9 +544,9 @@ namespace Runedal.GameEngine
         {
             //initialize all data collections
             Data.LoadLocations();
+            Data.LoadSpells();
             Data.LoadCharacters();
             Data.LoadItems();
-            Data.LoadSpells();
             Data.LoadStackingEffects();
         }
 

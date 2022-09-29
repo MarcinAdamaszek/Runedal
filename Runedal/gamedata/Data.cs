@@ -12,13 +12,14 @@ using Runedal.GameData.Effects;
 using static Runedal.GameData.Items.Weapon;
 using System.Xml.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace Runedal.GameData
 {
     public class Data
     {
         public const string JsonDirectoryPath = @"C:\Users\adamach\source\repos\Runedal\Runedal\GameData\Resources\Json\";
-        public Data() 
+        public Data()
         {
             //make json deserializer ignore letter cases in property names
             Options = new JsonSerializerOptions()
@@ -38,6 +39,7 @@ namespace Runedal.GameData
             Items = new List<Item>();
             Spells = new List<Spell>();
             TakenIds = new List<ulong>();
+            AllCharactersTestProp = new List<Character>();
             PriceMultiplier = 1.2;
         }
         public double PriceMultiplier { get; set; }
@@ -53,6 +55,7 @@ namespace Runedal.GameData
         public List<Spell>? Spells { get; set; }
         public List<ulong>? TakenIds { get; set; }
         public Player? Player { get; set; }
+        public List<Character> AllCharactersTestProp {get; set;}
       
         
         //method reading json file into json string
@@ -111,6 +114,7 @@ namespace Runedal.GameData
             Character[] heroesArray = JsonSerializer.Deserialize<Hero[]>(JsonString, Options)!;
             AddCharactersToList(heroesArray);
 
+            AddSpellsToCharacters();
         } 
 
         //method loading locations from json file
@@ -206,19 +210,8 @@ namespace Runedal.GameData
             });
         }
 
-        //method loading real locations to be used in game
-        public void LoadRealLocations()
-        {
-            LocationPrototypes!.ForEach(loc =>
-            {
-                Locations!.Add(new Location(loc));
-            });
-        }
-
         public void PopulateLocations()
         {
-            AddSpellsToCharacters();
-
             Character character = new Character();
             int i;
 
@@ -236,7 +229,7 @@ namespace Runedal.GameData
                             Monster monster = new Monster((character as Monster)!);
                             monster.Id = GetNewId();
                             location.AddCharacter(monster);
-
+                            AllCharactersTestProp.Add(monster);
                         }
                     }
                     else if (character.GetType() == typeof(Trader))
@@ -246,6 +239,7 @@ namespace Runedal.GameData
                             Trader trader = new Trader((character as Trader)!);
                             trader.Id = GetNewId();
                             location.AddCharacter(trader);
+                            AllCharactersTestProp.Add(trader);
                         }
                     }
                     else if (character.GetType() == typeof(Hero))
@@ -255,6 +249,7 @@ namespace Runedal.GameData
                             Hero hero = new Hero((character as Hero)!);
                             hero.Id = GetNewId();
                             location.AddCharacter(hero);
+                            AllCharactersTestProp.Add(hero);
                         }
                     }
                 }

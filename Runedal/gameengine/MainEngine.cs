@@ -457,7 +457,7 @@ namespace Runedal.GameEngine
                     CraftHandler(argument1, argument2);
                     break;
                 case "stop":
-                case "sp":
+                case "st":
                     StopHandler();
                     break;
                 case "pause":
@@ -4705,7 +4705,7 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> PRZERWIJ AKCJĘ";
                 manualLines[i++] = "     * Komenda: 'stop'";
-                manualLines[i++] = "     * Skrót: 'sp'";
+                manualLines[i++] = "     * Skrót: 'st'";
                 manualLines[i++] = "           Przerywa ostatnio zakolejkowaną akcję, handel, rozmowę lub atak";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> ZATRZYMAJ/WZNÓW GRĘ (PAUZA)";

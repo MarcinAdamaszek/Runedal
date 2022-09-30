@@ -2597,8 +2597,8 @@ namespace Runedal.GameEngine
             int quantityBase = Convert.ToInt32(Math.Sqrt(dyingChar.Level / 2));
             int lowTierQuantity;
             double lowTierLimit = 17;
-            double mediumTierLimit = dyingChar.Level * 25;
-            double highTierLimit = dyingChar.Level * 200;
+            double mediumTierLimit = dyingChar.Level * 30;
+            double highTierLimit = dyingChar.Level * 100;
 
             Item lowTierItem = new Item("placeholder");
             Item mediumTierItem = new Item("placeholder");
@@ -2632,7 +2632,7 @@ namespace Runedal.GameEngine
             //same for medium and high tiers
             Data.Items!.ForEach(it =>
             {
-                if (it.Price < mediumTierLimit && it.Price >= lowTierLimit)
+                if (it.Price < mediumTierLimit && it.Price >= mediumTierLimit * 0.5)
                 {
                     if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success)
                     {
@@ -2648,7 +2648,7 @@ namespace Runedal.GameEngine
             //high tier
             Data.Items!.ForEach(it =>
             {
-                if (it.Price < highTierLimit && it.Price >= mediumTierLimit)
+                if (it.Price < highTierLimit && it.Price >= highTierLimit * 0.5)
                 {
                     highTierPool.Add(it);
                 }
@@ -2660,13 +2660,12 @@ namespace Runedal.GameEngine
 
             double lowTierChance = 0.4;
             double mediumTierChance = 0.03;
-            double highTierChance = 0.005;
+            double highTierChance = 0.3;
 
             //modify chance drop for heroes(bosses)
             if (dyingChar.GetType() == typeof(Hero))
             {
                 mediumTierChance = 1.0;
-                highTierChance = 0.3;
             }
 
             //try dropping low tier item
@@ -2684,7 +2683,7 @@ namespace Runedal.GameEngine
 
             //try dropping high tier item
             if (highTierItem.Name != "placeholder" && TryOutChance(highTierChance) &&
-                dyingChar.Level > 5)
+                dyingChar.GetType() == typeof(Hero))
             {
                 AddItemToLocation(dyingChar.CurrentLocation!, highTierItem.Name!, 1);
             }

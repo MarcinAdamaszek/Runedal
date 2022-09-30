@@ -1691,6 +1691,12 @@ namespace Runedal.GameEngine
             int itemQuantity;
             Item itemToPickup = new Item();
 
+            if (Data.Player.CurrentState == CombatCharacter.State.Combat)
+            {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return;
+            }
+
             //handle lack of argument
             if (itemName == string.Empty)
             {

@@ -32,7 +32,6 @@ namespace Runedal.GameData
                 }
             };
 
-            LocationPrototypes = new List<Location>();
             Locations = new List<Location>();
             Characters = new List<Character>();
             Monsters = new List<Monster>();
@@ -47,7 +46,6 @@ namespace Runedal.GameData
         public string? JsonString { get; set; }
         public string[]? StackingEffects { get; set; }
         public JsonSerializerOptions Options { get; set; }
-        public List<Location>? LocationPrototypes { get; set; }
         public List<Location>? Locations { get; set; }
         public List<Character>? Characters { get; set; }
         public List<Monster>? Monsters { get; set; }

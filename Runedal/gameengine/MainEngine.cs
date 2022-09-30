@@ -4211,7 +4211,8 @@ namespace Runedal.GameEngine
         {
             Location center = Data.Player!.CurrentLocation!;
             const string enDash = "\x2500";
-            const string emptySquare = "\x25A1";
+            const string emptyLoc = "\x25A1";
+            const string filledLoc = "\x25D9";
             const string player = "\x25A0";
             const string upAndDown = "\x2195";
             const string traderLoc = "\x2302";
@@ -4265,9 +4266,14 @@ namespace Runedal.GameEngine
                             {
                                 mapLines[k] += traderLoc;
                             }
+                            else if (examinedLocation.Characters!.Exists(character => 
+                            character.GetType() == typeof(Monster)))
+                            {
+                                mapLines[k] += filledLoc;
+                            }
                             else
                             {
-                                mapLines[k] += emptySquare;
+                                mapLines[k] += emptyLoc;
                             }
                         }
                         
@@ -4286,32 +4292,6 @@ namespace Runedal.GameEngine
                             mapLines[k] += "   ";
                     }
                 }
-
-                //if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ))
-                //{
-                //    //if it's player's current location, sign it with 'player sign'
-                //    if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
-                //    {
-                //        mapLines[k] += player;
-                //    }
-                //    else
-                //    {
-
-                //        //otherwise, if there is another location in the same Z axis
-                //        //directly connected to this one
-                //        if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ - 1) ||
-                //            IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
-                //        {
-                //            mapLines[k] += upAndDown;
-                //        }
-                //        else
-                //        {
-                //            mapLines[k] += emptySquare;
-                //        }
-                //    }
-
-                //}
-
 
                 k += 2;
             }

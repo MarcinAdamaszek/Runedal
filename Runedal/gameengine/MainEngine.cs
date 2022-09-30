@@ -367,6 +367,24 @@ namespace Runedal.GameEngine
                 case "g":
                     GoHandler(argument1);
                     break;
+                case "n":
+                    GoHandler("n");
+                    break;
+                case "e":
+                    GoHandler("e");
+                    break;
+                case "s":
+                    GoHandler("s");
+                    break;
+                case "w":
+                    GoHandler("w");
+                    break;
+                case "u":
+                    GoHandler("u");
+                    break;
+                case "d":
+                    GoHandler("d");
+                    break;
                 case "attack":
                 case "a":
                     AttackHandler(argument1);
@@ -376,7 +394,7 @@ namespace Runedal.GameEngine
                     FleeHandler(argument1);
                     break;
                 case "cast":
-                case "ca":
+                case "c":
                     CastHandler(argument1, argument2);
                     break;
                 case "trade":
@@ -391,7 +409,6 @@ namespace Runedal.GameEngine
                     BuyHandler(argument1, argument2);
                     break;
                 case "sell":
-                case "se":
                     SellHandler(argument1, argument2);
                     break;
                 case "look":
@@ -399,11 +416,9 @@ namespace Runedal.GameEngine
                     LookHandler(argument1);
                     break;
                 case "use":
-                case "u":
                     UseHandler(argument1);
                     break;
                 case "wear":
-                case "w":
                     WearHandler(argument1);
                     break;
                 case "takeoff":
@@ -411,7 +426,6 @@ namespace Runedal.GameEngine
                     TakeoffHandler(argument1);
                     break;
                 case "drop":
-                case "d":
                     DropHandler(argument1, argument2);
                     break;
                 case "pickup":
@@ -423,19 +437,19 @@ namespace Runedal.GameEngine
                     InventoryHandler(Data.Player!, false);
                     break;
                 case "stats":
-                case "st":
+                case "ss":
                     StatsHandler();
                     break;
                 case "spells":
-                case "sp":
+                case "sps":
                     SpellsHandler();
                     break;
                 case "effects":
-                case "e":
+                case "ef":
                     EffectsHandler();
                     break;
                 case "point":
-                case "po":
+                case "pt":
                     PointHandler(argument1);
                     break;
                 case "craft":
@@ -443,11 +457,11 @@ namespace Runedal.GameEngine
                     CraftHandler(argument1, argument2);
                     break;
                 case "stop":
-                case "s":
+                case "sp":
                     StopHandler();
                     break;
                 case "pause":
-                case "pa":
+                case "ps":
                     PauseHandler();
                     break;
                 case "save":
@@ -4603,9 +4617,10 @@ namespace Runedal.GameEngine
                     " zamiast nazwy obiektu {np. 'look n'}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> IDŹ";
-                manualLines[i++] = "     * Komenda: 'go [nazwa kierunku]'";
-                manualLines[i++] = "     * Skrót: 'g'";
-                manualLines[i++] = "           Twoja postać idzie w wybranym kierunku {np. 'go n'} (n - północ, e - wschód, s - południe, w - zachód, u - góra, d - dół)";
+                manualLines[i++] = "     * Komenda: '[litera kierunku]'";
+                manualLines[i++] = "     * Skrót: brak";
+                manualLines[i++] = "           Wpisujesz jedną z liter kierunku ('n' - północ, 'e' - wschód, 's' - południe, 'w' - zachód, 'u' - góra, 'd' - dół),";
+                manualLines[i++] = "aby twoja postać poszła w wybranym kierunku {np. 'n' - idzie na północ} ";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> ATAKUJ";
                 manualLines[i++] = "     * Komenda: 'attack [nazwa przeciwnika]'";
@@ -4620,7 +4635,7 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> UŻYJ PRZEDMIOTU";
                 manualLines[i++] = "     * Komenda: 'use [nazwa obiektu]'";
-                manualLines[i++] = "     * Skrót: 'u'";
+                manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Używa wybranego obiektu {np. 'use mikstura_many'}.";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> ROZMAWIAJ";
@@ -4635,14 +4650,14 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> KUP";
                 manualLines[i++] = "     * Komenda: 'buy [nazwa przedmiotu] [ilość]'";
-                manualLines[i++] = "     * Skrót: 'b'";
+                manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Kupuje jedną sztukę wybranego przedmiotu {np. 'buy piwo'}. Możesz dodać ilość sztuk jaką " +
                     "chcesz kupić {np. 'buy piwo 3'}. Jeśli chcesz kupić wszystko co ma handlarz - wpisz " +
                     "'all' lub 'a' {np. 'buy piwo all' lub 'buy piwo a'}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> SPRZEDAJ";
                 manualLines[i++] = "     * Komenda: 'sell [nazwa przedmiotu] [ilość]'";
-                manualLines[i++] = "     * Skrót: 'se'";
+                manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Sprzedaje jedną sztukę wybranego przedmiotu {np. sell piwo}. Możesz dodać ilość sztuk jaką " +
                     "chcesz sprzedać {np. 'sell piwo 3'}. Jeśli chcesz sprzedać wszystko co posiadasz, wpisz " +
                     "'all' lub 'a' {np. 'sell piwo all' lub 'sell piwo a'} (tylko co potem będziesz pił?)}";
@@ -4655,13 +4670,13 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> WYRZUĆ";
                 manualLines[i++] = "     * Komenda: 'drop [nazwa przedmiotu] [ilość]'";
-                manualLines[i++] = "     * Skrót: 'd'";
+                manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Wyrzuca jeden wybrany przedmiot {np. 'drop drewniana_pałka'}. Możesz dodać ilość sztuk" +
                     " {np. 'drop piwo 3' (kto to widział piwo wylewać..)}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> ZAŁÓŻ PRZEDMIOT";
                 manualLines[i++] = "     * Komenda: 'wear [nazwa przedmiotu]'";
-                manualLines[i++] = "     * Skrót: 'w'";
+                manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Zakłada wybrany przedmiot {np. 'wear skórzana_kurtka'}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> ŚCIĄGNIJ PRZEDMIOT";
@@ -4672,9 +4687,9 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> RZUĆ CZAR";
                 manualLines[i++] = "     * Komenda: 'cast [numer czaru] [cel]'";
-                manualLines[i++] = "     * Skrót: 'ca'";
+                manualLines[i++] = "     * Skrót: 'c'";
                 manualLines[i++] = "           Rzuca czar z listy zapamiętanych czarów {np. 'cast 1' - rzuci pierwszy czar na liście}. " +
-                    "Możesz wybrać cel w jaki chcesz rzucić czar {np. cast 1 szkielet_wojownik - rzuci pierwszy czar na liście w szkielet_wojownik}";
+                    "Możesz wybrać cel w jaki chcesz rzucić czar {np. 'cast 1 szkielet_wojownik' - rzuci pierwszy czar na liście w szkielet_wojownik}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> UTWÓRZ CZAR";
                 manualLines[i++] = "     * Komenda: 'craft [nazwa runy] [nazwa runy]'";
@@ -4684,9 +4699,9 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> UŻYJ PUNKTU ATRYBUTU";
                 manualLines[i++] = "     * Komenda: 'point [nazwa atrybutu]'";
-                manualLines[i++] = "     * Skrót: 'po'";
+                manualLines[i++] = "     * Skrót: 'pt'";
                 manualLines[i++] = "           Zużywa jeden punkt atrybutu i dodaje jeden do wybranego atrybutu ('strength' - siła, " +
-                    "'agility' - zręczność, 'intelligence' - inteligencja) (lub skróty: 'str', 'agi', 'int') {np. 'point str' - dodaje jeden do siły}";
+                    "'agility' - zręczność, 'intelligence' - inteligencja) (lub skróty: 'str', 'agi', 'int') {np. 'point strength' - dodaje jeden do siły}";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> EKWIPUNEK"; 
                 manualLines[i++] = "     * Komenda: 'inventory'";
@@ -4695,22 +4710,22 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> STATYSTYKI";
                 manualLines[i++] = "     * Komenda: 'stats'";
-                manualLines[i++] = "     * Skrót: 'st'";
+                manualLines[i++] = "     * Skrót: 'ss'";
                 manualLines[i++] = "           Pokazuje statystyki Twojej postaci";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> ZAKLĘCIA";
                 manualLines[i++] = "     * Komenda: 'spells'";
-                manualLines[i++] = "     * Skrót: 'sp'";
+                manualLines[i++] = "     * Skrót: 'sps'";
                 manualLines[i++] = "           Pokazuje zapamiętane czary";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> PRZERWIJ AKCJĘ";
                 manualLines[i++] = "     * Komenda: 'stop'";
-                manualLines[i++] = "     * Skrót: 's'";
+                manualLines[i++] = "     * Skrót: 'sp'";
                 manualLines[i++] = "           Przerywa ostatnio zakolejkowaną akcję, handel, rozmowę lub atak";
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> ZATRZYMAJ/WZNÓW GRĘ (PAUZA)";
                 manualLines[i++] = "     * Komenda: 'pause'";
-                manualLines[i++] = "     * Skrót: 'pa'";
+                manualLines[i++] = "     * Skrót: 'ps'";
                 manualLines[i++] = "           Całkowicie wstrzymuje/wznawia grę."; 
                 manualLines[i++] = "";
                 manualLines[i++] = "  >>> SZYBKI ZAPIS";
@@ -4809,8 +4824,8 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      Każda lokacja może mieć wyjścia w sześciu";
             manualLines[i++] = "      możliwych kierunkach: północ, południe, wschód";
             manualLines[i++] = "      zachód, dół i góra. Możesz przemieszczać się";
-            manualLines[i++] = "      między lokacjami, używając komendy 'go' i";
-            manualLines[i++] = "      litery kierunku. Litery kierunków to: ";
+            manualLines[i++] = "      pomiędzy lokacjami, zwyczajnie wpisując";
+            manualLines[i++] = "      jedną z liter kierunku:";
             manualLines[i++] = "      > 'n' - północ";
             manualLines[i++] = "      > 's' - południe";
             manualLines[i++] = "      > 'e' - wschód";
@@ -4818,7 +4833,7 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      > 'u' - góra";
             manualLines[i++] = "      > 'd' - dół";
             manualLines[i++] = "       Jeśli chcesc iść np. na północ";
-            manualLines[i++] = "       - wpisujesz 'go n' i naciskasz enter.\n";
+            manualLines[i++] = "       - wpisujesz 'n' i naciskasz enter.\n";
             manualLines[i++] = "  >>> PATRZENIE\n";
             manualLines[i++] = "      W grze nie ma żadnej grafiki, więc wszystko";
             manualLines[i++] = "      co \"widzisz\" będzie opisywane słowami.";

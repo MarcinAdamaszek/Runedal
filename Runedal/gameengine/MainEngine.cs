@@ -2778,7 +2778,7 @@ namespace Runedal.GameEngine
             //for player, and level factor for other characters)
             if (caster == Data.Player)
             {
-                casterDmgFactor = (caster as Player)!.GetEffectiveIntelligence();
+                casterDmgFactor = (caster as Player)!.GetEffectiveIntelligence() / 3;
             }
             else
             {

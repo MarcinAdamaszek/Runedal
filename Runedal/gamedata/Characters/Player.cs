@@ -9,6 +9,7 @@ using Runedal.GameData.Items;
 using System.Windows.Media.Effects;
 using static Runedal.GameData.Characters.CombatCharacter;
 using Runedal.GameData.Effects;
+using Runedal.GameEngine;
 
 namespace Runedal.GameData.Characters
 {
@@ -16,9 +17,9 @@ namespace Runedal.GameData.Characters
     {
         //values of multipliers for calculating attributes modifiers
         private const double MaxHpStrMultiplier = 30;
-        private const double MaxMpIntMultiplier = 15;
+        private const double MaxMpIntMultiplier = 13;
         private const double HpRegenStrMultiplier = 8;
-        private const double MpRegenIntMultiplier = 8;
+        private const double MpRegenIntMultiplier = 3.5;
         private const double SpeedAgiMultiplier = 0.5;
         private const double AttackStrMultiplier = 2.5;
         private const double AtkSpeedAgiMultiplier = 1.5;
@@ -225,7 +226,7 @@ namespace Runedal.GameData.Characters
                 {
                     _Intelligence = value;
                     EffectiveMaxMp = GetEffectiveMaxMp();
-                    MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(GetEffectiveIntelligence()) / 3);
+                    MaxSpellsRemembered = Convert.ToInt32(Math.Floor((MainEngine.NthRoot(GetEffectiveIntelligence(), 1.5) / 8)));
                     if (MaxSpellsRemembered < 1)
                     {
                         MaxSpellsRemembered = 1;

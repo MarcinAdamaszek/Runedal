@@ -33,11 +33,11 @@ namespace Runedal.GameEngine
 {
     public class MainEngine
     {
-        private const int firstIntThreshold = 30;
-        private const int secondIntThreshold = 50;
-        private const int thirdIntThreshold = 100;
-        private const int fourthIntThreshold = 160;
-        private const int fifthIntThreshold = 280;
+        private const int firstIntThreshold = 25;
+        private const int secondIntThreshold = 65;
+        private const int thirdIntThreshold = 117;
+        private const int fourthIntThreshold = 200;
+        private const int fifthIntThreshold = 250;
         public MainEngine(MainWindow window)
         { 
             this.Window = window;
@@ -5035,6 +5035,12 @@ namespace Runedal.GameEngine
 
 
         //==============================================HELPER METHODS=============================================
+
+        //method calculating nth root of a double value
+        public static double NthRoot(double A, double N)
+        {
+            return Math.Pow(A, 1.0 / N);
+        }
 
         //method determining if location with specified coordinates exists
         private bool IsThereALocation(int X, int Y, int Z)

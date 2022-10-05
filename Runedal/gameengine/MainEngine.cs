@@ -5681,7 +5681,7 @@ namespace Runedal.GameEngine
                 //cast a spell once a while if it's attacking the player
                 if (isReceiverPlayer && attacker.RememberedSpells.Count > 0)
                 {
-                    isSpellCasted = TryOutChance(0.25);
+                    isSpellCasted = TryOutChance(0.2);
 
                     if (isSpellCasted)
                     {

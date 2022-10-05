@@ -2718,7 +2718,7 @@ namespace Runedal.GameEngine
             PrintMessage("Tworzysz czar " + spellToCraft.Name, MessageType.Action);
             PrintMessage("Czujesz jak nowe zaklęcie wypełnia Twój umysł", MessageType.Action);
 
-            Data.Player.SpendMana(200);
+            Data.Player!.SpendMana(200);
 
             //if collection of player's spells was full and the last spell
             //was removed - print proper message to user about it

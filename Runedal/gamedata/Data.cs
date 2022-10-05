@@ -185,13 +185,18 @@ namespace Runedal.GameData
         //method loading spells from json
         public void LoadSpells()
         {
-            //load consumables
-            JsonString = JsonToString(JsonDirectoryPath + @"Spells.json");
-            Spell[] spellsArray = JsonSerializer.Deserialize<Spell[]>(JsonString, Options)!;
+            string[] spellsFilepaths = Directory.GetFiles(JsonDirectoryPath + @"Spells\");
+            Spell[] spellsArray;
 
-            foreach (var spell in spellsArray)
+            foreach (string path in spellsFilepaths)
             {
-                Spells!.Add(spell);
+                JsonString = JsonToString(path);
+                spellsArray = JsonSerializer.Deserialize<Spell[]>(JsonString, Options)!;
+
+                foreach (var spell in spellsArray)
+                {
+                    Spells!.Add(spell);
+                }
             }
         }
 

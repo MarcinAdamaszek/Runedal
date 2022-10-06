@@ -62,7 +62,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(50);
+            GameClock.Interval = TimeSpan.FromMilliseconds(25);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -3098,7 +3098,7 @@ namespace Runedal.GameEngine
                 double lifestealMultiplier = lifestealPercentValue * 0.01;
                 double lifestealHeal = Math.Round(lifestealMultiplier * dmg);
                 dealer.Heal(lifestealHeal);
-                PrintMessage("ULECZONO " + lifestealHeal, MessageType.Gain);
+                //PrintMessage("ULECZONO " + lifestealHeal, MessageType.Gain);
             }
 
             //break invis if it's player dealing or receiving the dmg
@@ -4218,10 +4218,11 @@ namespace Runedal.GameEngine
             Location center = Data.Player!.CurrentLocation!;
             const string enDash = "\x2500";
             const string emptyLoc = "\x25A1";
-            const string filledLoc = "\x25D9";
+            const string filledLoc = "\x263C";
             const string player = "\x25A0";
             const string upAndDown = "\x2195";
             const string traderLoc = "\x2302";
+            const string heroLoc = "\x25D9";
             const int rangeSize = 12;
             
             int i, j, k;
@@ -4276,6 +4277,11 @@ namespace Runedal.GameEngine
                             character.GetType() == typeof(Monster)))
                             {
                                 mapLines[k] += filledLoc;
+                            }
+                            else if (examinedLocation.Characters!.Exists(character =>
+                            character.GetType() == typeof(Hero)))
+                            {
+                                mapLines[k] += heroLoc;
                             }
                             else
                             {

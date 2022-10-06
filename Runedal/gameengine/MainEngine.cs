@@ -1445,6 +1445,10 @@ namespace Runedal.GameEngine
             //if total buying price of the item is lesser than amount of gold possesed by player
             if (Data.Player!.Gold! >= buyingPrice)
             {
+                //display trader's/player's inventories to update their content
+                InventoryInfo(trader, true);
+                InventoryInfo(Data.Player!, true);
+
                 //inform player about action
                 PrintMessage("Kupujesz " + itemQuantity + " " + itemName, MessageType.Action);
 
@@ -1457,10 +1461,6 @@ namespace Runedal.GameEngine
 
                 //add gold amount to trader's pool
                 trader.Gold += buyingPrice;
-
-                //display trader's/player's inventories once again
-                //InventoryInfo(trader, true);
-                //InventoryInfo(Data.Player!, true);
             }
             else
             {
@@ -1532,6 +1532,11 @@ namespace Runedal.GameEngine
             //if total buying price of the item is lesser than amount of gold possesed by player
             if (trader.Gold >= sellingPrice)
             {
+
+                //display trader's/player's inventories to update their content
+                InventoryInfo(trader, true);
+                InventoryInfo(Data.Player!, true);
+
                 //inform player about action
                 PrintMessage("Sprzedajesz " + itemQuantity + " " + itemName, MessageType.Action);
 
@@ -1542,10 +1547,6 @@ namespace Runedal.GameEngine
                 //swap gold from player to trader 
                 AddGoldToPlayer(sellingPrice);
                 trader.Gold -= sellingPrice;
-
-                //display trader's/player's inventories once again
-                //InventoryInfo(trader, true);
-                //InventoryInfo(Data.Player!, true);
             }
             else
             {

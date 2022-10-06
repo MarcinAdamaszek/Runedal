@@ -1459,8 +1459,8 @@ namespace Runedal.GameEngine
                 trader.Gold += buyingPrice;
 
                 //display trader's/player's inventories once again
-                InventoryInfo(trader, true);
-                InventoryInfo(Data.Player!, true);
+                //InventoryInfo(trader, true);
+                //InventoryInfo(Data.Player!, true);
             }
             else
             {
@@ -1544,8 +1544,8 @@ namespace Runedal.GameEngine
                 trader.Gold -= sellingPrice;
 
                 //display trader's/player's inventories once again
-                InventoryInfo(trader, true);
-                InventoryInfo(Data.Player!, true);
+                //InventoryInfo(trader, true);
+                //InventoryInfo(Data.Player!, true);
             }
             else
             {

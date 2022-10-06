@@ -1615,13 +1615,13 @@ namespace Runedal.GameEngine
 
             ResetPlayerState();
 
-            if (itemIndex == -1 && itemName != "złoto")
+            if (itemIndex == -1 && itemName != "złoto" && itemName != "zloto")
             {
                 PrintMessage("Nie posiadasz przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
                 return;
             }
 
-            if (itemName != "złoto")
+            if (itemName != "złoto" && itemName != "zloto")
             {
                 itemToRemove = Data.Player!.Inventory[itemIndex];
             }
@@ -1631,7 +1631,7 @@ namespace Runedal.GameEngine
             {
 
                 //depending if it's item or gold
-                if (itemName != "złoto")
+                if (itemName != "złoto" && itemName != "zloto")
                 {
                     itemQuantity = itemToRemove.Quantity;
                 }
@@ -1654,11 +1654,11 @@ namespace Runedal.GameEngine
             }
 
             //if the item name is 'zloto' drop gold
-            if (itemName == "złoto")
+            if (itemName == "złoto" || itemName == "zloto")
             {
 
                 //if player wants to drop more quantity of gold than he has,
-                //set quantity to equal to what he possesses
+                //prevent doing so, and print appropriate system message
                 if (Data.Player!.Gold < itemQuantity)
                 {
                     PrintMessage("Próbujesz wyrzucić więcej niż posiadasz..", MessageType.SystemFeedback);
@@ -1689,7 +1689,7 @@ namespace Runedal.GameEngine
         {
             int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower())
             == FlattenPolishChars(itemName));
-            int itemQuantity;
+            int itemQuantity = 0;
             Item itemToPickup = new Item();
 
             if (Data.Player.CurrentState == CombatCharacter.State.Combat)
@@ -1697,6 +1697,8 @@ namespace Runedal.GameEngine
                 PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
                 return;
             }
+
+            ResetPlayerState();
 
             //handle lack of argument
             if (itemName == string.Empty)
@@ -1742,44 +1744,36 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            ResetPlayerState();
-
-            if (itemIndex == -1 && itemName != "złoto")
+            if (itemIndex == -1 && itemName != "złoto" && itemName != "zloto")
             {
                 PrintMessage("Nie ma tu przedmiotu o nazwie \"" + itemName + "\"", MessageType.SystemFeedback);
                 return;
             }
 
-            if (itemName != "złoto")
+            if (itemName != "złoto" && itemName != "zloto")
             {
                 itemToPickup = Data.Player!.CurrentLocation!.Items[itemIndex];
             }
 
-            //set item quantity depedning on 2nd argument if it's not empty
-            if (quantity == "all" || quantity == "a")
-            {
-
-                //depending if it's item or gold
-                if (itemName != "złoto")
-                {
-                    itemQuantity = itemToPickup.Quantity;
-                }
-                else
-                {
-                    itemQuantity = Data.Player.Gold;
-                }
-            }
-            else if (!ConvertQuantityString(quantity, out itemQuantity))
-            {
-                PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
-                return;
-            }            
+                       
 
             //if the item name is 'zloto' pickup gold
-            if (itemName == "złoto")
+            if (itemName == "złoto" || itemName == "zloto")
             {
+
+                //set gold quantity
+                if (quantity == String.Empty)
+                {
+                    itemQuantity = Data.Player!.CurrentLocation!.Gold;
+                }
+                else if (!ConvertQuantityString(quantity, out itemQuantity))
+                {
+                    PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
+                    return;
+                }
+
                 //if player wants to pick up more quantity of gold than there is in his current
-                //location, set quantity to the amount of all gold lying on the ground
+                //location, display appropriate system message
                 if (Data.Player!.CurrentLocation.Gold < itemQuantity || itemQuantity == 0)
                 {
                     PrintMessage("Nie ma tu takiej ilości złota..", MessageType.SystemFeedback);
@@ -1798,6 +1792,18 @@ namespace Runedal.GameEngine
                     PrintMessage("Nie ma tu żadnego złota", MessageType.SystemFeedback);
                 }
 
+                return;
+            }
+
+            //set item quantity depedning on 2nd argument if it's not empty
+            if (quantity == "all" || quantity == "a")
+            {
+
+                
+            }
+            else if (!ConvertQuantityString(quantity, out itemQuantity))
+            {
+                PrintMessage("Niepoprawna ilość", MessageType.SystemFeedback);
                 return;
             }
 

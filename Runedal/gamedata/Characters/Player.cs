@@ -818,7 +818,7 @@ namespace Runedal.GameData.Characters
         public int GetCarryWeight()
         {
             //add all worn items weights to total carry weight
-            int carryWeight = Torso!.RealWeight + Helmet!.RealWeight + Helmet!.RealWeight + Gloves!.RealWeight + Shoes!.RealWeight + Weapon!.RealWeight;
+            int carryWeight = Torso!.RealWeight + Pants!.RealWeight + Helmet!.RealWeight + Helmet!.RealWeight + Gloves!.RealWeight + Shoes!.RealWeight + Weapon!.RealWeight;
 
             //for each item in Inventory, add it's weight to total carry weight
             Inventory!.ForEach(item => carryWeight += item.RealWeight);

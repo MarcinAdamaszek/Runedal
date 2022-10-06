@@ -14,4 +14,6 @@
     <Page Remove="GameData\JSONData\**" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties gamedata_4resources_4json_4locations_4derillon_4derillonspidercave2_1json__JsonSchema="d" /></VisualStudio></ProjectExtensions>
+
 </Project>

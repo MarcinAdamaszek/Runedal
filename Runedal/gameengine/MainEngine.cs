@@ -3163,7 +3163,14 @@ namespace Runedal.GameEngine
 
                 if (isDealerPlayer)
                 {
-                    GivePlayerExperience(receiver.Level);
+                    if (receiver.GetType() == typeof(Hero))
+                    {
+                        GivePlayerExperience(receiver.Level * 3);
+                    }
+                    else
+                    {
+                        GivePlayerExperience(receiver.Level);
+                    }
                 }
             }
 

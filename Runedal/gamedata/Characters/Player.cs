@@ -18,8 +18,8 @@ namespace Runedal.GameData.Characters
         //values of multipliers for calculating attributes modifiers
         private const double MaxHpStrMultiplier = 30;
         private const double MaxMpIntMultiplier = 13;
-        private const double HpRegenStrMultiplier = 8;
-        private const double MpRegenIntMultiplier = 3.5;
+        private const double HpRegenStrMultiplier = 3;
+        private const double MpRegenIntMultiplier = 4;
         private const double SpeedAgiMultiplier = 0.5;
         private const double AttackStrMultiplier = 2.5;
         private const double AtkSpeedAgiMultiplier = 1.5;

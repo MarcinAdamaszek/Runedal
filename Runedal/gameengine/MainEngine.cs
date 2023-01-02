@@ -62,7 +62,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(25);
+            GameClock.Interval = TimeSpan.FromMilliseconds(50);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -470,12 +470,6 @@ namespace Runedal.GameEngine
                 case "autoattack":
                     AutoattackHandler();
                     break;
-                case "help":
-                    HelpHandler();
-                    break;
-                case "manual":
-                    ManualHandler(argument1);
-                    break;
                 case "clear":
                     ClearOutputBox();
                     break;
@@ -506,7 +500,7 @@ namespace Runedal.GameEngine
                     break;
                 default:
                     PrintMessage("Nie rozumiem. Wpisz 'help' aby zobaczyć komendy, lub wciśnij esc aby zobaczyć menu.", MessageType.SystemFeedback);
-                    return;
+                    break;
             }
         }
 
@@ -674,10 +668,8 @@ namespace Runedal.GameEngine
 
             ClearOutputBox();
 
-            PrintMessage("> Witaj w świecie Runedal!. Aby zrobić cokolwiek, wpisujesz odpowiednią komendę i naciskasz enter.", MessageType.EffectOn);
-            PrintMessage("> Jeśli chcesz zobaczyć listę komend, wpisz 'help'.", MessageType.EffectOn);
-            PrintMessage("> Jeśli chcesz zobaczyć instrukcję gry - wpisz 'manual'", MessageType.EffectOn);
-            PrintMessage("> Jeśli chcesz wyjść do menu głównego - wciśnij esc\n", MessageType.EffectOn);
+            PrintMessage("> Witaj w świecie Runedal!", MessageType.EffectOn);
+            PrintMessage("> Jeśli nie wiesz co robić - wciśnij esc aby zobaczyć menu główne i wybierz opcję \"3.JAK GRAĆ?\" lub \"4.KOMENDY\"\n", MessageType.EffectOn);
 
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
@@ -1023,23 +1015,26 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'manual' command
-        private void ManualHandler(string command)
-        {
-            ClearOutputBox();
-            PrintManual(false);
-        }
+        //unused methods handling 'manual' and 'help' commands
+        //private void ManualHandler(string command)
+        //{
+        //    ClearOutputBox();
+        //    ClearOutputBox();
+        //    PrintManual(false);
+        //}
 
         //method handling 'help' command
-        private void HelpHandler()
-        {
-            ClearOutputBox();
-            PrintMessage("    **************** KOMENDY ******************\n", MessageType.Gain, false);
-            PrintMessage(" (Jeśli chcesz zobaczyć instrukcję gry, wpisz 'manual')\n", MessageType.CriticalHit, false);
-            PrintCommandsCS(false);
-        }
+        //private void HelpHandler()
+        //{
+        //    ClearOutputBox();
+        //    ClearOutputBox();
+        //    PrintMessage("    **************** KOMENDY ******************\n", MessageType.Gain, false);
+        //    PrintMessage(" (Jeśli chcesz zobaczyć instrukcję gry, wpisz 'manual')\n", MessageType.CriticalHit, false);
+        //    PrintCommandsCS(false);
+        //}
 
         //method handling game pausing
+
         private void PauseHandler()
         {
             if (IsPaused)
@@ -4783,7 +4778,7 @@ namespace Runedal.GameEngine
         //method printing game manual
         private void PrintManual(bool isExitInfoPrinted = true)
         {
-            const int manualSize = 218;
+            const int manualSize = 220;
             string[] manualLines = new string[manualSize];
             int i;
 
@@ -4807,8 +4802,7 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      postać w dowolny sposób.";
             manualLines[i++] = "      Grą sterujesz za pomocą wpisywania komend.";
             manualLines[i++] = "      Aby zobaczyć listę komend, wyjdź do menu";
-            manualLines[i++] = "      i wybierz opcję 4.KOMENDY. Jeśli jesteś w grze,";
-            manualLines[i++] = "      wystarczy, że wpiszesz 'help'.\n";
+            manualLines[i++] = "      i wybierz opcję 4.KOMENDY.\n";
             manualLines[i++] = "  >>> INTERFEJS UŻYTKOWNIKA\n";
             manualLines[i++] = "      Praktycznie cała akcja gry, odbywa się w tym";
             manualLines[i++] = "      największym, czarnym oknie, na którym";
@@ -4817,8 +4811,7 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      Nieco niżej znajdują się paski HP (zdrowie),";
             manualLines[i++] = "      MP (mana) oraz pasek akcji (ten po prawej)";
             manualLines[i++] = "      Poniżej pasków jest miejsce do wpisywania komend";
-            manualLines[i++] = "      za pomocą, których \"mówisz\" postaci (lub grze)";
-            manualLines[i++] = "      co ma robić.";
+            manualLines[i++] = "      za pomocą, których sterujesz grą.";
             manualLines[i++] = "      Ten zielony prostokąt w prawym górnym rogu,";
             manualLines[i++] = "      to mapka, która pokazuje gdzie się znajdujesz.\n";
             manualLines[i++] = "  >>> ZATRZYMANIE/WZNOWIENIE GRY\n";

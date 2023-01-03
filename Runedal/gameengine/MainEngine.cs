@@ -499,7 +499,7 @@ namespace Runedal.GameEngine
                     PrintMessage("Wszystkich postaci w grze: " + Data.AllCharactersTestProp.Count);
                     break;
                 default:
-                    PrintMessage("Nie rozumiem. Wpisz 'help' aby zobaczyć komendy, lub wciśnij esc aby zobaczyć menu.", MessageType.SystemFeedback);
+                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wciśnij esc aby wyjść do menu i wybierz \"3.JAK GRAĆ?\" lub \"4.KOMENDY\"", MessageType.SystemFeedback);
                     break;
             }
         }
@@ -538,12 +538,7 @@ namespace Runedal.GameEngine
                 PrintMessage(runedalAscii[j], MessageType.SystemFeedback);
             }
 
-            PrintMessage("\n*************** WITAJ W GRZE RUNEDAL! *****************\n", MessageType.Gain);
-
-            PrintMessage("        Tekstowym rpg, w którym odkrywasz świat,");
-            PrintMessage("               walczysz i rozwijasz swoją ");
-            PrintMessage("                postać w unikalny sposób! \n");
-
+            PrintMessage("\n*************** WITAJ W GRZE RUNEDAL! *****************\n\n", MessageType.Gain);
             PrintMessage("               (Naciśnij dowolny klawisz)");
         }
 

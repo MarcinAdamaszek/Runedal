@@ -2336,7 +2336,6 @@ namespace Runedal.GameEngine
             for (i = 0; i < numberOfSpells; i++)
             {
                 numbers[i] = i + 1;
-                //numbersAsStrings[i] = Convert.ToString(i);
             }
 
             Spell spellToCast = new Spell("placeholder");
@@ -2345,7 +2344,6 @@ namespace Runedal.GameEngine
             if (numbers.Contains(spellNumber))
             {
                 spellToCast = Data.Player.RememberedSpells[spellNumber - 1];
-                target = new CombatCharacter("placeholder");
 
                 //check if user's character has enough mana to cast the spell
                 if (spellToCast.ManaCost > Data.Player.Mp)
@@ -2374,14 +2372,28 @@ namespace Runedal.GameEngine
                     else
                     {
                         //if player isn't fighting with anyone
-                        if (Data.Player.CurrentState != CombatCharacter.State.Combat)
+                        //if (Data.Player.CurrentState != CombatCharacter.State.Combat)
+                        //{
+                        //    PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
+                        //    return;
+                        //}
+                        if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
                         {
-                            PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
-                            return;
+                            int combatCharIndex = Data.Player!.CurrentLocation!.Characters!.FindIndex(
+                                character => character is CombatCharacter && character != Data.Player!);
+                            if (combatCharIndex != -1)
+                            {
+                                target = (CombatCharacter)Data.Player!.CurrentLocation!.Characters[combatCharIndex];
+                            }
+                            else
+                            {
+                                PrintMessage("Nie ma tu nikogo do zaatakowania", MessageType.SystemFeedback);
+                                return;
+                            }
                         }
 
                         //else, if player is attacking a character
-                        if (AttackInstances.Exists(ins => ins.Attacker == Data.Player!))
+                        else if (AttackInstances.Exists(ins => ins.Attacker == Data.Player!))
                         {
                             target = AttackInstances.Find(ins => ins.Attacker == Data.Player!)!.Receiver;
                         }
@@ -2790,6 +2802,12 @@ namespace Runedal.GameEngine
 
             spellDmg = (spell.Power * Math.Sqrt(casterDmgFactor)) /
                     (Math.Sqrt(target.GetEffectiveMagicResistance() * 0.02));
+
+            //prevent weird bug of spellDmg becoming inifite number
+            if (spellDmg > Int32.MaxValue || spellDmg <= 0)
+            {
+                spellDmg = 100;
+            }
 
             //randomize spell dmg
             spellDmg = RandomizeDmg(spellDmg);

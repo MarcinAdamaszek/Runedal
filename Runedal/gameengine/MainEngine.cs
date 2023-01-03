@@ -5601,7 +5601,7 @@ namespace Runedal.GameEngine
         //method randomizing dmg
         private double RandomizeDmg(double staticDmg)
         {
-            double randomDmgMultiplier = Rand.Next(70, 131) * 0.01;
+            double randomDmgMultiplier = Rand.Next(80, 121) * 0.01;
             double randomizedDmg = staticDmg * randomDmgMultiplier;
             return randomizedDmg;
         }

@@ -1915,6 +1915,10 @@ namespace Runedal.GameEngine
         //method for stopping actions/states
         private void StopHandler()
         {
+            //stop all queued actions
+            Actions.Clear();
+
+            //stop attacking
             int instanceIndex = AttackInstances.FindIndex(ins => ins.Attacker == Data.Player!);
             if (instanceIndex != -1)
             {
@@ -1923,8 +1927,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            Actions.Clear();
-
+            //stop trade etc
             ResetPlayerState();
         }
 

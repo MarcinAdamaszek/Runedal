@@ -26,7 +26,7 @@ namespace Runedal.GameData.Characters
         private const double AccuracyAgiMultiplier = 1.5;
         private const double CriticalAgiMultiplier = 2.0;
         private const double EvasionAgiMultiplier = 0.5;
-        private const double MagicResistanceIntMultiplier = 2.0;
+        private const double MagicResistanceIntMultiplier = 3;
 
         //values of other multipliers
         private const int StrWeightLimitMultiplier = 30;

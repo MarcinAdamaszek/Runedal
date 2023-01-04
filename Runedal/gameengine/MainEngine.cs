@@ -2753,7 +2753,6 @@ namespace Runedal.GameEngine
         {
             bool hasSpellLanded;
             double spellDmg;
-            double landRate;
             double casterDmgFactor;
             double casterChanceFactor;
             
@@ -2766,29 +2765,23 @@ namespace Runedal.GameEngine
             //if target self, then ignore magicResistance
             if (caster == target)
             {
-                landRate = 1.1;
+                hasSpellLanded = true;
             }
             else
             {
-                landRate = 1 / (Math.Sqrt(target.GetEffectiveMagicResistance() * 0.01));
 
-                //calculate spell damage, using slightly different formulas
-                //for player and other combat characters (intelligence factor
-                //for player, and level factor for other characters)
+                //set casterChanceFactor depending on if it's a player or a monster
                 if (caster == Data.Player!)
                 {
-                    casterChanceFactor = (caster as Player)!.GetEffectiveIntelligence();
+                    casterChanceFactor = (caster as Player)!.GetEffectiveIntelligence() * 1.2;
                 }
                 else
                 {
-                    casterChanceFactor = caster.Level * 1.5;
+                    casterChanceFactor = caster.Level * 15;
                 }
 
-                landRate += casterChanceFactor * 0.002;
-
+                hasSpellLanded = IsSpellASuccess(casterChanceFactor, target.GetEffectiveMagicResistance());
             }
-
-            hasSpellLanded = TryOutChance(landRate);
 
             //calculate spell damage, using slightly different formulas
             //for player and other combat characters (intelligence factor
@@ -2809,6 +2802,12 @@ namespace Runedal.GameEngine
             if (spellDmg > Int32.MaxValue || spellDmg <= 0)
             {
                 spellDmg = 100;
+            }
+
+            //greatly descrease spell dmg if it failed to land
+            if (!hasSpellLanded)
+            {
+                spellDmg *= 0.333;
             }
 
             //randomize spell dmg
@@ -5568,7 +5567,7 @@ namespace Runedal.GameEngine
         }
 
         /// <summary>
-        /// /// method determining if attack reached the target on basis of two 
+        /// /// method determining if an attack reached the target on basis of two 
         /// parameters: accuracy and evasion. If attack is a success - returns true
         /// if missed - returns false
         /// </summary>
@@ -5581,6 +5580,28 @@ namespace Runedal.GameEngine
             double missChance = Rand.NextDouble() * evasion;
 
             if (hitChance > missChance)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// method determining if a spell succeded or failed on basis of two parameters:
+        /// casterChanceFactor(player int value or monster's lvl) and targetMagicResistance
+        /// </summary>
+        /// <param name="casterChanceFactor"></param>
+        /// <param name="targetMagicResistance"></param>
+        /// <returns></returns>
+        private bool IsSpellASuccess(double casterChanceFactor, double targetMagicResistance)
+        {
+            double successChance = Rand.NextDouble() * casterChanceFactor * 3;
+            double failChance = Rand.NextDouble() * targetMagicResistance;
+
+            if (successChance > failChance)
             {
                 return true;
             }

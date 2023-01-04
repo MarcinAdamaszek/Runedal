@@ -174,7 +174,7 @@ namespace Runedal.GameData.Characters
 
         //spells remembered by character
         public List<Spell> RememberedSpells { get; set; }
-        public int MaxSpellsRemembered { get; set; }
+        public virtual int MaxSpellsRemembered { get; set; }
         public string[]? StartingSpells { get; set; }
         public double Heal(double healAmount)
         {
@@ -332,6 +332,15 @@ namespace Runedal.GameData.Characters
 
             RememberedSpells.Insert(0, new Spell(spell));
             return removedSpell;
+        }
+
+        //method refreshing RememberedSpells
+        public void RefreshSpellsRemembered()
+        {
+            while (MaxSpellsRemembered < RememberedSpells.Count)
+            {
+                RememberedSpells.Remove(RememberedSpells.Last());
+            }
         }
 
         //method for adding modifier to character's list of modifiers

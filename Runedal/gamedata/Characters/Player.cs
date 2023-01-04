@@ -226,11 +226,6 @@ namespace Runedal.GameData.Characters
                 {
                     _Intelligence = value;
                     EffectiveMaxMp = GetEffectiveMaxMp();
-                    MaxSpellsRemembered = Convert.ToInt32(Math.Floor((MainEngine.NthRoot(GetEffectiveIntelligence(), 1.5) / 8)));
-                    if (MaxSpellsRemembered < 1)
-                    {
-                        MaxSpellsRemembered = 1;
-                    }
                 }
             }
         }
@@ -462,7 +457,8 @@ namespace Runedal.GameData.Characters
             else if (mod.Type == Modifier.ModType.MaxMp || mod.Type == Modifier.ModType.Intelligence)
             {
                 EffectiveMaxMp = GetEffectiveMaxMp();
-                MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(GetEffectiveIntelligence()) / 3);
+                RefreshMaxSpellsRemembered();
+                RefreshSpellsRemembered();
             }
         }
         public override void RemoveModifier(Modifier mod)
@@ -475,13 +471,8 @@ namespace Runedal.GameData.Characters
             else if (mod.Type == Modifier.ModType.MaxMp || mod.Type == Modifier.ModType.Intelligence)
             {
                 EffectiveMaxMp = GetEffectiveMaxMp();
-                MaxSpellsRemembered = Convert.ToInt32(Math.Sqrt(GetEffectiveIntelligence()) / 3);
-
-                //prevent player from keeping extra spells after max spells remembered drop
-                if (RememberedSpells.Count > MaxSpellsRemembered)
-                {
-                    RememberedSpells.Remove(RememberedSpells.Last());
-                }
+                RefreshMaxSpellsRemembered();
+                RefreshSpellsRemembered();
             }
         }
 
@@ -812,6 +803,16 @@ namespace Runedal.GameData.Characters
         private void SetMpPercentage()
         {
             MpPercentage = (Mp / EffectiveMaxMp) * 100;
+        }
+
+        //method refreshing MaxSpellsRemembered property
+        public void RefreshMaxSpellsRemembered()
+        {
+            MaxSpellsRemembered = Convert.ToInt32(Math.Floor((MainEngine.NthRoot(GetEffectiveIntelligence(), 1.5) / 8)));
+            if (MaxSpellsRemembered < 1)
+            {
+                MaxSpellsRemembered = 1;
+            }
         }
 
         //method returning sum weight of all items carried by player

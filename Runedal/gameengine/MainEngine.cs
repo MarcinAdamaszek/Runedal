@@ -1879,7 +1879,7 @@ namespace Runedal.GameEngine
                         PrintMessage("Nie jesteś uzbrojony", MessageType.SystemFeedback);
                     }
                     break;
-                case "helm":
+                case "helmet":
                     if (!TakeOffArmorFromPlayer(Armor.ArmorType.Helmet))
                     {
                         PrintMessage("Nie nosisz żadnego hełmu", MessageType.SystemFeedback);

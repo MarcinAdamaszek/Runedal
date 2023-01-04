@@ -184,9 +184,9 @@ namespace Runedal.GameData.Characters
                     SetMpPercentage();
 
                     //if max mp drops below real Mp value, equalize the Mp
-                    if (EffectiveMaxHp < Hp)
+                    if (EffectiveMaxMp < Mp)
                     {
-                        Hp = EffectiveMaxHp;
+                        Mp = EffectiveMaxMp;
                     }
                 }
             }

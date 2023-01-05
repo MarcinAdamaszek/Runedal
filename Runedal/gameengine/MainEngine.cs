@@ -393,6 +393,9 @@ namespace Runedal.GameEngine
                 case "f":
                     FleeHandler(argument1);
                     break;
+                case "help":
+                    HelpHandler();
+                    break;
                 case "cast":
                 case "c":
                     CastHandler(argument1, argument2);
@@ -1014,23 +1017,11 @@ namespace Runedal.GameEngine
             }
         }
 
-        //unused methods handling 'manual' and 'help' commands
-        //private void ManualHandler(string command)
-        //{
-        //    ClearOutputBox();
-        //    ClearOutputBox();
-        //    PrintManual(false);
-        //}
-
         //method handling 'help' command
-        //private void HelpHandler()
-        //{
-        //    ClearOutputBox();
-        //    ClearOutputBox();
-        //    PrintMessage("    **************** KOMENDY ******************\n", MessageType.Gain, false);
-        //    PrintMessage(" (Jeśli chcesz zobaczyć instrukcję gry, wpisz 'manual')\n", MessageType.CriticalHit, false);
-        //    PrintCommandsCS(false);
-        //}
+        private void HelpHandler()
+        {
+            PrintCommandsCS(false);
+        }
 
         //method handling game pausing
 
@@ -4595,21 +4586,13 @@ namespace Runedal.GameEngine
         }
 
         //method printing commands-manual
-        private void PrintCommandsCS(bool isDescriptionPrinted = true, string command = "none")
+        private void PrintCommandsCS(bool isLong = true)
         {
             const int manualSize = 137;
             string[] manualLines = new string[manualSize];
             int i;
-            int start;
-
-            if (isDescriptionPrinted)
-            {
-                start = 0;
-            }
-            else
-            {
-                start = 10;
-            }
+            int start = 1;
+            bool shouldScroll = isLong ? false : true;
 
             for (i = 0; i < manualSize; i++)
             {
@@ -4618,7 +4601,7 @@ namespace Runedal.GameEngine
 
             i = 0;
 
-            if (command == "none")
+            if (isLong)
             {
                 manualLines[i++] = "************************* KOMENDY *************************\n";
                 manualLines[i++] = "             (Wciśnij esc aby wrócić do menu)\n";
@@ -4635,161 +4618,193 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "           Ogląda obiekt o wybranej nazwie {np. 'look zardzewiały_miecz'}. Aby obejżeć lokację (rozejżeć się), " +
                     "wpisz samą komendę 'look'. Możesz też spojrzeć do sąsiedniej lokacji wpisując jeden z kierunków (n, e, s, w, u, d)" +
                     " zamiast nazwy obiektu {np. 'look n'}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> IDŹ";
                 manualLines[i++] = "     * Komenda: '[litera kierunku]'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Wpisujesz jedną z liter kierunku ('n' - północ, 'e' - wschód, 's' - południe, 'w' - zachód, 'u' - góra, 'd' - dół),";
                 manualLines[i++] = "aby twoja postać poszła w wybranym kierunku {np. 'n' - idzie na północ} ";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> ATAKUJ";
                 manualLines[i++] = "     * Komenda: 'attack [nazwa przeciwnika]'";
                 manualLines[i++] = "     * Skrót: 'a'";
-                manualLines[i++] = "           Atakuje wybranego przeciwnika {np. 'attack szczur'}. Jeśli już z kimś walczysz, wystarczy samo 'attack' aby zaatakować" +
+                manualLines[i++] = "           Atakuje wybranego przeciwnika {np. 'attack szczur'}. Jeśli wpiszesz samo 'attack', Twoja postać zaatakuję pierwszego lepszego" +
+                    " przeciwnika. Jeśli już z kimś walczysz, wystarczy samo 'attack' aby zaatakować" +
                     " Twojego przeciwnika (lub zaatakować najsłabszego z wielu przeciwników z którymi walczysz jednocześnie)";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> UCIEKNIJ";
                 manualLines[i++] = "     * Komenda: 'flee [nazwa kierunku]'";
                 manualLines[i++] = "     * Skrót: 'f'";
                 manualLines[i++] = "           Twoja postać próbuje ucieczki we losowym kierunku. Możesz wskazać kierunek ucieczki {np. 'flee n'}.";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> UŻYJ PRZEDMIOTU";
                 manualLines[i++] = "     * Komenda: 'use [nazwa obiektu]'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Używa wybranego obiektu {np. 'use mikstura_many'}.";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> ROZMAWIAJ";
                 manualLines[i++] = "     * Komenda: 'talk [nazwa postaci]'";
                 manualLines[i++] = "     * Skrót: 'ta'";
                 manualLines[i++] = "           Rozpoczyna rozmowę z wybraną postacią {np. 'talk karczmarz'}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> HANDLUJ";
                 manualLines[i++] = "     * Komenda: 'trade [nazwa postaci]'";
                 manualLines[i++] = "     * Skrót: 'tr'";
                 manualLines[i++] = "           Rozpoczyna handel z wybraną postacią {np. 'trade karczmarz'}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> KUP";
                 manualLines[i++] = "     * Komenda: 'buy [nazwa przedmiotu] [ilość]'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Kupuje jedną sztukę wybranego przedmiotu {np. 'buy piwo'}. Możesz dodać ilość sztuk jaką " +
                     "chcesz kupić {np. 'buy piwo 3'}. Jeśli chcesz kupić wszystko co ma handlarz - wpisz " +
                     "'all' lub 'a' {np. 'buy piwo all' lub 'buy piwo a'}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> SPRZEDAJ";
                 manualLines[i++] = "     * Komenda: 'sell [nazwa przedmiotu] [ilość]'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Sprzedaje jedną sztukę wybranego przedmiotu {np. sell piwo}. Możesz dodać ilość sztuk jaką " +
                     "chcesz sprzedać {np. 'sell piwo 3'}. Jeśli chcesz sprzedać wszystko co posiadasz, wpisz " +
                     "'all' lub 'a' {np. 'sell piwo all' lub 'sell piwo a'} (tylko co potem będziesz pił?)}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> PODNIEŚ";
                 manualLines[i++] = "     * Komenda: 'pickup [nazwa przedmiotu] [ilość]'";
                 manualLines[i++] = "     * Skrót: 'p'";
                 manualLines[i++] = "           Podnosi wszystkie przedmioty oraz złoto leżące w lokacji. Możesz dodać nazwę przedmiotu aby podnieść tylko " +
                     "wybrany przedmiot {np. 'pickup drewniana_pałka'}. Możesz też dodać ilość sztuk {np. 'pickup złoto 10' - podniesie 10 złota}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> WYRZUĆ";
                 manualLines[i++] = "     * Komenda: 'drop [nazwa przedmiotu] [ilość]'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Wyrzuca jeden wybrany przedmiot {np. 'drop drewniana_pałka'}. Możesz dodać ilość sztuk" +
                     " {np. 'drop piwo 3' (kto to widział piwo wylewać..)}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> ZAŁÓŻ PRZEDMIOT";
                 manualLines[i++] = "     * Komenda: 'wear [nazwa przedmiotu]'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Zakłada wybrany przedmiot {np. 'wear skórzana_kurtka'}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> ŚCIĄGNIJ PRZEDMIOT";
                 manualLines[i++] = "     * Komenda: 'takeoff [typ przedmiotu]'";
                 manualLines[i++] = "     * Skrót: 'of'";
                 manualLines[i++] = "           Ściąga przedmiot wybranego typu ('weapon' - broń, 'helmet' - hełm, 'torso' - tors, " +
                     "'pants' - spodnie, 'gloves' - rękawice, 'shoes' - buty) {np. 'takeoff weapon'}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> RZUĆ CZAR";
                 manualLines[i++] = "     * Komenda: 'cast [numer czaru] [cel]'";
                 manualLines[i++] = "     * Skrót: 'c'";
                 manualLines[i++] = "           Rzuca czar z listy zapamiętanych czarów {np. 'cast 1' - rzuci pierwszy czar na liście}. " +
                     "Możesz wybrać cel w jaki chcesz rzucić czar {np. 'cast 1 szkielet_wojownik' - rzuci pierwszy czar na liście w szkielet_wojownik}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> UTWÓRZ CZAR";
                 manualLines[i++] = "     * Komenda: 'craft [nazwa runy] [nazwa runy]'";
                 manualLines[i++] = "     * Skrót: 'cr'";
                 manualLines[i++] = "           Tworzy czar z wybranej runy lub kombinacji run {np. 'craft akull verde' - tworzy czar z run " +
                     "'akull' i 'verde'}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> UŻYJ PUNKTU ATRYBUTU";
                 manualLines[i++] = "     * Komenda: 'point [nazwa atrybutu]'";
                 manualLines[i++] = "     * Skrót: 'pt'";
                 manualLines[i++] = "           Zużywa jeden punkt atrybutu i dodaje jeden do wybranego atrybutu ('strength' - siła, " +
                     "'agility' - zręczność, 'intelligence' - inteligencja) (lub skróty: 'str', 'agi', 'int') {np. 'point strength' - dodaje jeden do siły}";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> EKWIPUNEK"; 
                 manualLines[i++] = "     * Komenda: 'inventory'";
                 manualLines[i++] = "     * Skrót: 'i'";
                 manualLines[i++] = "           Pokazuje ekwipunek Twojej postaci";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> STATYSTYKI";
                 manualLines[i++] = "     * Komenda: 'stats'";
                 manualLines[i++] = "     * Skrót: 'ss'";
                 manualLines[i++] = "           Pokazuje statystyki Twojej postaci";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> ZAKLĘCIA";
                 manualLines[i++] = "     * Komenda: 'spells'";
                 manualLines[i++] = "     * Skrót: 'sps'";
                 manualLines[i++] = "           Pokazuje zapamiętane czary";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> PRZERWIJ AKCJĘ";
                 manualLines[i++] = "     * Komenda: 'stop'";
                 manualLines[i++] = "     * Skrót: 'st'";
                 manualLines[i++] = "           Przerywa ostatnio zakolejkowaną akcję, handel, rozmowę lub atak";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> ZATRZYMAJ/WZNÓW GRĘ (PAUZA)";
                 manualLines[i++] = "     * Komenda: 'pause'";
                 manualLines[i++] = "     * Skrót: 'ps'";
                 manualLines[i++] = "           Całkowicie wstrzymuje/wznawia grę."; 
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> SZYBKI ZAPIS";
                 manualLines[i++] = "     * Komenda: 'save'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Zapisuje bieżący stan gry";
-                manualLines[i++] = "";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> WYŁĄCZ/WŁĄCZ AUTOMATYCZNY ATAK";
                 manualLines[i++] = "     * Komenda: 'autoattack'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Wyłącza/włącza automatyczny atak Twojej postaci.";
-                manualLines[i++] = "";
-                manualLines[i++] = "  >>> INSTRUKCJA";
-                manualLines[i++] = "     * Komenda: 'manual'";
-                manualLines[i++] = "     * Skrót: brak";
-                manualLines[i++] = "           Pokazuje instrukcję gry";
+                manualLines[i++] = " ";
                 manualLines[i++] = "  >>> CZYSZCZENIE EKRANU";
                 manualLines[i++] = "     * Komenda: 'clear'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Wymazuje całą, dotychczasową treść ekranu gry";
             }
+            else
+            {
+                manualLines[i++] = " * 'look' ('l') - oglądanie";
+                manualLines[i++] = " * 'n'/'e'/'s'/'w'/'u'/'d' - poruszanie się";
+                manualLines[i++] = " * 'attack' ('a') - atakowanie";
+                manualLines[i++] = " * 'flee' ('f') - ucieczka";
+                manualLines[i++] = " * 'use' - używanie przedmiotów";
+                manualLines[i++] = " * 'talk' ('ta') - rozmawianie";
+                manualLines[i++] = " * 'trade' ('tr') - handel";
+                manualLines[i++] = " * 'buy' - kupno";
+                manualLines[i++] = " * 'sell' - sprzedaż";
+                manualLines[i++] = " * 'pickup' ('p') - podnoszenie";
+                manualLines[i++] = " * 'wear' - zakładanie przedmiotów";
+                manualLines[i++] = " * 'drop' - wyrzucanie przedmiotów";
+                manualLines[i++] = " * 'takeoff' ('of') - zdejmowanie przedmiotów";
+                manualLines[i++] = " * 'cast' ('c') - rzucanie czarów";
+                manualLines[i++] = " * 'craft' ('cr') - tworzenie czarów";
+                manualLines[i++] = " * 'point' ('pt') - używanie pkt. atrybutów";
+                manualLines[i++] = " * 'inventory' ('i') - oglądanie ekwipunku";
+                manualLines[i++] = " * 'stats' ('ss') - oglądanie statystyk";
+                manualLines[i++] = " * 'spells' ('sps') - oglądanie zapamiętanych czarów";
+                manualLines[i++] = " * 'stop' ('st') - przerywanie akcji";
+                manualLines[i++] = " * 'pause' ('ps') - zatrzymanie/wznowienie gry";
+                manualLines[i++] = " * 'save' - szybki zapis";
+                manualLines[i++] = " * 'autoattack' - włączenie/wyłączenie auto. ataku";
+                manualLines[i++] = " * 'clear' - czyszczenie ekranu";
+            }
+
+            //make space before short commands cheatsheet
+            if (!isLong) PrintMessage(" ");
 
             for (i = start; i < manualLines.Length; i++)
             {
-                if (isDescriptionPrinted && i == 1)
+                if (manualLines[i] == string.Empty)
                 {
-                    PrintMessage(manualLines[i], MessageType.Action, false);
+                    break;
+                }
+
+                if (i == 1 && isLong == true)
+                {
+                    PrintMessage(manualLines[i], MessageType.Action, shouldScroll);
                     continue;
                 }
                 if (Regex.IsMatch(manualLines[i], @"^\s+>>>"))
                 {
-                    PrintMessage(manualLines[i], MessageType.EffectOn, false);
+                    PrintMessage(manualLines[i], MessageType.EffectOn, shouldScroll);
                 }
                 else if (Regex.IsMatch(manualLines[i], @"^\s+\*\s"))
                 {
-                    PrintMessage(manualLines[i], MessageType.UserCommand, false);
+                    PrintMessage(manualLines[i], MessageType.UserCommand, shouldScroll);
                 }
                 else if (Regex.IsMatch(manualLines[i], @"^\*{3,20}"))
                 {
-                    PrintMessage(manualLines[i], MessageType.Gain, false);
+                    PrintMessage(manualLines[i], MessageType.Gain, shouldScroll);
                 }
                 else 
                 { 
-                PrintMessage(manualLines[i], MessageType.Default, false);
+                PrintMessage(manualLines[i], MessageType.Default, shouldScroll);
                 }
             }
         }

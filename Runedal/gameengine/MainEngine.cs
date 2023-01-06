@@ -62,7 +62,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(50);
+            GameClock.Interval = TimeSpan.FromMilliseconds(10);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();

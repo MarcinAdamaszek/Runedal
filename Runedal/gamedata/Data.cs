@@ -298,7 +298,6 @@ namespace Runedal.GameData
             //add player to gamesave
             save.Player = player;
             save.PlayerHp = player.Hp;
-            save.PlayerHp = player.Mp;
 
             Locations!.ForEach(loc =>
             {

@@ -29,6 +29,7 @@ namespace Runedal.GameData.Characters
 
             HpCounter = CounterMax;
             MpCounter = CounterMax;
+            MaxSpellsRemembered = 1;
         }
 
         //constructor for placeholder
@@ -174,7 +175,7 @@ namespace Runedal.GameData.Characters
 
         //spells remembered by character
         public List<Spell> RememberedSpells { get; set; }
-        public virtual int MaxSpellsRemembered { get; set; }
+        public int MaxSpellsRemembered { get; set; }
         public string[]? StartingSpells { get; set; }
         public double Heal(double healAmount)
         {
@@ -319,7 +320,7 @@ namespace Runedal.GameData.Characters
         {
             Spell removedSpell = new Spell();
 
-            if (RememberedSpells.Count == MaxSpellsRemembered)
+            if (RememberedSpells.Count > 0 && RememberedSpells.Count == MaxSpellsRemembered)
             {
                 
                 removedSpell = RememberedSpells[MaxSpellsRemembered - 1];

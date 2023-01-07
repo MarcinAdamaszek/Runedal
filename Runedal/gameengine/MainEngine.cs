@@ -62,7 +62,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(10);
+            GameClock.Interval = TimeSpan.FromMilliseconds(25);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -661,6 +661,9 @@ namespace Runedal.GameEngine
 
             //name player's character with the name he has chosen
             Data.Player!.Name = playerName;
+
+            //set number of spells remembered to 1
+
 
             GameClock.Start();
 

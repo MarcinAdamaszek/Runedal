@@ -35,6 +35,6 @@ namespace Runedal.GameData
         public List<Hero> Heroes { get; set; }
         public Player? Player { get; set; }
         public double PlayerHp { get; set; }
-
+        public double PlayerMp { get; set; }
     }
 }

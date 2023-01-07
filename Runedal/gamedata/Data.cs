@@ -297,7 +297,11 @@ namespace Runedal.GameData
 
             //add player to gamesave
             save.Player = player;
+
+            //prevent weird bug causing player hp/mp to become lower values when
+            //loading game save
             save.PlayerHp = player.Hp;
+            save.PlayerMp = player.Mp;
 
             Locations!.ForEach(loc =>
             {
@@ -404,7 +408,11 @@ namespace Runedal.GameData
 
             //reassign player object to it's reference in data
             Player = save.Player;
+
+            //prevent weird bug causing player hp/mp to become lower values when
+            //loading game save
             Player!.Hp = save.PlayerHp;
+            Player!.Mp = save.PlayerMp;
 
             //prevents weird bug causing effectiveMaxMp (and probably Hp also) to load before modifiers
             Player!.EffectiveMaxMp = Player!.GetEffectiveMaxMp();

@@ -502,7 +502,7 @@ namespace Runedal.GameEngine
                     PrintMessage("Wszystkich postaci w grze: " + Data.AllCharactersTestProp.Count);
                     break;
                 default:
-                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wciśnij esc aby wyjść do menu i wybierz \"3.JAK GRAĆ?\" lub \"4.KOMENDY\"", MessageType.SystemFeedback);
+                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wciśnij esc aby zobaczyć menu lub wpisz \"help\"", MessageType.SystemFeedback);
                     break;
             }
         }
@@ -670,7 +670,8 @@ namespace Runedal.GameEngine
             ClearOutputBox();
 
             PrintMessage("> Witaj w świecie Runedal!", MessageType.EffectOn);
-            PrintMessage("> Jeśli nie wiesz co robić - wciśnij esc aby zobaczyć menu główne i wybierz opcję \"3.JAK GRAĆ?\" lub \"4.KOMENDY\"\n", MessageType.EffectOn);
+            PrintMessage("> Jeśli nie wiesz co robić - wciśnij esc aby zobaczyć menu główne i wybierz opcję \"4.KOMENDY\" lub \"3.JAK GRAĆ?\"", MessageType.EffectOn);
+            PrintMessage("> Aby zobaczyć ściągawkę komend - wpisz \"help\"\n", MessageType.EffectOn);
 
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
@@ -4591,10 +4592,10 @@ namespace Runedal.GameEngine
         //method printing commands-manual
         private void PrintCommandsCS(bool isLong = true)
         {
-            const int manualSize = 137;
+            const int manualSize = 150;
             string[] manualLines = new string[manualSize];
             int i;
-            int start = 1;
+            int start = 0;
             bool shouldScroll = isLong ? false : true;
 
             for (i = 0; i < manualSize; i++)
@@ -4719,6 +4720,10 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "     * Komenda: 'stats'";
                 manualLines[i++] = "     * Skrót: 'ss'";
                 manualLines[i++] = "           Pokazuje statystyki Twojej postaci";
+                manualLines[i++] = "  >>> EFEKTY";
+                manualLines[i++] = "     * Komenda: 'effects'";
+                manualLines[i++] = "     * Skrót: 'ef'";
+                manualLines[i++] = "           Pokazuje wszystkie efekty wpływające w tej chwili na Twoją postać";
                 manualLines[i++] = " ";
                 manualLines[i++] = "  >>> ZAKLĘCIA";
                 manualLines[i++] = "     * Komenda: 'spells'";
@@ -4752,6 +4757,7 @@ namespace Runedal.GameEngine
             }
             else
             {
+                manualLines[i++] = " * 'komenda' ('skrót komendy') - opis komendy";
                 manualLines[i++] = " * 'look' ('l') - oglądanie";
                 manualLines[i++] = " * 'n'/'e'/'s'/'w'/'u'/'d' - poruszanie się";
                 manualLines[i++] = " * 'attack' ('a') - atakowanie";
@@ -4770,6 +4776,7 @@ namespace Runedal.GameEngine
                 manualLines[i++] = " * 'point' ('pt') - używanie pkt. atrybutów";
                 manualLines[i++] = " * 'inventory' ('i') - oglądanie ekwipunku";
                 manualLines[i++] = " * 'stats' ('ss') - oglądanie statystyk";
+                manualLines[i++] = " * 'effects' ('ef') - oglądanie efektów";
                 manualLines[i++] = " * 'spells' ('sps') - oglądanie zapamiętanych czarów";
                 manualLines[i++] = " * 'stop' ('st') - przerywanie akcji";
                 manualLines[i++] = " * 'pause' ('ps') - zatrzymanie/wznowienie gry";
@@ -4788,7 +4795,14 @@ namespace Runedal.GameEngine
                     break;
                 }
 
-                if (i == 1 && isLong == true)
+                //print first (description) line of short commands CS in different color
+                if(i == 0 && !isLong)
+                {
+                    PrintMessage(manualLines[i], MessageType.EffectOn, shouldScroll);
+                    continue;
+                }
+
+                if (i == 1 && isLong)
                 {
                     PrintMessage(manualLines[i], MessageType.Action, shouldScroll);
                     continue;

@@ -2611,10 +2611,12 @@ namespace Runedal.GameEngine
             double highTierLimit = dyingChar.Level * 100;
 
             Item lowTierItem = new Item("placeholder");
+            Item highConsumablesItem = new Item("placeholder");
             Item mediumTierItem = new Item("placeholder");
             Item highTierItem = new Item("placeholder");
 
             List<Item> lowTierPool = new List<Item>();
+            List<Item> highConsumablesPool = new List<Item>();
             List<Item> mediumTierPool = new List<Item>();
             List<Item> highTierPool = new List<Item>();
 
@@ -2639,7 +2641,24 @@ namespace Runedal.GameEngine
                 lowTierItem = lowTierPool[Rand.Next(0, lowTierPool.Count)];
             }
 
-            //same for medium and high tiers
+            //same for high consumables
+            Data.Items!.ForEach(it =>
+            {
+                if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit)
+                {
+                    if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
+                    it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo")
+                    {
+                        highConsumablesPool.Add(it);
+                    }
+                }
+            });
+            if (highConsumablesPool.Count > 0)
+            {
+                highConsumablesItem = highConsumablesPool[Rand.Next(0, highConsumablesPool.Count)];
+            }
+
+            //same for medium tier
             Data.Items!.ForEach(it =>
             {
                 if (it.Price < mediumTierLimit && it.Price >= mediumTierLimit * 0.5)
@@ -2669,7 +2688,8 @@ namespace Runedal.GameEngine
             }
 
             double lowTierChance = 0.4;
-            double mediumTierChance = 0.03;
+            double highConsumableChance = 0.05;
+            double mediumTierChance = 0.02;
             double highTierChance = 0.3;
 
             //modify chance drop for heroes(bosses)
@@ -2682,6 +2702,12 @@ namespace Runedal.GameEngine
             if (lowTierItem.Name != "placeholder" && TryOutChance(lowTierChance))
             {
                 AddItemToLocation(dyingChar.CurrentLocation!, lowTierItem.Name!, lowTierQuantity);
+            }
+
+            //try dropping high consumable item
+            if (highConsumablesItem.Name != "placeholder" && TryOutChance(highConsumableChance))
+            {
+                AddItemToLocation(dyingChar.CurrentLocation!, highConsumablesItem.Name!, 1);
             }
 
             //try dropping medium tier item

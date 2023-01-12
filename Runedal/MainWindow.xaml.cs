@@ -86,6 +86,14 @@ namespace Runedal
                 return;
             }
 
+            //handle saving error
+            if (Engine.IsErrorSaving)
+            {
+                Engine.PrintMainMenu();
+                Engine.IsErrorSaving = false;
+                inputBox.Text = "";
+            }
+
             
             if (e.Key == Key.Escape)
             {

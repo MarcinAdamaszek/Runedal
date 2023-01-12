@@ -55,6 +55,7 @@ namespace Runedal.GameEngine
             this.IsNewSave = false;
             this.IsExitConfirmation = false;
             this.IsSaveConfirmation = false;
+            this.IsErrorSaving = false;
 
             this.GameSavePath = string.Empty;
 
@@ -138,6 +139,7 @@ namespace Runedal.GameEngine
         public bool IsExitConfirmation { get; set; }
         public bool IsFromGameSaving { get; set; }
         public bool IsFromGameLoading { get; set; }
+        public bool IsErrorSaving { get; set; }
 
         //method processing user input commands
         public void ProcessCommand()
@@ -225,6 +227,14 @@ namespace Runedal.GameEngine
                         IsInMenu = false;
                         break;
                     case "6":
+                        if (Data.Player!.CurrentState != CombatCharacter.State.Idle)
+                        {
+                            ClearOutputBox();
+                            IsErrorSaving = true;
+                            PrintMessage("\n              Nie możesz zapisać gry, gdy Twoja", MessageType.ReceiveDmg);
+                            PrintMessage("\n              postać walczy, handluje lub rozmawia!", MessageType.ReceiveDmg);
+                            return;
+                        }
                         SixthOptionHandler();
                         IsInMenu = false;
                         break;
@@ -603,8 +613,8 @@ namespace Runedal.GameEngine
             if (IsInGame)
             {
                 PrintMessage("                       6. ZAPISZ GRĘ", MessageType.Loss);
-                PrintMessage("\n\n", MessageType.Default, false);
-                PrintMessage("               (Wciśnij esc aby wrócić do gry)\n\n", MessageType.Action, false);
+                PrintMessage("\n", MessageType.Default, false);
+                PrintMessage("               (Wciśnij esc aby wrócić do gry)\n", MessageType.Action, false);
             }
 
             if (gameSaveSuccess)
@@ -920,6 +930,13 @@ namespace Runedal.GameEngine
 
             if (IsQuickSave)
             {
+                //handle error when player is fighting/trading/talking
+                if (Data.Player!.CurrentState != Player.State.Idle)
+                {
+                    PrintMessage("Nie możesz zapisać gry podczas walki, handlu lub rozmowy!", MessageType.SystemFeedback);
+                    return;
+                }
+
                 SaveGame("", false, true);
                 return;
             }

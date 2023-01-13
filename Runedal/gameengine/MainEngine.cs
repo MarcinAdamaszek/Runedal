@@ -2923,6 +2923,13 @@ namespace Runedal.GameEngine
             {
                 BreakInvisibility();
             }
+
+            //remove nur'zhel effect immediately if cast during fight
+            if (caster == Data.Player! && spell.Name == "Powłoka_nur'zhel" && 
+                Data.Player!.CurrentState == CombatCharacter.State.Combat)
+            {
+                BreakInvisibility();
+            }
         }
 
         //method for attacking character by another character

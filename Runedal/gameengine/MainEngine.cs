@@ -2185,16 +2185,16 @@ namespace Runedal.GameEngine
                 switch (firstRune)
                 {
                     case "iskarr":
-                        spellName = "kula_ognia";
+                        spellName = "błogosławieństwo";
                         break;
                     case "akull":
-                        spellName = "fala_mrozu";
+                        spellName = "powłoka_nur'zhel";
                         break;
                     case "verde":
                         spellName = "zdrewniała_skóra";
                         break;
                     case "xitan":
-                        spellName = "dotyk_śmierci";
+                        spellName = "amok";
                         break;
                     case "dara":
                         spellName = "niebiański_dotyk";
@@ -2228,7 +2228,7 @@ namespace Runedal.GameEngine
                 //zjarrit-verde
                 else if (firstRune == runeNames[0] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[0])
                 {
-                    spellName = "amok";
+                    spellName = "kula_ognia";
                 }
 
                 //zjarrit-xitan
@@ -2252,13 +2252,13 @@ namespace Runedal.GameEngine
                 //akull-xitan
                 else if (firstRune == runeNames[1] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[1])
                 {
-                    spellName = "demoniczny_portal";
+                    spellName = "dotyk_śmierci";
                 }
 
                 //akull-dara
                 else if (firstRune == runeNames[1] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[1])
                 {
-                    spellName = "powłoka_nur'zhel";
+                    spellName = "fala_mrozu";
                 }
 
                 //verde-xitan
@@ -2270,13 +2270,13 @@ namespace Runedal.GameEngine
                 //verde-dara
                 else if (firstRune == runeNames[2] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[2])
                 {
-                    spellName = "błogosławieństwo";
+                    spellName = "tarcza_mentalna";
                 }
 
                 //xitan-dara
                 else if (firstRune == runeNames[3] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[3])
                 {
-                    spellName = "tarcza_mentalna";
+                    spellName = "demoniczny_portal";
                 }
                 else
                 {

@@ -33,11 +33,11 @@ namespace Runedal.GameEngine
 {
     public class MainEngine
     {
-        private const int firstIntThreshold = 25;
-        private const int secondIntThreshold = 65;
-        private const int thirdIntThreshold = 117;
-        private const int fourthIntThreshold = 200;
-        private const int fifthIntThreshold = 250;
+        private const int firstIntThreshold = 21;
+        private const int secondIntThreshold = 30;
+        private const int thirdIntThreshold = 80;
+        private const int fourthIntThreshold = 150;
+        private const int fifthIntThreshold = 300;
         public MainEngine(MainWindow window)
         { 
             this.Window = window;

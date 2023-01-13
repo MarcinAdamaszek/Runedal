@@ -63,7 +63,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(1);
+            GameClock.Interval = TimeSpan.FromMilliseconds(25);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -510,6 +510,9 @@ namespace Runedal.GameEngine
                     break;
                 case "allchars":
                     PrintMessage("Wszystkich postaci w grze: " + Data.AllCharactersTestProp.Count);
+                    break;
+                case "devme":
+                    Data.Player!.AddAttributePoints(1);
                     break;
                 default:
                     PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wciśnij esc aby zobaczyć menu lub wpisz \"help\"", MessageType.SystemFeedback);

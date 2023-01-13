@@ -29,7 +29,7 @@ namespace Runedal.GameData.Characters
         private const double MagicResistanceIntMultiplier = 3;
 
         //values of other multipliers
-        private const int StrWeightLimitMultiplier = 30;
+        private const int StrWeightLimitMultiplier = 27;
         private const double WeightPenaltyHpRegenMultiplier = 0.1;
         private const double WeightPenaltyMpRegenMultiplier = 0.1;
         private const double WeightPenaltyCombatStatsMultiplier = 0.8;
@@ -830,7 +830,7 @@ namespace Runedal.GameData.Characters
         //method returning player's weight limit
         public int GetWeightLimit()
         {
-            return 1200 + (GetEffectiveStrength() * StrWeightLimitMultiplier);
+            return 1500 + (GetEffectiveStrength() * StrWeightLimitMultiplier);
         }
 
         //property changed event handler

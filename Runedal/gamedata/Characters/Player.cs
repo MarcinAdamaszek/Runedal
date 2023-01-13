@@ -830,7 +830,7 @@ namespace Runedal.GameData.Characters
         //method returning player's weight limit
         public int GetWeightLimit()
         {
-            return 1500 + (GetEffectiveStrength() * StrWeightLimitMultiplier);
+            return 1600 + (GetEffectiveStrength() * StrWeightLimitMultiplier);
         }
 
         //property changed event handler

@@ -808,7 +808,7 @@ namespace Runedal.GameData.Characters
         //method refreshing MaxSpellsRemembered property
         public void RefreshMaxSpellsRemembered()
         {
-            MaxSpellsRemembered = Convert.ToInt32(Math.Floor((MainEngine.NthRoot(GetEffectiveIntelligence(), 1.5) / 8)));
+            MaxSpellsRemembered = Convert.ToInt32(Math.Floor((MainEngine.NthRoot(GetEffectiveIntelligence(), 1.5) / 5)));
             if (MaxSpellsRemembered < 1)
             {
                 MaxSpellsRemembered = 1;

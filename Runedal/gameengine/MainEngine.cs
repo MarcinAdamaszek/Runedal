@@ -63,7 +63,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(25);
+            GameClock.Interval = TimeSpan.FromMilliseconds(5);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -5722,6 +5722,10 @@ namespace Runedal.GameEngine
         //method adding action to actions list
         private void AddAction(CharAction action)
         {
+            //prevention fix for player's character sometimes losing items modifiers without
+            //taking them off
+            RefreshItemsModifiers();
+
             int actionIndex = Actions.FindIndex(act => act.Performer == action.Performer);
 
             if (actionIndex != -1)
@@ -5732,6 +5736,33 @@ namespace Runedal.GameEngine
             Actions.Add(action);
         }
 
+        //method refreshing all worn-items modifiers on player's character
+        private void RefreshItemsModifiers()
+        {
+            Item[] wornItems = new Item[6];
+            string parentName = string.Empty;
+
+            wornItems[0] = Data.Player!.Weapon!;
+            wornItems[1] = Data.Player!.Torso!;
+            wornItems[2] = Data.Player!.Pants!;
+            wornItems[3] = Data.Player!.Gloves!;
+            wornItems[4] = Data.Player!.Shoes!;
+            wornItems[5] = Data.Player!.Helmet!;
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (wornItems[i].Name != "placeholder")
+                {
+                    wornItems[i].Modifiers!.ForEach(itemMod =>
+                    {
+                        if (!Data.Player!.Modifiers!.Exists(playerMod => playerMod.Parent == itemMod.Parent))
+                        {
+                            Data.Player!.AddModifier(itemMod);
+                        }
+                    });
+                }
+            }
+        }
 
 
 

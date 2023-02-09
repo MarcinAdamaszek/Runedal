@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Windows.Themes;
 using Runedal.GameData.Characters;
 
 namespace Runedal.GameData.Effects
@@ -78,6 +79,8 @@ namespace Runedal.GameData.Effects
             }
         }
         public int DurationInTicks { get; set; }
+
+        //parent of a modifier, meaning the name of an item/spell etc. that caused it
         public string Parent { get; set; }
 
         //method setting DurationInTicks to full (Duration * 10)

@@ -15,6 +15,7 @@ namespace Runedal.GameData
         //default constructor for json deserializer
         public Location() : base()
         {
+            IsVisible = false;
             NorthPassage = true;
             EastPassage = true;
             SouthPassage = true;
@@ -29,6 +30,7 @@ namespace Runedal.GameData
             X = coordinates[0];
             Y = coordinates[1];
             Z = coordinates[2];
+            IsVisible = false;
             NorthPassage = openBools[0];
             EastPassage = openBools[1];
             SouthPassage = openBools[2];
@@ -42,6 +44,7 @@ namespace Runedal.GameData
         }
         public Location(Location lc) : base(lc)
         {
+            IsVisible = false;
             NorthPassage = lc.NorthPassage;
             EastPassage = lc.EastPassage;
             SouthPassage = lc.SouthPassage;
@@ -70,6 +73,9 @@ namespace Runedal.GameData
         public bool WestPassage { get; set; }
         public bool UpPassage { get; set; }
         public bool DownPassage { get; set; }
+
+        //bool indicating if the location is visible to player
+        public bool IsVisible { get; set; }
 
         //list of character-entities currently present in the location
         public List<Character>? Characters { get; set; }

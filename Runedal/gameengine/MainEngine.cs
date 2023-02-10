@@ -686,6 +686,25 @@ namespace Runedal.GameEngine
             PrintMessage("> Jeśli nie wiesz co robić - wciśnij esc aby zobaczyć menu główne i wybierz opcję \"4.KOMENDY\" lub \"3.JAK GRAĆ?\"", MessageType.EffectOn);
             PrintMessage("> Aby zobaczyć ściągawkę komend - wpisz \"help\"\n", MessageType.EffectOn);
 
+            //reveal starting location and adjacent locations
+            Location northAdjacentLoc = new Location();
+            Location eastAdjacentLoc = new Location();
+            Location southAdjacentLoc = new Location();
+            Location westAdjacentLoc = new Location();
+
+            GetNextLocation("n", out northAdjacentLoc);
+            GetNextLocation("e", out eastAdjacentLoc);
+            GetNextLocation("s", out southAdjacentLoc);
+            GetNextLocation("w", out westAdjacentLoc);
+
+            northAdjacentLoc.IsVisible = true;
+            eastAdjacentLoc.IsVisible = true;
+            southAdjacentLoc.IsVisible = true;
+            westAdjacentLoc.IsVisible = true;
+
+            Data.Player!.CurrentLocation!.IsVisible = true;
+
+
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
         }
@@ -3221,10 +3240,29 @@ namespace Runedal.GameEngine
             location.AddCharacter(character);
             character.CurrentLocation = location;
             bool isPlayerInvisible = Data.Player!.Modifiers!.Exists(mod => mod.Type == Modifier.ModType.Invisibility);
+            string[] allDirections = new string[4];
+            Location adjacentLocation = new Location();
+
+            allDirections[0] = "n";
+            allDirections[1] = "e";
+            allDirections[2] = "s";
+            allDirections[3] = "w";
+
 
             //if added character is player
             if (character.GetType() == typeof(Player))
             {
+
+                //reveal the location and all adjacent locations for player
+                location.IsVisible = true;
+                
+                for (int i = 0; i < 4; i++)
+                {
+                    if (GetNextLocation(allDirections[i], out adjacentLocation))
+                    {
+                        adjacentLocation.IsVisible = true;
+                    }
+                }
 
                 //display location info to user
                 LocationInfo(Data.Player!.CurrentLocation!);
@@ -4291,6 +4329,9 @@ namespace Runedal.GameEngine
         private void PrintMap()
         {
             Location center = Data.Player!.CurrentLocation!;
+            Location examinedLocation = new Location();
+            Location eastAdjacentLoc = new Location();
+            Location northAdjacentLoc = new Location();
             const string enDash = "\x2500";
             const string emptyLoc = "\x25A1";
             const string filledLoc = "\x263C";
@@ -4325,43 +4366,54 @@ namespace Runedal.GameEngine
                 {
                     if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ))
                     {
-                        Location examinedLocation = Data.Locations!.Find(loc => loc.X == horizontalRange[j] &&
+                        examinedLocation = Data.Locations!.Find(loc => loc.X == horizontalRange[j] &&
                             loc.Y == verticalRange[i] && loc.Z == currentZ)!;
+                        eastAdjacentLoc = Data.Locations!.Find(loc => loc.X == horizontalRange[j] + 1 &&
+                        loc.Y == verticalRange[i] && loc.Z == currentZ)!;
 
-                        //if it's player's current location, sign it with 'player sign'
-                        if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
-                        {
-                            mapLines[k] += player;
-                        }
-                        else
+                        //check if location is visible to player
+                        if (examinedLocation.IsVisible)
                         {
 
-                            //otherwise, if there is another location in the same Z axis
-                            //directly connected to this one
-                            if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ - 1) ||
-                                IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
+                            //if it's player's current location, sign it with 'player sign'
+                            if (center.X == horizontalRange[j] && center.Y == verticalRange[i])
                             {
-                                mapLines[k] += upAndDown;
-                            }
-                            else if (examinedLocation.Characters!.Exists(character => 
-                            character.GetType() == typeof(Trader)))
-                            {
-                                mapLines[k] += traderLoc;
-                            }
-                            else if (examinedLocation.Characters!.Exists(character => 
-                            character.GetType() == typeof(Monster)))
-                            {
-                                mapLines[k] += filledLoc;
-                            }
-                            else if (examinedLocation.Characters!.Exists(character =>
-                            character.GetType() == typeof(Hero)))
-                            {
-                                mapLines[k] += heroLoc;
+                                mapLines[k] += player;
                             }
                             else
                             {
-                                mapLines[k] += emptyLoc;
+
+                                //otherwise, if there is another location in the same Z axis
+                                //directly connected to this one
+                                if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ - 1) ||
+                                    IsThereALocation(horizontalRange[j], verticalRange[i], currentZ + 1))
+                                {
+                                    mapLines[k] += upAndDown;
+                                }
+                                else if (examinedLocation.Characters!.Exists(character =>
+                                character.GetType() == typeof(Trader)))
+                                {
+                                    mapLines[k] += traderLoc;
+                                }
+                                else if (examinedLocation.Characters!.Exists(character =>
+                                character.GetType() == typeof(Monster)))
+                                {
+                                    mapLines[k] += filledLoc;
+                                }
+                                else if (examinedLocation.Characters!.Exists(character =>
+                                character.GetType() == typeof(Hero)))
+                                {
+                                    mapLines[k] += heroLoc;
+                                }
+                                else
+                                {
+                                    mapLines[k] += emptyLoc;
+                                }
                             }
+                        }
+                        else
+                        {
+                            mapLines[k] += " ";
                         }
                         
                     }
@@ -4370,7 +4422,9 @@ namespace Runedal.GameEngine
                         mapLines[k] += " ";
                     }
 
-                    if (IsThereALocation(horizontalRange[j] + 1, verticalRange[i], currentZ) && IsThereALocation(horizontalRange[j], verticalRange[i], currentZ)) 
+                    if (IsThereALocation(horizontalRange[j] + 1, verticalRange[i], currentZ) && 
+                        IsThereALocation(horizontalRange[j], verticalRange[i], currentZ) &&
+                        eastAdjacentLoc.IsVisible && examinedLocation.IsVisible) 
                     {
                         mapLines[k] += " " + enDash + " ";
                     }
@@ -4390,7 +4444,14 @@ namespace Runedal.GameEngine
             {
                 for (j = 0; j < rangeSize; j++)
                 {
-                    if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ) && IsThereALocation(horizontalRange[j], verticalRange[i] + 1, currentZ))
+                    examinedLocation = Data.Locations!.Find(loc => loc.X == horizontalRange[j] &&
+                            loc.Y == verticalRange[i] && loc.Z == currentZ)!;
+                    northAdjacentLoc = Data.Locations!.Find(loc => loc.X == horizontalRange[j] &&
+                        loc.Y == verticalRange[i] + 1 && loc.Z == currentZ)!;
+
+                    if (IsThereALocation(horizontalRange[j], verticalRange[i], currentZ) && 
+                        IsThereALocation(horizontalRange[j], verticalRange[i] + 1, currentZ) && 
+                        northAdjacentLoc.IsVisible && examinedLocation.IsVisible)
                     {
                         mapLines[k] += "|";
                     }

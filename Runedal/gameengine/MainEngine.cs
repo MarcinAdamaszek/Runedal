@@ -63,7 +63,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(5);
+            GameClock.Interval = TimeSpan.FromMilliseconds(100);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -2793,8 +2793,10 @@ namespace Runedal.GameEngine
         private void CastSpell(CombatCharacter caster, CombatCharacter target, Spell spell)
         {
             bool hasSpellLanded;
+            bool isDmgLethal = false;
+            bool isCasterPlayer = false;
             double spellDmg;
-            double casterDmgFactor;
+            double casterDmgFactor = 1;
             double casterChanceFactor;
             
             //prevent casting the spell when it's cost is higher than caster's actual mana value
@@ -2812,28 +2814,19 @@ namespace Runedal.GameEngine
             {
 
                 //set casterChanceFactor depending on if it's a player or a monster
-                if (caster == Data.Player!)
+                if (caster == Data.Player)
                 {
                     casterChanceFactor = (caster as Player)!.GetEffectiveIntelligence() * 1.2;
+                    casterDmgFactor = (caster as Player)!.GetEffectiveIntelligence() / 3;
+                    isCasterPlayer = true;
                 }
                 else
                 {
                     casterChanceFactor = caster.Level * 15;
+                    casterDmgFactor = caster.Level * 1.5;
                 }
 
                 hasSpellLanded = IsSpellASuccess(casterChanceFactor, target.GetEffectiveMagicResistance());
-            }
-
-            //calculate spell damage, using slightly different formulas
-            //for player and other combat characters (intelligence factor
-            //for player, and level factor for other characters)
-            if (caster == Data.Player)
-            {
-                casterDmgFactor = (caster as Player)!.GetEffectiveIntelligence() / 3;
-            }
-            else
-            {
-                casterDmgFactor = caster.Level * 1.5;
             }
 
             spellDmg = (spell.Power * Math.Sqrt(casterDmgFactor)) /
@@ -2915,7 +2908,7 @@ namespace Runedal.GameEngine
             //deal spell dmg
             if (spell.Power > 0)
             {
-                DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
+                isDmgLethal = DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
             }
 
             //break player's invis if the spell was other than invis
@@ -2929,6 +2922,12 @@ namespace Runedal.GameEngine
                 Data.Player!.CurrentState == CombatCharacter.State.Combat)
             {
                 BreakInvisibility();
+            }
+
+            //trigger target's autoattack only if if the spell is offensive
+            if (caster != target)
+            {
+                TriggerAutoAttack(caster, target, isCasterPlayer, isDmgLethal);
             }
         }
 
@@ -3168,44 +3167,6 @@ namespace Runedal.GameEngine
             if (dealer == Data.Player! || receiver == Data.Player)
             {
                 BreakInvisibility();
-            }
-
-            //if receiver is an npc character - respond with counterattack
-            if (receiver != Data.Player)
-            {
-
-                //check if receiver isn't already attacking the attacker and prevent
-                //counterattacking if the attacked character has been killed
-                if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == dealer)
-                    && !isDmgLethal)
-                {
-                    AttackCharacter(receiver, dealer);
-                }
-
-                //also, if the monster is social type, make his 'comrades'
-                //attack the attacker
-                if (receiver.GetType() == typeof(Monster))
-                {
-                    receiver.CurrentLocation!.Characters!.ForEach(character =>
-                    {
-                        if (character.Name! == receiver.Name! && character != receiver &&
-                        (receiver as Monster)!.Aggressiveness == Monster.AggressionType.Social)
-                        {
-
-                            //make sure they aren't already attacking the attacker
-                            if (!AttackInstances.Exists(ins => ins.Attacker == character && ins.Receiver == dealer))
-                            {
-                                AttackCharacter((character as CombatCharacter)!, dealer);
-                            }
-                        }
-                    });
-                }
-            }
-
-            //handle auto-attack
-            else if (IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
-            {
-                AttackCharacter(Data.Player!, dealer);
             }
 
             if (isDmgLethal)
@@ -3690,6 +3651,50 @@ namespace Runedal.GameEngine
                 target.AddModifier(specialMod);
             }
 
+        }
+
+        //method triggering auto-attack if character becomes a target
+        //of an attack attempt or offensive spell
+        private void TriggerAutoAttack(CombatCharacter attacker, CombatCharacter receiver,
+             bool isAttackerPlayer, bool isDmgLethal)
+        {
+            //if receiver is an npc character - respond with counterattack
+            if (isAttackerPlayer)
+            {
+
+                //check if receiver isn't already attacking the attacker and prevent
+                //counterattacking if the attacked character has been killed
+                if (!AttackInstances.Exists(ins => ins.Attacker == receiver && ins.Receiver == attacker)
+                    && !isDmgLethal)
+                {
+                    AttackCharacter(receiver, attacker);
+                }
+
+                //also, if the monster is social type, make his 'comrades'
+                //attack the attacker
+                if (receiver.GetType() == typeof(Monster))
+                {
+                    receiver.CurrentLocation!.Characters!.ForEach(character =>
+                    {
+                        if (character.Name! == receiver.Name! && character != receiver &&
+                        (receiver as Monster)!.Aggressiveness == Monster.AggressionType.Social)
+                        {
+
+                            //make sure they aren't already attacking the attacker
+                            if (!AttackInstances.Exists(ins => ins.Attacker == character && ins.Receiver == attacker))
+                            {
+                                AttackCharacter((character as CombatCharacter)!, attacker);
+                            }
+                        }
+                    });
+                }
+            }
+
+            //handle auto-attack
+            else if (IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
+            {
+                AttackCharacter(Data.Player!, attacker);
+            }
         }
 
         //method removing effects from player
@@ -5852,7 +5857,7 @@ namespace Runedal.GameEngine
                 //cast a spell once a while if it's attacking the player
                 if (isReceiverPlayer && attacker.RememberedSpells.Count > 0)
                 {
-                    isSpellCasted = TryOutChance(0.2);
+                    isSpellCasted = TryOutChance(1.2);
 
                     if (isSpellCasted)
                     {
@@ -5863,6 +5868,7 @@ namespace Runedal.GameEngine
                         {
                             CastSpell(attacker, receiver, attacker.RememberedSpells[randomSpellNumber]);
                             attacker.ActionCounter += 40;
+
                             return;
                         }
                     }
@@ -5905,6 +5911,9 @@ namespace Runedal.GameEngine
                     dmgAsInt = Convert.ToInt32(dealtDmg);
                     isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt);
                 }
+
+                //trigger auto-attack on attacked character (receiver)
+                TriggerAutoAttack(attacker, receiver, isAttackerPlayer, isDmgLethal);
             }
         }
 

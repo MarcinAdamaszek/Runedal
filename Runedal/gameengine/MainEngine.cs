@@ -63,7 +63,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(25);
+            GameClock.Interval = TimeSpan.FromMilliseconds(100);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -2652,12 +2652,12 @@ namespace Runedal.GameEngine
             Item lowTierItem = new Item("placeholder");
             Item highConsumablesItem = new Item("placeholder");
             Item mediumTierItem = new Item("placeholder");
-            Item highTierItem = new Item("placeholder");
+            //Item highTierItem = new Item("placeholder");
 
             List<Item> lowTierPool = new List<Item>();
             List<Item> highConsumablesPool = new List<Item>();
             List<Item> mediumTierPool = new List<Item>();
-            List<Item> highTierPool = new List<Item>();
+            //List<Item> highTierPool = new List<Item>();
 
             //if quantityBase is lower than 1 set it to 1
             if (quantityBase < 1)
@@ -2681,21 +2681,21 @@ namespace Runedal.GameEngine
             }
 
             //same for high consumables
-            Data.Items!.ForEach(it =>
-            {
-                if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit)
-                {
-                    if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
-                    it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo")
-                    {
-                        highConsumablesPool.Add(it);
-                    }
-                }
-            });
-            if (highConsumablesPool.Count > 0)
-            {
-                highConsumablesItem = highConsumablesPool[Rand.Next(0, highConsumablesPool.Count)];
-            }
+            //Data.Items!.ForEach(it =>
+            //{
+            //    if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit)
+            //    {
+            //        if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
+            //        it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo")
+            //        {
+            //            highConsumablesPool.Add(it);
+            //        }
+            //    }
+            //});
+            //if (highConsumablesPool.Count > 0)
+            //{
+            //    highConsumablesItem = highConsumablesPool[Rand.Next(0, highConsumablesPool.Count)];
+            //}
 
             //same for medium tier
             Data.Items!.ForEach(it =>
@@ -2714,28 +2714,27 @@ namespace Runedal.GameEngine
             }
 
             //high tier
-            Data.Items!.ForEach(it =>
-            {
-                if (it.Price < highTierLimit && it.Price >= highTierLimit * 0.5)
-                {
-                    highTierPool.Add(it);
-                }
-            });
-            if (highTierPool.Count > 0)
-            {
-                highTierItem = highTierPool[Rand.Next(0, highTierPool.Count)];
-            }
+            //Data.Items!.ForEach(it =>
+            //{
+            //    if (it.Price < highTierLimit && it.Price >= highTierLimit * 0.5)
+            //    {
+            //        highTierPool.Add(it);
+            //    }
+            //});
+            //if (highTierPool.Count > 0)
+            //{
+            //    highTierItem = highTierPool[Rand.Next(0, highTierPool.Count)];
+            //}
 
             double lowTierChance = 0.4;
             double highConsumableChance = 0.05;
             double mediumTierChance = 0.02;
-            double highTierChance = 0.3;
+            //double highTierChance = 0.3;
 
             //modify chance drop for heroes(bosses)
             if (dyingChar.GetType() == typeof(Hero))
             {
                 mediumTierChance = 1.0;
-                highTierChance = 0.0;
             }
 
             //try dropping low tier item
@@ -2758,11 +2757,11 @@ namespace Runedal.GameEngine
             }
 
             //try dropping high tier item
-            if (highTierItem.Name != "placeholder" && TryOutChance(highTierChance) &&
-                dyingChar.GetType() == typeof(Hero))
-            {
-                AddItemToLocation(dyingChar.CurrentLocation!, highTierItem.Name!, 1);
-            }
+            //if (highTierItem.Name != "placeholder" && TryOutChance(highTierChance) &&
+            //    dyingChar.GetType() == typeof(Hero))
+            //{
+            //    AddItemToLocation(dyingChar.CurrentLocation!, highTierItem.Name!, 1);
+            //}
         }
 
         ///<summary>

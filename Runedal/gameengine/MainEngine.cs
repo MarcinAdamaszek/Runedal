@@ -63,7 +63,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(100);
+            GameClock.Interval = TimeSpan.FromMilliseconds(1);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -358,7 +358,7 @@ namespace Runedal.GameEngine
             //and handle unpausing
             if (IsPaused)
             {
-                if (command == "pause" || command == "pa")
+                if (command == "pause" || command == "ps")
                 {
                     PauseHandler();
                     return;

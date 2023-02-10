@@ -19,7 +19,7 @@ namespace Runedal.GameData.Characters
         private const double MaxHpStrMultiplier = 20;
         private const double MaxMpIntMultiplier = 13;
         private const double HpRegenStrMultiplier = 2;
-        private const double MpRegenIntMultiplier = 5;
+        private const double MpRegenIntMultiplier = 6;
         private const double SpeedAgiMultiplier = 0.5;
         private const double AttackStrMultiplier = 2.5;
         private const double AtkSpeedAgiMultiplier = 1.5;

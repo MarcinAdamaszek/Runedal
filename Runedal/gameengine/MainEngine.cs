@@ -63,14 +63,14 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(1);
+            GameClock.Interval = TimeSpan.FromMilliseconds(25);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
             LoadGameObjects();
             PrepareNewGameLoad();
             PrintWelcomeScreen();
-
+            
             //StartNewGame("Czesiek");
             //GivePlayerExperience(100);
 
@@ -5918,7 +5918,7 @@ namespace Runedal.GameEngine
                 //cast a spell once a while if it's attacking the player
                 if (isReceiverPlayer && attacker.RememberedSpells.Count > 0)
                 {
-                    isSpellCasted = TryOutChance(1.2);
+                    isSpellCasted = TryOutChance(0.2);
 
                     if (isSpellCasted)
                     {
@@ -5974,7 +5974,10 @@ namespace Runedal.GameEngine
                 }
 
                 //trigger auto-attack on attacked character (receiver)
-                TriggerAutoAttack(attacker, receiver, isAttackerPlayer, isDmgLethal);
+                if (!isDmgLethal)
+                {
+                    TriggerAutoAttack(attacker, receiver, isAttackerPlayer, isDmgLethal);
+                }
             }
         }
 

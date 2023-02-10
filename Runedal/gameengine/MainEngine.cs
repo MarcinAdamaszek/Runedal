@@ -2305,7 +2305,7 @@ namespace Runedal.GameEngine
             //check if player has enough mana to craft a spell
             if (Data.Player!.Mp < 200)
             {
-                PrintMessage("Nie masz wystarczającej ilości many aby to zrobić (potrzeba 200)");
+                PrintMessage("Nie masz wystarczającej ilości many aby to zrobić (potrzeba 200)", MessageType.SystemFeedback);
                 return;
             }
 

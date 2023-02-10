@@ -2735,6 +2735,7 @@ namespace Runedal.GameEngine
             if (dyingChar.GetType() == typeof(Hero))
             {
                 mediumTierChance = 1.0;
+                highTierChance = 0.0;
             }
 
             //try dropping low tier item

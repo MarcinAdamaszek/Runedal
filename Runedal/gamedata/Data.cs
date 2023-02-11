@@ -471,7 +471,7 @@ namespace Runedal.GameData
                     if (weapon.Type == WeaponType.Blade)
                     {
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -20, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -30, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -10, 0, weapon.Name!, true));
                     }
                     else if (weapon.Type == WeaponType.Blunt)
                     {

@@ -2756,21 +2756,21 @@ namespace Runedal.GameEngine
             }
 
             //same for high consumables
-            //Data.Items!.ForEach(it =>
-            //{
-            //    if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit)
-            //    {
-            //        if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
-            //        it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo")
-            //        {
-            //            highConsumablesPool.Add(it);
-            //        }
-            //    }
-            //});
-            //if (highConsumablesPool.Count > 0)
-            //{
-            //    highConsumablesItem = highConsumablesPool[Rand.Next(0, highConsumablesPool.Count)];
-            //}
+            Data.Items!.ForEach(it =>
+            {
+                if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit)
+                {
+                    if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
+                    it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo")
+                    {
+                        highConsumablesPool.Add(it);
+                    }
+                }
+            });
+            if (highConsumablesPool.Count > 0)
+                {
+                    highConsumablesItem = highConsumablesPool[Rand.Next(0, highConsumablesPool.Count)];
+                }
 
             //same for medium tier
             Data.Items!.ForEach(it =>
@@ -2802,7 +2802,7 @@ namespace Runedal.GameEngine
             //}
 
             double lowTierChance = 0.4;
-            double highConsumableChance = 0.05;
+            double highConsumableChance = 0.015 * dyingChar.Level;
             double mediumTierChance = 0.02;
             //double highTierChance = 0.3;
 

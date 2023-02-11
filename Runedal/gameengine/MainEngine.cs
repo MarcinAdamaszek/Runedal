@@ -3002,7 +3002,7 @@ namespace Runedal.GameEngine
             //deal spell dmg
             if (spell.Power > 0)
             {
-                isDmgLethal = DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg));
+                isDmgLethal = DealDmgToCharacter(caster, target, Convert.ToInt32(spellDmg), true);
             }
 
             //break player's invis if the spell was other than invis
@@ -3199,7 +3199,7 @@ namespace Runedal.GameEngine
         /// <param name="receiver"></param>
         /// <param name="dmg"></param>
         /// <returns></returns>
-        private bool DealDmgToCharacter(CombatCharacter dealer, CombatCharacter receiver, int dmg)
+        private bool DealDmgToCharacter(CombatCharacter dealer, CombatCharacter receiver, int dmg, bool isSpelldmg)
         {
             bool isDealerPlayer = dealer.GetType() == typeof(Player);
             bool isReceiverPlayer = receiver.GetType() == typeof(Player);
@@ -3237,24 +3237,27 @@ namespace Runedal.GameEngine
                 PrintMessage(dealer.Name! + " zadaje Ci " + dmg + " obrażeń", MessageType.ReceiveDmg);
             }
 
-            //handle lifesteal modifiers (if present on dealer)
-            double lifestealPercentValue = 0;
-            dealer.Modifiers!.ForEach(mod =>
+            //handle lifesteal modifiers (if present on dealer and ONLY if it's not spell dmg)
+            if (!isSpelldmg)
             {
-                if (mod.Type == Modifier.ModType.Lifesteal)
+                double lifestealPercentValue = 0;
+                dealer.Modifiers!.ForEach(mod =>
                 {
-                    lifestealPercentValue += mod.Value;
-                }
-            });
+                    if (mod.Type == Modifier.ModType.Lifesteal)
+                    {
+                        lifestealPercentValue += mod.Value;
+                    }
+                });
 
-            //heal dealer for value of dmg multiplied by
-            //lifesteal percent multiplier
-            if (lifestealPercentValue > 0)
-            {
-                double lifestealMultiplier = lifestealPercentValue * 0.01;
-                double lifestealHeal = Math.Round(lifestealMultiplier * dmg);
-                dealer.Heal(lifestealHeal);
-                //PrintMessage("ULECZONO " + lifestealHeal, MessageType.Gain);
+                //heal dealer for value of dmg multiplied by
+                //lifesteal percent multiplier
+                if (lifestealPercentValue > 0)
+                {
+                    double lifestealMultiplier = lifestealPercentValue * 0.01;
+                    double lifestealHeal = Math.Round(lifestealMultiplier * dmg);
+                    dealer.Heal(lifestealHeal);
+                    //PrintMessage("ULECZONO " + lifestealHeal, MessageType.Gain);
+                }
             }
 
             //break invis if it's player dealing or receiving the dmg
@@ -6067,7 +6070,7 @@ namespace Runedal.GameEngine
                     }
 
                     dmgAsInt = Convert.ToInt32(dealtDmg);
-                    isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt);
+                    isDmgLethal = DealDmgToCharacter(attacker, receiver, dmgAsInt, false);
                 }
 
                 //trigger auto-attack on attacked character (receiver)

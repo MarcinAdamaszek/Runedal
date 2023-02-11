@@ -47,6 +47,8 @@ namespace Runedal.GameEngine
             this.Actions = new List<CharAction>();
             this.TeleportLocation = new Location();
             this.LastoutputBoxContent = new List<TextRange>();
+            this.TimeInterval = 100;
+            this.MinTimeInterval = 1;
             this.IsInMenu = true;
             this.IsPlayerChoosingAName = false;
             this.IsInGame = false;
@@ -63,7 +65,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(25);
+            GameClock.Interval = TimeSpan.FromMilliseconds(TimeInterval);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -126,6 +128,8 @@ namespace Runedal.GameEngine
         public Location TeleportLocation { get; set; }
         public List<TextRange> LastoutputBoxContent { get; set; }
         public string GameSavePath { get; set; }
+        public int TimeInterval { get; set; }
+        public int MinTimeInterval { get; set; }
         public bool IsAutoattackOn { get; set; }
         public bool IsPaused { get; set; }
         public bool IsInMenu { get; set; }
@@ -486,6 +490,14 @@ namespace Runedal.GameEngine
                 case "clear":
                     ClearOutputBox();
                     break;
+                case "speedup":
+                case "up":
+                    ChangeSpeedHandler(false);
+                    break;
+                case "slowdown":
+                case "dn":
+                    ChangeSpeedHandler(true);
+                    break;
                 case "1":
                 case "2":
                 case "3":
@@ -498,11 +510,11 @@ namespace Runedal.GameEngine
                 case "10":
                     OptionHandler(command);
                     break;
-                case "iwannagrow":
-                        GivePlayerExperience(10);
-                    break;
 
                 //for testing
+                case "iwannagrow":
+                    GivePlayerExperience(10);
+                    break;
                 case "loc":
                     PrintMessage("Z = " + Data.Player!.CurrentLocation!.Z + "\n" +
                         "Y = " + Data.Player!.CurrentLocation!.Y + "\n" +
@@ -2559,6 +2571,43 @@ namespace Runedal.GameEngine
                 //print effect
                 PrintMessage(effectLine, MessageType.EffectOn);
             });
+        }
+
+        //method for handling game speed manipulation
+        private void ChangeSpeedHandler(bool isSlowDown)
+        {
+            if (isSlowDown)
+            {
+                if (TimeInterval >= 100)
+                {
+                    PrintMessage("Gra działa w minimalnej szybkości!", MessageType.SystemFeedback);
+                }
+                else
+                {
+                    TimeInterval *= 2;
+                    GameClock.Stop();
+                    GameClock.Interval = TimeSpan.FromMilliseconds(TimeInterval);
+                    GameClock.Start();
+                }
+            }
+            else
+            {
+                if (TimeInterval <= MinTimeInterval)
+                {
+                    PrintMessage("Gra działa w maksymalnej szybkości!", MessageType.SystemFeedback);
+                }
+                else
+                {
+                    TimeInterval /= 2;
+                    GameClock.Stop();
+                    GameClock.Interval = TimeSpan.FromMilliseconds(TimeInterval);
+                    GameClock.Start();
+                }
+            }
+
+            int GameSpeed = 100 / TimeInterval;
+
+            PrintMessage("Szybkość gry: " + GameSpeed + "x", MessageType.SystemFeedback);
         }
 
 
@@ -4879,6 +4928,10 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "     * Komenda: 'clear'";
                 manualLines[i++] = "     * Skrót: brak";
                 manualLines[i++] = "           Wymazuje całą, dotychczasową treść ekranu gry";
+                manualLines[i++] = " >>> PRZYSPIESZANIE/SPOWALNIANIE GRY";
+                manualLines[i++] = "     * Komenda 'speedup'/'slowdown'";
+                manualLines[i++] = "     * Skrót: 'up'/'dn'";
+                manualLines[i++] = "           Przyspiesza/spowalnia działanie zegara gry.";
             }
             else
             {
@@ -4908,6 +4961,8 @@ namespace Runedal.GameEngine
                 manualLines[i++] = " * 'save' - szybki zapis";
                 manualLines[i++] = " * 'autoattack' - włączenie/wyłączenie auto. ataku";
                 manualLines[i++] = " * 'clear' - czyszczenie ekranu";
+                manualLines[i++] = " * 'speedup' ('up') - przyspiesza grę";
+                manualLines[i++] = " * 'slowdown' ('dn') - spowalnia grę";
             }
 
             //make space before short commands cheatsheet

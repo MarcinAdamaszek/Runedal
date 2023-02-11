@@ -116,7 +116,9 @@ namespace Runedal.GameEngine
             Speech,
             DealDmg,
             ReceiveDmg,
-            CriticalHit
+            CriticalHit,
+            Miss,
+            Dodge
         }
 
         public MainWindow Window { get; set; }
@@ -5748,6 +5750,12 @@ namespace Runedal.GameEngine
                 case (MessageType.CriticalHit):
                     brush = Brushes.Magenta;
                     break;
+                case (MessageType.Miss):
+                    brush = Brushes.BlueViolet;
+                    break;
+                case (MessageType.Dodge):
+                    brush = Brushes.LightSeaGreen;
+                    break;
             }
 
             // Get the latest block in the document and try to append a new message to it
@@ -6016,17 +6024,27 @@ namespace Runedal.GameEngine
 
                 attacker.PerformAttack();
 
+                //print info about performing an attack
+                if (isAttackerPlayer)
+                {
+                    PrintMessage("Robisz zamach..");
+                }
+                else
+                {
+                    PrintMessage(attacker.Name + " próbuje Cię zranić..");
+                }
+
                 //try if attack actually hits or misses
                 if (!IsAttackHit(attacker.GetEffectiveAccuracy(), receiver.GetEffectiveEvasion()))
                 {
                     //display appropriate message if missed
                     if (isAttackerPlayer)
                     {
-                        PrintMessage("Chybiłeś!");
+                        PrintMessage("Chybiłeś!", MessageType.Miss);
                     }
                     if (isReceiverPlayer)
                     {
-                        PrintMessage("Unikasz ataku " + attacker.Name);
+                        PrintMessage("Unikasz ataku " + attacker.Name, MessageType.Dodge);
                     }
                 }
                 else

@@ -3048,18 +3048,18 @@ namespace Runedal.GameEngine
             }
 
             //print appropriate message depending on player's position in attacker/attacked configuration
-            if (attacker == Data.Player)
-            {
-                PrintMessage("Atakujesz postać: " + attacked.Name + "!", MessageType.Action);
-            }
-            else if (attacked == Data.Player)
-            {
-                PrintMessage("Zostałeś zaatakowany przez: " + attacker.Name + "!");
-            }
-            else if (attacked.CurrentLocation! == Data.Player!.CurrentLocation)
-            {
-                PrintMessage(attacker.Name! + " atakuje: " + attacked.Name);
-            }
+            //if (attacker == Data.Player)
+            //{
+            //    PrintMessage("Atakujesz postać: " + attacked.Name + "!", MessageType.Action);
+            //}
+            //else if (attacked == Data.Player)
+            //{
+            //    PrintMessage("Zostałeś zaatakowany przez: " + attacker.Name + "!");
+            //}
+            //else if (attacked.CurrentLocation! == Data.Player!.CurrentLocation)
+            //{
+            //    PrintMessage(attacker.Name! + " atakuje: " + attacked.Name);
+            //}
             
             //if attacked character doesn't exist in attacker's opponents list
             if (!(attacker.Opponents.Exists(op => op == attacked)))
@@ -6030,11 +6030,11 @@ namespace Runedal.GameEngine
                 //print info about performing an attack
                 if (isAttackerPlayer)
                 {
-                    PrintMessage("Robisz zamach..");
+                    PrintMessage("Atakujesz postać: " + receiver.Name);
                 }
                 else
                 {
-                    PrintMessage(attacker.Name + " próbuje Cię zranić..");
+                    PrintMessage(attacker.Name + " atakuje Cię..");
                 }
 
                 //try if attack actually hits or misses
@@ -6043,11 +6043,11 @@ namespace Runedal.GameEngine
                     //display appropriate message if missed
                     if (isAttackerPlayer)
                     {
-                        PrintMessage("Chybiłeś!", MessageType.Miss);
+                        PrintMessage("Nie trafiasz", MessageType.Miss);
                     }
                     if (isReceiverPlayer)
                     {
-                        PrintMessage("Unikasz ataku " + attacker.Name, MessageType.Dodge);
+                        PrintMessage("Unikasz ataku " + attacker.Name + "!", MessageType.Dodge);
                     }
                 }
                 else

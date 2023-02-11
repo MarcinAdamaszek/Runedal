@@ -226,6 +226,7 @@ namespace Runedal.GameData.Characters
                 {
                     _Intelligence = value;
                     EffectiveMaxMp = GetEffectiveMaxMp();
+                    RefreshMaxSpellsRemembered();
                 }
             }
         }

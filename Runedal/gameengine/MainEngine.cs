@@ -2270,25 +2270,25 @@ namespace Runedal.GameEngine
                     return;
                 }
 
-                //zjarrit-akull combination
+                //iskarr-akull combination
                 if (firstRune == runeNames[0] && secondRune == runeNames[1] || firstRune == runeNames[1] && secondRune == runeNames[0])
                 {
                     spellName = "eksplozja";
                 }
 
-                //zjarrit-verde
+                //iskarr-verde
                 else if (firstRune == runeNames[0] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[0])
                 {
                     spellName = "kula_ognia";
                 }
 
-                //zjarrit-xitan
+                //iskarr-xitan
                 else if (firstRune == runeNames[0] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[0])
                 {
                     spellName = "kula_chaosu";
                 }
 
-                //zjarrit-dara
+                //iskarr-dara
                 else if (firstRune == runeNames[0] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[0])
                 {
                     spellName = "dusza_paladyna";
@@ -2327,7 +2327,7 @@ namespace Runedal.GameEngine
                 //xitan-dara
                 else if (firstRune == runeNames[3] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[3])
                 {
-                    spellName = "demoniczny_portal";
+                    spellName = "szpon_zaświatów";
                 }
                 else
                 {

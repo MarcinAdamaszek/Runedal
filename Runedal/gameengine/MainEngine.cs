@@ -63,7 +63,7 @@ namespace Runedal.GameEngine
 
             //set game clock for game time
             GameClock = new DispatcherTimer(DispatcherPriority.Send);
-            GameClock.Interval = TimeSpan.FromMilliseconds(100);
+            GameClock.Interval = TimeSpan.FromMilliseconds(25);
             GameClock.Tick += GameClockTick!;
 
             //PrintManual();
@@ -2504,10 +2504,16 @@ namespace Runedal.GameEngine
                 if (locationIndex != -1)
                 {
                     TeleportLocation = Data.Locations![locationIndex];
+                    
+                    if (!TeleportLocation.IsVisible)
+                    {
+                        PrintMessage("Nie znasz lokacji o nazwie \"" + targetName + "\"", MessageType.SystemFeedback);
+                        return;
+                    }
                 }
                 else
                 {
-                    PrintMessage("Nie istnieje lokacja " + targetName, MessageType.SystemFeedback);
+                    PrintMessage("Nie znasz lokacji o nazwie \"" + targetName + "\"", MessageType.SystemFeedback);
                     return;
                 }
 

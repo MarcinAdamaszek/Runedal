@@ -1155,6 +1155,8 @@ namespace Runedal.GameEngine
         {
             int index = -1;
             string description = string.Empty;
+            string[] directionLetters = new string[] { "n", "e", "s", "w", "u", "d" };
+            Location nextLocation;
 
             //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
@@ -1164,10 +1166,9 @@ namespace Runedal.GameEngine
             else
             {
                 //if player typed n, e, s, w, u or d - search for adjacent locations
-                string[] directionLetters = new string[] { "n", "e", "s", "w", "u", "d" };
                 if (directionLetters.Contains(entityName))
                 {
-                    Location nextLocation;
+
                     if (!GetNextLocation(entityName, out nextLocation))
                     {
                         PrintMessage("Niczego nie ma w tamtym kierunku", MessageType.SystemFeedback);
@@ -1206,6 +1207,23 @@ namespace Runedal.GameEngine
                 }
                 else
                 {
+
+                    //else search adjacent locations also
+                    for (int i = 0; i < 4; i++)
+                    {
+                        GetNextLocation(directionLetters[i], out nextLocation);
+                        index = nextLocation.Characters!.FindIndex(character => FlattenPolishChars(character.Name!.ToLower())
+                        == FlattenPolishChars(entityName));
+                        
+                        if (index != -1)
+                        {
+                            CharacterInfo(nextLocation.Characters[index]);
+                            return;
+                        }
+                    }
+                }
+                {
+
                     //else search player's inventory for item with name matching the argument
                     index = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(entityName));
                     if (index != -1)

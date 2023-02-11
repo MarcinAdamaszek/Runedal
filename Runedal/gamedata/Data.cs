@@ -496,7 +496,7 @@ namespace Runedal.GameData
                         }
                         else if (armor.Weight < 500 && armor.Weight >= 200)
                         {
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
                         }
                     }
                     if (armor.Type == Armor.ArmorType.Pants)
@@ -510,7 +510,7 @@ namespace Runedal.GameData
                         }
                         else if (armor.Weight < 450 && armor.Weight >= 150)
                         {
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -7, 0, armor.Name!, true));
                         }
                     }
                     if (armor.Type == Armor.ArmorType.Helmet || armor.Type == Armor.ArmorType.Gloves || armor.Type == Armor.ArmorType.Shoes)
@@ -524,9 +524,7 @@ namespace Runedal.GameData
                         }
                         else if (armor.Weight < 250 && armor.Weight >= 100)
                         {
-                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
-                            //armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -5, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -3, 0, armor.Name!, true));
                         }
                     }
                 }

@@ -2910,7 +2910,7 @@ namespace Runedal.GameEngine
                 //set casterChanceFactor depending on if it's a player or a monster
                 if (caster == Data.Player)
                 {
-                    casterChanceFactor = (caster as Player)!.GetEffectiveIntelligence() * 1.2;
+                    casterChanceFactor = (caster as Player)!.GetEffectiveIntelligence() * 1.3;
                     casterDmgFactor = (caster as Player)!.GetEffectiveIntelligence() / 3;
                     isCasterPlayer = true;
                 }

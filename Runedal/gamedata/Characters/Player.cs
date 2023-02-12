@@ -764,6 +764,9 @@ namespace Runedal.GameData.Characters
                     case Modifier.ModType.HpRegen:
                         baseStatValue = HpRegen + modifiersSumValue + HpRegenStrMultiplier * GetEffectiveStrength();
                         break;
+                    case Modifier.ModType.MpRegen:
+                        baseStatValue = MpRegen + modifiersSumValue + MpRegenIntMultiplier * GetEffectiveIntelligence();
+                        break;
                     case Modifier.ModType.Speed:
                         baseStatValue = Speed + modifiersSumValue + SpeedAgiMultiplier * GetEffectiveAgility();
                         break;

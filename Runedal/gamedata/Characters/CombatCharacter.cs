@@ -523,6 +523,9 @@ namespace Runedal.GameData.Characters
                     case Modifier.ModType.HpRegen:
                         baseStatValue = HpRegen;
                         break;
+                    case Modifier.ModType.MpRegen:
+                        baseStatValue = MpRegen;
+                        break;
                     case Modifier.ModType.Speed:
                         baseStatValue = Speed;
                         break;

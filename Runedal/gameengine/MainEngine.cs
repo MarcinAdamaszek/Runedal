@@ -2303,7 +2303,7 @@ namespace Runedal.GameEngine
                 //akull-xitan
                 else if (firstRune == runeNames[1] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[1])
                 {
-                    spellName = "dotyk_śmierci";
+                    spellName = "tarcza_mentalna";
                 }
 
                 //akull-dara
@@ -2315,13 +2315,13 @@ namespace Runedal.GameEngine
                 //verde-xitan
                 else if (firstRune == runeNames[2] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[2])
                 {
-                    spellName = "wampirze_ostrze";
+                    spellName = "dotyk_śmierci";
                 }
 
                 //verde-dara
                 else if (firstRune == runeNames[2] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[2])
                 {
-                    spellName = "tarcza_mentalna";
+                    spellName = "wampirze_ostrze";
                 }
 
                 //xitan-dara

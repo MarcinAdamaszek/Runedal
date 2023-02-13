@@ -2978,7 +2978,30 @@ namespace Runedal.GameEngine
                     {
                         PrintMessage("Czar się powiódł!");
                     }
-                    spell.Modifiers.ForEach(mod => target.AddModifier(mod));
+
+                    //reset mods durations if character is already affected by it, otherwise
+                    //apply the mods
+                    Modifier spellMod = new Modifier();
+                    if (target.Modifiers!.Exists(mod => mod.Parent!.ToLower() == spell.Name!.ToLower()))
+                    {
+                        target.Modifiers!.ForEach(mod =>
+                        {
+                            if (mod.Parent!.ToLower() == spell.Name!.ToLower())
+                            {
+                                mod.ResetDuration();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        spell.Modifiers.ForEach(mod =>
+                        {
+                            spellMod = new Modifier(mod);
+                            spellMod.Parent = spell.Name!;
+                            target.AddModifier(spellMod);
+                        });
+                    }
+                    
                 }
 
                 //apply special effects

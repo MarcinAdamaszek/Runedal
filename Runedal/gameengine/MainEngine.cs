@@ -4222,7 +4222,7 @@ namespace Runedal.GameEngine
                 //swap 'placeholder' string to 'brak'
                 for (i = 0; i < itemSlots.Length; i++)
                 {
-                    itemSlots[i] = Regex.Replace(itemSlots[i], @"\bplaceholder\b", "brak");
+                    itemSlots[i] = Regex.Replace(itemSlots[i], @"\bplaceholder\b", "---");
 
                     //fill remaining spaces in table row
                     while (itemSlots[i].Length <= horizontalBorder.Length - 3)

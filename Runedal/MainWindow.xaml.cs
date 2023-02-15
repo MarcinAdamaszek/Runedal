@@ -28,6 +28,13 @@ namespace Runedal
         public MainWindow()
         {
             InitializeComponent();
+
+            //ImageBrush myBrush = new ImageBrush();
+            //myBrush.ImageSource =
+            //    new BitmapImage(new Uri("GameData//Resources//Images//wall-3341768.jpg",
+            //    UriKind.Relative));
+            //this.Background = myBrush;
+
             Engine = new MainEngine(this);
             //Player = Engine.Data.Player!;
             CommandHistory = new List<string>();

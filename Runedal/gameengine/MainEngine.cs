@@ -3162,7 +3162,7 @@ namespace Runedal.GameEngine
                 //give player death penalty
                 Data.Player!.Experience = 0;
                 RemoveGoldFromPlayer(Data.Player!.Gold);
-                PrintMessage("Tracisz całe zebrane doświadczenie!");
+                PrintMessage("Tracisz całe zebrane doświadczenie i złoto!");
 
                 //delevel player
                 //if (Data.Player!.Level > 1)
@@ -3191,7 +3191,7 @@ namespace Runedal.GameEngine
                 AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma_Pod_Wilczym_Kłem")!, Data.Player!);
                 PrintMap();
                 
-                Data.Player!.Hp = Data.Player.GetEffectiveMaxHp() * 0.4;
+                Data.Player!.Hp = Math.Floor(Data.Player.GetEffectiveMaxHp() * 0.4);
                 Data.Player!.Mp = 0;
             }
 

@@ -2245,7 +2245,7 @@ namespace Runedal.GameEngine
                         spellName = "zdrewniała_skóra";
                         break;
                     case "xitan":
-                        spellName = "amok";
+                        spellName = "wampirze_ostrze";
                         break;
                     case "dara":
                         spellName = "niebiański_dotyk";
@@ -2297,7 +2297,7 @@ namespace Runedal.GameEngine
                 //akull-verde
                 else if (firstRune == runeNames[1] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[1])
                 {
-                    spellName = "wcielenie_zabójcy";
+                    spellName = "dotyk_śmierci";
                 }
 
                 //akull-xitan
@@ -2315,13 +2315,13 @@ namespace Runedal.GameEngine
                 //verde-xitan
                 else if (firstRune == runeNames[2] && secondRune == runeNames[3] || firstRune == runeNames[3] && secondRune == runeNames[2])
                 {
-                    spellName = "dotyk_śmierci";
+                    spellName = "wcielenie_zabójcy";
                 }
 
                 //verde-dara
                 else if (firstRune == runeNames[2] && secondRune == runeNames[4] || firstRune == runeNames[4] && secondRune == runeNames[2])
                 {
-                    spellName = "wampirze_ostrze";
+                    spellName = "amok";
                 }
 
                 //xitan-dara
@@ -2761,7 +2761,8 @@ namespace Runedal.GameEngine
                 if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit)
                 {
                     if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
-                    it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo")
+                    it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo" &&
+                    it.Name!.ToLower() != "stek")
                     {
                         highConsumablesPool.Add(it);
                     }

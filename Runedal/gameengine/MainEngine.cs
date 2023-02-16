@@ -3190,7 +3190,54 @@ namespace Runedal.GameEngine
                 PrintMessage("Odradzasz się..", MessageType.Action);
                 AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma_Pod_Wilczym_Kłem")!, Data.Player!);
                 PrintMap();
-                
+
+                //reapply items modifiers
+                if (Data.Player!.Weapon!.Name!.ToLower() != "placeholder")
+                {
+                    Data.Player!.Weapon!.Modifiers!.ForEach(mod =>
+                    {
+                        Data.Player.AddModifier(mod);
+                    });
+                }
+                if (Data.Player!.Torso!.Name!.ToLower() != "placeholder")
+                {
+                    Data.Player!.Torso!.Modifiers!.ForEach(mod =>
+                    {
+                        Data.Player.AddModifier(mod);
+                    });
+                }
+                if (Data.Player!.Pants!.Name!.ToLower() != "placeholder")
+                {
+                    Data.Player!.Pants!.Modifiers!.ForEach(mod =>
+                    {
+                        Data.Player.AddModifier(mod);
+                    });
+                }
+                if (Data.Player!.Helmet!.Name!.ToLower() != "placeholder")
+                {
+                    Data.Player!.Helmet!.Modifiers!.ForEach(mod =>
+                    {
+                        Data.Player.AddModifier(mod);
+                    });
+                }
+                if (Data.Player!.Gloves!.Name!.ToLower() != "placeholder")
+                {
+                    Data.Player!.Gloves!.Modifiers!.ForEach(mod =>
+                    {
+                        Data.Player.AddModifier(mod);
+                    });
+                }
+                if (Data.Player!.Shoes!.Name!.ToLower() != "placeholder")
+                {
+                    Data.Player!.Shoes!.Modifiers!.ForEach(mod =>
+                    {
+                        Data.Player.AddModifier(mod);
+                    });
+                }
+
+                //fix bug causing player still fighting with the enemy he died from
+                AttackInstances.Clear();
+
                 Data.Player!.Hp = Math.Floor(Data.Player.GetEffectiveMaxHp() * 0.4);
                 Data.Player!.Mp = 0;
             }

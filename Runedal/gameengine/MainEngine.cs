@@ -2832,6 +2832,14 @@ namespace Runedal.GameEngine
                 AddItemToLocation(dyingChar.CurrentLocation!, mediumTierItem.Name!, 1);
             }
 
+            //drop kula_portalowa if it's the final boss of a location
+            if (dyingChar.Name!.ToLower() == "arachna" || dyingChar.Name!.ToLower() == "król_pustyni" ||
+                 dyingChar.Name!.ToLower() == "Idazerel")
+            {
+                Item portalOrb = new Item(Data.Items.First(it => it.Name!.ToLower() == "kula_portalowa_derillon"));
+                AddItemToLocation(dyingChar.CurrentLocation!, "kula_portalowa_derillon", 1);
+            }
+
             //try dropping high tier item
             //if (highTierItem.Name != "placeholder" && TryOutChance(highTierChance) &&
             //    dyingChar.GetType() == typeof(Hero))

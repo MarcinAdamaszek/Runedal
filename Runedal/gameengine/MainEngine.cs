@@ -4491,6 +4491,7 @@ namespace Runedal.GameEngine
             Location northAdjacentLoc = new Location();
             const string enDash = "\x2500";
             const string emptyLoc = "\x25A1";
+            const string itemsLoc = "\x2736";
             const string filledLoc = "\x263C";
             const string player = "\x25A0";
             const string upAndDown = "\x2195";
@@ -4561,6 +4562,10 @@ namespace Runedal.GameEngine
                                 character.GetType() == typeof(Hero)))
                                 {
                                     mapLines[k] += heroLoc;
+                                }
+                                else if (examinedLocation.Items!.Count! > 0 || examinedLocation.Gold > 0)
+                                {
+                                    mapLines[k] += itemsLoc;
                                 }
                                 else
                                 {

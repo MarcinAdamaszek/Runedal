@@ -160,6 +160,14 @@ namespace Runedal
                     return;
                 }
 
+                if (Engine.IsDeleting)
+                {
+                    Engine.IsDeleting = false;
+                    Engine.IsInMenu = true;
+                    Engine.PrintMainMenu();
+                    return;
+                }
+
 
                 if (Engine.IsInGame)
                 {

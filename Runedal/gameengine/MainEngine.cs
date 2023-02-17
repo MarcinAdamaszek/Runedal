@@ -54,9 +54,11 @@ namespace Runedal.GameEngine
             this.IsInGame = false;
             this.IsLoading = false;
             this.IsSaving = false;
+            this.IsDeleting = false;
             this.IsNewSave = false;
             this.IsExitConfirmation = false;
             this.IsSaveConfirmation = false;
+            this.IsDeleteConfirmation = false;
             this.IsErrorSaving = false;
 
             this.GameSavePath = string.Empty;
@@ -140,9 +142,11 @@ namespace Runedal.GameEngine
         public bool IsSaving { get; set; }
         public bool IsNewSave { get; set; }
         public bool IsLoading { get; set; }
+        public bool IsDeleting { get; set; }
         public bool IsInGame { get; set; }
         public bool IsSaveConfirmation { get; set; }
         public bool IsExitConfirmation { get; set; }
+        public bool IsDeleteConfirmation { get; set; }
         public bool IsFromGameSaving { get; set; }
         public bool IsFromGameLoading { get; set; }
         public bool IsErrorSaving { get; set; }
@@ -320,9 +324,52 @@ namespace Runedal.GameEngine
                     ClearOutputBox();
                     PrintMainMenu();
                 }
+                else if (command == "d")
+                {
+                    IsLoading = false;
+                    IsDeleting = true;
+                    ClearOutputBox();
+                    LoadHandler(true);
+                }
                 else
                 {
                     LoadGame(command);
+                }
+                return;
+            }
+
+            //handle game saves deleting
+            if (IsDeleting)
+            {
+                if (command == "w")
+                {
+                    IsDeleting = false;
+                    IsLoading = true;
+                    LoadHandler(false);
+                }
+                else
+                {
+                    ChooseDeletion(command);
+                    IsDeleting = false;
+                }
+                return;
+            }
+
+            //handle game save delete confirmation
+            if (IsDeleteConfirmation)
+            {
+                if (command == "1")
+                {
+                    DeleteGameSave();
+                    IsDeleteConfirmation = false;
+                    IsDeleting = true;
+                    LoadHandler(true);
+                }
+                else if (command == "2")
+                {
+                    IsDeleteConfirmation = false;
+                    IsDeleting = true;
+                    LoadHandler(true);
                 }
                 return;
             }
@@ -830,6 +877,38 @@ namespace Runedal.GameEngine
             LocationInfo(Data.Player!.CurrentLocation!);
         }
 
+        //method chosing game save to be deleted
+        private void ChooseDeletion(string saveNumber)
+        {
+            string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
+            int chosenNumber = -1;
+            int i;
+
+            for (i = 0; i < saveFiles.Length; i++)
+            {
+                if (saveNumber == Convert.ToString(i + 1))
+                {
+                    chosenNumber = i;
+                    break;
+                }
+            }
+
+            if (chosenNumber == -1)
+            {
+                return;
+            }
+
+            GameSavePath = saveFiles[chosenNumber];
+            IsDeleteConfirmation = true;
+            GameSaveDeleteConfirmation();
+        }
+
+        //method deleting game save
+        private void DeleteGameSave()
+        {
+            File.Delete(GameSavePath);
+        }
+
         //method handling new save game
         private void PrintNewSaveScreen()
         {
@@ -874,7 +953,34 @@ namespace Runedal.GameEngine
             SaveGame("", true);
         }
 
+        //method handling game save deletion confirmation
+        private void GameSaveDeleteConfirmation()
+        {
+            string fileName = Path.GetFileName(GameSavePath);
+            string leadingSpace = string.Empty;
+            int numberOfSpaces = 29;
+            int i;
 
+            for (i = 0; i < fileName.Length; i += 2)
+            {
+                numberOfSpaces--;
+            }
+
+            for (i = 0; i < numberOfSpaces; i++)
+            {
+                leadingSpace += " ";
+            }
+
+            ClearOutputBox();
+            PrintMessage("************************* UWAGA! *************************\n", MessageType.CriticalHit, false);
+            PrintMessage("             (Wciśnij esc aby wrócić do menu)\n", MessageType.Action, false);
+            PrintMessage("            Czy na pewno chcesz usunąć zapis gry.", MessageType.Default, false);
+            PrintMessage("                         o nazwie:", MessageType.Default, false);
+            PrintMessage(leadingSpace + "\"" + fileName + "\"?\n", MessageType.Default, false);
+            PrintMessage("             (wpisz 1 lub 2 i naciśnij enter)\n", MessageType.Default, false);
+            PrintMessage("                         1. TAK", MessageType.Loss, false);
+            PrintMessage("                         2. NIE", MessageType.Loss, false);
+        }
 
 
 
@@ -903,7 +1009,7 @@ namespace Runedal.GameEngine
         private void SecondOptionHandler()
         {
             IsInMenu = false;
-            LoadHandler();
+            LoadHandler(false);
         }
 
         //print game manual
@@ -1011,7 +1117,7 @@ namespace Runedal.GameEngine
         }
 
         //method handling 'load' command
-        private void LoadHandler()
+        private void LoadHandler(bool isDeleting)
         {
             IsLoading = true;
 
@@ -1028,11 +1134,36 @@ namespace Runedal.GameEngine
 
             ClearOutputBox();
 
-            PrintMessage("*********************** WCZYTAJ GRĘ ***********************\n", MessageType.Gain, false);
+            if (isDeleting)
+            {
+                IsLoading = false;
+                PrintMessage("*********************** USUŃ ZAPIS ************************\n", MessageType.ReceiveDmg, false);
+            }
+            else
+            {
+                PrintMessage("*********************** WCZYTAJ GRĘ ***********************\n", MessageType.Gain, false);
+            }
             PrintMessage("             (Wciśnij esc aby powrócić do menu)\n", MessageType.Action, false);
-
-            PrintMessage("          Aby wybrać zapis gry, wpisz odpowiedni numer", MessageType.Default, false);
+            if (isDeleting)
+            {
+                PrintMessage("          Aby USUNĄĆ zapis gry, wpisz odpowiedni numer", MessageType.Default, false);
+            }
+            else
+            {
+                PrintMessage("         Aby WCZYTAĆ zapis gry, wpisz odpowiedni numer", MessageType.Default, false);
+            }
+            
             PrintMessage("                     i naciśnij enter:\n", MessageType.Default, false);
+            if (isDeleting)
+            {
+                PrintMessage("          Aby przejść do tworzenia zapisów, wpisz \"w\"", MessageType.Default, false);
+                PrintMessage("                     i naciśnij enter\n", MessageType.Default, false);
+            }
+            else
+            {
+                PrintMessage("           Aby przejść do usuwania zapisów, wpisz \"d\"", MessageType.Default, false);
+                PrintMessage("                     i naciśnij enter\n", MessageType.Default, false);
+            }
 
             if (savesToChoose.Contains("AUTO_ZAPIS"))
             {
@@ -1052,7 +1183,8 @@ namespace Runedal.GameEngine
                 i = 1;
                 foreach (var save in savesToChoose)
                 {
-                        PrintMessage("                        " + i + save, MessageType.Loss, false);
+                        PrintMessage("                        " + i + ". " + save, MessageType.Loss, false);
+                        i++;
                 }
             }
 

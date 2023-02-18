@@ -189,12 +189,15 @@ namespace Runedal.GameEngine
             {
                 command = commandParts[0];
                 argument1 = commandParts[1];
+                argument1 = RemoveUnderscores(argument1);
             }
             else
             {
                 command = commandParts[0];
                 argument1 = commandParts[1];
                 argument2 = commandParts[2];
+                argument1 = RemoveUnderscores(argument1);
+                argument2 = RemoveUnderscores(argument2);
             }
 
             if (IsExitConfirmation)
@@ -5700,7 +5703,15 @@ namespace Runedal.GameEngine
             polishName = Regex.Replace(polishName, @"[ś]", "s");
             polishName = Regex.Replace(polishName, @"[źż]", "z");
 
+            //remove underscores
+            polishName = RemoveUnderscores(polishName);
+
             return polishName;
+        }
+
+        private string RemoveUnderscores(string objectName)
+        {
+            return Regex.Replace(objectName, @"_", "");
         }
 
         //method returning polish string representing specified type of ArmorType type
@@ -5946,6 +5957,7 @@ namespace Runedal.GameEngine
         //method displaying communicates in outputBox of the gui
         public void PrintMessage(string msg, MessageType type = MessageType.Default, bool shouldScroll = true)
         {
+             
             // Maximum of blocks in the document
             int MaxBlocks = 100;
 

@@ -58,6 +58,7 @@ namespace Runedal.GameEngine
             this.IsNewSave = false;
             this.IsExitConfirmation = false;
             this.IsSaveConfirmation = false;
+            this.IsSaveOverwriteConfirmation = false;
             this.IsDeleteConfirmation = false;
             this.IsErrorSaving = false;
 
@@ -145,6 +146,7 @@ namespace Runedal.GameEngine
         public bool IsDeleting { get; set; }
         public bool IsInGame { get; set; }
         public bool IsSaveConfirmation { get; set; }
+        public bool IsSaveOverwriteConfirmation { get; set; }
         public bool IsExitConfirmation { get; set; }
         public bool IsDeleteConfirmation { get; set; }
         public bool IsFromGameSaving { get; set; }
@@ -286,22 +288,6 @@ namespace Runedal.GameEngine
                     HandleNewSaveName(command);
                     return;
                 }
-
-
-                if (command == "b")
-                {
-                    IsSaving = false;
-                    ClearOutputBox();
-                    if (IsInGame)
-                    {
-                        LocationInfo(Data.Player!.CurrentLocation!);
-                    }
-                    else
-                    {
-                        IsInMenu = false;
-                        PrintMainMenu();
-                    }
-                }
                 else if (command == "1")
                 {
                     IsNewSave = true;
@@ -310,6 +296,20 @@ namespace Runedal.GameEngine
                 else
                 {
                     SaveGame(command);
+                }
+                return;
+            }
+
+            if (IsSaveOverwriteConfirmation)
+            {
+                if (command == "1")
+                {
+                    SaveGame("-1", true, false);
+                }
+                else if (command == "2")
+                {
+                    IsSaveOverwriteConfirmation = false;
+                    SaveHandler();
                 }
                 return;
             }
@@ -809,6 +809,13 @@ namespace Runedal.GameEngine
             {
                 return;
             }
+            else if (!isQuickSave && !IsPathSpecified)
+            {
+                IsSaveOverwriteConfirmation = true;
+                GameSavePath = savePath;
+                GameSaveOverwriteConfirmation();
+                return;
+            }
 
             GameClock.Stop();
 
@@ -978,6 +985,21 @@ namespace Runedal.GameEngine
             PrintMessage("                         o nazwie:", MessageType.Default, false);
             PrintMessage(leadingSpace + "\"" + fileName + "\"?\n", MessageType.Default, false);
             PrintMessage("             (wpisz 1 lub 2 i naciśnij enter)\n", MessageType.Default, false);
+            PrintMessage("                         1. TAK", MessageType.Loss, false);
+            PrintMessage("                         2. NIE", MessageType.Loss, false);
+        }
+
+        //handle chosing existing game save and overwriting it
+        private void GameSaveOverwriteConfirmation()
+        {
+            ClearOutputBox();
+            PrintMessage("************************* UWAGA! *************************\n", MessageType.CriticalHit, false);
+            PrintMessage("             (Wciśnij esc aby wrócić do menu)\n", MessageType.Action, false);
+            PrintMessage("           Próbujesz zapisać grę na istniejącym", MessageType.Default, false);
+            PrintMessage("               zapisie. Spowoduje to utratę", MessageType.Default, false);
+            PrintMessage("                   poprzedniego zapisu.", MessageType.Default, false);
+            PrintMessage("                     Zapisać mimo to?", MessageType.Default, false);
+            PrintMessage("             (wpisz 1 lub 2 i naciśnij enter)", MessageType.Default, false);
             PrintMessage("                         1. TAK", MessageType.Loss, false);
             PrintMessage("                         2. NIE", MessageType.Loss, false);
         }

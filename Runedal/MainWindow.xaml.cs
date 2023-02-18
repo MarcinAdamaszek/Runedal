@@ -104,6 +104,14 @@ namespace Runedal
             
             if (e.Key == Key.Escape)
             {
+                if (Engine.IsSaveOverwriteConfirmation)
+                {
+                    Engine.IsSaveOverwriteConfirmation = false;
+                    Engine.IsInMenu = true;
+                    Engine.PrintMainMenu();
+                    return;
+                }
+
                 if (Engine.IsInMenu && Engine.IsInGame)
                 {
                     Engine.IsInMenu = false;

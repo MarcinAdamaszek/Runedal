@@ -47,6 +47,7 @@ namespace Runedal.GameEngine
             this.Actions = new List<CharAction>();
             this.TeleportLocation = new Location();
             this.LastoutputBoxContent = new List<TextRange>();
+            this.Hints = new Hints();
             this.TimeInterval = 100;
             this.MinTimeInterval = 1;
             this.IsInMenu = true;
@@ -132,6 +133,7 @@ namespace Runedal.GameEngine
         public List<CharAction> Actions { get; set; }
         public Location TeleportLocation { get; set; }
         public List<TextRange> LastoutputBoxContent { get; set; }
+        public Hints Hints { get; set; }
         public string GameSavePath { get; set; }
         public int TimeInterval { get; set; }
         public int MinTimeInterval { get; set; }
@@ -771,6 +773,8 @@ namespace Runedal.GameEngine
 
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
+
+            PrintHint(Hints.HintType.Go);
         }
 
         //method clearing the outputBox
@@ -3027,6 +3031,13 @@ namespace Runedal.GameEngine
 
             //change minimap display
             PrintMap();
+
+            //display hints
+            if (Hints.AttackHint && nextLocation.Characters!.Exists(ch => ch.GetType() == typeof(Monster)))
+            {
+                Monster monsterToAttack = (nextLocation.Characters!.Find(ch => ch.GetType() == typeof(Monster)) as Monster)!;
+                PrintHint(Hints.HintType.Attack, monsterToAttack.Name!);
+            }
         }
 
         //method for crafting a spell
@@ -5952,6 +5963,45 @@ namespace Runedal.GameEngine
         {
             string characterLine = character.Name + ": " + line;
             PrintMessage(characterLine, MessageType.Speech);
+        }
+
+        //method printing hints for player doing something for the very first time
+        private void PrintHint(Hints.HintType type, string objectName = "placeholder")
+        {
+            int i;
+            int hintLinesLength = 10;
+            string[] hintLines = new string[hintLinesLength];
+
+            //fill every hint line with a proper beginning
+            hintLines[0] = "> PODPOWIEDŹ!";
+            for (i = 1; i < hintLinesLength; i++)
+            {
+                hintLines[i] = "> ";
+            }
+
+            switch (type)
+            {
+                case Hints.HintType.Go:
+                    hintLines[1] += "Aby udać się w którymś kierunku, wpisz jedną z liter kierunków (n, e, s, w, u, d) i naciśnij enter";
+                    hintLines[2] += "Np. aby pójść na północ wpisz \"n\"";
+                    Hints.GoHint = false;
+                    break;
+                case Hints.HintType.Attack:
+                    hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName + "), którą możesz zaatakować!";
+                    hintLines[2] += "Aby zaatakować pierwszą z brzegu postać w lokacji, wpisz \"attack\" lub skrót \"a\"";
+                    hintLines[3] += "Możesz też wybrać postać, którą chcesz zaatakować, dodając jej nazwę: \"attack " + objectName + "\"";
+                    Hints.AttackHint = false;
+                    break;
+            }
+
+            for (i = 0; i < hintLinesLength; i++)
+            {
+                if (hintLines[i].Length > 2)
+                {
+                    PrintMessage(hintLines[i], MessageType.EffectOn);
+                }
+            }
+
         }
 
         //method displaying communicates in outputBox of the gui

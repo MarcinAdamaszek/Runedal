@@ -750,7 +750,9 @@ namespace Runedal.GameEngine
 
             PrintMessage("> Witaj w świecie Runedal!", MessageType.EffectOn);
             PrintMessage("> Jeśli nie wiesz co robić - wciśnij esc aby zobaczyć menu główne i wybierz opcję \"4.KOMENDY\" lub \"3.JAK GRAĆ?\"", MessageType.EffectOn);
-            PrintMessage("> Aby zobaczyć ściągawkę komend - wpisz \"help\"\n", MessageType.EffectOn);
+            PrintMessage("> Aby zobaczyć ściągawkę komend - wpisz \"help\"", MessageType.EffectOn);
+            PrintMessage("> Przy wpisywaniu, wielkość liter nie ma znaczenia (SzCzUr = szczur), można pomijać polskie znaki (żmija = zmija), lub znak " +
+                "\"_\" (mikstura_życia = miksturazycia)\n", MessageType.EffectOn);
 
             //reveal starting location and adjacent locations
             Location northAdjacentLoc = new Location();
@@ -5065,6 +5067,12 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "         miejsca w jakim przebywasz, ale jeśli dodasz";
                 manualLines[i++] = "         nazwę obiektu, np 'look szczur' wyświetli Ci";
                 manualLines[i++] = "         się opis postaci o nazwie szczur.\n";
+                manualLines[i++] = "         Przy wpisywaniu, wielkość liter";
+                manualLines[i++] = "         nie ma znaczenia (np. SzCzUr = szczur)";
+                manualLines[i++] = "         można pomijać polskie znaki ";
+                manualLines[i++] = "         (np. \"żmija\" = \"zmija\").";
+                manualLines[i++] = "         oraz pomijać znak \"_\"";
+                manualLines[i++] = "         (np. mikstura_życia = miksturazycia)\n";
                 manualLines[i++] = "  >>> OBEJŻYJ";
                 manualLines[i++] = "     * Komenda: 'look [nazwa obiektu]'";
                 manualLines[i++] = "     * Skrót: 'l'";

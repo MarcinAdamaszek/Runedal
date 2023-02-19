@@ -15,6 +15,9 @@ namespace Runedal.GameData
             AttackHint= true;
             PickupHint= true;
             TradeHint= true;
+            LevelUpHint = true;
+            InventoryHint= true;
+            LookInventoryItemHint = true;
         }
 
         public enum HintType
@@ -22,13 +25,19 @@ namespace Runedal.GameData
             Go,
             Attack,
             Pickup,
-            Trade
+            Trade,
+            LevelUp,
+            Inventory,
+            LookInventoryItem
         }
         public bool HintsOnOff { get; set; }
         public bool GoHint { get; set; }
         public bool AttackHint { get; set; }
         public bool PickupHint { get; set; }
         public bool TradeHint { get; set; }
+        public bool LevelUpHint { get; set; }
+        public bool InventoryHint { get; set; }
+        public bool LookInventoryItemHint { get; set; }
 
     }
 }

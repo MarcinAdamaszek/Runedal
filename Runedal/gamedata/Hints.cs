@@ -18,6 +18,10 @@ namespace Runedal.GameData
             LevelUpHint = true;
             InventoryHint= true;
             LookInventoryItemHint = true;
+            BuySellHint = true;
+            LookAdjacentLocHint = true;
+            LookHint = true;
+            StatsHint = true;
         }
 
         public enum HintType
@@ -28,7 +32,11 @@ namespace Runedal.GameData
             Trade,
             LevelUp,
             Inventory,
-            LookInventoryItem
+            Look,
+            LookInventoryItem,
+            BuySell,
+            LookAdjacentLoc,
+            Stats
         }
         public bool HintsOnOff { get; set; }
         public bool GoHint { get; set; }
@@ -37,7 +45,11 @@ namespace Runedal.GameData
         public bool TradeHint { get; set; }
         public bool LevelUpHint { get; set; }
         public bool InventoryHint { get; set; }
+        public bool LookHint { get; set; }
         public bool LookInventoryItemHint { get; set; }
+        public bool BuySellHint { get; set; }
+        public bool LookAdjacentLocHint { get; set; }
+        public bool StatsHint { get; set; }
 
     }
 }

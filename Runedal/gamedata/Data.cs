@@ -13,6 +13,7 @@ using static Runedal.GameData.Items.Weapon;
 using System.Xml.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Runedal.GameEngine;
 
 namespace Runedal.GameData
 {
@@ -274,10 +275,13 @@ namespace Runedal.GameData
         }
 
         //method saving game
-        public void SaveGame(string savePath)
+        public void SaveGame(string savePath, Hints hints)
         {
             GameSave save = new GameSave();
             Player player = Player!;
+
+            //save hints
+            save.Hints = hints;
 
             //save takenids list
             save.TakenIds = TakenIds!;
@@ -361,11 +365,14 @@ namespace Runedal.GameData
         }
         
         //method loading gamesave
-        public void LoadGame(string savePath)
+        public void LoadGame(string savePath, out Hints hints)
         {
             JsonString = File.ReadAllText(savePath);
 
             GameSave save = JsonSerializer.Deserialize<GameSave>(JsonString, Options)!;
+
+            //load hints
+            hints = save.Hints;
 
             //clear locations
             Locations!.Clear();

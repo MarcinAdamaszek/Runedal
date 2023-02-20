@@ -652,7 +652,7 @@ namespace Runedal.GameEngine
             Data.PopulateLocations();
 
             //save newgame json file
-            Data.SaveGame(Data.JsonDirectoryPath + @"NewGame.json");
+            Data.SaveGame(Data.JsonDirectoryPath + @"NewGame.json", new Hints());
         }
 
         //method printing menu of the game
@@ -733,7 +733,9 @@ namespace Runedal.GameEngine
         {
             IsInGame = true;
 
-            Data.LoadGame(Data.JsonDirectoryPath + @"NewGame.json");
+            Hints tempHints = new Hints();
+            Data.LoadGame(Data.JsonDirectoryPath + @"NewGame.json", out tempHints);
+            Hints = tempHints;
 
             //connect hp/mp/action bars to values of player object
             Window.InitializePlayerDataContext(Data.Player!);
@@ -834,7 +836,7 @@ namespace Runedal.GameEngine
             GameClock.Stop();
 
             //here save the game
-            Data.SaveGame(savePath);
+            Data.SaveGame(savePath, Hints);
 
             if (IsInMenu)
             {
@@ -882,7 +884,9 @@ namespace Runedal.GameEngine
 
             GameClock.Stop();
 
-            Data.LoadGame(saveFiles[chosenNumber]);
+            Hints tempHints = new Hints();
+            Data.LoadGame(saveFiles[chosenNumber], out tempHints);
+            Hints = tempHints;
 
             //reassign window's player variable
             Window.InitializePlayerDataContext(Data.Player!);
@@ -1260,7 +1264,7 @@ namespace Runedal.GameEngine
             }
             else
             {
-                PrintMessage("Gra zatrzymana", MessageType.SystemFeedback);
+                PrintMessage("Gra zatrzymana (wpisz \"pause\" lub \"ps\" aby wznowić)", MessageType.SystemFeedback);
                 IsPaused = true;
                 GameClock.Stop();
             }
@@ -1722,14 +1726,30 @@ namespace Runedal.GameEngine
                 InventoryInfo(trader, true);
                 InventoryInfo(Data.Player!, true);
 
-                //trigger wear hint
-                if (Hints.WearHint)
+                //trigger hints
+                if (Hints.HintsOnOff)
                 {
-                    Item boughtItem = Data.Items!.Find(it => it.Name!.ToLower() == itemName)!;
 
-                    if (boughtItem.GetType() == typeof(Armor) || boughtItem.GetType() == typeof(Weapon))
+                    //trigger wear hint
+                    if (Hints.WearHint)
                     {
-                        PrintHint(Hints.HintType.Wear, boughtItem.Name!.ToLower());
+                        Item boughtItem = Data.Items!.Find(it => it.Name!.ToLower() == itemName)!;
+
+                        if (boughtItem.GetType() == typeof(Armor) || boughtItem.GetType() == typeof(Weapon))
+                        {
+                            PrintHint(Hints.HintType.Wear, boughtItem.Name!.ToLower());
+                        }
+                    }
+
+                    //trigger use hint
+                    if (Hints.UseHint)
+                    {
+                        Item boughtItem = Data.Items!.Find(it => it.Name!.ToLower() == itemName)!;
+
+                        if (boughtItem.GetType() == typeof(Consumable))
+                        {
+                            PrintHint(Hints.HintType.Use, boughtItem.Name!.ToLower());
+                        }
                     }
                 }
             }
@@ -2134,10 +2154,22 @@ namespace Runedal.GameEngine
             if (itemToWear.GetType() == typeof(Armor))
             {
                 WearArmorOnPlayer(itemName);
+
+                //trigger takeoff hint
+                if (Hints.HintsOnOff && Hints.TakeoffHint)
+                {
+                    PrintHint(Hints.HintType.Takeoff, itemName.ToLower());
+                }
             }
             else if (itemToWear.GetType() == typeof(Weapon))
             {
                 WearWeaponOnPlayer(itemName);
+
+                //trigger takeoff hint
+                if (Hints.HintsOnOff && Hints.TakeoffHint)
+                {
+                    PrintHint(Hints.HintType.Takeoff, itemName.ToLower());
+                }
             }
             else
             {
@@ -3115,6 +3147,18 @@ namespace Runedal.GameEngine
                     Trader traderToTrade = (nextLocation.Characters!.Find(ch => ch.GetType() == typeof(Trader)) as Trader)!;
                     PrintHint(Hints.HintType.Trade, traderToTrade.Name!);
                 }
+
+                //pause hint
+                if (Hints.PauseHint && nextLocation.Characters!.Exists(ch => ch.Name!.ToLower() == "żmija"))
+                {
+                    PrintHint(Hints.HintType.Pause);
+                }
+
+                //game speed hint
+                if (Hints.GameSpeedHint && nextLocation.X == 11 && nextLocation.Y == 15 && nextLocation.Z == 0)
+                {
+                    PrintHint(Hints.HintType.GameSpeed);
+                }
             }
         }
 
@@ -3569,6 +3613,15 @@ namespace Runedal.GameEngine
             else if (isReceiverPlayer)
             {
                 PrintMessage(dealer.Name! + " zadaje Ci " + dmg + " obrażeń", MessageType.ReceiveDmg);
+
+                //trigger flee hint
+                if (Data.Player!.Hp < Data.Player!.GetEffectiveMaxHp() * 0.6)
+                {
+                    if (Hints.HintsOnOff && Hints.FleeHint)
+                    {
+                        PrintHint(Hints.HintType.Flee);
+                    }
+                }
             }
 
             //handle lifesteal modifiers (if present on dealer and ONLY if it's not spell dmg)
@@ -3783,11 +3836,20 @@ namespace Runedal.GameEngine
                 }
 
                 //trigger wear hint
-                if (Hints.WearHint && Data.Player!.CurrentState != CombatCharacter.State.Trade)
+                if (Hints.HintsOnOff && Hints.WearHint && Data.Player!.CurrentState != CombatCharacter.State.Trade)
                 {
                     if (itemToAdd.GetType() == typeof(Armor) || itemToAdd.GetType() == typeof(Weapon))
                     {
                         PrintHint(Hints.HintType.Wear, itemToAdd.Name!.ToLower());
+                    }
+                }
+
+                //trigger use hint
+                if (Hints.HintsOnOff && Hints.UseHint && Data.Player!.CurrentState != CombatCharacter.State.Trade)
+                {
+                    if (itemToAdd.GetType() == typeof(Consumable))
+                    {
+                        PrintHint(Hints.HintType.Use, itemToAdd.Name!.ToLower());
                     }
                 }
             }
@@ -4089,6 +4151,12 @@ namespace Runedal.GameEngine
                 }
 
                 PrintMessage("Czujesz efekt działania " + itemEffect.Description, MessageType.EffectOn);
+
+                //trigger effects hint
+                if (Hints.HintsOnOff && Hints.EffectsHint)
+                {
+                    PrintHint(Hints.HintType.Effects);
+                }
             }
         }
 
@@ -5702,6 +5770,188 @@ namespace Runedal.GameEngine
             }
         }
 
+        //method printing hints for player doing something for the very first time
+        private void PrintHint(Hints.HintType type, string objectName1 = "placeholder", string objectName2 = "placeholder")
+        {
+            int i;
+            int hintLinesLength = 10;
+            string[] hintLines = new string[hintLinesLength];
+
+            //fill every hint line with a proper beginning
+            hintLines[0] = "> PODPOWIEDŹ!";
+            for (i = 1; i < hintLinesLength; i++)
+            {
+                hintLines[i] = "> ";
+            }
+
+            switch (type)
+            {
+                case Hints.HintType.Go:
+                    hintLines[1] += "Aby udać się w którymś kierunku, wpisz jedną z liter kierunków (n, e, s, w, u, d) i naciśnij enter";
+                    hintLines[2] += "\"n\" = północ; \"e\" = wschód; \"s\" = południe; \"w\" = zachód; \"u\" = góra; \"d\" = dół.";
+                    hintLines[3] += "Np. aby pójść na północ wpisz \"n\"";
+                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.GoHint = false;
+                    break;
+                case Hints.HintType.Attack:
+                    hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), którą możesz zaatakować!";
+                    hintLines[2] += "Aby zaatakować pierwszą z brzegu postać w lokacji, wpisz \"attack\"";
+                    hintLines[3] += "Możesz też wybrać postać, którą chcesz zaatakować, dodając jej nazwę: \"attack " + objectName1 + "\"";
+                    hintLines[4] += "Komenda \"attack\" ma swój skrót \"a\", którego można używać zamiennie.";
+                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.AttackHint = false;
+                    break;
+                case Hints.HintType.Trade:
+                    hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), z którą możesz handlować!";
+                    hintLines[2] += "Aby rozpocząć handel z postacią, wpisz komendę \"trade\" i nazwę postaci: \"trade " + objectName1 +
+                        "\"";
+                    hintLines[3] += "Komenda \"trade\" na swój skrót \"tr\", którego można używać zamiennie.";
+                    hintLines[4] += "Z każdą postacią można też porozmawiać! Aby rozpocząć dialog, wpisz \"talk " + objectName1 + "\"";
+                    hintLines[5] += "Komenda \"talk\" ma swój skrót \"ta\", którego można używać zamiennie.";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.TradeHint = false;
+                    break;
+                case Hints.HintType.Pickup:
+                    hintLines[1] += "Aby podnieść wszystkie przedmioty i całe złoto leżące w lokacji, wpisz \"pickup\"";
+                    hintLines[2] += "Możesz też wybrać przedmiot, który chcesz podnieść: np. \"pickup złoto\"";
+                    hintLines[3] += "Aby podnieść konkretną ilość, możesz dodąc liczbę: np. \"pickup chleb 2\" - podniesie 2 chleby";
+                    hintLines[4] += "Komenda \"pickup\" ma swój skrót \"p\", którego można używać zamiennie.";
+                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.PickupHint = false;
+                    break;
+                case Hints.HintType.Look:
+                    hintLines[1] += "Aby rozejrzeć się po lokacji, wpisz \"look\" (lub skrót \"l\")";
+                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.LookHint = false;
+                    break;
+                case Hints.HintType.Inventory:
+                    hintLines[1] += "Podniosłeś swoje pierwsze przedmioty! Wszystko, co podniesiesz, trafia do Twojego ekwipunku";
+                    hintLines[2] += "Aby zobaczyć swój ekwipunek wpisz \"inventory\".";
+                    hintLines[3] += "Komenda \"inventory\" ma swój skrót \"i\", którego można używać zamiennie.";
+                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.InventoryHint = false;
+                    break;
+                case Hints.HintType.LookInventoryItem:
+                    hintLines[1] += "Oto Twój ekwipunek! (jeśli go nie widzisz, przewiń tekst do góry rolką myszki)";
+                    hintLines[2] += "Aby obejżeć przedmiot, użyj komendy \"look\" i nazwy przedmiotu: np. \"look " +
+                        objectName1 + "\" aby obejżeć " + objectName1;
+                    hintLines[3] += "Możesz oglądać przedmioty w swoim ekwipunku, ekwipunku postaci z którą handlujesz, " +
+                        "lub te leżące na ziemi.";
+                    hintLines[4] += "Komenda \"look\" ma swój skrót \"l\", którego można używać zamiennie.";
+                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.LookInventoryItemHint = false;
+                    break;
+                case Hints.HintType.BuySell:
+                    hintLines[1] += "Aby obejżeć przedmiot w ekwipunku handlarza użyj komendy \"look\" (np. \"look " + objectName1 + "\"";
+                    hintLines[2] += "Aby kupić przedmiot, użyj komendy \"buy\" (np. \"buy " + objectName1 + "\"";
+                    hintLines[3] += "Aby sprzedać przedmiot, użyj komendy \"sell\" (np. \"sell " + objectName2 + "\"";
+                    hintLines[4] += "UWAGA!!! Sprzedajesz taniej niż kupujesz, więc rób to rozważnie!";
+                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.BuySellHint = false;
+                    break;
+                case Hints.HintType.LookAdjacentLoc:
+                    hintLines[1] += "Aby obejżeć sąsiędnią lokację, użyj komendy \"look\" i litery kierunku (np. \"look n\" - spojrzy na północ)";
+                    hintLines[2] += "n = północ; e = wschód; s = południe; w = zachód; u = góra; d = dół.";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.LookAdjacentLocHint = false;
+                    break;
+                case Hints.HintType.Stats:
+                    hintLines[1] += "Wraz z nowym poziomem, zdobyłeś 5 pkt. atrybutów do wydania!";
+                    hintLines[2] += "Posiadane pkt. możesz wydać na jeden z trzech atrybutów: siłę, inteligencję lub zręczność.";
+                    hintLines[3] += "Aby obejżeć statystyki postaci, wpisz \"stats\" (lub skrót \"ss\")";
+                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.StatsHint = false;
+                    break;
+                case Hints.HintType.Attributes:
+                    hintLines[1] += "Oto Twoje statystyki! (jeśli ich nie widzisz, przewiń tekst do góry rolką myszy)";
+                    hintLines[2] += "Aby ulepszyć atrybut, użyj komendy \"point\" i skrótu atrybutu (np. \"point str\" - doda 1 do siły)";
+                    hintLines[3] += "Skróty atrybutów: \"str\" = siła; \"agi\" = zręczność; \"int\" = inteligencja";
+                    hintLines[4] += "UWAGA!!! Raz zużyty pkt. atrybutu, nie może zostać cofnięty!";
+                    hintLines[5] += "Komenda \"point\" ma swój skrót \"pt\".";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.AttributesHint = false;
+                    break;
+                case Hints.HintType.Craft1:
+                    hintLines[1] += "Zdobyłeś runę " + objectName1 + "!";
+                    hintLines[2] += "Aby utworzyć nowy czar, uzyj komendy \"craft\" i nazwy runy (np. \"craft " + objectName1 + "\")";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.CraftHint1 = false;
+                    break;
+                case Hints.HintType.Craft2:
+                    hintLines[1] += "Zdobyłeś kolejną runę: " + objectName1 + "!";
+                    hintLines[2] += "Aby utworzyć czar z kombinacji dwóch run, użyj komendy \"craft\" (np. \"craft " + objectName1 +
+                        " " + objectName2 + "\")";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.CraftHint2 = false;
+                    break;
+                case Hints.HintType.Spells:
+                    hintLines[1] += "Utworzyłeś swój pierwszy czar!";
+                    hintLines[2] += "Aby zobaczyć listę zapamiętanych czarów, wpisz \"spells\" lub skrót \"sps\"";
+                    hintLines[3] += "Aby zobaczyć opis czaru, użyj komendy \"look\" (np. \"look " + objectName1 + "\"";
+                    hintLines[4] += "Aby rzucić czar, użyj komendy \"cast\" i numeru czaru na liście (np. \"cast 1\")";
+                    hintLines[5] += "Komenda \"cast\" ma swój skrót: \"c\"";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.SpellsHint = false;
+                    break;
+                case Hints.HintType.Wear:
+                    hintLines[1] += "Zdobyłeś przedmiot, który możesz założyć: " + objectName1 + "";
+                    hintLines[2] += "Aby założyć przedmiot, uzyj komendy \"wear\" i nazwy przedmiotu (np. \"wear " + objectName1 + "\")";
+                    hintLines[3] += "Założone przedmioty, możesz zobaczyć w dolnej części swojego ekwipunku (\"inventory\" lub \"i\")";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.WearHint = false;
+                    break;
+                case Hints.HintType.Takeoff:
+                    hintLines[1] += "Założyłeś przedmiot: " + objectName1 + "";
+                    hintLines[2] += "Aby ściągnąć przedmiot, użyj komendy \"takeoff\" i typu zakładanego przedmiotu (np. \"takeoff helmet\" - " +
+                        "aby ściągnąć nakrycie głowy)";
+                    hintLines[3] += "Typy zakładanych przedmiotów to: \"helmet\" = hełm/czapka; \"torso\" = napierśnik/koszula; \"pants\" = spodnie; " +
+                        "\"gloves\" = rękawice; \"shoes\" = buty";
+                    hintLines[4] += "Komenda \"takeoff\" ma swój skrót: \"of\"";
+                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.TakeoffHint = false;
+                    break;
+                case Hints.HintType.Use:
+                    hintLines[1] += "Zdobyłeś używalny przedmiot: " + objectName1;
+                    hintLines[2] += "Aby użyć przedmiotu, użyj komendy \"use\" i nazwy przedmiotu (np. \"use " + objectName1 + "\")";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.UseHint = false;
+                    break;
+                case Hints.HintType.Pause:
+                    hintLines[1] += "Aby zatrzymać grę, użyj komendy \"pause\"";
+                    hintLines[2] += "Komenda \"pause\" ma skrót \"ps\"";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.PauseHint = false;
+                    break;
+                case Hints.HintType.Flee:
+                    hintLines[1] += "Aby spróbować ucieczki, użyj komendy \"flee\"";
+                    hintLines[2] += "Możesz wybrać kierunek ucieczki, dodając literę kierunku (np. \"flee n\" - ucieczka na północ)";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.FleeHint = false;
+                    break;
+                case Hints.HintType.GameSpeed:
+                    hintLines[1] += "Aby zwiększyć szybkość gry, użyj komendy \"speedup\" (skrót \"up\")";
+                    hintLines[2] += "Aby zmniejszyć szybkość gry, użyj komendy \"slowdown\" (skrót \"dn\")";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.GameSpeedHint = false;
+                    break;
+                case Hints.HintType.Effects:
+                    hintLines[1] += "Aby zobaczyć efekty nałożone na Twoją postać, wpisz \"effects\" (skrót \"ef\")";
+                    hintLines[2] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.EffectsHint = false;
+                    break;
+
+            }
+
+            for (i = 0; i < hintLinesLength; i++)
+            {
+                if (hintLines[i].Length > 2)
+                {
+                    PrintMessage(hintLines[i], MessageType.EffectOn);
+                }
+            }
+
+        }
+
 
 
 
@@ -6119,152 +6369,6 @@ namespace Runedal.GameEngine
         {
             string characterLine = character.Name + ": " + line;
             PrintMessage(characterLine, MessageType.Speech);
-        }
-
-        //method printing hints for player doing something for the very first time
-        private void PrintHint(Hints.HintType type, string objectName1 = "placeholder", string objectName2 = "placeholder")
-        {
-            int i;
-            int hintLinesLength = 10;
-            string[] hintLines = new string[hintLinesLength];
-
-            //fill every hint line with a proper beginning
-            hintLines[0] = "> PODPOWIEDŹ!";
-            for (i = 1; i < hintLinesLength; i++)
-            {
-                hintLines[i] = "> ";
-            }
-
-            switch (type)
-            {
-                case Hints.HintType.Go:
-                    hintLines[1] += "Aby udać się w którymś kierunku, wpisz jedną z liter kierunków (n, e, s, w, u, d) i naciśnij enter";
-                    hintLines[2] += "\"\" = północ; \"e\" = wschód; \"s\" = południe; \"w\" = zachód; \"u\" = góra; \"d\" = dół.";
-                    hintLines[3] += "Np. aby pójść na północ wpisz \"n\"";
-                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.GoHint = false;
-                    break;
-                case Hints.HintType.Attack:
-                    hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), którą możesz zaatakować!";
-                    hintLines[2] += "Aby zaatakować pierwszą z brzegu postać w lokacji, wpisz \"attack\"";
-                    hintLines[3] += "Możesz też wybrać postać, którą chcesz zaatakować, dodając jej nazwę: \"attack " + objectName1 + "\"";
-                    hintLines[4] += "Komenda \"attack\" ma swój skrót \"a\", którego można używać zamiennie.";
-                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.AttackHint = false;
-                    break;
-                case Hints.HintType.Trade:
-                    hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), z którą możesz handlować!";
-                    hintLines[2] += "Aby rozpocząć handel z postacią, wpisz komendę \"trade\" i nazwę postaci: \"trade " + objectName1 + 
-                        "\"";
-                    hintLines[3] += "Komenda \"trade\" na swój skrót \"tr\", którego można używać zamiennie.";
-                    hintLines[4] += "Z każdą postacią można też porozmawiać! Aby rozpocząć dialog, wpisz \"talk " + objectName1 + "\"";
-                    hintLines[5] += "Komenda \"talk\" ma swój skrót \"ta\", którego można używać zamiennie.";
-                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.TradeHint = false;
-                    break;
-                case Hints.HintType.Pickup:
-                    hintLines[1] += "Ginący przeciwnicy upuszczają złoto, a czasami jakieś przedmioty!";
-                    hintLines[2] += "Aby podnieść wszystkie przedmioty i całe złoto leżące w lokacji, wpisz \"pickup\"";
-                    hintLines[3] += "Możesz też wybrać przedmiot, który chcesz podnieść: np. \"pickup złoto\"";
-                    hintLines[4] += "Aby podnieść konkretną ilość, możesz dodąc liczbę: np. \"pickup chleb 2\" - podniesie 2 chleby";
-                    hintLines[5] += "Komenda \"pickup\" ma swój skrót \"p\", którego można używać zamiennie.";
-                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.PickupHint = false;
-                    break;
-                case Hints.HintType.Look:
-                    hintLines[1] += "Aby rozejrzeć się po lokacji, wpisz \"look\" (lub skrót \"l\")";
-                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.LookHint = false;
-                    break;
-                case Hints.HintType.Inventory:
-                    hintLines[1] += "Podniosłeś swoje pierwsze przedmioty! Wszystko, co podniesiesz, trafia do Twojego ekwipunku";
-                    hintLines[2] += "Aby zobaczyć swój ekwipunek wpisz \"inventory\".";
-                    hintLines[3] += "Komenda \"inventory\" ma swój skrót \"i\", którego można używać zamiennie.";
-                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.InventoryHint = false;
-                    break;
-                case Hints.HintType.LookInventoryItem:
-                    hintLines[1] += "Oto Twój ekwipunek! (jeśli go nie widzisz, przewiń tekst do góry rolką myszki)";
-                    hintLines[2] += "W górnej części widzisz posiadane przez Twoją postać przedmioty";
-                    hintLines[3] += "W dolnej części, widzisz założone przedmioty (np broń w ręce, czy hełm na głowie)";
-                    hintLines[4] += "Aby obejżeć przedmiot, użyj komendy \"look\" i nazwy przedmiotu: np. \"look " +
-                        objectName1 + "\" aby obejżeć " + objectName1;
-                    hintLines[5] += "Możesz oglądać przedmioty w swoim ekwipunku, ekwipunku postaci z którą handlujesz, " +
-                        "lub te leżące na ziemi.";
-                    hintLines[6] += "Komenda \"look\" ma swój skrót \"l\", którego można używać zamiennie.";
-                    hintLines[7] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.LookInventoryItemHint = false;
-                    break;
-                case Hints.HintType.BuySell:
-                    hintLines[1] += "Aby obejżeć przedmiot w ekwipunku handlarza użyj komendy \"look\" (np. \"look " + objectName1 + "\"";
-                    hintLines[2] += "Aby kupić przedmiot, użyj komendy \"buy\" (np. \"buy " + objectName1 + "\"";
-                    hintLines[3] += "Aby sprzedać przedmiot, użyj komendy \"sell\" (np. \"sell " + objectName2 + "\"";
-                    hintLines[4] += "UWAGA!!! Sprzedajesz taniej niż kupujesz, więc rób to rozważnie!";
-                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.BuySellHint = false;
-                    break;
-                case Hints.HintType.LookAdjacentLoc:
-                    hintLines[1] += "Aby obejżeć sąsiędnią lokację, użyj komendy \"look\" i litery kierunku (np. \"look n\" - spojrzy na północ)";
-                    hintLines[2] += "n = północ; e = wschód; s = południe; w = zachód; u = góra; d = dół.";
-                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.LookAdjacentLocHint = false;
-                    break;
-                case Hints.HintType.Stats:
-                    hintLines[1] += "Wraz z nowym poziomem, zdobyłeś 5 pkt. atrybutów do wydania!";
-                    hintLines[2] += "Posiadane pkt. możesz wydać na jeden z trzech atrybutów: siłę, inteligencję lub zręczność.";
-                    hintLines[3] += "Aby obejżeć statystyki postaci, wpisz \"stats\" (lub skrót \"ss\")";
-                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.StatsHint = false;
-                    break;
-                case Hints.HintType.Attributes:
-                    hintLines[1] += "Oto Twoje statystyki! (jeśli ich nie widzisz, przewiń tekst do góry rolką myszy)";
-                    hintLines[2] += "Aby ulepszyć atrybut, użyj komendy \"point\" i skrótu atrybutu (np. \"point str\" - doda 1 do siły)";
-                    hintLines[3] += "Skróty atrybutów: \"str\" = siła; \"agi\" = zręczność; \"int\" = inteligencja";
-                    hintLines[4] += "UWAGA!!! Raz zużyty pkt. atrybutu, nie może zostać cofnięty!";
-                    hintLines[5] += "Komenda \"point\" ma swój skrót \"pt\".";
-                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.AttributesHint = false;
-                    break;
-                case Hints.HintType.Craft1:
-                    hintLines[1] += "Zdobyłeś runę " + objectName1 + "!";
-                    hintLines[2] += "Aby utworzyć nowy czar, uzyj komendy \"craft\" i nazwy runy (np. \"craft " + objectName1 + "\")";
-                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.CraftHint1 = false;
-                    break;
-                case Hints.HintType.Craft2:
-                    hintLines[1] += "Zdobyłeś kolejną runę: " + objectName1 + "!";
-                    hintLines[2] += "Aby utworzyć czar z kombinacji dwóch run, użyj komendy \"craft\" (np. \"craft " + objectName1 + 
-                        " " + objectName2 + "\")";
-                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.CraftHint2 = false;
-                    break;
-                case Hints.HintType.Spells:
-                    hintLines[1] += "Utworzyłeś swój pierwszy czar!";
-                    hintLines[2] += "Aby zobaczyć listę zapamiętanych czarów, wpisz \"spells\" lub skrót \"sps\"";
-                    hintLines[3] += "Aby zobaczyć opis czaru, użyj komendy \"look\" (np. \"look " + objectName1 + "\"";
-                    hintLines[4] += "Aby rzucić czar, użyj komendy \"cast\" i numeru czaru na liście (np. \"cast 1\")";
-                    hintLines[5] += "Komenda \"cast\" ma swój skrót: \"c\"";
-                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.SpellsHint = false;
-                    break;
-                case Hints.HintType.Wear:
-                    hintLines[1] += "Zdobyłeś przedmiot, który możesz założyć: " + objectName1 + "!";
-                    hintLines[2] += "Aby założyć przedmiot, uzyj komendy \"wear\" i nazwy przedmiotu (np. \"wear " + objectName1 + "\")";
-                    hintLines[3] += "Założone przedmioty, możesz zobaczyć w dolnej części swojego ekwipunku (\"inventory\" lub \"i\")";
-                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
-                    Hints.WearHint = false;
-                    break;
-
-            }
-
-            for (i = 0; i < hintLinesLength; i++)
-            {
-                if (hintLines[i].Length > 2)
-                {
-                    PrintMessage(hintLines[i], MessageType.EffectOn);
-                }
-            }
-
         }
 
         //method displaying communicates in outputBox of the gui

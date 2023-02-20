@@ -29,6 +29,11 @@ namespace Runedal.GameData
             SpellsHint = true;
             WearHint = true;
             TakeoffHint = true;
+            UseHint = true;
+            PauseHint = true;
+            FleeHint = true;
+            GameSpeedHint = true;
+            EffectsHint = true;
         }
 
         public enum HintType
@@ -49,7 +54,12 @@ namespace Runedal.GameData
             Craft2,
             Spells,
             Wear,
-            Takeoff
+            Takeoff,
+            Use,
+            Pause,
+            Flee,
+            GameSpeed,
+            Effects
         }
         public bool HintsOnOff { get; set; }
         public bool GoHint { get; set; }
@@ -69,6 +79,10 @@ namespace Runedal.GameData
         public bool SpellsHint { get; set; }
         public bool WearHint { get; set; }
         public bool TakeoffHint { get; set; }
-
+        public bool UseHint { get; set; }
+        public bool PauseHint { get; set; }
+        public bool FleeHint { get; set; }
+        public bool GameSpeedHint { get; set; }
+        public bool EffectsHint { get; set; }
     }
 }

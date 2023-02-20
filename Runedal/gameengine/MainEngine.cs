@@ -552,6 +552,9 @@ namespace Runedal.GameEngine
                 case "dn":
                     ChangeSpeedHandler(true);
                     break;
+                case "hints":
+                    HintsHandler();
+                    break;
                 case "1":
                 case "2":
                 case "3":
@@ -2881,6 +2884,21 @@ namespace Runedal.GameEngine
             int GameSpeed = 100 / TimeInterval;
 
             PrintMessage("Szybkość gry: " + GameSpeed + "x", MessageType.SystemFeedback);
+        }
+
+        //method handling turning on/off hints
+        private void HintsHandler()
+        {
+            if (Hints.HintsOnOff)
+            {
+                Hints.HintsOnOff = false;
+                PrintMessage("Podpowiedzi wyłączone! (wpisz \"hints\" aby włączyć)", MessageType.SystemFeedback);
+            }
+            else
+            {
+                Hints.HintsOnOff = true;
+                PrintMessage("Podpowiedzi włączone!", MessageType.SystemFeedback);
+            }
         }
 
 
@@ -5826,26 +5844,23 @@ namespace Runedal.GameEngine
                     break;
                 case Hints.HintType.Inventory:
                     hintLines[1] += "Podniosłeś swoje pierwsze przedmioty! Wszystko, co podniesiesz, trafia do Twojego ekwipunku";
-                    hintLines[2] += "Aby zobaczyć swój ekwipunek wpisz \"inventory\".";
-                    hintLines[3] += "Komenda \"inventory\" ma swój skrót \"i\", którego można używać zamiennie.";
-                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    hintLines[2] += "Aby zobaczyć swój ekwipunek wpisz \"inventory\" lub skrót \"i\".";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.InventoryHint = false;
                     break;
                 case Hints.HintType.LookInventoryItem:
-                    hintLines[1] += "Oto Twój ekwipunek! (jeśli go nie widzisz, przewiń tekst do góry rolką myszki)";
-                    hintLines[2] += "Aby obejżeć przedmiot, użyj komendy \"look\" i nazwy przedmiotu: np. \"look " +
+                    hintLines[1] += "Aby obejżeć przedmiot, użyj komendy \"look\" i nazwy przedmiotu: np. \"look " +
                         objectName1 + "\" aby obejżeć " + objectName1;
-                    hintLines[3] += "Możesz oglądać przedmioty w swoim ekwipunku, ekwipunku postaci z którą handlujesz, " +
-                        "lub te leżące na ziemi.";
-                    hintLines[4] += "Komenda \"look\" ma swój skrót \"l\", którego można używać zamiennie.";
-                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    hintLines[2] += "Możesz też oglądać przedmioty postaci z którą handlujesz, lub te leżące na ziemi";
+                    hintLines[3] += "Komenda \"look\" ma swój skrót \"l\", którego można używać zamiennie.";
+                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.LookInventoryItemHint = false;
                     break;
                 case Hints.HintType.BuySell:
                     hintLines[1] += "Aby obejżeć przedmiot w ekwipunku handlarza użyj komendy \"look\" (np. \"look " + objectName1 + "\"";
                     hintLines[2] += "Aby kupić przedmiot, użyj komendy \"buy\" (np. \"buy " + objectName1 + "\"";
                     hintLines[3] += "Aby sprzedać przedmiot, użyj komendy \"sell\" (np. \"sell " + objectName2 + "\"";
-                    hintLines[4] += "UWAGA!!! Sprzedajesz taniej niż kupujesz, więc rób to rozważnie!";
+                    hintLines[4] += "UWAGA!!! Sprzedajesz taniej niż kupujesz!";
                     hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.BuySellHint = false;
                     break;
@@ -5863,12 +5878,11 @@ namespace Runedal.GameEngine
                     Hints.StatsHint = false;
                     break;
                 case Hints.HintType.Attributes:
-                    hintLines[1] += "Oto Twoje statystyki! (jeśli ich nie widzisz, przewiń tekst do góry rolką myszy)";
-                    hintLines[2] += "Aby ulepszyć atrybut, użyj komendy \"point\" i skrótu atrybutu (np. \"point str\" - doda 1 do siły)";
-                    hintLines[3] += "Skróty atrybutów: \"str\" = siła; \"agi\" = zręczność; \"int\" = inteligencja";
-                    hintLines[4] += "UWAGA!!! Raz zużyty pkt. atrybutu, nie może zostać cofnięty!";
-                    hintLines[5] += "Komenda \"point\" ma swój skrót \"pt\".";
-                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    hintLines[1] += "Aby ulepszyć atrybut, użyj komendy \"point\" i skrótu atrybutu (np. \"point str\" - doda 1 do siły)";
+                    hintLines[2] += "Skróty atrybutów: \"str\" = siła; \"agi\" = zręczność; \"int\" = inteligencja";
+                    hintLines[3] += "UWAGA!!! Raz zużyty pkt. atrybutu, nie może zostać cofnięty!";
+                    hintLines[4] += "Komenda \"point\" ma swój skrót \"pt\".";
+                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.AttributesHint = false;
                     break;
                 case Hints.HintType.Craft1:

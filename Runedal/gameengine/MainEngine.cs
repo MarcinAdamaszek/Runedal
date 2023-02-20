@@ -5815,7 +5815,7 @@ namespace Runedal.GameEngine
                     hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), którą możesz zaatakować!";
                     hintLines[2] += "Aby zaatakować pierwszą z brzegu postać w lokacji, wpisz \"attack\"";
                     hintLines[3] += "Możesz też wybrać postać, którą chcesz zaatakować, dodając jej nazwę: \"attack " + objectName1 + "\"";
-                    hintLines[4] += "Komenda \"attack\" ma swój skrót \"a\", którego można używać zamiennie.";
+                    hintLines[4] += "Komenda \"attack\" ma swój skrót: \"a\"";
                     hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.AttackHint = false;
                     break;
@@ -5823,9 +5823,9 @@ namespace Runedal.GameEngine
                     hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), z którą możesz handlować!";
                     hintLines[2] += "Aby rozpocząć handel z postacią, wpisz komendę \"trade\" i nazwę postaci: \"trade " + objectName1 +
                         "\"";
-                    hintLines[3] += "Komenda \"trade\" na swój skrót \"tr\", którego można używać zamiennie.";
+                    hintLines[3] += "Komenda \"trade\" ma swój skrót: \"tr\"";
                     hintLines[4] += "Z każdą postacią można też porozmawiać! Aby rozpocząć dialog, wpisz \"talk " + objectName1 + "\"";
-                    hintLines[5] += "Komenda \"talk\" ma swój skrót \"ta\", którego można używać zamiennie.";
+                    hintLines[5] += "Komenda \"talk\" ma swój skrót: \"ta\"";
                     hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.TradeHint = false;
                     break;
@@ -5833,7 +5833,7 @@ namespace Runedal.GameEngine
                     hintLines[1] += "Aby podnieść wszystkie przedmioty i całe złoto leżące w lokacji, wpisz \"pickup\"";
                     hintLines[2] += "Możesz też wybrać przedmiot, który chcesz podnieść: np. \"pickup złoto\"";
                     hintLines[3] += "Aby podnieść konkretną ilość, możesz dodąc liczbę: np. \"pickup chleb 2\" - podniesie 2 chleby";
-                    hintLines[4] += "Komenda \"pickup\" ma swój skrót \"p\", którego można używać zamiennie.";
+                    hintLines[4] += "Komenda \"pickup\" ma swój skrót: \"p\"";
                     hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.PickupHint = false;
                     break;
@@ -5852,7 +5852,7 @@ namespace Runedal.GameEngine
                     hintLines[1] += "Aby obejżeć przedmiot, użyj komendy \"look\" i nazwy przedmiotu: np. \"look " +
                         objectName1 + "\" aby obejżeć " + objectName1;
                     hintLines[2] += "Możesz też oglądać przedmioty postaci z którą handlujesz, lub te leżące na ziemi";
-                    hintLines[3] += "Komenda \"look\" ma swój skrót \"l\", którego można używać zamiennie.";
+                    hintLines[3] += "Komenda \"look\" ma swój skrót: \"l\"";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.LookInventoryItemHint = false;
                     break;
@@ -5881,7 +5881,7 @@ namespace Runedal.GameEngine
                     hintLines[1] += "Aby ulepszyć atrybut, użyj komendy \"point\" i skrótu atrybutu (np. \"point str\" - doda 1 do siły)";
                     hintLines[2] += "Skróty atrybutów: \"str\" = siła; \"agi\" = zręczność; \"int\" = inteligencja";
                     hintLines[3] += "UWAGA!!! Raz zużyty pkt. atrybutu, nie może zostać cofnięty!";
-                    hintLines[4] += "Komenda \"point\" ma swój skrót \"pt\".";
+                    hintLines[4] += "Komenda \"point\" ma swój skrót: \"pt\".";
                     hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.AttributesHint = false;
                     break;

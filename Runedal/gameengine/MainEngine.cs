@@ -1721,6 +1721,17 @@ namespace Runedal.GameEngine
                 //display trader's/player's inventories to update their content
                 InventoryInfo(trader, true);
                 InventoryInfo(Data.Player!, true);
+
+                //trigger wear hint
+                if (Hints.WearHint)
+                {
+                    Item boughtItem = Data.Items!.Find(it => it.Name!.ToLower() == itemName)!;
+
+                    if (boughtItem.GetType() == typeof(Armor) || boughtItem.GetType() == typeof(Weapon))
+                    {
+                        PrintHint(Hints.HintType.Wear, boughtItem.Name!.ToLower());
+                    }
+                }
             }
             else
             {
@@ -3770,6 +3781,15 @@ namespace Runedal.GameEngine
                         PrintHint(Hints.HintType.Craft2, runesOwned[0].Name!, runesOwned[1].Name!);
                     }
                 }
+
+                //trigger wear hint
+                if (Hints.WearHint && Data.Player!.CurrentState != CombatCharacter.State.Trade)
+                {
+                    if (itemToAdd.GetType() == typeof(Armor) || itemToAdd.GetType() == typeof(Weapon))
+                    {
+                        PrintHint(Hints.HintType.Wear, itemToAdd.Name!.ToLower());
+                    }
+                }
             }
         }
 
@@ -4222,16 +4242,8 @@ namespace Runedal.GameEngine
              Data.Player!.CurrentState = Player.State.Idle;
         }
 
-        //method breaking talk state and printing proper message
-        private void BreakTalkState()
-        {
-            PrintMessage("Przestajesz rozmawiać z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
-            Data.Player.InteractsWith = new Character("placeholder");
-            Data.Player!.CurrentState = Player.State.Idle;
-        }
-
         //method for breaking invis buff
-        private void BreakInvisibility() 
+        private void BreakInvisibility()
         {
             List<EffectOnPlayer> effectsToRemove = new List<EffectOnPlayer>();
             List<Modifier> modsToRemove = new List<Modifier>();
@@ -4268,6 +4280,14 @@ namespace Runedal.GameEngine
                     Data.Player!.RemoveModifier(mod);
                 });
             }
+        }
+
+        //method breaking talk state and printing proper message
+        private void BreakTalkState()
+        {
+            PrintMessage("Przestajesz rozmawiać z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
+            Data.Player.InteractsWith = new Character("placeholder");
+            Data.Player!.CurrentState = Player.State.Idle;
         }
 
         //method checking if player is trading/talking and breaking the state if so

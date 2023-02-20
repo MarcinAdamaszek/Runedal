@@ -777,7 +777,11 @@ namespace Runedal.GameEngine
             PrintMap();
             LocationInfo(Data.Player!.CurrentLocation!);
 
-            PrintHint(Hints.HintType.Go);
+            //trigger go hint
+            if (Hints.HintsOnOff)
+            {
+                PrintHint(Hints.HintType.Go);
+            }
         }
 
         //method clearing the outputBox
@@ -1330,9 +1334,12 @@ namespace Runedal.GameEngine
                 LocationInfo(Data.Player!.CurrentLocation!);
 
                 //trigger look adjacent loc hint
-                if (Hints.LookAdjacentLocHint)
+                if (Hints.HintsOnOff)
                 {
-                    PrintHint(Hints.HintType.LookAdjacentLoc);
+                    if (Hints.LookAdjacentLocHint)
+                    {
+                        PrintHint(Hints.HintType.LookAdjacentLoc);
+                    }
                 }
             }
             else
@@ -1501,12 +1508,15 @@ namespace Runedal.GameEngine
                 InventoryInfo(Data.Player!, true);
 
                 //trigger buy/sell hint
-                if (Hints.BuySellHint)
+                if (Hints.HintsOnOff)
                 {
-                    Item item1 = tradingCharacter.Inventory!.First();
-                    Item item2 = Data.Player!.Inventory!.First();
+                    if (Hints.BuySellHint)
+                    {
+                        Item item1 = tradingCharacter.Inventory!.First();
+                        Item item2 = Data.Player!.Inventory!.First();
 
-                    PrintHint(Hints.HintType.BuySell, item1.Name!.ToLower(), item2.Name!.ToLower());
+                        PrintHint(Hints.HintType.BuySell, item1.Name!.ToLower(), item2.Name!.ToLower());
+                    }
                 }
             }
             else
@@ -1620,10 +1630,13 @@ namespace Runedal.GameEngine
             }
 
             //trigger look inventory item hint
-            if (Hints.LookInventoryItemHint)
+            if (Hints.HintsOnOff)
             {
-                Item itemToLook = Data.Player!.Inventory!.First();
-                PrintHint(Hints.HintType.LookInventoryItem, itemToLook.Name!.ToLower());
+                if (Hints.LookInventoryItemHint)
+                {
+                    Item itemToLook = Data.Player!.Inventory!.First();
+                    PrintHint(Hints.HintType.LookInventoryItem, itemToLook.Name!.ToLower());
+                }
             }
         }
 
@@ -1843,6 +1856,16 @@ namespace Runedal.GameEngine
         private void StatsHandler()
         {
             StatsInfo();
+
+            //trigger attributes hint
+
+            if (Hints.HintsOnOff)
+            {
+                if (Hints.AttributesHint)
+                {
+                    PrintHint(Hints.HintType.Attributes);
+                }
+            }
         }
 
         //method handling 'drop' command
@@ -3059,25 +3082,28 @@ namespace Runedal.GameEngine
             PrintMap();
 
             //display hints
-
-            //look hint
-            if (Hints.LookHint)
+            if (Hints.HintsOnOff)
             {
-                PrintHint(Hints.HintType.Look);
-            }
 
-            //attack hint
-            if (Hints.AttackHint && nextLocation.Characters!.Exists(ch => ch.GetType() == typeof(Monster)))
-            {
-                Monster monsterToAttack = (nextLocation.Characters!.Find(ch => ch.GetType() == typeof(Monster)) as Monster)!;
-                PrintHint(Hints.HintType.Attack, monsterToAttack.Name!);
-            }
+                //look hint
+                if (Hints.LookHint)
+                {
+                    PrintHint(Hints.HintType.Look);
+                }
 
-            //trade hint
-            if (Hints.TradeHint && nextLocation.Characters!.Exists(ch => ch.GetType() == typeof(Trader)))
-            {
-                Trader traderToTrade = (nextLocation.Characters!.Find(ch => ch.GetType() == typeof(Trader)) as Trader)!;
-                PrintHint(Hints.HintType.Trade, traderToTrade.Name!);
+                //attack hint
+                if (Hints.AttackHint && nextLocation.Characters!.Exists(ch => ch.GetType() == typeof(Monster)))
+                {
+                    Monster monsterToAttack = (nextLocation.Characters!.Find(ch => ch.GetType() == typeof(Monster)) as Monster)!;
+                    PrintHint(Hints.HintType.Attack, monsterToAttack.Name!);
+                }
+
+                //trade hint
+                if (Hints.TradeHint && nextLocation.Characters!.Exists(ch => ch.GetType() == typeof(Trader)))
+                {
+                    Trader traderToTrade = (nextLocation.Characters!.Find(ch => ch.GetType() == typeof(Trader)) as Trader)!;
+                    PrintHint(Hints.HintType.Trade, traderToTrade.Name!);
+                }
             }
         }
 
@@ -3478,9 +3504,12 @@ namespace Runedal.GameEngine
                 Data.TakenIds!.Remove(character.Id);
 
                 //trigger pickup hint
-                if (Hints.PickupHint)
+                if (Hints.HintsOnOff)
                 {
-                    PrintHint(Hints.HintType.Pickup);
+                    if (Hints.PickupHint)
+                    {
+                        PrintHint(Hints.HintType.Pickup);
+                    }
                 }
             }
         }
@@ -3605,9 +3634,12 @@ namespace Runedal.GameEngine
                 Data.Player!.AddAttributePoints((Data.Player!.Level - previousLevel) * 5);
 
                 //trigger stats hint
-                if (Hints.StatsHint)
+                if (Hints.HintsOnOff)
                 {
-                    PrintHint(Hints.HintType.Stats);
+                    if (Hints.StatsHint)
+                    {
+                        PrintHint(Hints.HintType.Stats);
+                    }
                 }
             }
         }
@@ -3692,13 +3724,52 @@ namespace Runedal.GameEngine
         {
             Item itemToAdd = Data.Items!.Find(item => FlattenPolishChars(item.Name!.ToLower())
             == FlattenPolishChars(itemName.ToLower()))!;
+
             Data.Player!.AddItem(itemToAdd, quantity);
             PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + itemToAdd.Name, MessageType.Gain);
 
-            //trigger inventory hint
-            if (Hints.InventoryHint)
+            //trigger hints
+            if (Hints.HintsOnOff)
             {
-                PrintHint(Hints.HintType.Inventory);
+
+                //trigger inventory hint
+                if (Hints.InventoryHint)
+                {
+                    PrintHint(Hints.HintType.Inventory);
+                }
+
+                //trigger craft1/2 hints
+                int i = 0;
+                string[] runeNames = new string[5];
+
+                runeNames[i++] = "iskarr";
+                runeNames[i++] = "akull";
+                runeNames[i++] = "verde";
+                runeNames[i++] = "xitan";
+                runeNames[i++] = "dara";
+
+                if (Hints.CraftHint1 && runeNames.Contains(itemToAdd.Name!.ToLower()))
+                {
+                    PrintHint(Hints.HintType.Craft1, itemToAdd.Name!);
+                }
+                else if (Hints.CraftHint2 && runeNames.Contains(itemToAdd.Name!.ToLower()))
+                {
+                    List<Item> runesOwned = new List<Item>();
+
+                    //check if player owns at least 2 runes
+                    Data.Player!.Inventory!.ForEach(it =>
+                    {
+                        if (runeNames.Contains(it.Name!.ToLower()))
+                        {
+                            runesOwned.Add(it);
+                        }
+                    });
+
+                    if (runesOwned.Count >= 2)
+                    {
+                        PrintHint(Hints.HintType.Craft2, runesOwned[0].Name!, runesOwned[1].Name!);
+                    }
+                }
             }
         }
 
@@ -6048,7 +6119,7 @@ namespace Runedal.GameEngine
             {
                 case Hints.HintType.Go:
                     hintLines[1] += "Aby udać się w którymś kierunku, wpisz jedną z liter kierunków (n, e, s, w, u, d) i naciśnij enter";
-                    hintLines[2] += "n = północ; e = wschód; s = południe; w = zachód; u = góra; d = dół.";
+                    hintLines[2] += "\"\" = północ; \"e\" = wschód; \"s\" = południe; \"w\" = zachód; \"u\" = góra; \"d\" = dół.";
                     hintLines[3] += "Np. aby pójść na północ wpisz \"n\"";
                     hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.GoHint = false;
@@ -6124,6 +6195,44 @@ namespace Runedal.GameEngine
                     hintLines[3] += "Aby obejżeć statystyki postaci, wpisz \"stats\" (lub skrót \"ss\")";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.StatsHint = false;
+                    break;
+                case Hints.HintType.Attributes:
+                    hintLines[1] += "Oto Twoje statystyki! (jeśli ich nie widzisz, przewiń tekst do góry rolką myszy)";
+                    hintLines[2] += "Aby ulepszyć atrybut, użyj komendy \"point\" i skrótu atrybutu (np. \"point str\" - doda 1 do siły)";
+                    hintLines[3] += "Skróty atrybutów: \"str\" = siła; \"agi\" = zręczność; \"int\" = inteligencja";
+                    hintLines[4] += "UWAGA!!! Raz zużyty pkt. atrybutu, nie może zostać cofnięty!";
+                    hintLines[5] += "Komenda \"point\" ma swój skrót \"pt\".";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.AttributesHint = false;
+                    break;
+                case Hints.HintType.Craft1:
+                    hintLines[1] += "Zdobyłeś runę " + objectName1 + "!";
+                    hintLines[2] += "Aby utworzyć nowy czar, uzyj komendy \"craft\" i nazwy runy (np. \"craft " + objectName1 + "\")";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.CraftHint1 = false;
+                    break;
+                case Hints.HintType.Craft2:
+                    hintLines[1] += "Zdobyłeś kolejną runę: " + objectName1 + "!";
+                    hintLines[2] += "Aby utworzyć czar z kombinacji dwóch run, użyj komendy \"craft\" (np. \"craft " + objectName1 + 
+                        " " + objectName2 + "\")";
+                    hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.CraftHint2 = false;
+                    break;
+                case Hints.HintType.Spells:
+                    hintLines[1] += "Utworzyłeś swój pierwszy czar!";
+                    hintLines[2] += "Aby zobaczyć listę zapamiętanych czarów, wpisz \"spells\" lub skrót \"sps\"";
+                    hintLines[3] += "Aby zobaczyć opis czaru, użyj komendy \"look\" (np. \"look " + objectName1 + "\"";
+                    hintLines[4] += "Aby rzucić czar, użyj komendy \"cast\" i numeru czaru na liście (np. \"cast 1\")";
+                    hintLines[5] += "Komenda \"cast\" ma swój skrót: \"c\"";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.SpellsHint = false;
+                    break;
+                case Hints.HintType.Wear:
+                    hintLines[1] += "Zdobyłeś przedmiot, który możesz założyć: " + objectName1 + "!";
+                    hintLines[2] += "Aby założyć przedmiot, uzyj komendy \"wear\" i nazwy przedmiotu (np. \"wear " + objectName1 + "\")";
+                    hintLines[3] += "Założone przedmioty, możesz zobaczyć w dolnej części swojego ekwipunku (\"inventory\" lub \"i\")";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.WearHint = false;
                     break;
 
             }
@@ -6567,6 +6676,15 @@ namespace Runedal.GameEngine
                 {
                     SpellCraft spellCraft = (SpellCraft)action;
                     CraftSpell(spellCraft.SpellToCraft);
+
+                    //trigger spells hint
+                    if (Hints.HintsOnOff)
+                    {
+                        if (Hints.SpellsHint)
+                        {
+                            PrintHint(Hints.HintType.Spells, spellCraft.SpellToCraft.Name!.ToLower());
+                        }
+                    }
                 }
 
                 //add cooldown to performer's action counter

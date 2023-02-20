@@ -22,6 +22,13 @@ namespace Runedal.GameData
             LookAdjacentLocHint = true;
             LookHint = true;
             StatsHint = true;
+            AttackHint = true;
+            AttributesHint = true;
+            CraftHint1 = true;
+            CraftHint2 = true;
+            SpellsHint = true;
+            WearHint = true;
+            TakeoffHint = true;
         }
 
         public enum HintType
@@ -36,7 +43,13 @@ namespace Runedal.GameData
             LookInventoryItem,
             BuySell,
             LookAdjacentLoc,
-            Stats
+            Stats,
+            Attributes,
+            Craft1,
+            Craft2,
+            Spells,
+            Wear,
+            Takeoff
         }
         public bool HintsOnOff { get; set; }
         public bool GoHint { get; set; }
@@ -50,6 +63,12 @@ namespace Runedal.GameData
         public bool BuySellHint { get; set; }
         public bool LookAdjacentLocHint { get; set; }
         public bool StatsHint { get; set; }
+        public bool AttributesHint { get; set; }
+        public bool CraftHint1 {get; set; }
+        public bool CraftHint2 { get; set; }
+        public bool SpellsHint { get; set; }
+        public bool WearHint { get; set; }
+        public bool TakeoffHint { get; set; }
 
     }
 }

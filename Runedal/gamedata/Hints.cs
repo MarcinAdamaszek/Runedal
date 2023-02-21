@@ -34,6 +34,7 @@ namespace Runedal.GameData
             FleeHint = true;
             GameSpeedHint = true;
             EffectsHint = true;
+            TalkHint = true;
         }
 
         public enum HintType
@@ -59,7 +60,8 @@ namespace Runedal.GameData
             Pause,
             Flee,
             GameSpeed,
-            Effects
+            Effects,
+            Talk
         }
         public bool HintsOnOff { get; set; }
         public bool GoHint { get; set; }
@@ -84,5 +86,6 @@ namespace Runedal.GameData
         public bool FleeHint { get; set; }
         public bool GameSpeedHint { get; set; }
         public bool EffectsHint { get; set; }
+        public bool TalkHint { get; set; }
     }
 }

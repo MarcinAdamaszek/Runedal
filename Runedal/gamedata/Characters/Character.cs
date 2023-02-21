@@ -75,12 +75,9 @@ namespace Runedal.GameData.Characters
 
         //array of answers character will respond when asked question
         public string[]? Answers { get; set; }
-        
+
         //set and quantity of items to load into character's inventory on game launch
         public Dictionary<string, int>? Items { get; set; }
-
-        //list of id's assigned to all existing monsters
-        //public static List<int> TakenIds { get; set; } = new List<int>();
 
         //method for adding items into character's inventory
         public void AddItem(Item newItem, int quantity = 1)

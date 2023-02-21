@@ -1504,6 +1504,12 @@ namespace Runedal.GameEngine
                     return;
                 }
 
+                if ((tradingCharacter as Trader)!.IsTalker)
+                {
+                    PrintMessage("Nie możesz handlować z tą postacią", MessageType.SystemFeedback);
+                    return;
+                }
+
                 //set player's interaction character
                 Data.Player!.InteractsWith = tradingCharacter;
 
@@ -3142,6 +3148,15 @@ namespace Runedal.GameEngine
             //change minimap display
             PrintMap();
 
+            //print characters welcome phrases
+            nextLocation.Characters!.ForEach(ch =>
+            {
+                if (ch.GetType() == typeof(Trader))
+                {
+                    PrintSpeech(ch, (ch as Trader)!.WelcomePhrase);
+                }
+            });
+
             //display hints
             if (Hints.HintsOnOff)
             {
@@ -3163,7 +3178,16 @@ namespace Runedal.GameEngine
                 if (Hints.TradeHint && nextLocation.Characters!.Exists(ch => ch.GetType() == typeof(Trader)))
                 {
                     Trader traderToTrade = (nextLocation.Characters!.Find(ch => ch.GetType() == typeof(Trader)) as Trader)!;
-                    PrintHint(Hints.HintType.Trade, traderToTrade.Name!);
+
+                    //check if trader isn't talker
+                    if (!traderToTrade.IsTalker)
+                    {
+                        PrintHint(Hints.HintType.Trade, traderToTrade.Name!);
+                    }
+                    else
+                    {
+                        PrintHint(Hints.HintType.Talk, traderToTrade.Name!);
+                    }
                 }
 
                 //pause hint
@@ -5812,7 +5836,7 @@ namespace Runedal.GameEngine
                     Hints.GoHint = false;
                     break;
                 case Hints.HintType.Attack:
-                    hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), którą możesz zaatakować!";
+                    hintLines[1] += "Jest tutaj postać (" + objectName1 + "), którą możesz zaatakować!";
                     hintLines[2] += "Aby zaatakować pierwszą z brzegu postać w lokacji, wpisz \"attack\"";
                     hintLines[3] += "Możesz też wybrać postać, którą chcesz zaatakować, dodając jej nazwę: \"attack " + objectName1 + "\"";
                     hintLines[4] += "Komenda \"attack\" ma swój skrót: \"a\"";
@@ -5820,17 +5844,24 @@ namespace Runedal.GameEngine
                     Hints.AttackHint = false;
                     break;
                 case Hints.HintType.Trade:
-                    hintLines[1] += "W tej lokacji, znajduje się postać (" + objectName1 + "), z którą możesz handlować!";
+                    hintLines[1] += "Jest tutaj postać (" + objectName1 + "), z którą możesz handlować!";
                     hintLines[2] += "Aby rozpocząć handel z postacią, wpisz komendę \"trade\" i nazwę postaci: \"trade " + objectName1 +
                         "\"";
                     hintLines[3] += "Komenda \"trade\" ma swój skrót: \"tr\"";
-                    hintLines[4] += "Z każdą postacią można też porozmawiać! Aby rozpocząć dialog, wpisz \"talk " + objectName1 + "\"";
-                    hintLines[5] += "Komenda \"talk\" ma swój skrót: \"ta\"";
-                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.TradeHint = false;
                     break;
+                case Hints.HintType.Talk:
+                    hintLines[1] += "Jest tutaj postać (" + objectName1 + "), z którą możesz porozmawiać!";
+                    hintLines[2] += "Aby rozpocząć dialog z postacią, wpisz komendę \"talk\" i nazwę postaci: \"talk " + objectName1 +
+                        "\"";
+                    hintLines[3] += "Rozmawiać możesz ze wszystkimi postaciami w grze!";
+                    hintLines[3] += "Komenda \"talk\" ma swój skrót: \"ta\"";
+                    hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.TalkHint = false;
+                    break;
                 case Hints.HintType.Pickup:
-                    hintLines[1] += "Aby podnieść wszystkie przedmioty i całe złoto leżące w lokacji, wpisz \"pickup\"";
+                    hintLines[1] += "Aby podnieść wszystkie przedmioty i całe złoto leżące na ziemi, wpisz \"pickup\"";
                     hintLines[2] += "Możesz też wybrać przedmiot, który chcesz podnieść: np. \"pickup złoto\"";
                     hintLines[3] += "Aby podnieść konkretną ilość, możesz dodąc liczbę: np. \"pickup chleb 2\" - podniesie 2 chleby";
                     hintLines[4] += "Komenda \"pickup\" ma swój skrót: \"p\"";

@@ -11,18 +11,33 @@ namespace Runedal.GameData.Characters
         //default constructor for json deserialization
         public Trader() : base()
         {
-
+            if (Items!.Count == 0)
+            {
+                IsTalker = true;
+            }
         }
         public Trader(string[] descriptive, string[][] responses, int gold) : base(descriptive, responses, gold)
         {
-            
+            if (Items!.Count == 0)
+            {
+                IsTalker = true;
+            }
         }
 
         //copy constructor
         public Trader(Trader tr) : base(tr)
         {
-
+            if (Items!.Count == 0)
+            {
+                IsTalker = true;
+            }
+            
+            WelcomePhrase = tr.WelcomePhrase;
         }
-        
+        public bool IsTalker { get; set; }
+
+        //welcome phrase for talker characters
+        public string WelcomePhrase { get; set; }
+
     }
 }

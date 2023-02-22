@@ -584,7 +584,7 @@ namespace Runedal.GameEngine
                     Data.Player!.AddAttributePoints(1);
                     break;
                 default:
-                    PrintMessage("Nie rozumiem. Jeśli nie wiesz co robić, wciśnij esc aby zobaczyć menu lub wpisz \"help\"", MessageType.SystemFeedback);
+                    PrintMessage("Nie rozumiem. Aby zobaczyć ściągawkę komend, wpisz \"help\". Aby wyjść do menu, wciśnij esc.", MessageType.SystemFeedback);
                     break;
             }
         }
@@ -755,11 +755,11 @@ namespace Runedal.GameEngine
 
             PrintMessage("> Witaj w świecie Runedal!", MessageType.EffectOn);
             PrintMessage("> Aby zrobić cokolwiek, wpisujesz komendę i naciskasz enter", MessageType.EffectOn);
-            PrintMessage("> Przy wpisywaniu, wielkość liter nie ma znaczenia (SzCzUr = szczur), można pomijać polskie znaki (żmija = zmija), lub znak " +
+            PrintMessage("> Przy wpisywaniu, wielkość liter nie ma znaczenia (SzCzUr = szczur), można pomijać polskie znaki (żmija = zmija), lub znak podkreślnika" +
                 "\"_\" (mikstura_życia = miksturazycia)", MessageType.EffectOn);
+            PrintMessage("> W zielonym oknie na prawo, znajduje się minimapa, która pokazuje gdzie się aktualnie znajdujesz\n", MessageType.EffectOn);
             PrintMessage("> Jeśli nie wiesz co robić - wciśnij esc aby zobaczyć menu główne i wybierz opcję \"4.KOMENDY\" lub \"3.JAK GRAĆ?\"", MessageType.EffectOn);
             PrintMessage("> Aby zobaczyć ściągawkę komend - wpisz \"help\"", MessageType.EffectOn);
-            PrintMessage("> W zielonym oknie na prawo, znajduje się minimapa, która pokazuje gdzie się aktualnie znajdujesz\n", MessageType.EffectOn);
 
             //reveal starting location and adjacent locations
             Location northAdjacentLoc = new Location();

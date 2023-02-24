@@ -3499,6 +3499,9 @@ namespace Runedal.GameEngine
             //if it's player dying
             if (character == Data.Player!)
             {
+                //fix bug causing player still fighting with the enemy he died from
+                AttackInstances.Clear();
+
                 Character death = new Character("Śmierć");
                 PrintMessage("Twój wzrok traci ostrość, a dzwięki dochodzą jakby z oddali. Przed Tobą pojawia się wysoka na 2 metry " +
                     "postać w czarnej szacie z kapturem, z której rękawów wystają jedynie białe, kościane dłonie. W prawej ręce, postać" +
@@ -3594,9 +3597,6 @@ namespace Runedal.GameEngine
                         Data.Player.AddModifier(mod);
                     });
                 }
-
-                //fix bug causing player still fighting with the enemy he died from
-                AttackInstances.Clear();
 
                 Data.Player!.Hp = Math.Floor(Data.Player.GetEffectiveMaxHp() * 0.4);
                 Data.Player!.Mp = 0;

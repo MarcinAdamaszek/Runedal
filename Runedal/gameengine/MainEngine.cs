@@ -3118,7 +3118,7 @@ namespace Runedal.GameEngine
                 AddItemToLocation(dyingChar.CurrentLocation!, mediumTierItem.Name!, 1);
             }
 
-            //drop kula_portalowa if it's the final boss of a location
+            //drop kula_portalowa_derillon if it's the final boss of a location
             if (dyingChar.Name!.ToLower() == "arachna" || dyingChar.Name!.ToLower() == "król_pustyni" ||
                  dyingChar.Name!.ToLower() == "Idazerel")
             {
@@ -3162,7 +3162,17 @@ namespace Runedal.GameEngine
             {
                 if (ch.GetType() == typeof(Trader))
                 {
-                    PrintSpeech(ch, (ch as Trader)!.WelcomePhrase);
+                    if ((ch as Trader)!.WelcomePhrase != "placeholder")
+                    {
+                        PrintSpeech(ch, (ch as Trader)!.WelcomePhrase);
+                    }
+                }
+                else if (ch.GetType() == typeof(Hero)) 
+                {
+                    if ((ch as Hero)!.WelcomePhrase != "placeholder")
+                    {
+                        PrintSpeech(ch, (ch as Hero)!.WelcomePhrase);
+                    }
                 }
             });
 
@@ -6700,6 +6710,7 @@ namespace Runedal.GameEngine
             double staticDmg;
             double rawDmg;
             double dealtDmg;
+            double chanceToCast;
             int dmgAsInt;
             int randomSpellNumber;
             
@@ -6724,7 +6735,8 @@ namespace Runedal.GameEngine
                 //cast a spell once a while if it's attacking the player
                 if (isReceiverPlayer && attacker.RememberedSpells.Count > 0)
                 {
-                    isSpellCasted = TryOutChance(0.2);
+                    chanceToCast = attacker.RememberedSpells.Count * 0.2;
+                    isSpellCasted = TryOutChance(chanceToCast);
 
                     if (isSpellCasted)
                     {

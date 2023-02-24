@@ -50,6 +50,7 @@ namespace Runedal.GameData.Characters
             Questions = ch.Questions;
             Answers = ch.Answers;
             Gold = ch.Gold;
+            WelcomePhrase = ch.WelcomePhrase;
             //AssignId();
         }
 
@@ -59,6 +60,7 @@ namespace Runedal.GameData.Characters
 
         //Amount of gold and list of items in the characters inventory
         public int Gold { get; set; }
+
         public List<Item>? Inventory { get; set; }
 
         //reference to location, where the character is currently located
@@ -75,6 +77,9 @@ namespace Runedal.GameData.Characters
 
         //array of answers character will respond when asked question
         public string[]? Answers { get; set; }
+
+        //welcome phrase for talker characters
+        public string WelcomePhrase { get; set; }
 
         //set and quantity of items to load into character's inventory on game launch
         public Dictionary<string, int>? Items { get; set; }

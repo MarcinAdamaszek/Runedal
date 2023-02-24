@@ -31,13 +31,8 @@ namespace Runedal.GameData.Characters
             {
                 IsTalker = true;
             }
-            
-            WelcomePhrase = tr.WelcomePhrase;
         }
         public bool IsTalker { get; set; }
-
-        //welcome phrase for talker characters
-        public string WelcomePhrase { get; set; }
 
     }
 }

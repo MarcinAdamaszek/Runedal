@@ -3224,6 +3224,15 @@ namespace Runedal.GameEngine
 
             //if collection of player's spells was full and the last spell
             //was removed - print proper message to user about it
+
+            //remove the spell from list first if it's already remembered
+            if (Data.Player!.RememberedSpells.Exists(sp => sp.Name!.ToLower() == spellToCraft.Name!.ToLower()))
+            {
+                Spell spellToRemove = Data.Player!.RememberedSpells.Find(sp => sp.Name!.ToLower() 
+                == spellToCraft.Name!.ToLower())!;
+                Data.Player!.RememberedSpells.Remove(spellToRemove);
+            }
+
             Spell returnedSpell = Data.Player!.AddSpell(spellToCraft);
             if (returnedSpell.Name != "placeholder")
             {

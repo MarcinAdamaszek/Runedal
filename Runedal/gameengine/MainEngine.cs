@@ -3633,6 +3633,13 @@ namespace Runedal.GameEngine
                 {
                     PrintHint(Hints.HintType.Pickup);
                 }
+
+                //open the silver gate if it's Agriluna dying
+                if (character.Name!.ToLower() == "agriluna")
+                {
+                    PrintMessage("Księżycowa Brama została otwarta!");
+                    character.CurrentLocation.NorthPassage = true;
+                }
             }
         }
 

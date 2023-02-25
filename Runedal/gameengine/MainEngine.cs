@@ -3049,7 +3049,7 @@ namespace Runedal.GameEngine
                 {
                     if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
                     it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo" &&
-                    it.Name!.ToLower() != "stek")
+                    it.Name!.ToLower() != "stek" && it.Name!.ToLower() != "diabelski_pył")
                     {
                         highConsumablesPool.Add(it);
                     }

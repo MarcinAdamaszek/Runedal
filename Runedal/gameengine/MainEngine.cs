@@ -37,7 +37,7 @@ namespace Runedal.GameEngine
         private const int secondIntThreshold = 30;
         private const int thirdIntThreshold = 70;
         private const int fourthIntThreshold = 130;
-        private const int fifthIntThreshold = 180;
+        private const int fifthIntThreshold = 200;
         public MainEngine(MainWindow window)
         { 
             this.Window = window;
@@ -309,6 +309,7 @@ namespace Runedal.GameEngine
             {
                 if (command == "1")
                 {
+                    IsSaveOverwriteConfirmation = false;
                     SaveGame("-1", true, false);
                 }
                 else if (command == "2")

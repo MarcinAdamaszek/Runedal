@@ -3045,7 +3045,8 @@ namespace Runedal.GameEngine
             //same for high consumables
             Data.Items!.ForEach(it =>
             {
-                if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit)
+                if (it.GetType() == typeof(Consumable) && it.Price >= lowTierLimit 
+                && it.Price < 100)
                 {
                     if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success &&
                     it.Name!.ToLower() != "derillońska" && it.Name!.ToLower() != "piwo" &&
@@ -3063,7 +3064,8 @@ namespace Runedal.GameEngine
             //same for medium tier
             Data.Items!.ForEach(it =>
             {
-                if (it.Price < mediumTierLimit && it.Price >= mediumTierLimit * 0.5)
+                if (it.Price < mediumTierLimit && it.Price >= mediumTierLimit * 0.5 
+                && it.GetType() != typeof(Consumable))
                 {
                     if (!Regex.Match(it.Name!.ToLower(), @"kula_portalowa").Success)
                     {

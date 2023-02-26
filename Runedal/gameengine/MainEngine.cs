@@ -3103,9 +3103,12 @@ namespace Runedal.GameEngine
             }
 
             //try dropping low tier item
-            if (lowTierItem.Name != "placeholder" && TryOutChance(lowTierChance))
+            if (dyingChar.Level < 38)
             {
-                AddItemToLocation(dyingChar.CurrentLocation!, lowTierItem.Name!, lowTierQuantity);
+                if (lowTierItem.Name != "placeholder" && TryOutChance(lowTierChance))
+                {
+                    AddItemToLocation(dyingChar.CurrentLocation!, lowTierItem.Name!, lowTierQuantity);
+                }
             }
 
             //try dropping high consumable item

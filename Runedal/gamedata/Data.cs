@@ -445,7 +445,14 @@ namespace Runedal.GameData
             {
                 foreach (var character in charactersArray)
                 {
-                    character.Gold += (character as Monster)!.Level * 3;
+                    if ((character as Monster)!.Level < 30)
+                    {
+                        character.Gold += (character as Monster)!.Level * 3;
+                    }
+                    else
+                    {
+                        character.Gold += (character as Monster)!.Level * 10;
+                    }
                     Characters!.Add(character);
                 }
             }
@@ -453,7 +460,14 @@ namespace Runedal.GameData
             {
                 foreach (var character in charactersArray)
                 {
-                    character.Gold += (character as Hero)!.Level * 10;
+                    if ((character as Hero)!.Level < 40)
+                    {
+                        character.Gold += (character as Hero)!.Level * 10;
+                    }
+                    else
+                    {
+                        character.Gold += (character as Hero)!.Level * 30;
+                    }
                     Characters!.Add(character);
                 }
             }

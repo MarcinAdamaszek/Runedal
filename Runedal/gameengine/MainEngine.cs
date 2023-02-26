@@ -3168,7 +3168,7 @@ namespace Runedal.GameEngine
                         PrintSpeech(ch, (ch as Trader)!.WelcomePhrase);
                     }
                 }
-                else if (ch.GetType() == typeof(Hero)) 
+                else if (ch.GetType() == typeof(Hero) && (ch as Hero)!.Aggressiveness != Monster.AggressionType.Aggressive) 
                 {
                     if ((ch as Hero)!.WelcomePhrase != "placeholder")
                     {

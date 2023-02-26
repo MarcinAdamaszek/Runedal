@@ -2514,7 +2514,7 @@ namespace Runedal.GameEngine
                         spellName = "wampirze_ostrze";
                         break;
                     case "dara":
-                        spellName = "niebiański_dotyk";
+                        spellName = "niebiańska_łaska";
                         break;
 
                         //if the first rune name is incorrect

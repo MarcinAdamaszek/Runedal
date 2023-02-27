@@ -3506,7 +3506,7 @@ namespace Runedal.GameEngine
             if (character == Data.Player!)
             {
                 //fix bug causing player still fighting with the enemy he died from
-                AttackInstances.Clear();
+                //AttackInstances.Clear();
 
                 Character death = new Character("Śmierć");
                 PrintMessage("Twój wzrok traci ostrość, a dzwięki dochodzą jakby z oddali. Przed Tobą pojawia się wysoka na 2 metry " +
@@ -3746,8 +3746,6 @@ namespace Runedal.GameEngine
                 {
                     receiver.RemoveOpponent(dealer);
                 }
-                //dealer.InteractsWith = new Character("placeholder");
-                //receiver.InteractsWith = new Character("placeholder");
 
                 if (isDealerPlayer)
                 {
@@ -4366,7 +4364,7 @@ namespace Runedal.GameEngine
             }
 
             //handle auto-attack
-            else if (IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player))
+            else if (IsAutoattackOn && !AttackInstances.Exists(ins => ins.Attacker == Data.Player) && !isDmgLethal)
             {
                 AttackCharacter(Data.Player!, attacker);
             }

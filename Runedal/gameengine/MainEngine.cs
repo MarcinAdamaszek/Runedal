@@ -3753,11 +3753,25 @@ namespace Runedal.GameEngine
                 {
                     if (receiver.GetType() == typeof(Hero))
                     {
-                        GivePlayerExperience(receiver.Level * 3);
+                        if (receiver.Level < 39)
+                        {
+                            GivePlayerExperience(receiver.Level * 3);
+                        }
+                        else
+                        {
+                            GivePlayerExperience(receiver.Level * 6);
+                        }
                     }
                     else
                     {
-                        GivePlayerExperience(receiver.Level);
+                        if (receiver.Level < 31)
+                        {
+                            GivePlayerExperience(receiver.Level);
+                        }
+                        else
+                        {
+                            GivePlayerExperience(receiver.Level * 2);
+                        }
                     }
                 }
             }

@@ -3103,7 +3103,7 @@ namespace Runedal.GameEngine
             }
 
             //try dropping low tier item
-            if (dyingChar.Level < 38)
+            if (dyingChar.Level < 31)
             {
                 if (lowTierItem.Name != "placeholder" && TryOutChance(lowTierChance))
                 {
@@ -3751,25 +3751,11 @@ namespace Runedal.GameEngine
                 {
                     if (receiver.GetType() == typeof(Hero))
                     {
-                        if (receiver.Level < 39)
-                        {
-                            GivePlayerExperience(receiver.Level * 3);
-                        }
-                        else
-                        {
-                            GivePlayerExperience(receiver.Level * 6);
-                        }
+                        GivePlayerExperience(receiver.Level * 3);
                     }
                     else
                     {
-                        if (receiver.Level < 31)
-                        {
-                            GivePlayerExperience(receiver.Level);
-                        }
-                        else
-                        {
-                            GivePlayerExperience(receiver.Level * 2);
-                        }
+                        GivePlayerExperience(receiver.Level);
                     }
                 }
             }
@@ -3782,6 +3768,12 @@ namespace Runedal.GameEngine
         {
             ulong experience = Convert.ToUInt64(lvl * 15);
             int previousLevel = Data.Player!.Level;
+
+            //increase experience amount if it's artimesian mob
+            if (lvl > 30)
+            {
+                experience += Convert.ToUInt64(lvl * 5);
+            }
 
             PrintMessage("Zdobywasz " + experience + " doświadczenia", MessageType.Action);
             if (Data.Player!.GainExperience(experience))

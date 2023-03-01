@@ -3226,6 +3226,12 @@ namespace Runedal.GameEngine
                 {
                     PrintHint(Hints.HintType.GameSpeed);
                 }
+
+                //quick save hint
+                if (Hints.QuickSaveHint && nextLocation.X == 18 && nextLocation.Y == 17 && nextLocation.Z == 0)
+                {
+                    PrintHint(Hints.HintType.QuickSave);
+                }
             }
         }
 
@@ -5879,29 +5885,29 @@ namespace Runedal.GameEngine
                 case Hints.HintType.Attack:
                     hintLines[1] += "Jest tutaj postać (" + objectName1 + "), którą możesz zaatakować!";
                     hintLines[2] += "Aby zaatakować pierwszą postać z brzegu, wpisz \"attack\" (skrót \"a\")";
-                    hintLines[3] += "Możesz też wybrać postać, którą chcesz zaatakować, dodając jej nazwę: \"attack " + objectName1 + "\"";
+                    hintLines[3] += "Możesz też wybrać postać, którą chcesz zaatakować, dodając jej nazwę (np. \"attack " + objectName1 + "\")";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.AttackHint = false;
                     break;
                 case Hints.HintType.Trade:
                     hintLines[1] += "Jest tutaj postać (" + objectName1 + "), z którą możesz handlować!";
-                    hintLines[2] += "Aby rozpocząć handel z postacią, wpisz komendę \"trade\" (skrót \"tr\") i nazwę postaci: \"trade " + objectName1 +
-                        "\"";
+                    hintLines[2] += "Aby rozpocząć handel z postacią, wpisz komendę \"trade\" (skrót \"tr\") i nazwę postaci (np. \"trade " + objectName1 +
+                        "\")";
                     hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.TradeHint = false;
                     break;
                 case Hints.HintType.Talk:
                     hintLines[1] += "Jest tutaj postać (" + objectName1 + "), z którą możesz porozmawiać!";
-                    hintLines[2] += "Aby rozpocząć dialog z postacią, wpisz komendę \"talk\" (skrót \"ta\") i nazwę postaci: \"talk " + objectName1 +
-                        "\"";
+                    hintLines[2] += "Aby rozpocząć dialog z postacią, wpisz komendę \"talk\" (skrót \"ta\") i nazwę postaci (np. \"talk " + objectName1 +
+                        "\")";
                     hintLines[3] += "Rozmawiać możesz ze wszystkimi postaciami w grze!";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.TalkHint = false;
                     break;
                 case Hints.HintType.Pickup:
                     hintLines[1] += "Aby podnieść wszystko co leży na ziemi, wpisz \"pickup\" (skrót \"p\")";
-                    hintLines[2] += "Możesz też wybrać przedmiot, który chcesz podnieść: np. \"pickup złoto\"";
-                    hintLines[3] += "Aby podnieść konkretną ilość, możesz dodąc liczbę: np. \"pickup chleb 2\" - podniesie 2 chleby";
+                    hintLines[2] += "Możesz też wybrać przedmiot, który chcesz podnieść (np. \"pickup złoto\")";
+                    hintLines[3] += "Aby podnieść konkretną ilość, możesz dodąc liczbę (np. \"pickup złoto 2\" - podniesie 2 złota)";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.PickupHint = false;
                     break;
@@ -5916,17 +5922,17 @@ namespace Runedal.GameEngine
                     Hints.InventoryHint = false;
                     break;
                 case Hints.HintType.LookInventoryItem:
-                    hintLines[1] += "Aby obejżeć przedmiot, użyj komendy \"look\" (skrót \"l\") i nazwy przedmiotu: np. \"look " +
-                        objectName1 + "\" aby obejżeć " + objectName1;
-                    hintLines[2] += "Aby wyrzucić przedmiot, użyj komendy \"drop\" i nazwy przedmiotu: np. \"drop " + objectName1 +"\"";
-                    hintLines[3] += "Aby wyrzucić większą ilość przedmiotu, możesz dodać liczbę: np. \"drop " + objectName1 + " 2\"";
+                    hintLines[1] += "Aby obejżeć przedmiot, użyj komendy \"look\" (skrót \"l\") i nazwy przedmiotu (np. \"look " +
+                        objectName1 + "\" aby obejżeć " + objectName1 + ")";
+                    hintLines[2] += "Aby wyrzucić przedmiot, użyj komendy \"drop\" i nazwy przedmiotu (np. \"drop " + objectName1 +"\")";
+                    hintLines[3] += "Aby wyrzucić większą ilość przedmiotu, możesz dodać liczbę (np. \"drop " + objectName1 + " 2\")";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.LookInventoryItemHint = false;
                     break;
                 case Hints.HintType.BuySell:
-                    hintLines[1] += "Aby obejżeć przedmiot w ekwipunku handlarza użyj komendy \"look\" (skrót \"l\") (np. \"look " + objectName1 + "\"";
-                    hintLines[2] += "Aby kupić przedmiot, użyj komendy \"buy\" (np. \"buy " + objectName1 + "\"";
-                    hintLines[3] += "Aby sprzedać przedmiot, użyj komendy \"sell\" (np. \"sell " + objectName2 + "\"";
+                    hintLines[1] += "Aby obejżeć przedmiot w ekwipunku handlarza użyj komendy \"look\" (skrót \"l\") (np. \"look " + objectName1 + "\")";
+                    hintLines[2] += "Aby kupić przedmiot, użyj komendy \"buy\" (np. \"buy " + objectName1 + "\")";
+                    hintLines[3] += "Aby sprzedać przedmiot, użyj komendy \"sell\" (np. \"sell " + objectName2 + "\")";
                     hintLines[4] += "UWAGA!!! Sprzedajesz taniej niż kupujesz!";
                     hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.BuySellHint = false;
@@ -5966,7 +5972,7 @@ namespace Runedal.GameEngine
                     break;
                 case Hints.HintType.Spells:
                     hintLines[1] += "Aby zobaczyć listę zapamiętanych czarów, wpisz \"spells\" lub skrót \"sps\"";
-                    hintLines[2] += "Aby zobaczyć opis czaru, użyj komendy \"look\" (skrót \"l\") (np. \"look " + objectName1 + "\"";
+                    hintLines[2] += "Aby zobaczyć opis czaru, użyj komendy \"look\" (skrót \"l\") (np. \"look " + objectName1 + "\")";
                     hintLines[3] += "Aby rzucić czar, użyj komendy \"cast\" (skrót \"c\") i numeru czaru na liście (np. \"cast 1\")";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.SpellsHint = false;
@@ -5999,7 +6005,7 @@ namespace Runedal.GameEngine
                     Hints.PauseHint = false;
                     break;
                 case Hints.HintType.Flee:
-                    hintLines[1] += "Aby spróbować ucieczki, użyj komendy \"flee\"";
+                    hintLines[1] += "Aby spróbować ucieczki, użyj komendy \"flee\" (skrót \"f\")";
                     hintLines[2] += "Możesz wybrać kierunek ucieczki, dodając literę kierunku (np. \"flee n\" - ucieczka na północ)";
                     hintLines[3] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.FleeHint = false;
@@ -6014,6 +6020,11 @@ namespace Runedal.GameEngine
                     hintLines[1] += "Aby zobaczyć efekty nałożone na Twoją postać, wpisz \"effects\" (skrót \"ef\")";
                     hintLines[2] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.EffectsHint = false;
+                    break;
+                case Hints.HintType.QuickSave:
+                    hintLines[1] += "Aby zrobić szybki zapis gry, wpisz \"save\"";
+                    hintLines[2] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    Hints.QuickSaveHint = false;
                     break;
 
             }

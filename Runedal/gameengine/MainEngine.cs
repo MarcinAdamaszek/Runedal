@@ -808,7 +808,7 @@ namespace Runedal.GameEngine
 
             if (isQuickSave)
             {
-                savePath = Data.JsonDirectoryPath + @"SavedGames\AUTO_ZAPIS";
+                savePath = Data.JsonDirectoryPath + @"SavedGames\SZYBKI_ZAPIS";
             }
 
             if (IsPathSpecified)
@@ -1153,7 +1153,7 @@ namespace Runedal.GameEngine
 
             foreach (var save in savesToChoose)
             {
-                if (save != "AUTO_ZAPIS")
+                if (save != "SZYBKI_ZAPIS")
                 {
                     PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
                     i++;
@@ -1210,13 +1210,13 @@ namespace Runedal.GameEngine
                 PrintMessage("                     i naciśnij enter\n", MessageType.Default, false);
             }
 
-            if (savesToChoose.Contains("AUTO_ZAPIS"))
+            if (savesToChoose.Contains("SZYBKI_ZAPIS"))
             {
-                PrintMessage("                       1. AUTO_ZAPIS", MessageType.Loss, false);
+                PrintMessage("                       1. SZYBKI_ZAPIS", MessageType.Loss, false);
                 i = 2;
                 foreach (var save in savesToChoose)
                 {
-                    if (save != "AUTO_ZAPIS")
+                    if (save != "SZYBKI_ZAPIS")
                     {
                         PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
                         i++;

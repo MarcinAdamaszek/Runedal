@@ -866,7 +866,8 @@ namespace Runedal.GameEngine
         //method loading game
         private void LoadGame(string saveNumber)
         {
-            string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
+            string gameSavesPathBeginning = Data.JsonDirectoryPath + @"SavedGames\";
+            string[] saveFiles = Directory.GetFiles(gameSavesPathBeginning);
             int chosenNumber = -1;
             int i;
 
@@ -883,6 +884,8 @@ namespace Runedal.GameEngine
             {
                 return;
             }
+
+            
 
             IsInGame = true;
             IsLoading = false;
@@ -1153,11 +1156,11 @@ namespace Runedal.GameEngine
 
             foreach (var save in savesToChoose)
             {
-                if (save != "SZYBKI_ZAPIS")
-                {
+                //if (save != "SZYBKI_ZAPIS")
+                //{
                     PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
                     i++;
-                }
+                //}
             }
         }
 
@@ -1210,30 +1213,15 @@ namespace Runedal.GameEngine
                 PrintMessage("                     i naciśnij enter\n", MessageType.Default, false);
             }
 
-            if (savesToChoose.Contains("SZYBKI_ZAPIS"))
+
+            i = 1;
+            foreach (var save in savesToChoose)
             {
-                PrintMessage("                       1. SZYBKI_ZAPIS", MessageType.Loss, false);
-                i = 2;
-                foreach (var save in savesToChoose)
-                {
-                    if (save != "SZYBKI_ZAPIS")
-                    {
-                        PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
-                        i++;
-                    }
-                }
-            }
-            else
-            {
-                i = 1;
-                foreach (var save in savesToChoose)
-                {
-                        PrintMessage("                        " + i + ". " + save, MessageType.Loss, false);
-                        i++;
-                }
+                PrintMessage("                        " + i + ". " + save, MessageType.Loss, false);
+                i++;
             }
 
-            
+
         }
 
         //mathod handling 'autoattack' command

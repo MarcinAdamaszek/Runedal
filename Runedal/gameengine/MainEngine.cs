@@ -818,7 +818,7 @@ namespace Runedal.GameEngine
 
             for (i = 0; i < saveFiles.Length; i++)
             {
-                if (saveNumber == Convert.ToString(i + 1))
+                if (saveNumber == Convert.ToString(i + 2))
                 {
                     IsSaving = false;
                     savePath = saveFiles[i];

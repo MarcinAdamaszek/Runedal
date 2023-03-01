@@ -2997,7 +2997,7 @@ namespace Runedal.GameEngine
         }
 
         //method triggering the drop chance for every monster dying
-        private void TryChanceToDrop(CombatCharacter dyingChar)
+        private void TriggerDropChance(CombatCharacter dyingChar)
         {
             //prevent dropping anything if it's rat dying
             if (dyingChar.Name!.ToLower() == "szczur")
@@ -3620,7 +3620,7 @@ namespace Runedal.GameEngine
                 TryRuneDrop();
 
                 //try chance to drop extra items
-                TryChanceToDrop(character);
+                TriggerDropChance(character);
 
                 //drop character's items
                 character.Inventory!.ForEach(item =>

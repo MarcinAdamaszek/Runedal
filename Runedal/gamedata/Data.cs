@@ -451,7 +451,7 @@ namespace Runedal.GameData
                     }
                     else
                     {
-                        character.Gold += (character as Monster)!.Level * 9;
+                        character.Gold += (character as Monster)!.Level * 7;
                     }
                     Characters!.Add(character);
                 }
@@ -466,7 +466,7 @@ namespace Runedal.GameData
                     }
                     else
                     {
-                        character.Gold += (character as Hero)!.Level * 30;
+                        character.Gold += (character as Hero)!.Level * 25;
                     }
                     Characters!.Add(character);
                 }

@@ -3118,6 +3118,14 @@ namespace Runedal.GameEngine
                 AddItemToLocation(dyingChar.CurrentLocation!, mediumTierItem.Name!, 1);
             }
 
+            //try dropping stek/mikstura_zycia when it's arimesian enemy dying
+            if (dyingChar.Level > 30 && TryOutChance(0.30))
+            {
+                string[] itemsNames = new string[2] { "Stek", "Mikstura_życia" };
+
+                AddItemToLocation(dyingChar.CurrentLocation!, itemsNames[Rand.Next(0, 2)], 1);
+            }
+
             //try dropping high tier item
             //if (highTierItem.Name != "placeholder" && TryOutChance(highTierChance) &&
             //    dyingChar.GetType() == typeof(Hero))

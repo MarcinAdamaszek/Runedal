@@ -1307,7 +1307,7 @@ namespace Runedal.GameEngine
                         weightAboveLimit = 0;
                     }
 
-                    int actionPoints = (int)((500 + weightAboveLimit) / Data.Player.GetEffectiveSpeed()) * 10;
+                    int actionPoints = (int)((300 + weightAboveLimit) / Data.Player.GetEffectiveSpeed()) * 10;
 
                     CharAction locationChange = new LocationChange(Data.Player!, nextLocation, directionString, actionPoints);
                     AddAction(locationChange);

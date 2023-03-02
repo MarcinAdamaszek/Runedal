@@ -3755,12 +3755,6 @@ namespace Runedal.GameEngine
             ulong experience = Convert.ToUInt64(lvl * 15);
             int previousLevel = Data.Player!.Level;
 
-            //increase experience amount if it's artimesian mob
-            if (lvl > 30)
-            {
-                experience += Convert.ToUInt64(lvl * 5);
-            }
-
             PrintMessage("Zdobywasz " + experience + " doświadczenia", MessageType.Action);
             if (Data.Player!.GainExperience(experience))
             {

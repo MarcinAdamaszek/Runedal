@@ -18,7 +18,7 @@ namespace Runedal.GameData.Characters
         //values of multipliers for calculating attributes modifiers
         private const double MaxHpStrMultiplier = 14;
         private const double MaxMpIntMultiplier = 14;
-        private const double HpRegenStrMultiplier = 2;
+        private const double HpRegenStrMultiplier = 3;
         private const double MpRegenIntMultiplier = 7;
         private const double SpeedAgiMultiplier = 0.5;
         private const double AttackStrMultiplier = 2.5;
@@ -771,7 +771,8 @@ namespace Runedal.GameData.Characters
                         baseStatValue = Speed + modifiersSumValue + SpeedAgiMultiplier * GetEffectiveAgility();
                         break;
                     case Modifier.ModType.Attack:
-                        baseStatValue = Attack + modifiersSumValue + AttackStrMultiplier * GetEffectiveStrength();
+                        baseStatValue = Attack + modifiersSumValue + AttackStrMultiplier * GetEffectiveStrength() 
+                            + Weapon!.Attack;
                         break;
                     case Modifier.ModType.AtkSpeed:
                         baseStatValue = AtkSpeed + modifiersSumValue + AtkSpeedAgiMultiplier * GetEffectiveAgility();
@@ -780,7 +781,8 @@ namespace Runedal.GameData.Characters
                         baseStatValue = Accuracy + modifiersSumValue + AccuracyAgiMultiplier * GetEffectiveAgility();
                         break;
                     case Modifier.ModType.Defense:
-                        baseStatValue = Defense + modifiersSumValue;
+                        baseStatValue = Defense + modifiersSumValue + Torso!.Defense + Pants!.Defense 
+                            + Gloves!.Defense + Shoes!.Defense + Helmet!.Defense;
                         break;
                     case Modifier.ModType.Evasion:
                         baseStatValue = Evasion + modifiersSumValue + EvasionAgiMultiplier * GetEffectiveAgility();

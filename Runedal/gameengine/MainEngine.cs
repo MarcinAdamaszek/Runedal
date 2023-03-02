@@ -584,6 +584,12 @@ namespace Runedal.GameEngine
                 case "devme":
                     Data.Player!.AddAttributePoints(1);
                     break;
+                case "clockstop":
+                    GameClock.Stop();
+                    break;
+                case "clockstart":
+                    GameClock.Start();
+                    break;
                 default:
                     PrintMessage("Nie rozumiem. Aby zobaczyć ściągawkę komend, wpisz \"help\". Aby wyjść do menu, wciśnij esc.", MessageType.SystemFeedback);
                     break;

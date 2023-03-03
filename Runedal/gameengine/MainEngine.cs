@@ -4244,7 +4244,17 @@ namespace Runedal.GameEngine
             Modifier specialMod = new Modifier();
             parentName += "(SE)";
 
-            if (effect.Type == SpecialEffect.EffectType.Heal)
+            if (effect.Type == SpecialEffect.EffectType.HealPercent)
+            {
+                double healedHp = target.Heal((effect.Value * 0.01) * target.GetEffectiveMaxHp());
+
+                if (target == Data.Player)
+                {
+                    PrintMessage("Uleczono: " + healedHp + " HP");
+                }
+                return;
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Heal)
             {
                 double healedHp = target.Heal(effect.Value);
 
@@ -6064,7 +6074,11 @@ namespace Runedal.GameEngine
         {
             string effectDescription = string.Empty;
 
-            if (effect.Type == SpecialEffect.EffectType.Heal)
+            if (effect.Type == SpecialEffect.EffectType.HealPercent)
+            {
+                effectDescription = "Leczenie(" + effect.Value + "_%_MaxHP)";
+            }
+            else if (effect.Type == SpecialEffect.EffectType.Heal)
             {
                 effectDescription = "Leczenie(" + effect.Value + "_HP)";
             }

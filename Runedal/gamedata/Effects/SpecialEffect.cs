@@ -24,6 +24,7 @@ namespace Runedal.GameData.Effects
         }
         public enum EffectType
         {
+            HealPercent,
             Heal,
             Stun,
             Lifesteal,

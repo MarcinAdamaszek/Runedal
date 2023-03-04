@@ -5191,7 +5191,7 @@ namespace Runedal.GameEngine
             rows[5] = "||-----------------------";
             rows[6] = "|| Siła: " + attributes[0];
             rows[7] = "|| Zręczność: " + attributes[1];
-            rows[8] = "|| Inteligencja: " + attributes[2];
+            rows[8] = "|| Intel.: " + attributes[2];
             rows[9] = "||-----------------------";
             rows[10] = "|| Maks. HP: " + player.EffectiveMaxHp;
             rows[11] = "|| Maks. MP: " + player.EffectiveMaxMp;

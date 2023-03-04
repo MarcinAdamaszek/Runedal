@@ -3086,7 +3086,7 @@ namespace Runedal.GameEngine
             //}
 
             double lowTierChance = 0.4;
-            double highConsumableChance = 0.015 * NthRoot(dyingChar.Level, 1.2);
+            double highConsumableChance = 0.013 * NthRoot(dyingChar.Level, 1.2);
             double mediumTierChance = 0.02;
             //double highTierChance = 0.3;
 
@@ -3106,7 +3106,8 @@ namespace Runedal.GameEngine
             }
 
             //try dropping high consumable item
-            if (highConsumablesItem.Name != "placeholder" && TryOutChance(highConsumableChance))
+            if (highConsumablesItem.Name != "placeholder" && TryOutChance(highConsumableChance) 
+                && dyingChar.Level > 4)
             {
                 AddItemToLocation(dyingChar.CurrentLocation!, highConsumablesItem.Name!, 1);
             }

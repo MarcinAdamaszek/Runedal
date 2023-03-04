@@ -545,10 +545,10 @@ namespace Runedal.GameData.Characters
                         baseStatValue = Evasion;
                         break;
                     case Modifier.ModType.MagicResistance:
-                        baseStatValue = Evasion;
+                        baseStatValue = MagicResistance;
                         break;
                     case Modifier.ModType.Critical:
-                        baseStatValue = Evasion;
+                        baseStatValue = Critical;
                         break;
                 }
 

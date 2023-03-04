@@ -2557,7 +2557,7 @@ namespace Runedal.GameEngine
                 //akull-verde
                 else if (firstRune == runeNames[1] && secondRune == runeNames[2] || firstRune == runeNames[2] && secondRune == runeNames[1])
                 {
-                    spellName = "dotyk_śmierci";
+                    spellName = "rozbicie";
                 }
 
                 //akull-xitan
@@ -4246,7 +4246,7 @@ namespace Runedal.GameEngine
 
             if (effect.Type == SpecialEffect.EffectType.HealPercent)
             {
-                double healedHp = target.Heal((effect.Value * 0.01) * target.GetEffectiveMaxHp());
+                double healedHp = target.Heal(Math.Floor(effect.Value * 0.01 * target.GetEffectiveMaxHp()));
 
                 if (target == Data.Player)
                 {

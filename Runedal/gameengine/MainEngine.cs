@@ -5223,7 +5223,7 @@ namespace Runedal.GameEngine
             rows[6] += "Uniki: " + Math.Floor(player.GetEffectiveEvasion());
             rows[7] += "Odporność na magię: " + Math.Floor(player.GetEffectiveMagicResistance());
             rows[8] += "Szybkość: " + Math.Floor(player.GetEffectiveSpeed());
-            rows[9] += "Regeneracja HP " + Math.Floor(player.GetEffectiveHpRegen());
+            rows[9] += "Regeneracja HP: " + Math.Floor(player.GetEffectiveHpRegen());
             rows[10] += "Regeneracja MP: " + Math.Floor(player.GetEffectiveMpRegen());
             rows[11] += "Udźwig: " + player.GetWeightLimit();
 

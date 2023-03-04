@@ -3005,6 +3005,12 @@ namespace Runedal.GameEngine
             double mediumTierLimit = dyingChar.Level * 30;
             double highTierLimit = dyingChar.Level * 100;
 
+            //increase the worth of medium tier item for bosses
+            if (dyingChar.GetType() == typeof(Hero)) 
+            {
+                mediumTierLimit =  dyingChar.Level * 20 + Math.Pow(dyingChar.Level, 2);
+            }
+
             Item lowTierItem = new Item("placeholder");
             Item highConsumablesItem = new Item("placeholder");
             Item mediumTierItem = new Item("placeholder");

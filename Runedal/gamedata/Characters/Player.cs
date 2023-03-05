@@ -29,7 +29,7 @@ namespace Runedal.GameData.Characters
         private const double MagicResistanceIntMultiplier = 5;
 
         //values of other multipliers
-        private const int StrWeightLimitMultiplier = 27;
+        private const int StrWeightLimitMultiplier = 50;
         private const double WeightPenaltyHpRegenMultiplier = 0.1;
         private const double WeightPenaltyMpRegenMultiplier = 0.1;
         private const double WeightPenaltyCombatStatsMultiplier = 0.8;

@@ -500,7 +500,7 @@ namespace Runedal.GameData
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Attack, 40, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -20, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -60, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -60, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -50, 0, weapon.Name!, true));
                     }
                 }
 
@@ -514,7 +514,7 @@ namespace Runedal.GameData
                         if (armor.Weight >= 500)
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -10, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -12, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 500 && armor.Weight >= 200)
@@ -527,7 +527,7 @@ namespace Runedal.GameData
                         if (armor.Weight >= 450)
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -7, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -15, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -7, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 450 && armor.Weight >= 150)
@@ -540,7 +540,7 @@ namespace Runedal.GameData
                         if (armor.Weight >= 250)
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -5, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -7, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -4, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -5, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 250 && armor.Weight >= 100)

@@ -488,19 +488,18 @@ namespace Runedal.GameData
                 //if it's weapon, add modifiers depending on weapon type
                 if (item.GetType() == typeof(Weapon))
                 {
-                    Weapon weapon = (Weapon)item;
                     if (weapon.Type == WeaponType.Blade)
                     {
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -15, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -40, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -40, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -10, 0, weapon.Name!, true));
+                        //weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -20, 0, weapon.Name!, true));
+                        //weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, weapon.Name!, true));
                     }
                     else if (weapon.Type == WeaponType.Blunt)
                     {
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Attack, 40, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -40, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -70, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -70, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -20, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -60, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -60, 0, weapon.Name!, true));
                     }
                 }
 

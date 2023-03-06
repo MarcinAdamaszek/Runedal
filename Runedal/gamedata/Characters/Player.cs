@@ -21,7 +21,7 @@ namespace Runedal.GameData.Characters
         private const double HpRegenStrMultiplier = 3;
         private const double MpRegenIntMultiplier = 7;
         private const double SpeedAgiMultiplier = 0.5;
-        private const double AttackStrMultiplier = 4;
+        private const double AttackStrMultiplier = 2;
         private const double AtkSpeedAgiMultiplier = 1;
         private const double AccuracyAgiMultiplier = 1.5;
         private const double CriticalAgiMultiplier = 2.6;
@@ -29,7 +29,7 @@ namespace Runedal.GameData.Characters
         private const double MagicResistanceIntMultiplier = 5;
 
         //values of other multipliers
-        private const int StrWeightLimitMultiplier = 50;
+        private const int StrWeightLimitMultiplier = 27;
         private const double WeightPenaltyHpRegenMultiplier = 0.1;
         private const double WeightPenaltyMpRegenMultiplier = 0.1;
         private const double WeightPenaltyCombatStatsMultiplier = 0.8;

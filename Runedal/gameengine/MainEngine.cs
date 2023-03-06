@@ -2170,7 +2170,16 @@ namespace Runedal.GameEngine
             }
             else if (itemToWear.GetType() == typeof(Weapon))
             {
-                WearWeaponOnPlayer(itemName);
+                if (itemToWear.Weight / 3 > Data.Player!.Strength)
+                {
+                    WearWeaponOnPlayer(itemName);
+                }
+                else
+                {
+                    PrintMessage("Nie masz wystarczającej siły aby założyć ten przedmiot! " +
+                        "(Wymagana bazowa siła: " + itemToWear.Weight / 5 + ")", MessageType.SystemFeedback);
+                    return;
+                }
 
                 //trigger takeoff hint
                 if (Hints.HintsOnOff && Hints.TakeoffHint)
@@ -4793,6 +4802,7 @@ namespace Runedal.GameEngine
         //method describing item
         private void ItemInfo(string itemName)
         {
+            bool isTooHeavy = false;
             string description = string.Empty;
             string weight = string.Empty;
             string itemType = string.Empty;
@@ -4909,6 +4919,12 @@ namespace Runedal.GameEngine
                 else if (weaponToDescribe.Type == Weapon.WeaponType.Blunt)
                 {
                     itemType += "Broń obuchowa";
+                    weight += " (Wymagana bazowa siła: " + weaponToDescribe.Weight / 5 + ")";
+
+                    if (weaponToDescribe.Weight / 5 > Data.Player!.Strength)
+                    {
+                        isTooHeavy = true;
+                    }
                 }
             }
             else if (itemToDescribe.GetType() == typeof(RuneStone))
@@ -4932,7 +4948,17 @@ namespace Runedal.GameEngine
             //print basic item info
             PrintMessage("[ " + itemToDescribe.Name + " ]");
             PrintMessage(itemToDescribe.Description!);
-            PrintMessage(weight);
+
+            //print weight in red color if the item is too heavy
+            if (isTooHeavy)
+            {
+                PrintMessage(weight + "!", MessageType.ReceiveDmg);
+            }
+            else
+            {
+                PrintMessage(weight);
+            }
+
             PrintMessage(itemType);
             if (effect != string.Empty)
             {

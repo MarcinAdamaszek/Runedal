@@ -2170,16 +2170,15 @@ namespace Runedal.GameEngine
             }
             else if (itemToWear.GetType() == typeof(Weapon))
             {
-                if (itemToWear.Weight / 3 > Data.Player!.Strength)
-                {
-                    WearWeaponOnPlayer(itemName);
-                }
-                else
+                if ((itemToWear as Weapon)!.Type == Weapon.WeaponType.Blunt 
+                    && itemToWear.Weight > 268 && itemToWear.Weight / 5 > Data.Player!.Strength)
                 {
                     PrintMessage("Nie masz wystarczającej siły aby założyć ten przedmiot! " +
                         "(Wymagana bazowa siła: " + itemToWear.Weight / 5 + ")", MessageType.SystemFeedback);
                     return;
                 }
+
+                WearWeaponOnPlayer(itemName);
 
                 //trigger takeoff hint
                 if (Hints.HintsOnOff && Hints.TakeoffHint)
@@ -4919,11 +4918,15 @@ namespace Runedal.GameEngine
                 else if (weaponToDescribe.Type == Weapon.WeaponType.Blunt)
                 {
                     itemType += "Broń obuchowa";
-                    weight += " (Wymagana bazowa siła: " + weaponToDescribe.Weight / 5 + ")";
 
-                    if (weaponToDescribe.Weight / 5 > Data.Player!.Strength)
-                    {
-                        isTooHeavy = true;
+                    //set strength limit but only for 268+ blunts, to exclude staves
+                    if (weaponToDescribe.Weight > 268) {
+                        weight += " (Wymagana bazowa siła: " + weaponToDescribe.Weight / 5 + ")";
+
+                        if (weaponToDescribe.Weight / 5 > Data.Player!.Strength)
+                        {
+                            isTooHeavy = true;
+                        }
                     }
                 }
             }

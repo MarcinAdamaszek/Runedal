@@ -488,6 +488,7 @@ namespace Runedal.GameData
                 //if it's weapon, add modifiers depending on weapon type
                 if (item.GetType() == typeof(Weapon))
                 {
+                    Weapon weapon = (Weapon)item;
                     if (weapon.Type == WeaponType.Blade)
                     {
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -10, 0, weapon.Name!, true));
@@ -514,7 +515,6 @@ namespace Runedal.GameData
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -10, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -7, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 500 && armor.Weight >= 200)
@@ -528,7 +528,6 @@ namespace Runedal.GameData
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -7, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -15, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -5, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 450 && armor.Weight >= 150)
@@ -542,7 +541,6 @@ namespace Runedal.GameData
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -5, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -7, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -2, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -5, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 250 && armor.Weight >= 100)

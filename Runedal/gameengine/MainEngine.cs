@@ -28,6 +28,7 @@ using System.Windows.Markup;
 using System.IO;
 using System.Xaml.Schema;
 using System.Threading;
+using System.Windows.Media.Media3D;
 
 namespace Runedal.GameEngine
 {
@@ -2160,6 +2161,47 @@ namespace Runedal.GameEngine
             
             if (itemToWear.GetType() == typeof(Armor))
             {
+                int strLimit = 0;
+
+                //set str limit for heavy armors
+                if ((itemToWear as Armor)!.Type == Armor.ArmorType.Torso)
+                {
+                    if ((itemToWear as Armor)!.Weight >= 500)
+                    {
+                        strLimit = (int)Math.Floor(Math.Pow(((itemToWear as Armor)!.Weight / 3) 
+                            - 175, 1.35) / 6);
+                    }
+                }
+                else if ((itemToWear as Armor)!.Type == Armor.ArmorType.Pants)
+                {
+                    if ((itemToWear as Armor)!.Weight >= 400)
+                    {
+                        strLimit = (int)Math.Floor(Math.Pow(((itemToWear as Armor)!.Weight / 2) 
+                            - 175, 1.35) / 6);
+                    }
+                }
+                else if ((itemToWear as Armor)!.Type == Armor.ArmorType.Helmet || 
+                    (itemToWear as Armor)!.Type == Armor.ArmorType.Gloves ||
+                    (itemToWear as Armor)!.Type == Armor.ArmorType.Gloves)
+                {
+                    if ((itemToWear as Armor)!.Weight >= 250)
+                    {
+                        strLimit = (int)Math.Floor(Math.Pow((itemToWear as Armor)!.Weight - 175, 1.35) / 6);
+                    }
+                }
+
+                //if str limit variable is filled (meaning armor was heavy),
+                //check player's base str if he meets the requirement
+                if (strLimit > 0)
+                {
+                    if (Data.Player!.Strength < strLimit)
+                    {
+                        PrintMessage("Nie możesz założyć tego przedmiotu! (Wymagana siła: " + strLimit + ")",
+                            MessageType.SystemFeedback);
+                        return;
+                    }
+                }
+
                 WearArmorOnPlayer(itemName);
 
                 //trigger takeoff hint
@@ -2170,6 +2212,8 @@ namespace Runedal.GameEngine
             }
             else if (itemToWear.GetType() == typeof(Weapon))
             {
+
+                //set str limit for blunt weapons
                 if ((itemToWear as Weapon)!.Type == Weapon.WeaponType.Blunt 
                     && itemToWear.Weight > 268 && itemToWear.Weight / 5 > Data.Player!.Strength)
                 {
@@ -3100,7 +3144,7 @@ namespace Runedal.GameEngine
             //}
 
             double lowTierChance = 0.4;
-            double highConsumableChance = 0.013 * NthRoot(dyingChar.Level, 1.2);
+            double highConsumableChance = 0.07 * NthRoot(dyingChar.Level, 1.2);
             double mediumTierChance = 0.02;
             //double highTierChance = 0.3;
 

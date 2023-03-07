@@ -497,10 +497,11 @@ namespace Runedal.GameData
                     }
                     else if (weapon.Type == WeaponType.Blunt)
                     {
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Accuracy, 100, 0, weapon.Name!, false));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Attack, 40, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -20, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -60, 0, weapon.Name!, true));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -50, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -60, 0, weapon.Name!, true));
                     }
                 }
 
@@ -540,7 +541,7 @@ namespace Runedal.GameData
                         if (armor.Weight >= 250)
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -5, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -4, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -3, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -5, 0, armor.Name!, true));
                         }
                         else if (armor.Weight < 250 && armor.Weight >= 100)

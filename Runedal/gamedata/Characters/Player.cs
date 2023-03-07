@@ -691,9 +691,9 @@ namespace Runedal.GameData.Characters
                 effectiveEvasion *= WeightPenaltyCombatStatsMultiplier;
             }
 
-            if (effectiveEvasion < 1)
+            if (effectiveEvasion < 3)
             {
-                effectiveEvasion = 1;
+                effectiveEvasion = 3;
             }
             return effectiveEvasion;
         }

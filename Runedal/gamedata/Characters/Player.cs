@@ -16,9 +16,9 @@ namespace Runedal.GameData.Characters
     public class Player : CombatCharacter, INotifyPropertyChanged
     {
         //values of multipliers for calculating attributes modifiers
-        private const double MaxHpStrMultiplier = 14;
+        private const double MaxHpStrMultiplier = 10;
         private const double MaxMpIntMultiplier = 14;
-        private const double HpRegenStrMultiplier = 3;
+        private const double HpRegenStrMultiplier = 2;
         private const double MpRegenIntMultiplier = 7;
         private const double SpeedAgiMultiplier = 0.5;
         private const double AttackStrMultiplier = 2;

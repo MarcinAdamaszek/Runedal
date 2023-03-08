@@ -3144,7 +3144,7 @@ namespace Runedal.GameEngine
             //}
 
             double lowTierChance = 0.4;
-            double highConsumableChance = 0.07 * NthRoot(dyingChar.Level, 1.2);
+            double highConsumableChance = 0.007 * NthRoot(dyingChar.Level, 1.2);
             double mediumTierChance = 0.02;
             //double highTierChance = 0.3;
 

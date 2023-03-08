@@ -4301,7 +4301,7 @@ namespace Runedal.GameEngine
         private void ApplySpecialEffect(CombatCharacter target, SpecialEffect effect, string parentName)
         {
             Modifier specialMod = new Modifier();
-            parentName += "(SE)";
+            parentName += "(Specjalny)";
 
             if (effect.Type == SpecialEffect.EffectType.HealPercent)
             {
@@ -4356,10 +4356,10 @@ namespace Runedal.GameEngine
 
                     switch (cityName)
                     {
-                        case "Derillon(SE)":
+                        case "Derillon(Specjalny)":
                             TeleportLocation = Data.Locations!.Find(loc => loc.Name!.ToLower() == "ulica_derillon")!;
                             break;
-                        case "Artimesia(SE)":
+                        case "Artimesia(Specjalny)":
                             TeleportLocation = Data.Locations!.Find(loc => loc.Name!.ToLower() == "ulica_artimesii")!;
                             break;
                     }
@@ -4436,7 +4436,7 @@ namespace Runedal.GameEngine
 
             //ensure player will be attacked by aggressive monsters in his
             //current location if the effect was invis
-            if (effect.Name == "Powłoka_nur'zhel(SE)")
+            if (effect.Name == "Powłoka_nur'zhel(Specjalny)")
             {
                 Data.Player!.CurrentLocation!.Characters!.ForEach(character =>
                 {
@@ -4473,7 +4473,7 @@ namespace Runedal.GameEngine
                 //get all effects with that name
                 Data.Player!.Effects.ForEach(eff =>
                 {
-                    if (eff.Name == "Powłoka_nur'zhel" || eff.Name == "Powłoka_nur'zhel(SE)")
+                    if (eff.Name == "Powłoka_nur'zhel" || eff.Name == "Powłoka_nur'zhel(Specjalny)")
                     {
                         effectsToRemove.Add(eff);
                     }
@@ -4482,7 +4482,7 @@ namespace Runedal.GameEngine
                 //get all modifiers with that name
                 Data.Player!.Modifiers!.ForEach(mod =>
                 {
-                    if (mod.Parent == "Powłoka_nur'zhel" || mod.Parent == "Powłoka_nur'zhel(SE)")
+                    if (mod.Parent == "Powłoka_nur'zhel" || mod.Parent == "Powłoka_nur'zhel(Specjalny)")
                     {
                         modsToRemove.Add(mod);
                     }

@@ -2192,7 +2192,7 @@ namespace Runedal.GameEngine
                 }
                 else if ((itemToWear as Armor)!.Type == Armor.ArmorType.Helmet || 
                     (itemToWear as Armor)!.Type == Armor.ArmorType.Gloves ||
-                    (itemToWear as Armor)!.Type == Armor.ArmorType.Gloves)
+                    (itemToWear as Armor)!.Type == Armor.ArmorType.Shoes)
                 {
                     if ((itemToWear as Armor)!.Weight >= 250)
                     {
@@ -4995,7 +4995,7 @@ namespace Runedal.GameEngine
                     }
                 }
                 if (armorToDescribe.Type == Armor.ArmorType.Helmet || armorToDescribe.Type == Armor.ArmorType.Gloves ||
-                    armorToDescribe.Type == Armor.ArmorType.Gloves)
+                    armorToDescribe.Type == Armor.ArmorType.Shoes)
                 {
                     if (armorToDescribe.Weight >= 250)
                     {

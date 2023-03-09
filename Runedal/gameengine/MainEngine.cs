@@ -123,7 +123,8 @@ namespace Runedal.GameEngine
             ReceiveDmg,
             CriticalHit,
             Miss,
-            Dodge
+            Dodge,
+            LimitExceeded
         }
 
         public MainWindow Window { get; set; }
@@ -592,7 +593,7 @@ namespace Runedal.GameEngine
                     GameClock.Start();
                     break;
                 default:
-                    PrintMessage("Nie rozumiem. Aby zobaczyć ściągawkę komend, wpisz \"help\". Aby wyjść do menu, wciśnij esc.", MessageType.SystemFeedback);
+                    PrintMessage("Coś nie wyszło.. krótka lista komend - wpisz \"help\". Pełna lista - wciśnij esc i wybierz \"Komendy\"", MessageType.SystemFeedback);
                     break;
             }
         }
@@ -4900,6 +4901,14 @@ namespace Runedal.GameEngine
                     if (armorToDescribe.Weight >= 500)
                     {
                         itemType += " (ciężka zbroja)";
+
+                        //show str limit
+                        weight += " (Wymagana bazowa siła: " + armorToDescribe.Weight / 15 + ")";
+
+                        if (armorToDescribe.Weight / 15 > Data.Player!.Strength)
+                        {
+                            isTooHeavy = true;
+                        }
                     }
                     else if (armorToDescribe.Weight < 500 && armorToDescribe.Weight >= 200)
                     {
@@ -4915,6 +4924,14 @@ namespace Runedal.GameEngine
                     if (armorToDescribe.Weight >= 400)
                     {
                         itemType += " (ciężka zbroja)";
+
+                        //show str limit
+                        weight += " (Wymagana bazowa siła: " + armorToDescribe.Weight / 10 + ")";
+
+                        if (armorToDescribe.Weight / 10 > Data.Player!.Strength)
+                        {
+                            isTooHeavy = true;
+                        }
                     }
                     else if (armorToDescribe.Weight < 400 && armorToDescribe.Weight >= 150)
                     {
@@ -4931,6 +4948,14 @@ namespace Runedal.GameEngine
                     if (armorToDescribe.Weight >= 250)
                     {
                         itemType += " (ciężka zbroja)";
+
+                        //show str limit
+                        weight += " (Wymagana bazowa siła: " + armorToDescribe.Weight / 5 + ")";
+
+                        if (armorToDescribe.Weight / 5 > Data.Player!.Strength)
+                        {
+                            isTooHeavy = true;
+                        }
                     }
                     else if (armorToDescribe.Weight < 250 && armorToDescribe.Weight >= 100)
                     {
@@ -4999,7 +5024,7 @@ namespace Runedal.GameEngine
             //print weight in red color if the item is too heavy
             if (isTooHeavy)
             {
-                PrintMessage(weight + "!", MessageType.ReceiveDmg);
+                PrintMessage(weight + "!", MessageType.LimitExceeded);
             }
             else
             {
@@ -6597,6 +6622,9 @@ namespace Runedal.GameEngine
                     break;
                 case (MessageType.Dodge):
                     brush = Brushes.LightSeaGreen;
+                    break;
+                case (MessageType.LimitExceeded):
+                    brush = Brushes.PaleVioletRed;
                     break;
             }
 

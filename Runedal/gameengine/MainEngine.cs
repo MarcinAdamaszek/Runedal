@@ -3194,6 +3194,14 @@ namespace Runedal.GameEngine
             //}
         }
 
+        //method triggering powloka nur'zhel effect
+        private void TriggerPowlokaNurzhel()
+        {
+            SpecialEffect additionalDmg = new SpecialEffect(SpecialEffect.EffectType.AdditionalDmg, 
+                3, 100);
+            ApplySpecialEffect(Data.Player!, additionalDmg, "Zaskoczenie");
+        }
+
         ///<summary>
         /// method performing action of location change and displaying 
         /// message saying that player is walking towards chosen direction
@@ -3395,6 +3403,28 @@ namespace Runedal.GameEngine
             else if (caster.CurrentLocation == Data.Player!.CurrentLocation)
             {
                 PrintMessage(caster.Name! + " rzuca czar w postać: " + target.Name);
+            }
+
+            //trigger powloka nur'zhel
+            if (caster == Data.Player! && Data.Player!.Effects!.Exists(eff =>
+            eff.Name!.ToLower() == "powłoka_nur'zhel") && spell.Power > 0)
+            {
+                TriggerPowlokaNurzhel();
+            }
+
+            //add additional dmg from additionalDmg modifiers
+            if (isCasterPlayer)
+            {
+                int additionalDmg = 0;
+                Data.Player!.Modifiers!.ForEach(mod =>
+                {
+                    if (mod.Type == Modifier.ModType.AdditionalDmg)
+                    {
+                        additionalDmg += mod.Value;
+                    }
+                });
+
+                spellDmg += additionalDmg;
             }
 
             //spend caster's mana
@@ -4340,6 +4370,10 @@ namespace Runedal.GameEngine
             {
                 specialMod = new Modifier(Modifier.ModType.ManaShield, effect.Value, effect.Duration, parentName, true);
             }
+            else if (effect.Type == SpecialEffect.EffectType.AdditionalDmg)
+            {
+                specialMod = new Modifier(Modifier.ModType.AdditionalDmg, effect.Value, effect.Duration, parentName);
+            }
             else if (effect.Type == SpecialEffect.EffectType.Teleport)
             {
                 //remove player from it's current location
@@ -4374,7 +4408,7 @@ namespace Runedal.GameEngine
             //apply special modifier depending on target type
             if (target == Data.Player)
             {
-                List<Modifier> specialMods = new List<Modifier>();
+                List<Modifier> specialMods = new();
                 specialMods.Add(specialMod);
                 ApplyEffect(specialMods, specialMod.Parent);
             }
@@ -6417,6 +6451,9 @@ namespace Runedal.GameEngine
                 case (Modifier.ModType.ManaShield):
                     modType = "Tarcza MP";
                     break;
+                case (Modifier.ModType.AdditionalDmg):
+                    modType = "Dodatkowe obrażenia";
+                    break;
             }
             return modType;
         }
@@ -6906,6 +6943,13 @@ namespace Runedal.GameEngine
                     PrintMessage(attacker.Name + " atakuje Cię..");
                 }
 
+                //trigger powloka nur'zhel
+                if (isAttackerPlayer && Data.Player!.Effects!.Exists(eff =>
+                eff.Name!.ToLower() == "powłoka_nur'zhel"))
+                {
+                    TriggerPowlokaNurzhel();
+                }
+
                 //try if attack actually hits or misses
                 if (!IsAttackHit(attacker.GetEffectiveAccuracy(), receiver.GetEffectiveEvasion()))
                 {
@@ -6924,6 +6968,21 @@ namespace Runedal.GameEngine
 
                     staticDmg = CalculateDmg(attacker.GetEffectiveAttack(), receiver.GetEffectiveDefense());
                     rawDmg = RandomizeDmg(staticDmg);
+
+                    //add additional dmg from additionalDmg modifiers
+                    if (isAttackerPlayer)
+                    {
+                        int additionalDmg = 0;
+                        Data.Player!.Modifiers!.ForEach(mod =>
+                        {
+                            if (mod.Type == Modifier.ModType.AdditionalDmg)
+                            {
+                                additionalDmg += mod.Value;
+                            }
+                        });
+
+                        rawDmg += additionalDmg;
+                    }
 
                     if (IsHitCritical(attacker.GetEffectiveCritical()))
                     {

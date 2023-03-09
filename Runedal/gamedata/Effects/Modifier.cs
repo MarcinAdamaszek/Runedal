@@ -55,7 +55,8 @@ namespace Runedal.GameData.Effects
             Stun,
             Lifesteal,
             Invisibility,
-            ManaShield
+            ManaShield,
+            AdditionalDmg
         }
 
         //type of modifier 

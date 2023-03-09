@@ -2141,6 +2141,15 @@ namespace Runedal.GameEngine
         //method handling 'wear' command
         private void WearHandler(string itemName)
         {
+            //prevent doing so when fighting
+            if (Data.Player!.CurrentState == CombatCharacter.State.Combat)
+            {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return;
+            }
+
+            ResetPlayerState();
+
             //handle lack of argument
             if (itemName == string.Empty)
             {
@@ -2242,6 +2251,15 @@ namespace Runedal.GameEngine
         //method for handling 'takeoff' command
         private void TakeoffHandler(string slotName)
         {
+            //prevent doing so when fighting
+            if (Data.Player!.CurrentState == CombatCharacter.State.Combat)
+            {
+                PrintMessage("Nie możesz tego zrobić w trakcie walki!", MessageType.SystemFeedback);
+                return;
+            }
+
+            ResetPlayerState();
+
             //handle lack of argument
             if (slotName == string.Empty)
             {

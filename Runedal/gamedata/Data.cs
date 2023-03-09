@@ -501,7 +501,12 @@ namespace Runedal.GameData
                     else if (weapon.Type == WeaponType.Blunt)
                     {
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Accuracy, 100, 0, weapon.Name!, false));
-                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Attack, 40, 0, weapon.Name!, true));
+
+                        if (weapon.Weight > 266)
+                        {
+                            weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Attack, 40, 0, weapon.Name!, true));
+                        }
+
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -20, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -60, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -60, 0, weapon.Name!, true));

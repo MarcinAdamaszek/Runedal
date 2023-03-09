@@ -489,11 +489,14 @@ namespace Runedal.GameData
                 if (item.GetType() == typeof(Weapon))
                 {
                     Weapon weapon = (Weapon)item;
+                    if (weapon.Type == WeaponType.Dagger)
+                    {
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -25, 0, weapon.Name!, true));
+                    }
                     if (weapon.Type == WeaponType.Blade)
                     {
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -10, 0, weapon.Name!, true));
-                        //weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -20, 0, weapon.Name!, true));
-                        //weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -20, 0, weapon.Name!, true));
+                        weapon.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -25, 0, weapon.Name!, true));
                     }
                     else if (weapon.Type == WeaponType.Blunt)
                     {
@@ -502,6 +505,11 @@ namespace Runedal.GameData
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.AtkSpeed, -20, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Critical, -60, 0, weapon.Name!, true));
                         weapon.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -60, 0, weapon.Name!, true));
+
+                        if (weapon.Weight > 266)
+                        {
+                            weapon.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -25, 0, weapon.Name!, true));
+                        }
                     }
                 }
 
@@ -516,12 +524,12 @@ namespace Runedal.GameData
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -10, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -12, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -15, 0, armor.Name!, true));
-                        }
-                        else if (armor.Weight < 500 && armor.Weight >= 200)
-                        {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
                         }
+                        //else if (armor.Weight < 500 && armor.Weight >= 200)
+                        //{
+                        //    armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
+                        //}
                     }
                     if (armor.Type == Armor.ArmorType.Pants)
                     {
@@ -529,12 +537,12 @@ namespace Runedal.GameData
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -7, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -7, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -10, 0, armor.Name!, true));
+                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -5, 0, armor.Name!, true));
                         }
-                        else if (armor.Weight < 450 && armor.Weight >= 150)
-                        {
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -7, 0, armor.Name!, true));
-                        }
+                        //else if (armor.Weight < 450 && armor.Weight >= 150)
+                        //{
+                        //    armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -7, 0, armor.Name!, true));
+                        //}
                     }
                     if (armor.Type == Armor.ArmorType.Helmet || armor.Type == Armor.ArmorType.Gloves || armor.Type == Armor.ArmorType.Shoes)
                     {
@@ -542,12 +550,12 @@ namespace Runedal.GameData
                         {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Speed, -5, 0, armor.Name!, true));
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.Evasion, -3, 0, armor.Name!, true));
-                            armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -5, 0, armor.Name!, true));
-                        }
-                        else if (armor.Weight < 250 && armor.Weight >= 100)
-                        {
                             armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -3, 0, armor.Name!, true));
                         }
+                        //else if (armor.Weight < 250 && armor.Weight >= 100)
+                        //{
+                        //    armor.Modifiers!.Add(new Modifier(Modifier.ModType.MpRegen, -3, 0, armor.Name!, true));
+                        //}
                     }
                 }
 

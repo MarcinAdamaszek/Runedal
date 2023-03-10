@@ -2178,16 +2178,14 @@ namespace Runedal.GameEngine
                 {
                     if ((itemToWear as Armor)!.Weight >= 500)
                     {
-                        strLimit = (int)Math.Floor(Math.Pow(((itemToWear as Armor)!.Weight / 3) 
-                            - 175, 1.35) / 6);
+                        strLimit = CalculateStrenghtLimit(itemToWear.Weight / 3);
                     }
                 }
                 else if ((itemToWear as Armor)!.Type == Armor.ArmorType.Pants)
                 {
                     if ((itemToWear as Armor)!.Weight >= 400)
                     {
-                        strLimit = (int)Math.Floor(Math.Pow(((itemToWear as Armor)!.Weight / 2) 
-                            - 175, 1.35) / 6);
+                        strLimit = CalculateStrenghtLimit(itemToWear.Weight / 2);
                     }
                 }
                 else if ((itemToWear as Armor)!.Type == Armor.ArmorType.Helmet || 
@@ -2196,7 +2194,7 @@ namespace Runedal.GameEngine
                 {
                     if ((itemToWear as Armor)!.Weight >= 250)
                     {
-                        strLimit = (int)Math.Floor(Math.Pow((itemToWear as Armor)!.Weight - 175, 1.35) / 6);
+                        strLimit = CalculateStrenghtLimit(itemToWear.Weight);
                     }
                 }
 
@@ -2579,7 +2577,7 @@ namespace Runedal.GameEngine
                         spellName = "wampirze_ostrze";
                         break;
                     case "dara":
-                        spellName = "niebiańska_łaska";
+                        spellName = "dotyk_niebios";
                         break;
 
                         //if the first rune name is incorrect
@@ -4899,6 +4897,7 @@ namespace Runedal.GameEngine
         private void ItemInfo(string itemName)
         {
             bool isTooHeavy = false;
+            int strLimit;
             string description = string.Empty;
             string weight = string.Empty;
             string itemType = string.Empty;
@@ -4955,9 +4954,10 @@ namespace Runedal.GameEngine
                         itemType += " (ciężka zbroja)";
 
                         //show str limit
-                        weight += " (Wymagana bazowa siła: " + armorToDescribe.Weight / 15 + ")";
+                        strLimit = CalculateStrenghtLimit(armorToDescribe.Weight / 3);
+                        weight += " (Wymagana bazowa siła: " + strLimit + ")";
 
-                        if (armorToDescribe.Weight / 15 > Data.Player!.Strength)
+                        if (strLimit > Data.Player!.Strength)
                         {
                             isTooHeavy = true;
                         }
@@ -4978,9 +4978,10 @@ namespace Runedal.GameEngine
                         itemType += " (ciężka zbroja)";
 
                         //show str limit
-                        weight += " (Wymagana bazowa siła: " + armorToDescribe.Weight / 10 + ")";
+                        strLimit = CalculateStrenghtLimit(armorToDescribe.Weight / 2);
+                        weight += " (Wymagana bazowa siła: " + strLimit + ")";
 
-                        if (armorToDescribe.Weight / 10 > Data.Player!.Strength)
+                        if (strLimit > Data.Player!.Strength)
                         {
                             isTooHeavy = true;
                         }
@@ -5000,11 +5001,12 @@ namespace Runedal.GameEngine
                     if (armorToDescribe.Weight >= 250)
                     {
                         itemType += " (ciężka zbroja)";
+                        strLimit = CalculateStrenghtLimit(armorToDescribe.Weight);
 
                         //show str limit
-                        weight += " (Wymagana bazowa siła: " + armorToDescribe.Weight / 5 + ")";
+                        weight += " (Wymagana bazowa siła: " + strLimit + ")";
 
-                        if (armorToDescribe.Weight / 5 > Data.Player!.Strength)
+                        if (strLimit > Data.Player!.Strength)
                         {
                             isTooHeavy = true;
                         }
@@ -6211,6 +6213,13 @@ namespace Runedal.GameEngine
         public static double NthRoot(double A, double N)
         {
             return Math.Pow(A, 1.0 / N);
+        }
+
+        //method calculating strenght limit for heavy armor parts
+        private int CalculateStrenghtLimit(int weight)
+        {
+            double strengthLimit = Math.Pow(weight - 175, 1.35) / 6;
+            return (int)Math.Floor(strengthLimit);
         }
 
         //method determining if location with specified coordinates exists

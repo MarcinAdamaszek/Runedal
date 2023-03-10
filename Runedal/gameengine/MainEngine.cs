@@ -3258,6 +3258,13 @@ namespace Runedal.GameEngine
                         PrintSpeech(ch, (ch as Hero)!.WelcomePhrase);
                     }
                 }
+                else if (ch.GetType() == typeof(Monster) && (ch as Monster)!.Aggressiveness != Monster.AggressionType.Aggressive)
+                {
+                    if ((ch as Monster)!.WelcomePhrase != "placeholder")
+                    {
+                        PrintSpeech(ch, (ch as Monster)!.WelcomePhrase);
+                    }
+                }
             });
 
             //display hints
@@ -3751,6 +3758,15 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage("Księżycowa Brama została otwarta!");
                     character.CurrentLocation.NorthPassage = true;
+                }
+
+                //open the north Artimesia gate if it's Bone Dragon dying
+                if (character.Name!.ToLower() == "kościany_smok")
+                {
+                    PrintMessage("Północna brama miasta Artimesia została otwarta!");
+                    Location northGate = Data.Locations!.Find(loc => loc.Name!.ToLower() ==
+                    "północna_brama")!;
+                    northGate.NorthPassage = true;
                 }
             }
         }

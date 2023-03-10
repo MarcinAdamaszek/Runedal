@@ -5998,8 +5998,8 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      regeneruje się mana postaci";
             manualLines[i++] = "      Twoja postać, oprócz statystyk, posiada jeszcze trzy";
             manualLines[i++] = "      atrybuty, które zwiększają jej statystyki:";
-            manualLines[i++] = "      > Siła - zwiększa maksymalne HP, regenerację HP";
-            manualLines[i++] = "      i atak";
+            manualLines[i++] = "      > Siła - zwiększa maksymalne HP, regenerację HP,";
+            manualLines[i++] = "      atak oraz udźwig";
             manualLines[i++] = "      > Zręczność - zwiększa szybkość, szybkość ataku, ";
             manualLines[i++] = "      celność, trafienia krytyczne i uniki.";
             manualLines[i++] = "      > Inteligencja - zwiększa maksymalne MP, ";

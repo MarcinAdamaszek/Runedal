@@ -572,6 +572,9 @@ namespace Runedal.GameEngine
                     break;
 
                 //for testing
+                case "hp":
+                    ShowEnemysHp();
+                    break;
                 case "iwannagrow":
                     GivePlayerExperience(10);
                     break;
@@ -764,11 +767,11 @@ namespace Runedal.GameEngine
 
             PrintMessage("> Witaj w świecie Runedal!", MessageType.EffectOn);
             PrintMessage("> Aby zrobić cokolwiek, wpisujesz komendę i naciskasz enter", MessageType.EffectOn);
-            PrintMessage("> Przy wpisywaniu, wielkość liter nie ma znaczenia (SzCzUr = szczur), można pomijać polskie znaki (żmija = zmija), lub znak podkreślnika" +
-                "\"_\" (mikstura_życia = miksturazycia)", MessageType.EffectOn);
-            PrintMessage("> W zielonym oknie na prawo, znajduje się minimapa, która pokazuje gdzie się aktualnie znajdujesz\n", MessageType.EffectOn);
+            PrintMessage("> Przy wpisywaniu, wielkość liter nie ma znaczenia (\"SzCzUr\" = \"szczur\"), można pomijać polskie znaki (\"żmija = zmija\"), lub znak podkreślnika" +
+                " \"_\" (\"mikstura_życia\" = \"miksturazycia\").", MessageType.EffectOn);
+            PrintMessage("> W zielonym oknie na prawo, znajduje się minimapa, która pokazuje gdzie się aktualnie znajdujesz", MessageType.EffectOn);
             PrintMessage("> Jeśli nie wiesz co robić - wciśnij esc aby zobaczyć menu główne i wybierz opcję \"4.KOMENDY\" lub \"3.JAK GRAĆ?\"", MessageType.EffectOn);
-            PrintMessage("> Aby zobaczyć ściągawkę komend - wpisz \"help\"", MessageType.EffectOn);
+            PrintMessage("> Aby zobaczyć krótką listę komend - wpisz \"help\"", MessageType.EffectOn);
 
             //reveal starting location and adjacent locations
             Location northAdjacentLoc = new Location();
@@ -6866,6 +6869,13 @@ namespace Runedal.GameEngine
                     });
                 }
             }
+        }
+
+        //method printing hp amount of an enemy currently fighting against player
+        private void ShowEnemysHp()
+        {
+            CombatCharacter enemy = AttackInstances.Find(ins => ins.Attacker == Data.Player!)!.Receiver!;
+            PrintMessage("Hp postaci " + enemy.Name + " wynosi: " + enemy.Hp);
         }
 
 

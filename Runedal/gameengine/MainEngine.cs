@@ -6106,11 +6106,12 @@ namespace Runedal.GameEngine
                     Hints.LookInventoryItemHint = false;
                     break;
                 case Hints.HintType.BuySell:
-                    hintLines[1] += "Aby obejżeć przedmiot w ekwipunku handlarza użyj komendy \"look\" (skrót \"l\") (np. \"look " + objectName1 + "\")";
-                    hintLines[2] += "Aby kupić przedmiot, użyj komendy \"buy\" (np. \"buy " + objectName1 + "\")";
-                    hintLines[3] += "Aby sprzedać przedmiot, użyj komendy \"sell\" (np. \"sell " + objectName2 + "\")";
-                    hintLines[4] += "UWAGA!!! Sprzedajesz taniej niż kupujesz!";
-                    hintLines[5] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
+                    hintLines[1] += "Aby ponownie wyświetlić ekwipunek handlarza - wpisz \"inventory\" (skrót \"i\")";
+                    hintLines[2] += "Aby obejżeć przedmiot w ekwipunku handlarza użyj komendy \"look\" (skrót \"l\") (np. \"look " + objectName1 + "\")";
+                    hintLines[3] += "Aby kupić przedmiot, użyj komendy \"buy\" (np. \"buy " + objectName1 + "\")";
+                    hintLines[4] += "Aby sprzedać przedmiot, użyj komendy \"sell\" (np. \"sell " + objectName2 + "\")";
+                    hintLines[5] += "UWAGA!!! Sprzedajesz taniej niż kupujesz!";
+                    hintLines[6] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";
                     Hints.BuySellHint = false;
                     break;
                 case Hints.HintType.LookAdjacentLoc:

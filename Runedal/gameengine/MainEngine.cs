@@ -4202,7 +4202,7 @@ namespace Runedal.GameEngine
             else
             {
                 PrintMessage("Nie udaje Ci się uciec przed " + fastestOpponent.Name + "!");
-                ApplySpecialEffect(Data.Player!, new SpecialEffect(SpecialEffect.EffectType.Stun, 10), "Nieudana ucieczka");
+                ApplySpecialEffect(Data.Player!, new SpecialEffect(SpecialEffect.EffectType.Stun, 6), "Nieudana ucieczka");
             }
         }
 

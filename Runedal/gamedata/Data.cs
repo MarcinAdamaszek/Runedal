@@ -43,6 +43,7 @@ namespace Runedal.GameData
             PriceMultiplier = 1.2;
         }
         public double PriceMultiplier { get; set; }
+        public int DeathScreenDelayCounter { get; set; }
         public string? FileName { get; set; }
         public string? JsonString { get; set; }
         public string[]? StackingEffects { get; set; }
@@ -430,7 +431,14 @@ namespace Runedal.GameData
             loc.Y == save.Player!.CurrentLocation!.Y && loc.Z == Player.CurrentLocation!.Z)!;
             playerLocation.AddCharacter(Player!);
 
-            
+            //load counter for death screen delay
+            DeathScreenDelayCounter = 100;
+        }
+
+        //method clearing all current game session objects
+        public void ClearAllObjects()
+        {
+            Locations!.Clear();
         }
 
 

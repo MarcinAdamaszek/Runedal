@@ -29,6 +29,8 @@ using System.IO;
 using System.Xaml.Schema;
 using System.Threading;
 using System.Windows.Media.Media3D;
+using System.Security.RightsManagement;
+using System.Printing;
 
 namespace Runedal.GameEngine
 {
@@ -149,6 +151,7 @@ namespace Runedal.GameEngine
         public bool IsLoading { get; set; }
         public bool IsDeleting { get; set; }
         public bool IsInGame { get; set; }
+        public bool IsDeathScreen { get; set; }
         public bool IsSaveConfirmation { get; set; }
         public bool IsSaveOverwriteConfirmation { get; set; }
         public bool IsExitConfirmation { get; set; }
@@ -254,8 +257,11 @@ namespace Runedal.GameEngine
                             PrintMessage("\n              postać walczy, handluje lub rozmawia!", MessageType.ReceiveDmg);
                             return;
                         }
-                        SixthOptionHandler();
-                        IsInMenu = false;
+                        if (IsInGame)
+                        {
+                            SixthOptionHandler();
+                            IsInMenu = false;
+                        }
                         break;
                 }
 
@@ -636,7 +642,7 @@ namespace Runedal.GameEngine
             }
 
             PrintMessage("\n*************** WITAJ W GRZE RUNEDAL! *****************\n\n", MessageType.Gain);
-            PrintMessage("               (Naciśnij dowolny klawisz)");
+            PrintMessage("              (Naciśnij dowolny klawisz)", MessageType.Action);
         }
 
         //method loading all objects into list collections in Data.cs
@@ -800,6 +806,47 @@ namespace Runedal.GameEngine
             {
                 PrintHint(Hints.HintType.Go);
             }
+        }
+
+        //method ending current game session and exiting to menu
+        public void EndGame()
+        {
+            IsInGame = false;
+            Data.ClearAllObjects();
+            Data.Player!.ActionCounter = 0;
+            Data.Player!.Hp = 0;
+            Data.Player!.Mp = 0;
+            //clear player stats to reset hp/mp/action bars
+            //Data.Player!.ActionCounter = 0;
+            //Data.Player!.MaxHp = 0;
+            //Data.Player!.MaxMp = 0;
+            //Data.Player!.Strength = 0;
+            //Data.Player!.Intelligence = 0;
+            //Data.Player!.Modifiers!.Clear();
+            //Data.Player!.Hp = 0;
+            //Data.Player!.Mp = 0;
+
+
+            PrintDeathScreen();
+        }
+
+        //method printing death screen after player has lost all of his hp
+        public void PrintDeathScreen()
+        {
+            IsDeathScreen = true;
+
+            Window.inputBox.IsReadOnly = true;
+
+            Character death = new Character("Śmierć");
+            PrintMessage("Twój wzrok traci ostrość, a dzwięki dochodzą jakby z oddali. Przed Tobą pojawia się wysoka na 2 metry " +
+                "postać w czarnej szacie z kapturem, z której rękawów wystają jedynie białe, kościane dłonie. W prawej ręce, postać" +
+                " trzyma wielką kosę o srebrzysto-niebieskim ostrzu, tak cienkim, że jeśli spojrzeć na nie prostopadle, to nie byłoby go widać.");
+            PrintSpeech(death, "NIE PATRZ TAK NA MNIE - JA TU TYLKO SPRZĄTAM..");
+            PrintMessage("Postać pokazuje Ci pokaźną i bogato zdobioną klepsydrę z napisem \"" + Data.Player!.Name!.ToUpper() + "\" wyrytym srebrnymi literami, w której " +
+                "ostatnie ziarenka złotego piasku przesypują się do dolnej połowy, po czym bierze zamach, a Ty widzisz tylko srebrzysto-" +
+                "niebieski błysk..\n");
+            PrintMessage("-------========= NIE ŻYJESZ =========-------\n", MessageType.LimitExceeded);
+            PrintMessage("(Wciśnij dowolny klawisz aby przejść do menu)", MessageType.Action);
         }
 
         //method clearing the outputBox
@@ -3621,17 +3668,7 @@ namespace Runedal.GameEngine
             //if it's player dying
             if (character == Data.Player!)
             {
-                //fix bug causing player still fighting with the enemy he died from
-                //AttackInstances.Clear();
 
-                Character death = new Character("Śmierć");
-                PrintMessage("Twój wzrok traci ostrość, a dzwięki dochodzą jakby z oddali. Przed Tobą pojawia się wysoka na 2 metry " +
-                    "postać w czarnej szacie z kapturem, z której rękawów wystają jedynie białe, kościane dłonie. W prawej ręce, postać" +
-                    " trzyma wielką kosę o srebrzysto-niebieskim ostrzu, tak cienkim, że wydaje się nierealne");
-                PrintSpeech(death, "JA CHYBA NIE W PORĘ? NO CÓŻ, TRUDNO..");
-                PrintMessage("Postać pokazuje Ci pokaźną klepsydrę z napisem \"" + Data.Player!.Name! + "\" wyrytym srebrnymi literami, w której " +
-                    "ostatnie ziarenka złotego piasku przesypują się do dolnej połowy, po czym bierze zamach, a Ty widzisz tylko srebrzysto-" +
-                    "niebieski błysk..");
 
                 //remove queued action
                 Actions.Clear();
@@ -3644,84 +3681,64 @@ namespace Runedal.GameEngine
                 }
                 effectsToRemove.ForEach(eff => RemoveEffect(eff));
 
-                //give player death penalty
-                Data.Player!.Experience = 0;
-                RemoveGoldFromPlayer(Data.Player!.Gold);
-                PrintMessage("Tracisz całe zebrane doświadczenie i złoto!");
+                EndGame();
 
-                //delevel player
-                //if (Data.Player!.Level > 1)
+                ////give player death penalty
+                //Data.Player!.Experience = 0;
+                //RemoveGoldFromPlayer(Data.Player!.Gold);
+                //PrintMessage("Tracisz całe zebrane doświadczenie i złoto!");
+
+                ////respawn player
+                //PrintMessage("Odradzasz się..", MessageType.Action);
+                //AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma_Pod_Wilczym_Kłem")!, Data.Player!);
+                //PrintMap();
+
+                ////reapply items modifiers
+                //if (Data.Player!.Weapon!.Name!.ToLower() != "placeholder")
                 //{
-                //    Data.Player!.Level -= 1;
-
-                //    Data.Player!.Strength--;
-                //    Data.Player.Agility--;
-                //    Data.Player.Intelligence--;
-
-                //    if (Data.Player!.AttributePoints >= 4)
+                //    Data.Player!.Weapon!.Modifiers!.ForEach(mod =>
                 //    {
-                //        Data.Player!.AttributePoints = 0;
-                //    }
-                //    else
+                //        Data.Player.AddModifier(mod);
+                //    });
+                //}
+                //if (Data.Player!.Torso!.Name!.ToLower() != "placeholder")
+                //{
+                //    Data.Player!.Torso!.Modifiers!.ForEach(mod =>
                 //    {
-                //        Data.Player!.AttributePoints -= 4;
-                //    }
-
-                //    Data.Player.NextLvlExpCap = Convert.ToUInt64(Math.Pow(Data.Player.Level * 5, 1.5));
-
+                //        Data.Player.AddModifier(mod);
+                //    });
+                //}
+                //if (Data.Player!.Pants!.Name!.ToLower() != "placeholder")
+                //{
+                //    Data.Player!.Pants!.Modifiers!.ForEach(mod =>
+                //    {
+                //        Data.Player.AddModifier(mod);
+                //    });
+                //}
+                //if (Data.Player!.Helmet!.Name!.ToLower() != "placeholder")
+                //{
+                //    Data.Player!.Helmet!.Modifiers!.ForEach(mod =>
+                //    {
+                //        Data.Player.AddModifier(mod);
+                //    });
+                //}
+                //if (Data.Player!.Gloves!.Name!.ToLower() != "placeholder")
+                //{
+                //    Data.Player!.Gloves!.Modifiers!.ForEach(mod =>
+                //    {
+                //        Data.Player.AddModifier(mod);
+                //    });
+                //}
+                //if (Data.Player!.Shoes!.Name!.ToLower() != "placeholder")
+                //{
+                //    Data.Player!.Shoes!.Modifiers!.ForEach(mod =>
+                //    {
+                //        Data.Player.AddModifier(mod);
+                //    });
                 //}
 
-                //respawn player
-                PrintMessage("Odradzasz się..", MessageType.Action);
-                AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma_Pod_Wilczym_Kłem")!, Data.Player!);
-                PrintMap();
-
-                //reapply items modifiers
-                if (Data.Player!.Weapon!.Name!.ToLower() != "placeholder")
-                {
-                    Data.Player!.Weapon!.Modifiers!.ForEach(mod =>
-                    {
-                        Data.Player.AddModifier(mod);
-                    });
-                }
-                if (Data.Player!.Torso!.Name!.ToLower() != "placeholder")
-                {
-                    Data.Player!.Torso!.Modifiers!.ForEach(mod =>
-                    {
-                        Data.Player.AddModifier(mod);
-                    });
-                }
-                if (Data.Player!.Pants!.Name!.ToLower() != "placeholder")
-                {
-                    Data.Player!.Pants!.Modifiers!.ForEach(mod =>
-                    {
-                        Data.Player.AddModifier(mod);
-                    });
-                }
-                if (Data.Player!.Helmet!.Name!.ToLower() != "placeholder")
-                {
-                    Data.Player!.Helmet!.Modifiers!.ForEach(mod =>
-                    {
-                        Data.Player.AddModifier(mod);
-                    });
-                }
-                if (Data.Player!.Gloves!.Name!.ToLower() != "placeholder")
-                {
-                    Data.Player!.Gloves!.Modifiers!.ForEach(mod =>
-                    {
-                        Data.Player.AddModifier(mod);
-                    });
-                }
-                if (Data.Player!.Shoes!.Name!.ToLower() != "placeholder")
-                {
-                    Data.Player!.Shoes!.Modifiers!.ForEach(mod =>
-                    {
-                        Data.Player.AddModifier(mod);
-                    });
-                }
-
-                Data.Player!.Hp = Math.Floor(Data.Player.GetEffectiveMaxHp() * 0.4);
-                Data.Player!.Mp = 0;
+                //Data.Player!.Hp = Math.Floor(Data.Player.GetEffectiveMaxHp() * 0.4);
+                //Data.Player!.Mp = 0;
             }
 
             //else if it's npc dying
@@ -5789,12 +5806,12 @@ namespace Runedal.GameEngine
             i = 0;
 
             string title = "********************** INSTRUKCJA GRY *********************\n";
-            string exitInfo = "           (Wciśnij esc aby wrócić do menu)\n";
+            string exitInfo = "              (Wciśnij esc aby wrócić do menu)\n";
 
             manualLines[i++] = "      Runedal jest grą typu RPG, w której wszystko co ";
             manualLines[i++] = "      musisz robić, to czytać i pisać.";
             manualLines[i++] = "      Grasz postacią, która może się poruszać z";
-            manualLines[i++] = "      lokacji do lokacji, rozmawiać, atakować i ";
+            manualLines[i++] = "      lokacji do lokacji, rozmawiać, walczyć i ";
             manualLines[i++] = "      handlować z innymi postaciami, używać przedmiotów";
             manualLines[i++] = "      czy tworzyć i rzucać zaklęcia. Zdobywasz ";
             manualLines[i++] = "      kolejne poziomy, przedmioty i rozwijasz swoją";
@@ -5872,7 +5889,7 @@ namespace Runedal.GameEngine
             manualLines[i++] = "      > 'gloves' - rękawice";
             manualLines[i++] = "      > 'shoes' - buty";
             manualLines[i++] = "      Jeśli np. masz założoną jakąś broń i chcesz ją";
-            manualLines[i++] = "      ściągnąc, wpisujesz 'takeoff weapon'. Jeśli ";
+            manualLines[i++] = "      ściągnąć, wpisujesz 'takeoff weapon'. Jeśli ";
             manualLines[i++] = "      chcesz ściągnąć rękawice - 'takeoff gloves'. itd.\n";
             manualLines[i++] = "  >>> HANDEL\n   ";
             manualLines[i++] = "      Aby rozpocząć handel z postacią, używasz komendy";
@@ -6901,6 +6918,11 @@ namespace Runedal.GameEngine
             PlayerEffectsTick();
             AttacksTick();
             ActionsTick();
+
+            if (IsDeathScreen && Data.DeathScreenDelayCounter > 0)
+            {
+                Data.DeathScreenDelayCounter -= 1;
+            }
         }
 
         //method handling player effects tick

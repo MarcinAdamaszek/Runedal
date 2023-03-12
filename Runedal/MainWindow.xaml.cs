@@ -29,14 +29,7 @@ namespace Runedal
         {
             InitializeComponent();
 
-            //ImageBrush myBrush = new ImageBrush();
-            //myBrush.ImageSource =
-            //    new BitmapImage(new Uri("GameData//Resources//Images//wall-3341768.jpg",
-            //    UriKind.Relative));
-            //this.Background = myBrush;
-
             Engine = new MainEngine(this);
-            //Player = Engine.Data.Player!;
             CommandHistory = new List<string>();
             WasDownPressed = false;
             WasUpPressed = false;
@@ -44,8 +37,6 @@ namespace Runedal
             CommandIndex = -1;
             inputBox.IsReadOnly = true;
             IsFullScreen = true;
-
-            //DataContext = Player;
         }
 
         public string Input { get; set; } = string.Empty;
@@ -90,6 +81,21 @@ namespace Runedal
                 inputBox.IsReadOnly = false;
                 inputBox.Focus();
                 IsWelcomeScreenOn = false;
+                return;
+            }
+
+            //handle DeathScreen
+            if (Engine.IsDeathScreen)
+            {
+                if (Engine.Data.DeathScreenDelayCounter < 1)
+                {
+                    Engine.PrintMainMenu();
+                    inputBox.IsReadOnly = false;
+                    Engine.IsInMenu = true;
+                    Engine.IsDeathScreen = false;
+                    Player = null;
+                    DataContext = null;
+                }
                 return;
             }
 

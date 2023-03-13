@@ -857,8 +857,15 @@ namespace Runedal.GameEngine
             Window.outputBox.Document.Blocks.Add(new Paragraph());
         }
 
+        //method for auto-saving
+        private void AutoSave()
+        {
+            GameSavePath = Data.JsonDirectoryPath + @"SavedGames\AUTO_ZAPIS";
+            SaveGame("", true, false, true);
+        }
+
         //method saving game
-        private void SaveGame(string saveNumber, bool IsPathSpecified = false, bool isQuickSave = false)
+        private void SaveGame(string saveNumber, bool IsPathSpecified = false, bool isQuickSave = false, bool isAutoSave = false)
         {
             string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
             string savePath = string.Empty;
@@ -906,7 +913,7 @@ namespace Runedal.GameEngine
                 ClearOutputBox();
                 PrintMainMenu(true);
             }
-            else if (isQuickSave)
+            else if (isQuickSave || isAutoSave)
             {
                 PrintMessage("Gra zapisana!", MessageType.SystemFeedback);
             }
@@ -3122,7 +3129,7 @@ namespace Runedal.GameEngine
             int lowTierQuantity;
             double lowTierLimit = 17;
             double mediumTierLimit = dyingChar.Level * 30;
-            double highTierLimit = dyingChar.Level * 100;
+            //double highTierLimit = dyingChar.Level * 100;
 
             //increase the worth of medium tier item for bosses
             if (dyingChar.GetType() == typeof(Hero)) 
@@ -3682,63 +3689,6 @@ namespace Runedal.GameEngine
                 effectsToRemove.ForEach(eff => RemoveEffect(eff));
 
                 EndGame();
-
-                ////give player death penalty
-                //Data.Player!.Experience = 0;
-                //RemoveGoldFromPlayer(Data.Player!.Gold);
-                //PrintMessage("Tracisz całe zebrane doświadczenie i złoto!");
-
-                ////respawn player
-                //PrintMessage("Odradzasz się..", MessageType.Action);
-                //AddCharacterToLocation(Data.Locations!.Find(loc => loc.Name == "Karczma_Pod_Wilczym_Kłem")!, Data.Player!);
-                //PrintMap();
-
-                ////reapply items modifiers
-                //if (Data.Player!.Weapon!.Name!.ToLower() != "placeholder")
-                //{
-                //    Data.Player!.Weapon!.Modifiers!.ForEach(mod =>
-                //    {
-                //        Data.Player.AddModifier(mod);
-                //    });
-                //}
-                //if (Data.Player!.Torso!.Name!.ToLower() != "placeholder")
-                //{
-                //    Data.Player!.Torso!.Modifiers!.ForEach(mod =>
-                //    {
-                //        Data.Player.AddModifier(mod);
-                //    });
-                //}
-                //if (Data.Player!.Pants!.Name!.ToLower() != "placeholder")
-                //{
-                //    Data.Player!.Pants!.Modifiers!.ForEach(mod =>
-                //    {
-                //        Data.Player.AddModifier(mod);
-                //    });
-                //}
-                //if (Data.Player!.Helmet!.Name!.ToLower() != "placeholder")
-                //{
-                //    Data.Player!.Helmet!.Modifiers!.ForEach(mod =>
-                //    {
-                //        Data.Player.AddModifier(mod);
-                //    });
-                //}
-                //if (Data.Player!.Gloves!.Name!.ToLower() != "placeholder")
-                //{
-                //    Data.Player!.Gloves!.Modifiers!.ForEach(mod =>
-                //    {
-                //        Data.Player.AddModifier(mod);
-                //    });
-                //}
-                //if (Data.Player!.Shoes!.Name!.ToLower() != "placeholder")
-                //{
-                //    Data.Player!.Shoes!.Modifiers!.ForEach(mod =>
-                //    {
-                //        Data.Player.AddModifier(mod);
-                //    });
-                //}
-
-                //Data.Player!.Hp = Math.Floor(Data.Player.GetEffectiveMaxHp() * 0.4);
-                //Data.Player!.Mp = 0;
             }
 
             //else if it's npc dying
@@ -3898,6 +3848,12 @@ namespace Runedal.GameEngine
                     else
                     {
                         GivePlayerExperience(receiver.Level);
+                    }
+
+                    //make an auto-save when it's a hero dying
+                    if (receiver.GetType() == typeof(Hero))
+                    {
+                        AutoSave();
                     }
                 }
             }

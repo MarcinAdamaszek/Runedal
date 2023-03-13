@@ -642,7 +642,8 @@ namespace Runedal.GameEngine
             }
 
             PrintMessage("\n*************** WITAJ W GRZE RUNEDAL! *****************\n\n", MessageType.Gain);
-            PrintMessage("              (Naciśnij dowolny klawisz)", MessageType.Action);
+            PrintMessage("              Created by: Marcin Adamaszek\n\n");
+            PrintMessage("               (Naciśnij dowolny klawisz)", MessageType.Action);
         }
 
         //method loading all objects into list collections in Data.cs

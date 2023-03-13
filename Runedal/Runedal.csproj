@@ -9,19 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="GameData\JSONData\**" />
+    <Compile Remove="GameData\Resources\Images\**" />
     <EmbeddedResource Remove="GameData\JSONData\**" />
+    <EmbeddedResource Remove="GameData\Resources\Images\**" />
     <None Remove="GameData\JSONData\**" />
+    <None Remove="GameData\Resources\Images\**" />
     <Page Remove="GameData\JSONData\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="GameData\Resources\Images\wall-3341768.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="GameData\Resources\Images\wall-3341768.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
+    <Page Remove="GameData\Resources\Images\**" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties gamedata_4resources_4json_4locations_4derillon_4derillonspidercave2_1json__JsonSchema="d" /></VisualStudio></ProjectExtensions>

@@ -3739,6 +3739,15 @@ namespace Runedal.GameEngine
                     "północna_brama")!;
                     northGate.NorthPassage = true;
                 }
+
+                //open the east Artimesia gate if it's Green Dragon dying
+                if (character.Name!.ToLower() == "zielony_smok")
+                {
+                    PrintMessage("Wschodnia brama miasta Artimesia została otwarta!");
+                    Location eastGate = Data.Locations!.Find(loc => loc.Name!.ToLower() ==
+                    "wschodnia_brama")!;
+                    eastGate.EastPassage = true;
+                }
             }
         }
 

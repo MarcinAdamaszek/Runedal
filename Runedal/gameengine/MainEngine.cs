@@ -3725,7 +3725,7 @@ namespace Runedal.GameEngine
                 }
 
                 //open the silver gate if it's Agriluna dying
-                if (character.Name!.ToLower() == "agriluna")
+                if (character.Name!.ToLower() == "jokalyn")
                 {
                     PrintMessage("Księżycowa Brama została otwarta!");
                     character.CurrentLocation.NorthPassage = true;

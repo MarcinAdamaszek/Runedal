@@ -578,7 +578,7 @@ namespace Runedal.GameEngine
                     break;
 
                 //for testing
-                case "hp":
+                case "magicdoctor":
                     ShowEnemysHp();
                     break;
                 case "iwannagrow":
@@ -591,9 +591,6 @@ namespace Runedal.GameEngine
                     break;
                 case "allchars":
                     PrintMessage("Wszystkich postaci w grze: " + Data.AllCharactersTestProp.Count);
-                    break;
-                case "devme":
-                    Data.Player!.AddAttributePoints(1);
                     break;
                 case "onehithero":
                     Data.Player!.Attack += 1000000;

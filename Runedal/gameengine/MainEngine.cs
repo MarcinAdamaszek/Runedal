@@ -52,7 +52,7 @@ namespace Runedal.GameEngine
             this.LastoutputBoxContent = new List<TextRange>();
             this.Hints = new Hints();
             this.TimeInterval = 100;
-            this.MinTimeInterval = 1;
+            this.MinTimeInterval = 50;
             this.IsInMenu = true;
             this.IsPlayerChoosingAName = false;
             this.IsInGame = false;
@@ -3130,7 +3130,16 @@ namespace Runedal.GameEngine
 
             int GameSpeed = 100 / TimeInterval;
 
-            PrintMessage("Szybkość gry: " + GameSpeed + "x", MessageType.SystemFeedback);
+            if (isSlowDown)
+            {
+                PrintMessage("Szybkość gry: " + GameSpeed + "x " +
+                    "(\"speedup\" lub \"up\" aby zwiększyć)", MessageType.SystemFeedback);
+            }
+            else
+            {
+                PrintMessage("Szybkość gry: " + GameSpeed + "x " +
+                    "(\"slowdown\" lub \"dn\" aby zmniejszyć)", MessageType.SystemFeedback);
+            }
         }
 
         //method handling turning on/off hints

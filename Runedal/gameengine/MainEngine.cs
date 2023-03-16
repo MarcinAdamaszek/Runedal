@@ -42,7 +42,7 @@ namespace Runedal.GameEngine
         private const int fourthIntThreshold = 130;
         private const int fifthIntThreshold = 180;
         public MainEngine(MainWindow window)
-        { 
+        {
             this.Window = window;
             this.Data = new Data();
             this.Rand = new Random();
@@ -79,7 +79,7 @@ namespace Runedal.GameEngine
             LoadGameObjects();
             PrepareNewGameLoad();
             PrintWelcomeScreen();
-            
+
             //StartNewGame("Czesiek");
             //GivePlayerExperience(100);
 
@@ -169,7 +169,7 @@ namespace Runedal.GameEngine
             string argument2 = string.Empty;
             string[] commandParts;
 
-            
+
 
             //get user input from inputBox
             userCommand = Window.inputBox.Text;
@@ -951,7 +951,7 @@ namespace Runedal.GameEngine
                 return;
             }
 
-            
+
 
             IsInGame = true;
             IsLoading = false;
@@ -1181,7 +1181,7 @@ namespace Runedal.GameEngine
         //==============================================COMMAND HANDLERS=============================================
 
         //method handling 'save' command
-        private void SaveHandler(bool IsQuickSave = false) 
+        private void SaveHandler(bool IsQuickSave = false)
         {
 
             if (IsQuickSave)
@@ -1224,8 +1224,8 @@ namespace Runedal.GameEngine
             {
                 //if (save != "SZYBKI_ZAPIS")
                 //{
-                    PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
-                    i++;
+                PrintMessage("                       " + i + ". " + save, MessageType.Loss, false);
+                i++;
                 //}
             }
         }
@@ -1266,7 +1266,7 @@ namespace Runedal.GameEngine
             {
                 PrintMessage("         Aby WCZYTAĆ zapis gry, wpisz odpowiedni numer", MessageType.Default, false);
             }
-            
+
             PrintMessage("                     i naciśnij enter:\n", MessageType.Default, false);
             if (isDeleting)
             {
@@ -1332,7 +1332,7 @@ namespace Runedal.GameEngine
         //method moving player to next location
         private void GoHandler(string direction)
         {
-            
+
             bool innerPassage = Data.Player!.CurrentLocation!.GetPassage(direction);
             Location nextLocation = new Location();
 
@@ -1440,7 +1440,7 @@ namespace Runedal.GameEngine
 
 
                 //else search characters of current location and player's inventory for entity with name matching the argument
-                index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => FlattenPolishChars(character.Name!.ToLower()) 
+                index = Data.Player!.CurrentLocation!.Characters!.FindIndex(character => FlattenPolishChars(character.Name!.ToLower())
                 == FlattenPolishChars(entityName));
                 if (index != -1)
                 {
@@ -1456,7 +1456,7 @@ namespace Runedal.GameEngine
                         GetNextLocation(directionLetters[i], out nextLocation);
                         index = nextLocation.Characters!.FindIndex(character => FlattenPolishChars(character.Name!.ToLower())
                         == FlattenPolishChars(entityName));
-                        
+
                         if (index != -1)
                         {
                             CharacterInfo(nextLocation.Characters[index]);
@@ -1643,7 +1643,7 @@ namespace Runedal.GameEngine
             Data.Player!.CurrentState = Player.State.Talk;
             Data.Player!.InteractsWith = talkingCharacter;
             PrintMessage("Rozmawiasz z " + talkingCharacter.Name, MessageType.Action);
-            PrintMessage(talkingCharacter.Name + ": " + 
+            PrintMessage(talkingCharacter.Name + ": " +
                 talkingCharacter.PassiveResponses![Rand.Next(talkingCharacter.PassiveResponses.Length)], MessageType.Speech);
 
             PrintMessage("Wybierz co chcesz powiedzieć (wpisz cyfrę):");
@@ -1664,7 +1664,7 @@ namespace Runedal.GameEngine
             }
 
             int optionNumber = Int32.Parse(option);
-            
+
             if (optionNumber > Data.Player!.InteractsWith!.Questions!.Length)
             {
                 PrintSpeech(Data.Player!, "Bywaj");
@@ -1759,7 +1759,7 @@ namespace Runedal.GameEngine
             {
                 itemQuantity = 1;
             }
-            
+
             //if player set quantity to more than trader has, set it to
             if (trader.Inventory[itemIndex].Quantity < itemQuantity)
             {
@@ -1787,7 +1787,7 @@ namespace Runedal.GameEngine
                 {
                     PrintMessage("Kupujesz " + itemQuantity + " sztuk przedmiotu: " + itemName, MessageType.Action);
                 }
-               
+
                 //remove item from traders inventory and gold from player's inventory
                 trader.RemoveItem(itemName, itemQuantity);
                 RemoveGoldFromPlayer(buyingPrice);
@@ -1809,7 +1809,7 @@ namespace Runedal.GameEngine
                     //trigger wear hint
                     if (Hints.WearHint)
                     {
-                        Item boughtItem = Data.Items!.Find(it => FlattenPolishChars(it.Name!.ToLower()) == 
+                        Item boughtItem = Data.Items!.Find(it => FlattenPolishChars(it.Name!.ToLower()) ==
                         FlattenPolishChars(itemName.ToLower()))!;
 
                         if (boughtItem.GetType() == typeof(Armor) || boughtItem.GetType() == typeof(Weapon))
@@ -1821,7 +1821,7 @@ namespace Runedal.GameEngine
                     //trigger use hint
                     if (Hints.UseHint)
                     {
-                        Item boughtItem = Data.Items!.Find(it => FlattenPolishChars(it.Name!.ToLower()) == 
+                        Item boughtItem = Data.Items!.Find(it => FlattenPolishChars(it.Name!.ToLower()) ==
                         FlattenPolishChars(itemName.ToLower()))!;
 
                         if (boughtItem.GetType() == typeof(Consumable))
@@ -1859,6 +1859,18 @@ namespace Runedal.GameEngine
             int itemIndex = -1;
             int itemQuantity = 1;
             int sellingPrice = 0;
+
+            //check if player wears the item
+            if (FlattenPolishChars(Data.Player!.Weapon!.Name!.ToLower()) == FlattenPolishChars(itemName)
+                || FlattenPolishChars(Data.Player!.Torso!.Name!.ToLower()) == FlattenPolishChars(itemName)
+                || FlattenPolishChars(Data.Player!.Pants!.Name!.ToLower()) == FlattenPolishChars(itemName)
+                || FlattenPolishChars(Data.Player!.Helmet!.Name!.ToLower()) == FlattenPolishChars(itemName) 
+                || FlattenPolishChars(Data.Player!.Gloves!.Name!.ToLower()) == FlattenPolishChars(itemName) 
+                || FlattenPolishChars(Data.Player!.Shoes!.Name!.ToLower()) == FlattenPolishChars(itemName))
+            {
+                PrintMessage("Aby sprzedać przedmiot musisz go najpierw ściągnąć", MessageType.SystemFeedback);
+                return;
+            }
 
             itemIndex = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName));
 

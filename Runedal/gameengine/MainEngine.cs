@@ -2927,12 +2927,6 @@ namespace Runedal.GameEngine
                     }
                     else
                     {
-                        //if player isn't fighting with anyone
-                        //if (Data.Player.CurrentState != CombatCharacter.State.Combat)
-                        //{
-                        //    PrintMessage("Obecnie z nikim nie walczysz", MessageType.SystemFeedback);
-                        //    return;
-                        //}
                         if (Data.Player!.CurrentState != CombatCharacter.State.Combat)
                         {
                             int combatCharIndex = Data.Player!.CurrentLocation!.Characters!.FindIndex(
@@ -2978,6 +2972,7 @@ namespace Runedal.GameEngine
                 //else, if player typed second argument (target name)
                 else if (spellToCast.Name != "Demoniczny_portal")
                 {
+
                     //prevent casting self-spells on enemy
                     if (spellToCast.DefaultTarget == Spell.Target.Self)
                     {
@@ -3039,7 +3034,14 @@ namespace Runedal.GameEngine
 
                 target = Data.Player!;
             }
-            
+
+            //prevent casting offensive spells on self
+            if (spellToCast.DefaultTarget == Spell.Target.Enemy && target == Data.Player!)
+            {
+                PrintMessage("Nie możesz użyć czaru ofensywnego na sobie", MessageType.SystemFeedback);
+                return;
+            }
+
             //add action to queue
             CharAction spellcast = new SpellCast(Data.Player, target, spellToCast);
             AddAction(spellcast);

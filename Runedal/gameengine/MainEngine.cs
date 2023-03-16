@@ -595,6 +595,15 @@ namespace Runedal.GameEngine
                 case "devme":
                     Data.Player!.AddAttributePoints(1);
                     break;
+                case "onehithero":
+                    Data.Player!.Attack += 1000000;
+                    break;
+                case "makemeweak":
+                    if (Data.Player!.Attack > 20000)
+                    {
+                        Data.Player!.Attack -= 1000000;
+                    }
+                    break;
                 case "clockstop":
                     GameClock.Stop();
                     break;
@@ -1856,8 +1865,15 @@ namespace Runedal.GameEngine
                 || FlattenPolishChars(Data.Player!.Gloves!.Name!.ToLower()) == FlattenPolishChars(itemName) 
                 || FlattenPolishChars(Data.Player!.Shoes!.Name!.ToLower()) == FlattenPolishChars(itemName))
             {
-                PrintMessage("Aby sprzedać przedmiot musisz go najpierw ściągnąć", MessageType.SystemFeedback);
-                return;
+                
+                //if he does, prevent from selling it ONLY IF HE DOESNT HAVE ANOTHER COPY OF IT IN HIS
+                //INVENTORY
+                if (!Data.Player!.Inventory!.Exists(it => FlattenPolishChars(it.Name!.ToLower()) == 
+                FlattenPolishChars(itemName))) 
+                {
+                    PrintMessage("Aby sprzedać przedmiot musisz go najpierw ściągnąć", MessageType.SystemFeedback);
+                    return;
+                }
             }
 
             itemIndex = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower()) == FlattenPolishChars(itemName));

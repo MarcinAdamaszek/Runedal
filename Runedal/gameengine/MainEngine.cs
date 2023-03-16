@@ -642,7 +642,7 @@ namespace Runedal.GameEngine
             }
 
             PrintMessage("\n*************** WITAJ W GRZE RUNEDAL! *****************\n\n", MessageType.Gain);
-            PrintMessage("               (Naciśnij dowolny klawisz)\n\n\n", MessageType.Action);
+            PrintMessage("               (Naciśnij dowolny klawisz)\n\n", MessageType.Action);
             PrintMessage("              Created by: Marcin Adamaszek");
         }
 
@@ -1773,10 +1773,21 @@ namespace Runedal.GameEngine
             //if total buying price of the item is lesser than amount of gold possesed by player
             if (Data.Player!.Gold! >= buyingPrice)
             {
-                
-                //inform player about action
-                PrintMessage("Kupujesz " + itemQuantity + " " + itemName, MessageType.Action);
 
+                //inform player about action
+                if (itemQuantity == 1)
+                {
+                    PrintMessage("Kupujesz przedmiot: " + itemName, MessageType.Action);
+                }
+                else if (itemQuantity <= 4)
+                {
+                    PrintMessage("Kupujesz " + itemQuantity + " sztuki przedmiotu: " + itemName, MessageType.Action);
+                }
+                else
+                {
+                    PrintMessage("Kupujesz " + itemQuantity + " sztuk przedmiotu: " + itemName, MessageType.Action);
+                }
+               
                 //remove item from traders inventory and gold from player's inventory
                 trader.RemoveItem(itemName, itemQuantity);
                 RemoveGoldFromPlayer(buyingPrice);
@@ -1892,7 +1903,18 @@ namespace Runedal.GameEngine
             {
 
                 //inform player about action
-                PrintMessage("Sprzedajesz " + itemQuantity + " " + itemName, MessageType.Action);
+                if (itemQuantity == 1)
+                {
+                    PrintMessage("Sprzedajesz przedmiot: " + itemName, MessageType.Action);
+                }
+                else if (itemQuantity <= 4)
+                {
+                    PrintMessage("Sprzedajesz " + itemQuantity + " sztuki przedmiotu: " + itemName, MessageType.Action);
+                }
+                else
+                {
+                    PrintMessage("Sprzedajesz " + itemQuantity + " sztuk przedmiotu: " + itemName, MessageType.Action);
+                }
 
                 //remove item from player's inventory and put it into trader's inventory
                 RemoveItemFromPlayer(itemName, itemQuantity);
@@ -2033,7 +2055,18 @@ namespace Runedal.GameEngine
                     return;
                 }
 
-                PrintMessage("Upuszczasz " + itemQuantity + " złota", MessageType.Action);
+                if (itemQuantity == 1)
+                {
+                    PrintMessage("Wyrzucasz 1 sztukę złota", MessageType.Action);
+                }
+                else if (itemQuantity <= 4)
+                {
+                    PrintMessage("Wyrzucasz " + itemQuantity + " sztuki złota", MessageType.Action);
+                }
+                else
+                {
+                    PrintMessage("Wyrzucasz " + itemQuantity + " sztuk złota", MessageType.Action);
+                }
                 RemoveGoldFromPlayer(itemQuantity);
                 AddGoldToLocation(Data.Player.CurrentLocation!, itemQuantity);
 
@@ -2047,7 +2080,19 @@ namespace Runedal.GameEngine
                 itemQuantity = itemToRemove.Quantity;
             }
 
-            PrintMessage("Upuszczasz " + itemQuantity + " " + itemToRemove.Name, MessageType.Action);
+            if (itemQuantity == 1)
+            {
+                PrintMessage("Wyrzucasz przedmiot: " + itemToRemove.Name, MessageType.Action);
+            }
+            else if (itemQuantity <= 4)
+            {
+                PrintMessage("Wyrzucasz " + itemQuantity + " sztuki przedmiotu: " + itemToRemove.Name, MessageType.Action);
+            }
+            else
+            {
+                PrintMessage("Wyrzucasz " + itemQuantity + " sztuk przedmiotu: " + itemToRemove.Name, MessageType.Action);
+            }
+            
             RemoveItemFromPlayer(itemName, itemQuantity);
             AddItemToLocation(Data.Player!.CurrentLocation!, itemName, itemQuantity);
         }
@@ -2083,7 +2128,19 @@ namespace Runedal.GameEngine
                 {
                     itemsToPickup.ForEach(item => 
                     {
-                        PrintMessage("Podnosisz " + item.Quantity + " " + item.Name, MessageType.Action);
+                        if (item.Quantity == 1)
+                        {
+                            PrintMessage("Podnosisz przedmiot: " + item.Name, MessageType.Action);
+                        }
+                        else if (item.Quantity <= 4)
+                        {
+                            PrintMessage("Podnosisz " + item.Quantity + " sztuki przedmiotu: " + item.Name, MessageType.Action);
+                        }
+                        else
+                        {
+                            PrintMessage("Podnosisz " + item.Quantity + " sztuk przedmiotu: " + item.Name, MessageType.Action);
+                        }
+                        
                         AddItemToPlayer(item.Name!, item.Quantity);
                         Data.Player!.CurrentLocation!.RemoveItem(item.Name!, item.Quantity);
                     });
@@ -2091,7 +2148,18 @@ namespace Runedal.GameEngine
                     //pick up the gold also
                     if (Data.Player!.CurrentLocation.Gold > 0)
                     {
-                        PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " złota", MessageType.Action);
+                        if (Data.Player!.CurrentLocation.Gold == 1)
+                        {
+                            PrintMessage("Podnosisz 1 sztukę złota", MessageType.Action);
+                        }
+                        else if (Data.Player!.CurrentLocation.Gold <= 4)
+                        {
+                            PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " sztuki złota", MessageType.Action);
+                        }
+                        else
+                        {
+                            PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " sztuk złota", MessageType.Action);
+                        }
                         AddGoldToPlayer(Data.Player!.CurrentLocation.Gold);
                         Data.Player!.CurrentLocation.Gold = 0;
                     }
@@ -2100,7 +2168,18 @@ namespace Runedal.GameEngine
                 //else, if there are no items but only gold on the ground
                 else if (Data.Player!.CurrentLocation.Gold > 0)
                 {
-                    PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " złota", MessageType.Action);
+                    if (Data.Player!.CurrentLocation.Gold == 1)
+                    {
+                        PrintMessage("Podnosisz 1 sztukę złota", MessageType.Action);
+                    }
+                    else if (Data.Player!.CurrentLocation.Gold <= 4)
+                    {
+                        PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " sztuki złota", MessageType.Action);
+                    }
+                    else
+                    {
+                        PrintMessage("Podnosisz " + Data.Player!.CurrentLocation.Gold + " sztuk złota", MessageType.Action);
+                    }
                     AddGoldToPlayer(Data.Player!.CurrentLocation.Gold);
                     Data.Player!.CurrentLocation.Gold = 0;
                 }
@@ -2151,7 +2230,18 @@ namespace Runedal.GameEngine
                 //if there is any gold on the ground..
                 if (itemQuantity != 0)
                 {
-                    PrintMessage("Podnosisz " + itemQuantity + " złota", MessageType.Action);
+                    if (itemQuantity == 1)
+                    {
+                        PrintMessage("Podnosisz 1 sztukę złota", MessageType.Action);
+                    }
+                    else if (itemQuantity <= 4)
+                    {
+                        PrintMessage("Podnosisz " + itemQuantity + " sztuki złota", MessageType.Action);
+                    }
+                    else
+                    {
+                        PrintMessage("Podnosisz " + itemQuantity + " sztuk złota", MessageType.Action);
+                    }
                     Data.Player!.CurrentLocation.Gold -= itemQuantity;
                     AddGoldToPlayer(itemQuantity);
                 }
@@ -2190,7 +2280,18 @@ namespace Runedal.GameEngine
                 itemQuantity = 1;
             }
 
-            PrintMessage("Podnosisz " + itemQuantity + " " + itemToPickup.Name, MessageType.Action);
+            if (itemQuantity == 1)
+            {
+                PrintMessage("Podnosisz przedmiot: " + itemName, MessageType.Action);
+            }
+            else if (itemQuantity <= 4)
+            {
+                PrintMessage("Podnosisz " + itemQuantity + " sztuki przedmiotu: " + itemName, MessageType.Action);
+            }
+            else
+            {
+                PrintMessage("Podnosisz " + itemQuantity + " sztuk przedmiotu: " + itemName, MessageType.Action);
+            }
             AddItemToPlayer(itemName, itemQuantity);
             Data.Player!.CurrentLocation!.RemoveItem(itemName, itemQuantity);
 
@@ -3976,7 +4077,19 @@ namespace Runedal.GameEngine
             == FlattenPolishChars(itemName.ToLower()))!;
 
             Data.Player!.AddItem(itemToAdd, quantity);
-            PrintMessage("Zdobyłeś " + Convert.ToString(quantity) + " " + itemToAdd.Name, MessageType.Gain);
+
+            if (quantity == 1)
+            {
+                PrintMessage("Zdobyłeś przedmiot: " + itemToAdd.Name, MessageType.Gain);
+            }
+            else if (quantity <= 4)
+            {
+                PrintMessage("Zdobyłeś " + quantity + " sztuki przedmiotu: " + itemToAdd.Name, MessageType.Gain);
+            }
+            else
+            {
+                PrintMessage("Zdobyłeś " + quantity + " sztuk przedmiotu: " + itemToAdd.Name, MessageType.Gain);
+            }
 
             //trigger hints
             if (Hints.HintsOnOff)
@@ -4045,7 +4158,18 @@ namespace Runedal.GameEngine
 
             if (Data.Player!.RemoveItem(itemToRemove.Name!, quantity))
             {
-                PrintMessage("Straciłeś " + Convert.ToString(quantity) + " " + itemToRemove.Name, MessageType.Loss);
+                if (quantity == 1)
+                {
+                    PrintMessage("Straciłeś przedmiot: " + itemToRemove.Name, MessageType.Loss);
+                }
+                else if (quantity <= 4)
+                {
+                    PrintMessage("Straciłeś " + quantity + " sztuki przedmiotu: " + itemToRemove.Name, MessageType.Loss);
+                }
+                else
+                {
+                    PrintMessage("Straciłeś " + quantity + " sztuk przedmiotu: " + itemToRemove.Name, MessageType.Loss);
+                }
             }
             else
             {
@@ -4196,7 +4320,18 @@ namespace Runedal.GameEngine
         private void AddGoldToPlayer(int gold)
         {
             Data.Player!.Gold += gold;
-            PrintMessage("Zyskałeś " + Convert.ToString(gold) + " złota", MessageType.Gain);
+            if (gold == 1)
+            {
+                PrintMessage("Zyskałeś jedną sztukę złota", MessageType.Gain);
+            }
+            else if (gold <= 4)
+            {
+                PrintMessage("Zyskałeś " + gold + " sztuki złota", MessageType.Gain);
+            }
+            else
+            {
+                PrintMessage("Zyskałeś " + gold + " sztuk złota", MessageType.Gain);
+            }
 
             //trigger inventory hint
             if (Hints.HintsOnOff && Hints.InventoryHint)
@@ -4210,12 +4345,35 @@ namespace Runedal.GameEngine
         {
             if (Data.Player!.Gold >= gold)
             {
-                PrintMessage("Straciłeś " + Convert.ToString(gold) + " złota", MessageType.Loss);
+                if (gold == 1)
+                {
+                    PrintMessage("Straciłeś jedną sztukę złota", MessageType.Loss);
+                }
+                else if (gold <= 4)
+                {
+                    PrintMessage("Straciłeś " + Convert.ToString(gold) + " sztuki złota", MessageType.Loss);
+                }
+                else
+                {
+                    PrintMessage("Straciłeś " + Convert.ToString(gold) + " sztuk złota", MessageType.Loss);
+                }
+                
                 Data.Player!.Gold -= gold;
             }
             else
             {
-                PrintMessage("Straciłeś " + Convert.ToString(Data.Player!.Gold) + " złota", MessageType.Loss);
+                if (gold == 1)
+                {
+                    PrintMessage("Straciłeś jedną sztukę złota", MessageType.Loss);
+                }
+                else if (gold <= 4)
+                {
+                    PrintMessage("Straciłeś " + Convert.ToString(Data.Player!.Gold) + " sztuki złota", MessageType.Loss);
+                }
+                else
+                {
+                    PrintMessage("Straciłeś " + Convert.ToString(Data.Player!.Gold) + " sztuk złota", MessageType.Loss);
+                }
                 Data.Player!.Gold = 0;
             }
 
@@ -4228,7 +4386,7 @@ namespace Runedal.GameEngine
             if (!Data.Player!.Inventory!.Exists(it =>
             FlattenPolishChars(it.Name!.ToLower()) == FlattenPolishChars(item.Name!.ToLower())))
             {
-                PrintMessage("Nie posiadasz przedmiotu " + item.Name! + "!", MessageType.SystemFeedback);
+                PrintMessage("Nie posiadasz przedmiotu: " + item.Name! + "!", MessageType.SystemFeedback);
                 return;
             }
 
@@ -4593,7 +4751,18 @@ namespace Runedal.GameEngine
 
             if (location == Data.Player!.CurrentLocation)
             {
-                PrintMessage("W lokacji pojawia się przedmiot: " + itemToAdd.Name + "(" + quantity + ")");
+                if (quantity == 1)
+                {
+                    PrintMessage("W lokacji pojawia się przedmiot: " + itemToAdd.Name + "(" + quantity + ")");
+                }
+                else if (quantity <= 4)
+                {
+                    PrintMessage("W lokacji pojawiają się " + quantity + " sztuki przedmiotu: " + itemToAdd.Name);
+                }
+                else
+                {
+                    PrintMessage("W lokacji pojawia się " + quantity + " sztuk przedmiotu: " + itemToAdd.Name);
+                }
             }
         }
         
@@ -4604,7 +4773,18 @@ namespace Runedal.GameEngine
             
             if (location == Data.Player!.CurrentLocation)
             {
-                PrintMessage("W lokacji pojawia się złoto!");
+                if (amount == 1)
+                {
+                    PrintMessage("W lokacji pojawia się jedna sztuka złota!");
+                }
+                else if (amount <= 4)
+                {
+                    PrintMessage("W lokacji pojawiają się " + amount + " sztuki złota!");
+                }
+                else
+                {
+                    PrintMessage("W lokacji pojawia się " + amount + " sztuk złota!");
+                }
             }
         }
 

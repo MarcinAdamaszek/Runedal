@@ -3387,6 +3387,7 @@ namespace Runedal.GameEngine
             SpecialEffect additionalDmg = new SpecialEffect(SpecialEffect.EffectType.AdditionalDmg, 
                 3, 100);
             ApplySpecialEffect(Data.Player!, additionalDmg, "Zaskoczenie");
+            BreakInvisibility();
         }
 
         ///<summary>

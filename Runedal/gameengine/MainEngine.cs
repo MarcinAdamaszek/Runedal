@@ -3978,7 +3978,7 @@ namespace Runedal.GameEngine
             ulong experience = Convert.ToUInt64(lvl * 15);
             int previousLevel = Data.Player!.Level;
 
-            PrintMessage("Zdobywasz " + experience + " doświadczenia", MessageType.Action);
+            PrintMessage("Zdobywasz " + experience + " pkt. doświadczenia", MessageType.Action);
             if (Data.Player!.GainExperience(experience))
             {
                 PrintMessage("***Zdobywasz nowy poziom!***", MessageType.Action);

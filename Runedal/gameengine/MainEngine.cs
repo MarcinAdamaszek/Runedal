@@ -3420,30 +3420,33 @@ namespace Runedal.GameEngine
             PrintMap();
 
             //print characters welcome phrases
-            nextLocation.Characters!.ForEach(ch =>
+            if (!Data.Player!.Modifiers!.Exists(mod => mod.Type == Modifier.ModType.Invisibility))
             {
-                if (ch.GetType() == typeof(Trader))
+                nextLocation.Characters!.ForEach(ch =>
                 {
-                    if ((ch as Trader)!.WelcomePhrase != "placeholder")
+                    if (ch.GetType() == typeof(Trader))
                     {
-                        PrintSpeech(ch, (ch as Trader)!.WelcomePhrase);
+                        if ((ch as Trader)!.WelcomePhrase != "placeholder")
+                        {
+                            PrintSpeech(ch, (ch as Trader)!.WelcomePhrase);
+                        }
                     }
-                }
-                else if (ch.GetType() == typeof(Hero) && (ch as Hero)!.Aggressiveness != Monster.AggressionType.Aggressive) 
-                {
-                    if ((ch as Hero)!.WelcomePhrase != "placeholder")
+                    else if (ch.GetType() == typeof(Hero) && (ch as Hero)!.Aggressiveness != Monster.AggressionType.Aggressive)
                     {
-                        PrintSpeech(ch, (ch as Hero)!.WelcomePhrase);
+                        if ((ch as Hero)!.WelcomePhrase != "placeholder")
+                        {
+                            PrintSpeech(ch, (ch as Hero)!.WelcomePhrase);
+                        }
                     }
-                }
-                else if (ch.GetType() == typeof(Monster) && (ch as Monster)!.Aggressiveness != Monster.AggressionType.Aggressive)
-                {
-                    if ((ch as Monster)!.WelcomePhrase != "placeholder")
+                    else if (ch.GetType() == typeof(Monster) && (ch as Monster)!.Aggressiveness != Monster.AggressionType.Aggressive)
                     {
-                        PrintSpeech(ch, (ch as Monster)!.WelcomePhrase);
+                        if ((ch as Monster)!.WelcomePhrase != "placeholder")
+                        {
+                            PrintSpeech(ch, (ch as Monster)!.WelcomePhrase);
+                        }
                     }
-                }
-            });
+                });
+            }
 
             //display hints
             if (Hints.HintsOnOff)

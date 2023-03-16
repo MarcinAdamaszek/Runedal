@@ -432,7 +432,7 @@ namespace Runedal.GameEngine
                 }
                 else
                 {
-                    PrintMessage("Nie możesz nic zrobić w trakcie pauzy", MessageType.SystemFeedback);
+                    PrintMessage("Nie możesz nic zrobić w trakcie pauzy (wpisz \"pause\" lub \"ps\" aby wznowić)", MessageType.SystemFeedback);
                     return;
                 }
             }
@@ -6314,7 +6314,7 @@ namespace Runedal.GameEngine
                     Hints.CraftHint2 = false;
                     break;
                 case Hints.HintType.Spells:
-                    hintLines[1] += "Aby zobaczyć listę zapamiętanych czarów, wpisz \"spells\" lub skrót \"sps\"";
+                    hintLines[1] += "Aby zobaczyć listę zapamiętanych czarów, wpisz \"spells\" (skrót \"sps\")";
                     hintLines[2] += "Aby zobaczyć opis czaru, użyj komendy \"look\" (skrót \"l\") (np. \"look " + objectName1 + "\")";
                     hintLines[3] += "Aby rzucić czar, użyj komendy \"cast\" (skrót \"c\") i numeru czaru na liście (np. \"cast 1\")";
                     hintLines[4] += "(Aby wyłączyć/włączyć podpowiedzi, wpisz \"hints\")";

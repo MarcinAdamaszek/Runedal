@@ -55,7 +55,7 @@ namespace Runedal.GameData
         public List<Spell>? Spells { get; set; }
         public List<ulong>? TakenIds { get; set; }
         public Player? Player { get; set; }
-        public List<Character> AllCharactersTestProp {get; set;}
+        public List<Character> AllCharactersTestProp { get; set;}
       
         
         //method reading json file into json string
@@ -432,7 +432,8 @@ namespace Runedal.GameData
             playerLocation.AddCharacter(Player!);
 
             //load counter for death screen delay
-            DeathScreenDelayCounter = 100;
+            
+            DeathScreenDelayCounter = 40;
         }
 
         //method clearing all current game session objects

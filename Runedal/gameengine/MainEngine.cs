@@ -817,16 +817,6 @@ namespace Runedal.GameEngine
             Data.Player!.ActionCounter = 0;
             Data.Player!.Hp = 0;
             Data.Player!.Mp = 0;
-            //clear player stats to reset hp/mp/action bars
-            //Data.Player!.ActionCounter = 0;
-            //Data.Player!.MaxHp = 0;
-            //Data.Player!.MaxMp = 0;
-            //Data.Player!.Strength = 0;
-            //Data.Player!.Intelligence = 0;
-            //Data.Player!.Modifiers!.Clear();
-            //Data.Player!.Hp = 0;
-            //Data.Player!.Mp = 0;
-
 
             PrintDeathScreen();
         }
@@ -846,8 +836,7 @@ namespace Runedal.GameEngine
             PrintMessage("Postać pokazuje Ci pokaźną i bogato zdobioną klepsydrę z napisem \"" + Data.Player!.Name!.ToUpper() + "\" wyrytym srebrnymi literami, w której " +
                 "ostatnie ziarenka złotego piasku przesypują się do dolnej połowy, po czym bierze zamach, a Ty widzisz tylko srebrzysto-" +
                 "niebieski błysk..\n");
-            PrintMessage("-------========= NIE ŻYJESZ =========-------\n", MessageType.LimitExceeded);
-            PrintMessage("(Wciśnij dowolny klawisz aby przejść do menu)", MessageType.Action);
+            PrintMessage("-------========= NIE ŻYJESZ =========-------", MessageType.LimitExceeded);
         }
 
         //method clearing the outputBox
@@ -1312,7 +1301,6 @@ namespace Runedal.GameEngine
         }
 
         //method handling game pausing
-
         private void PauseHandler()
         {
             if (IsPaused)
@@ -7080,7 +7068,19 @@ namespace Runedal.GameEngine
 
             if (IsDeathScreen && Data.DeathScreenDelayCounter > 0)
             {
-                Data.DeathScreenDelayCounter -= 1;
+                if (TimeInterval > 90)
+                {
+                    Data.DeathScreenDelayCounter -= 2;
+                }
+                else
+                {
+                    Data.DeathScreenDelayCounter -= 1;
+                }
+
+                if (Data.DeathScreenDelayCounter == 2)
+                {
+                    PrintMessage("\n(Wciśnij dowolny klawisz aby przejść do menu)", MessageType.Action);
+                }
             }
         }
 

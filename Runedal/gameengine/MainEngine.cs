@@ -3133,12 +3133,12 @@ namespace Runedal.GameEngine
             if (isSlowDown)
             {
                 PrintMessage("Szybkość gry: " + GameSpeed + "x " +
-                    "(\"speedup\" lub \"up\" aby zwiększyć)", MessageType.SystemFeedback);
+                    "(wpisz \"speedup\" lub \"up\" aby zwiększyć)", MessageType.SystemFeedback);
             }
             else
             {
                 PrintMessage("Szybkość gry: " + GameSpeed + "x " +
-                    "(\"slowdown\" lub \"dn\" aby zmniejszyć)", MessageType.SystemFeedback);
+                    "(wpisz \"slowdown\" lub \"dn\" aby zmniejszyć)", MessageType.SystemFeedback);
             }
         }
 

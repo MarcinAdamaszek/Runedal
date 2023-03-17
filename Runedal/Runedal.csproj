@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>dis_02.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,10 @@
     <None Remove="GameData\Resources\Images\**" />
     <Page Remove="GameData\JSONData\**" />
     <Page Remove="GameData\Resources\Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="dis_02.ico" />
   </ItemGroup>
 
   <ItemGroup>

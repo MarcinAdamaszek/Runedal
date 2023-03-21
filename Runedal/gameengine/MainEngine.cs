@@ -1388,6 +1388,7 @@ namespace Runedal.GameEngine
             //if command "look" was used without argument, print location description
             if (entityName == string.Empty || entityName == "around")
             {
+                PrintMessage("Rozglądasz się", MessageType.Action);
                 LocationInfo(Data.Player!.CurrentLocation!);
 
                 //trigger look adjacent loc hint
@@ -5772,7 +5773,7 @@ namespace Runedal.GameEngine
                 manualLines[i++] = "  >>> UCIEKNIJ";
                 manualLines[i++] = "     * Komenda: 'flee [nazwa kierunku]'";
                 manualLines[i++] = "     * Skrót: 'f'";
-                manualLines[i++] = "           Twoja postać próbuje ucieczki we losowym kierunku. Możesz wskazać kierunek ucieczki {np. 'flee n'}.";
+                manualLines[i++] = "           Twoja postać próbuje ucieczki w losowym kierunku. Możesz wskazać kierunek ucieczki {np. 'flee n'}.";
                 manualLines[i++] = " ";
                 manualLines[i++] = "  >>> UŻYJ PRZEDMIOTU";
                 manualLines[i++] = "     * Komenda: 'use [nazwa obiektu]'";

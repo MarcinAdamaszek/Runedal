@@ -75,41 +75,11 @@ namespace Runedal.GameEngine
             GameClock.Interval = TimeSpan.FromMilliseconds(TimeInterval);
             GameClock.Tick += GameClockTick!;
 
-            //PrintManual();
             LoadGameObjects();
             PrepareNewGameLoad();
             PrintWelcomeScreen();
-
-            //StartNewGame("Czesiek");
-            //GivePlayerExperience(100);
-
-
-            //Data.Locations!.Find(loc => loc.Name == "Karczma").Characters.ForEach(ch =>
-            //{
-            //    if (ch.GetType() == typeof(Monster))
-            //    {
-            //        PrintMessage(Convert.ToString((ch as Monster).Id));
-            //    }
-            //});
-            //double szczurAtkSpeed = (Data.Locations!.Find(loc => loc.Name == "Piwnica").Characters.
-            //    Find(character => character.Name == "Szczur") as CombatCharacter).GetEffectiveAtkSpeed();
-            //double playerAtkSpeed = (Data.Locations!.Find(loc => loc.Name == "Karczma").Characters.
-            //    Find(character => character.Name == "Czesiek") as CombatCharacter).GetEffectiveAtkSpeed();
-
-            //PrintMessage("atk speed szczura: " + szczurAtkSpeed);
-            //PrintMessage("atk speed gracza: " + playerAtkSpeed);
-
-            //Location karczma = Data.Locations.Find(loc => loc.Name.ToLower() == "karczma");
-            //Monster skeleton = karczma.Characters.Find(ch => ch.Name.ToLower() == "dziki_pies") as Monster;
-            //AttackInstances.Add(new AttackInstance(Data.Player!, skeleton));
-            //AttackInstances.Add(new AttackInstance(skeleton, Data.Player!));
-            //Data.Player.Hp -= 500;
-            //Data.Player.Mp -= 300;
-            //(Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp -= 10;
-            //PrintMessage(Convert.ToString((Data.Characters.Find(ch => ch.Name == "Szczur") as CombatCharacter).Hp));
         }
 
-        //enum type for type of message displayed in PrintMessage method for displaying messages in different colors
         public enum MessageType
         {
             Default,
@@ -160,7 +130,6 @@ namespace Runedal.GameEngine
         public bool IsFromGameLoading { get; set; }
         public bool IsErrorSaving { get; set; }
 
-        //method processing user input commands
         public void ProcessCommand()
         {
             string userCommand = string.Empty;
@@ -613,7 +582,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method launching the welcome screen of the game
         private void PrintWelcomeScreen()
         {
             const int runedalWidth = 54;
@@ -652,7 +620,6 @@ namespace Runedal.GameEngine
             PrintMessage("              Created by: Marcin Adamaszek");
         }
 
-        //method loading all objects into list collections in Data.cs
         private void LoadGameObjects()
         {
             //initialize all data collections
@@ -663,7 +630,6 @@ namespace Runedal.GameEngine
             Data.LoadStackingEffects();
         }
 
-        //method creating new json file serving as new game load
         private void PrepareNewGameLoad()
         {
             //load player into game
@@ -683,7 +649,6 @@ namespace Runedal.GameEngine
             Data.SaveGame(Data.JsonDirectoryPath + @"NewGame.json", new Hints());
         }
 
-        //method printing menu of the game
         public void PrintMainMenu(bool gameSaveSuccess = false)
         {
             ClearOutputBox();
@@ -722,7 +687,6 @@ namespace Runedal.GameEngine
             PrintMessage("\n              TRYB PEŁNOEKRANOWY - KLAWISZ \"F11\"", MessageType.Action, false);
         }
 
-        //method veryfing player's name
         public void VerifyPlayerName(string playerName, string secondArgument)
         {
             var regex = @"^[\w']{3,40}$";
@@ -756,7 +720,6 @@ namespace Runedal.GameEngine
             return;
         }
 
-        //method starting a new game
         public void StartNewGame(string playerName)
         {
             IsInGame = true;
@@ -815,7 +778,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method ending current game session and exiting to menu
         public void EndGame()
         {
             IsInGame = false;
@@ -827,7 +789,6 @@ namespace Runedal.GameEngine
             PrintDeathScreen();
         }
 
-        //method printing death screen after player has lost all of his hp
         public void PrintDeathScreen()
         {
             IsDeathScreen = true;
@@ -845,7 +806,6 @@ namespace Runedal.GameEngine
             PrintMessage("-------========= NIE ŻYJESZ =========-------", MessageType.LimitExceeded);
         }
 
-        //method clearing the outputBox
         public void ClearOutputBox()
         {
             Window.outputBox.SelectAll();
@@ -853,14 +813,12 @@ namespace Runedal.GameEngine
             Window.outputBox.Document.Blocks.Add(new Paragraph());
         }
 
-        //method for auto-saving
         private void AutoSave()
         {
             GameSavePath = Data.JsonDirectoryPath + @"SavedGames\AUTO_ZAPIS";
             SaveGame("", true, false, true);
         }
 
-        //method saving game
         private void SaveGame(string saveNumber, bool IsPathSpecified = false, bool isQuickSave = false, bool isAutoSave = false)
         {
             string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
@@ -895,7 +853,7 @@ namespace Runedal.GameEngine
             {
                 IsSaveOverwriteConfirmation = true;
                 GameSavePath = savePath;
-                GameSaveOverwriteConfirmation();
+                ConfirmGameSaveOverwrite();
                 return;
             }
 
@@ -924,7 +882,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method loading game
         private void LoadGame(string saveNumber)
         {
             string gameSavesPathBeginning = Data.JsonDirectoryPath + @"SavedGames\";
@@ -971,7 +928,6 @@ namespace Runedal.GameEngine
             LocationInfo(Data.Player!.CurrentLocation!);
         }
 
-        //method chosing game save to be deleted
         private void ChooseDeletion(string saveNumber)
         {
             string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
@@ -997,13 +953,11 @@ namespace Runedal.GameEngine
             GameSaveDeleteConfirmation();
         }
 
-        //method deleting game save
         private void DeleteGameSave()
         {
             File.Delete(GameSavePath);
         }
 
-        //method handling new save game
         private void PrintNewSaveScreen()
         {
             ClearOutputBox();
@@ -1013,7 +967,6 @@ namespace Runedal.GameEngine
             IsNewSave = true;
         }
 
-        //method handling saving for user-chosen save name
         private void HandleNewSaveName(string saveName)
         {
             string[] saveFiles = Directory.GetFiles(Data.JsonDirectoryPath + @"SavedGames\");
@@ -1047,7 +1000,6 @@ namespace Runedal.GameEngine
             SaveGame("", true);
         }
 
-        //method handling game save deletion confirmation
         private void GameSaveDeleteConfirmation()
         {
             string fileName = Path.GetFileName(GameSavePath);
@@ -1076,8 +1028,7 @@ namespace Runedal.GameEngine
             PrintMessage("                         2. NIE", MessageType.Loss, false);
         }
 
-        //handle chosing existing game save and overwriting it
-        private void GameSaveOverwriteConfirmation()
+        private void ConfirmGameSaveOverwrite()
         {
             ClearOutputBox();
             PrintMessage("************************* UWAGA! *************************\n", MessageType.CriticalHit, false);
@@ -1175,7 +1126,6 @@ namespace Runedal.GameEngine
 
         //==============================================COMMAND HANDLERS=============================================
 
-        //method handling 'save' command
         private void SaveHandler(bool IsQuickSave = false)
         {
 
@@ -1225,7 +1175,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'load' command
         private void LoadHandler(bool isDeleting)
         {
             IsLoading = true;
@@ -1285,7 +1234,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //mathod handling 'autoattack' command
         private void AutoattackHandler()
         {
             if (IsAutoattackOn)
@@ -1300,13 +1248,11 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'help' command
         private void HelpHandler()
         {
             PrintCommandsCS(false);
         }
 
-        //method handling game pausing
         private void PauseHandler()
         {
             if (IsPaused)
@@ -1323,7 +1269,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method moving player to next location
         private void GoHandler(string direction)
         {
 
@@ -1377,7 +1322,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'look' command
         private void LookHandler(string entityName)
         {
             int index = -1;
@@ -1519,7 +1463,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'trade' command
         private void TradeHandler(string characterName)
         {
             int index = -1;
@@ -1589,7 +1532,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'talk' command
         private void TalkHandler(string characterName)
         {
 
@@ -1649,7 +1591,6 @@ namespace Runedal.GameEngine
             PrintMessage(Data.Player!.InteractsWith!.Questions.Length + 1 + ": Bywaj");
         }
 
-        //method handling chosen option (1, 2, 3 etc.)
         private void OptionHandler(string option)
         {
             if (Data.Player!.CurrentState != Player.State.Talk)
@@ -1678,7 +1619,6 @@ namespace Runedal.GameEngine
             PrintMessage(Data.Player!.InteractsWith!.Questions.Length + 1 + ": Bywaj");
         }
 
-        //method handling 'inventory' command
         private void InventoryHandler(Player player, bool withPrice)
         {
 
@@ -1704,7 +1644,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'buy' command
         private void BuyHandler(string itemName, string quantity)
         {
 
@@ -1832,7 +1771,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'sell' command
         private void SellHandler(string itemName, string quantity)
         {
 
@@ -1948,7 +1886,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'use' command
         private void UseHandler(string itemName)
         {
             Item itemToUse;
@@ -1986,7 +1923,6 @@ namespace Runedal.GameEngine
 
         }   
 
-        //method handling 'stats' command
         private void StatsHandler()
         {
             StatsInfo();
@@ -2002,7 +1938,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling 'drop' command
         private void DropHandler(string itemName, string quantity)
         {
             int itemIndex = Data.Player!.Inventory!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower())
@@ -2111,7 +2046,6 @@ namespace Runedal.GameEngine
             AddItemToLocation(Data.Player!.CurrentLocation!, itemName, itemQuantity);
         }
 
-        //method handling 'pickup' command
         private void PickupHandler(string itemName, string quantity)
         {
             int itemIndex = Data.Player!.CurrentLocation!.Items!.FindIndex(item => FlattenPolishChars(item.Name!.ToLower())
@@ -2311,7 +2245,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method handling 'wear' command
         private void WearHandler(string itemName)
         {
             //prevent doing so when fighting
@@ -2419,7 +2352,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method for handling 'takeoff' command
         private void TakeoffHandler(string slotName)
         {
             //prevent doing so when fighting
@@ -2484,7 +2416,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method for stopping actions/states
         private void StopHandler()
         {
             //stop all queued actions
@@ -2503,7 +2434,6 @@ namespace Runedal.GameEngine
             ResetPlayerState();
         }
 
-        //method for handling 'attack' command
         private void AttackHandler(string characterName)
         {
 
@@ -2584,7 +2514,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method for handling 'flee' command
         private void FleeHandler(string direction)
         {
             string directionToFlee = string.Empty;
@@ -2671,7 +2600,6 @@ namespace Runedal.GameEngine
             
         }
 
-        //method for spending attribute pointsd
         private void PointHandler(string attribute)
         {
             Player player = Data.Player!;
@@ -2718,7 +2646,6 @@ namespace Runedal.GameEngine
             PrintMessage("Twoja " + attributeWord + " zwiększa się o 1!");
         }
 
-        //method for crafting spells from runes combinations
         private void CraftHandler(string firstRune, string secondRune)
         {
             bool isCombinationDouble = false;
@@ -2871,13 +2798,11 @@ namespace Runedal.GameEngine
             Actions.Add(SpellCraft);
         }
 
-        //method showing player's remembered spells
         private void SpellsHandler()
         {
             SpellsInfo(Data.Player!);
         }
 
-        //method for handling spell casting
         private void CastHandler(string spellNumberAsString, string targetName)
         {
             int i;
@@ -3061,7 +2986,6 @@ namespace Runedal.GameEngine
             AddAction(spellcast);
         }
 
-        //method for handling 'effects' command
         private void EffectsHandler()
         {
             List<EffectOnPlayer> playerEffects = Data.Player!.Effects!;
@@ -3090,14 +3014,13 @@ namespace Runedal.GameEngine
                 effectLine = Regex.Replace(effectLine, @",\s$", "");
 
                 //add effect duration
-                effectLine += " " + TimeValueFromSeconds(Data.Player!.Modifiers!.Find(mod => mod.Parent == eff.Name)!.DurationInTicks / 10);
+                effectLine += " " + TimeStampFromSeconds(Data.Player!.Modifiers!.Find(mod => mod.Parent == eff.Name)!.DurationInTicks / 10);
 
                 //print effect
                 PrintMessage(effectLine, MessageType.EffectOn);
             });
         }
 
-        //method for handling game speed manipulation
         private void ChangeSpeedHandler(bool isSlowDown)
         {
             if (isSlowDown)
@@ -3143,7 +3066,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling turning on/off hints
         private void HintsHandler()
         {
             if (Hints.HintsOnOff)
@@ -3167,7 +3089,6 @@ namespace Runedal.GameEngine
 
         //==============================================MANIPULATION METHODS=============================================
 
-        //method simulating rune drop when monster dies and player achieves certain requirements
         private void TryRuneDrop()
         {
             
@@ -3243,7 +3164,6 @@ namespace Runedal.GameEngine
             Data.Player!.RunesAlreadyReceived++;
         }
 
-        //method triggering the drop chance for every monster dying
         private void TriggerDropChance(CombatCharacter dyingChar)
         {
             //prevent dropping anything if it's rat dying
@@ -3394,7 +3314,6 @@ namespace Runedal.GameEngine
             //}
         }
 
-        //method triggering powloka nur'zhel effect
         private void TriggerPowlokaNurzhel()
         {
             SpecialEffect additionalDmg = new SpecialEffect(SpecialEffect.EffectType.AdditionalDmg, 
@@ -3508,7 +3427,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method for crafting a spell
         private void CraftSpell(Spell spellToCraft)
         {
 
@@ -3537,7 +3455,6 @@ namespace Runedal.GameEngine
             SpellsInfo(Data.Player!);
         }
 
-        //method for casting spell by specified caster onto specified target
         private void CastSpell(CombatCharacter caster, CombatCharacter target, Spell spell)
         {
             bool hasSpellLanded;
@@ -3724,7 +3641,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method for attacking character by another character
         private void AttackCharacter(CombatCharacter attacker, CombatCharacter attacked)
         {
             //make sure to remove previous attack instance, so attacker doesn't attack
@@ -3768,7 +3684,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method killing non-player combat character
         private void KillCharacter(CombatCharacter character)
         {
             int i;
@@ -4001,7 +3916,6 @@ namespace Runedal.GameEngine
             return isDmgLethal;
         }
 
-        //method adding certain amount to player's experience pool
         private void GivePlayerExperience(int lvl)
         {
             ulong experience = Convert.ToUInt64(lvl * 15);
@@ -4024,7 +3938,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method putting character into location
         private void AddCharacterToLocation(Location location, Character character)
         {
             location.AddCharacter(character);
@@ -4099,7 +4012,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling adding items to player's inventory
         private void AddItemToPlayer(string itemName, int quantity)
         {
             Item itemToAdd = Data.Items!.Find(item => FlattenPolishChars(item.Name!.ToLower())
@@ -4177,7 +4089,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling removing items from player's inventory
         private void RemoveItemFromPlayer(string itemName, int quantity = 1)
         {
 
@@ -4206,7 +4117,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method for wearing a weapon-type items by player
         private void WearWeaponOnPlayer(string itemName)
         {
             Weapon weaponToWear = (Data.Items!.Find(item => FlattenPolishChars(item.Name!.ToLower())
@@ -4218,7 +4128,6 @@ namespace Runedal.GameEngine
             Data.Player!.WearWeapon(weaponToWear);
         }
 
-        //method for wearing armor type items by player
         private void WearArmorOnPlayer(string itemName)
         {
             Armor armorToWear = (Data.Items!.Find(item => 
@@ -4345,7 +4254,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling adding gold to player's pool
         private void AddGoldToPlayer(int gold)
         {
             Data.Player!.Gold += gold;
@@ -4369,7 +4277,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling removing gold from player's pool
         private void RemoveGoldFromPlayer(int gold)
         {
             if (Data.Player!.Gold >= gold)
@@ -4408,7 +4315,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method for using consumable item
         public void UseConsumable(Consumable item)
         {
             //prevent using non-existent item
@@ -4439,7 +4345,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method applying effects to player
         private void ApplyEffect(List<Modifier> modifiers, string objectName)
         {
             Player player = Data.Player!;
@@ -4533,7 +4438,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method applying special effects to combat character
         private void ApplySpecialEffect(CombatCharacter target, SpecialEffect effect, string parentName)
         {
             Modifier specialMod = new Modifier();
@@ -4624,8 +4528,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method triggering auto-attack if character becomes a target
-        //of an attack attempt or offensive spell
         private void TriggerAutoAttack(CombatCharacter attacker, CombatCharacter receiver,
              bool isAttackerPlayer, bool isDmgLethal)
         {
@@ -4668,7 +4570,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method removing effects from player
         private void RemoveEffect(EffectOnPlayer effect)
         {
             PrintMessage("Skończyło się działanie " + effect.Description, MessageType.EffectOff);
@@ -4691,7 +4592,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method breaking trade state and printing proper message
         private void BreakTradeState()
 
         {
@@ -4700,7 +4600,6 @@ namespace Runedal.GameEngine
              Data.Player!.CurrentState = Player.State.Idle;
         }
 
-        //method for breaking invis buff
         private void BreakInvisibility()
         {
             List<EffectOnPlayer> effectsToRemove = new List<EffectOnPlayer>();
@@ -4740,7 +4639,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method breaking talk state and printing proper message
         private void BreakTalkState()
         {
             PrintMessage("Przestajesz rozmawiać z: " + Data.Player!.InteractsWith!.Name, MessageType.Action);
@@ -4748,7 +4646,6 @@ namespace Runedal.GameEngine
             Data.Player!.CurrentState = Player.State.Idle;
         }
 
-        //method checking if player is trading/talking and breaking the state if so
         private void ResetPlayerState()
         {
             //check if player is trading with someone already
@@ -4762,7 +4659,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method adding items to non-player characters
         private void AddItemToNpc(Character character, string itemName, int quantity)
         {
             Item itemToAdd = Data.Items!.Find(item =>
@@ -4770,7 +4666,6 @@ namespace Runedal.GameEngine
             character.AddItem(itemToAdd, quantity);
         }
 
-        //method adding items to location
         private void AddItemToLocation(Location location, string itemName, int quantity)
         {
             Item itemToAdd = Data.Items!.Find(item => 
@@ -4795,7 +4690,6 @@ namespace Runedal.GameEngine
             }
         }
         
-        //method adding gold to location
         private void AddGoldToLocation(Location location, int amount)
         {
             location.Gold += amount;
@@ -4824,7 +4718,6 @@ namespace Runedal.GameEngine
 
         //==============================================DESCRIPTION METHODS=============================================
 
-        //method describing location to user
         public void LocationInfo(Location currentLocation, bool isDetailed = true)
         {
             //Location currentLocation = Data.Player!.CurrentLocation!;
@@ -4912,7 +4805,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method printing character's inventory
         private void InventoryInfo(Character character, bool withPrice = true)
         {
             string spaceAfterName;
@@ -5093,7 +4985,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method describing character
         private void CharacterInfo(Character character)
         {
             PrintMessage("[ " + character.Name + " ]");
@@ -5104,7 +4995,6 @@ namespace Runedal.GameEngine
             PrintMessage(character.Description!);
         }
 
-        //method describing item
         private void ItemInfo(string itemName)
         {
             bool isTooHeavy = false;
@@ -5328,8 +5218,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method printing map around player's current location
-        //in form of ascii art (or unicode art to be more precise)
         private void PrintMap()
         {
             Location center = Data.Player!.CurrentLocation!;
@@ -5493,7 +5381,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method printing player's statistics
         private void StatsInfo()
         {
             const int halfSize = 28;
@@ -5624,7 +5511,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method printing info about player's remembered spells
         private void SpellsInfo(CombatCharacter character)
         {
             int i, j;
@@ -5675,7 +5561,6 @@ namespace Runedal.GameEngine
 
         }
 
-        //method printing detailed info about single spell
         private void SpellInfo(Spell spell)
         {
             string name = spell.Name!;
@@ -5717,7 +5602,6 @@ namespace Runedal.GameEngine
             PrintMessage(specialEffects);
         }
 
-        //method printing commands-manual
         private void PrintCommandsCS(bool isLong = true)
         {
             const int manualSize = 150;
@@ -5966,7 +5850,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method printing game manual
         private void PrintManual(bool isExitInfoPrinted = true)
         {
             const int manualSize = 220;
@@ -6231,7 +6114,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method printing hints for player doing something for the very first time
         private void PrintHint(Hints.HintType type, string objectName1 = "placeholder", string objectName2 = "placeholder")
         {
             int i;
@@ -6421,20 +6303,18 @@ namespace Runedal.GameEngine
 
         //==============================================HELPER METHODS=============================================
 
-        //method calculating nth root of a double value
+        //calculating nth root of a double value
         public static double NthRoot(double A, double N)
         {
             return Math.Pow(A, 1.0 / N);
         }
 
-        //method calculating strenght limit for heavy armor parts
         private int CalculateStrenghtLimit(int weight)
         {
             double strengthLimit = Math.Pow(weight - 175, 1.35) / 6;
             return (int)Math.Floor(strengthLimit);
         }
 
-        //method determining if location with specified coordinates exists
         private bool IsThereALocation(int X, int Y, int Z)
         {
             if (Data.Locations!.Exists(loc => loc.X == X && loc.Y == Y && loc.Z == Z))
@@ -6447,7 +6327,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method returning formatted string representing special effect description
         private string GetSpecialEffectDescription(SpecialEffect effect)
         {
             string effectDescription = string.Empty;
@@ -6462,19 +6341,19 @@ namespace Runedal.GameEngine
             }
             else if (effect.Type == SpecialEffect.EffectType.Stun)
             {
-                effectDescription = "Ogłuszenie " + TimeValueFromSeconds(effect.Duration);
+                effectDescription = "Ogłuszenie " + TimeStampFromSeconds(effect.Duration);
             }
             else if (effect.Type == SpecialEffect.EffectType.Lifesteal)
             {
-                effectDescription = "Kradzież życia(+" + effect.Value + "_%) " + TimeValueFromSeconds(effect.Duration);
+                effectDescription = "Kradzież życia(+" + effect.Value + "_%) " + TimeStampFromSeconds(effect.Duration);
             }
             else if (effect.Type == SpecialEffect.EffectType.Invisibility)
             {
-                effectDescription = "Niewidzialność " + TimeValueFromSeconds(effect.Duration);
+                effectDescription = "Niewidzialność " + TimeStampFromSeconds(effect.Duration);
             }
             else if (effect.Type == SpecialEffect.EffectType.ManaShield)
             {
-                effectDescription = "Tarcza MP(+" + effect.Value + "_%) " + TimeValueFromSeconds(effect.Duration);
+                effectDescription = "Tarcza MP(+" + effect.Value + "_%) " + TimeStampFromSeconds(effect.Duration);
             }
             else if (effect.Type == SpecialEffect.EffectType.Teleport)
             {
@@ -6484,7 +6363,6 @@ namespace Runedal.GameEngine
             return effectDescription;
         }
 
-        //method returning formatted string representing effect description (it's modifiers and duration)
         private string GetEffectDescription(List<Modifier> modifiers, bool withRealDuration = false)
         {
             string effect = string.Empty;
@@ -6502,11 +6380,11 @@ namespace Runedal.GameEngine
                 //print starting or actual duration depending on second argument
                 if (withRealDuration)
                 {
-                    effect += " " + TimeValueFromSeconds((modifiers[0].DurationInTicks / 10));
+                    effect += " " + TimeStampFromSeconds((modifiers[0].DurationInTicks / 10));
                 }
                 else
                 {
-                    effect += " " + TimeValueFromSeconds(modifiers[0].Duration);
+                    effect += " " + TimeStampFromSeconds(modifiers[0].Duration);
                 }
             }
             else
@@ -6517,7 +6395,6 @@ namespace Runedal.GameEngine
             return effect;
         }
 
-        //method returning formatted string representing modifier and it's value with sign
         private string GetModDescription(Modifier modifier)
         {
             string description = string.Empty;
@@ -6548,8 +6425,6 @@ namespace Runedal.GameEngine
             return description;
         }
 
-        //method returning polish string representing direction in which player does something
-        //(ie goes or looks)
         private string GetPolishDirectionName(string directionLetter)
         {
             string directionString = string.Empty;
@@ -6601,7 +6476,6 @@ namespace Runedal.GameEngine
             return Regex.Replace(objectName, @"_", "");
         }
 
-        //method returning polish string representing specified type of ArmorType type
         private string GetPolishArmorType(Armor.ArmorType type)
         {
             string armorType = string.Empty;
@@ -6626,7 +6500,6 @@ namespace Runedal.GameEngine
             return armorType;
         }
 
-        //method returning polish string representing specified type of CombatCharacter statistic 
         private string GetPolishModType(Modifier.ModType type)
         {
             string modType = string.Empty;
@@ -6767,7 +6640,6 @@ namespace Runedal.GameEngine
             return isFound;
         }
 
-        //helper method for calculating selling price (trader price) of the item
         private int CalculateTraderPrice(string itemName)
         {
             Item itemToEvaluate = Data.Items!.Find(item =>
@@ -6778,7 +6650,7 @@ namespace Runedal.GameEngine
             return roundedPrice;
         }
 
-        //method converting quantity string to number and returning true
+        //converting quantity string to number and returning true
         //if conversion succeded and value is > 0  (returns false otherwise)
         private bool ConvertQuantityString(string quantityString, out int quantityValue)
         {
@@ -6802,8 +6674,8 @@ namespace Runedal.GameEngine
             return true;
         }
 
-        //method converting seconds number to time value in hours, minutes and seconds
-        private string TimeValueFromSeconds(int seconds)
+        //converting seconds number to time value in hours, minutes and seconds
+        private string TimeStampFromSeconds(int seconds)
         {
             int hours = 0;
             int minutes = 0;
@@ -6837,14 +6709,13 @@ namespace Runedal.GameEngine
             return time;
         }
 
-        //method printing characters line in form of speech
         private void PrintSpeech(Character character, string line)
         {
             string characterLine = character.Name + ": " + line;
             PrintMessage(characterLine, MessageType.Speech);
         }
 
-        //method displaying communicates in outputBox of the gui
+        //displaying blocks of text in outputBox of the gui
         public void PrintMessage(string msg, MessageType type = MessageType.Default, bool shouldScroll = true)
         {
              
@@ -6932,7 +6803,7 @@ namespace Runedal.GameEngine
         }
 
         /// <summary>
-        /// /// method taking chance parameter (as double 0.01-1.00 value, indicating percent
+        /// ///taking chance parameter (as double 0.01-1.00 value, indicating percent
         /// number) returns true if succeded and false if not
         /// </summary>
         /// <param name="chance"></param>
@@ -6951,7 +6822,7 @@ namespace Runedal.GameEngine
         }
 
         /// <summary>
-        /// /// method determining if an attack reached the target on basis of two 
+        /// ///determining if an attack reached the target on basis of two 
         /// parameters: accuracy and evasion. If attack is a success - returns true
         /// if missed - returns false
         /// </summary>
@@ -6974,7 +6845,7 @@ namespace Runedal.GameEngine
         }
 
         /// <summary>
-        /// method determining if a spell succeded or failed on basis of two parameters:
+        /// determining if a spell succeded or failed on basis of two parameters:
         /// casterChanceFactor(player int value or monster's lvl) and targetMagicResistance
         /// </summary>
         /// <param name="casterChanceFactor"></param>
@@ -7002,7 +6873,6 @@ namespace Runedal.GameEngine
             return isCritical;
         }
 
-        //method calculating dmg from attack and defense values
         private double CalculateDmg(double attack, double defense)
         {
             double reductionMultiplier = 1 / (Math.Sqrt(defense) / 10);
@@ -7010,7 +6880,6 @@ namespace Runedal.GameEngine
             return dmg;
         }
 
-        //method randomizing dmg
         private double RandomizeDmg(double staticDmg)
         {
             double randomDmgMultiplier = Rand.Next(80, 121) * 0.01;
@@ -7018,7 +6887,6 @@ namespace Runedal.GameEngine
             return randomizedDmg;
         }
 
-        //method adding action to actions list
         private void AddAction(CharAction action)
         {
             //prevention fix for player's character sometimes losing items modifiers without
@@ -7035,7 +6903,6 @@ namespace Runedal.GameEngine
             Actions.Add(action);
         }
 
-        //method refreshing all worn-items modifiers on player's character
         private void RefreshItemsModifiers()
         {
             Item[] wornItems = new Item[6];
@@ -7063,7 +6930,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method printing hp amount of an enemy currently fighting against player
         private void ShowEnemysHp()
         {
             CombatCharacter enemy = AttackInstances.Find(ins => ins.Attacker == Data.Player!)!.Receiver!;
@@ -7075,7 +6941,6 @@ namespace Runedal.GameEngine
 
         //==============================================EVENT HANDLERS=============================================
 
-        //handler for tick event of GameClock
         private void GameClockTick(object sender, EventArgs e)
         {
             //handle all characters regeneration/duration-decrease of modifiers etc
@@ -7112,7 +6977,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling player effects tick
         private void PlayerEffectsTick()
         {
             List<EffectOnPlayer> playerEffects;
@@ -7140,7 +7004,6 @@ namespace Runedal.GameEngine
             });
         }
 
-        //method handling attacks for every attack instance
         private void AttacksTick()
         {
             bool isSpellCasted = false;
@@ -7272,7 +7135,6 @@ namespace Runedal.GameEngine
             }
         }
 
-        //method handling actions done by combat characters
         private void ActionsTick()
         {
             List<CharAction> actionsToRemove = new List<CharAction>();

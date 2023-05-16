@@ -9,14 +9,12 @@ namespace Runedal.GameData.Items
 {
     public class Item : Entity
     {
-        //default constructor for json deserialization
         public Item() : base()
         {
             Modifiers = new List<Modifier>();
             Quantity = 1;
         }
 
-        //constructor for placeholder for empty Player's item slots
         public Item(string placeholder) : base(placeholder)
         {
             Quantity = 1;
@@ -32,7 +30,6 @@ namespace Runedal.GameData.Items
             Modifiers = new List<Modifier>();
         }
 
-        //copy constructor
         public Item(Item it, int quantity = 1)
         {
             Quantity = quantity;
@@ -41,8 +38,6 @@ namespace Runedal.GameData.Items
             Weight = it.Weight;
             Price = it.Price;
             RealWeight = it.Weight * quantity;
-
-            //create deep copy of modifiers collection
             Modifiers = it.Modifiers!.ConvertAll(mod => new Modifier(mod));
         }
         public Item(Item it)
@@ -53,8 +48,6 @@ namespace Runedal.GameData.Items
             Weight = it.Weight;
             Price = it.Price;
             RealWeight = it.Weight * it.Quantity;
-
-            //create deep copy of modifiers collection
             Modifiers = it.Modifiers!.ConvertAll(mod => new Modifier(mod));
         }
 
@@ -63,7 +56,6 @@ namespace Runedal.GameData.Items
         public int Price { get; set; }
         public int Quantity { get; set; }
 
-        //list of modifiers which change player's statistics and/or attributes
         public List<Modifier>? Modifiers { get; set; }
 
         public void ChangeQuantity(int quantity)

@@ -19,7 +19,6 @@ namespace Runedal.GameData.Characters
         protected double _Mp;
         protected double _ActionCounter;
 
-        //default constructor for json deserialization
         public CombatCharacter() : base()
         {
             Modifiers = new List<Modifier>();
@@ -32,7 +31,6 @@ namespace Runedal.GameData.Characters
             MaxSpellsRemembered = 1;
         }
 
-        //constructor for placeholder
         public CombatCharacter(string placeholder) : base(placeholder)
         {
             Modifiers = new List<Modifier>();
@@ -108,17 +106,13 @@ namespace Runedal.GameData.Characters
             Combat
         }
 
-        //counter for actions
         public virtual double ActionCounter { get; set; }
 
-        //hp/mp counters for regeneration
         public double HpCounter { get; set; }
         public double MpCounter { get; set; }
 
-        //character's level
         public int Level { get; set; }
 
-        //health and mana statistics
         public virtual double Hp { get; set; }
         public virtual double Mp { get; set; }
         public virtual double EffectiveMaxHp { get; set; }
@@ -152,7 +146,6 @@ namespace Runedal.GameData.Characters
         public double HpRegen { get; set; }
         public double MpRegen { get; set; }
 
-        //base combat statistics
         public double Speed { get; set; }
         public double Attack { get; set; }
         public double AtkSpeed { get; set; }
@@ -164,16 +157,12 @@ namespace Runedal.GameData.Characters
 
         public State CurrentState { get; set; }
 
-        //character with whom player currently interacts
         public Character? InteractsWith { get; set; }
 
-        //list of combat characters involved in fight with this one
         public List<CombatCharacter> Opponents { get; set; }
 
-        //list of modifiers currently affecting character
         public List<Modifier>? Modifiers { get; set; }
 
-        //spells remembered by character
         public List<Spell> RememberedSpells { get; set; }
         public int MaxSpellsRemembered { get; set; }
         public string[]? StartingSpells { get; set; }
@@ -243,21 +232,18 @@ namespace Runedal.GameData.Characters
             return manaSpent;
         }
 
-        //method adding attack delay to action counter
         public virtual void PerformAttack()
         {
             double attackDelay = 6000 / GetEffectiveAtkSpeed();
             ActionCounter += attackDelay;
         }
 
-        //method initializing hp/mp real values at the very first tick of the game clock
         public virtual void InitializeHpMp()
         {
             Hp = GetEffectiveMaxHp();
             Mp = GetEffectiveMaxMp();
         }
 
-        //method doing actions every tick of the game clock
         public void HandleTick()
         {
             RegenerateHp();
@@ -266,7 +252,6 @@ namespace Runedal.GameData.Characters
             DecreaseActionCounter();
         }
 
-        //method decreasing duration time for all modifiers
         public void DecreaseModDuration()
         {
             Modifier currentMod = new Modifier();
@@ -292,7 +277,6 @@ namespace Runedal.GameData.Characters
             });
         }
 
-        //method descreasing attack counter
         public void DecreaseActionCounter()
         {
             bool isCharacterStunned = Modifiers!.Exists(mod => mod.Type == Modifier.ModType.Stun);
@@ -335,7 +319,6 @@ namespace Runedal.GameData.Characters
             return removedSpell;
         }
 
-        //method refreshing RememberedSpells
         public void RefreshSpellsRemembered()
         {
             while (MaxSpellsRemembered < RememberedSpells.Count)
@@ -344,13 +327,11 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //method for adding modifier to character's list of modifiers
         public virtual void AddModifier(Modifier mod)
         {
             Modifiers!.Add(new Modifier(mod));
         }
         
-        //method for removing modifiers
         public virtual void RemoveModifier(Modifier mod)
         {
             Modifiers!.Remove(mod);
@@ -396,7 +377,6 @@ namespace Runedal.GameData.Characters
             return false;
         }
 
-        //'getters' for effective character's statistics - calculated from base statistics and modifiers
 
         public virtual double GetEffectiveMaxHp()
         {
@@ -558,7 +538,6 @@ namespace Runedal.GameData.Characters
             return modifiersSumValue;
         }
         
-        //method regenerating hp
         private void RegenerateHp()
         {
 
@@ -582,7 +561,6 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //method regenerating mp
         private void RegenerateMp()
         {
             //if mp is lesser than max

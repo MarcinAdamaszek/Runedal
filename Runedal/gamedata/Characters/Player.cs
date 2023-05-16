@@ -15,7 +15,6 @@ namespace Runedal.GameData.Characters
 {
     public class Player : CombatCharacter, INotifyPropertyChanged
     {
-        //values of multipliers for calculating attributes modifiers
         private const double MaxHpStrMultiplier = 10;
         private const double MaxMpIntMultiplier = 14;
         private const double HpRegenStrMultiplier = 2;
@@ -28,19 +27,16 @@ namespace Runedal.GameData.Characters
         private const double EvasionAgiMultiplier = 0.5;
         private const double MagicResistanceIntMultiplier = 5;
 
-        //values of other multipliers
         private const int StrWeightLimitMultiplier = 27;
         private const double WeightPenaltyHpRegenMultiplier = 0.1;
         private const double WeightPenaltyMpRegenMultiplier = 0.1;
         private const double WeightPenaltyCombatStatsMultiplier = 0.8;
 
-        //fields required for proper hp/mp display in gui
         private double _HpPercentage;
         private double _MpPercentage;
         private int _Strength;
         private int _Intelligence;
 
-        //default constructor for json deserialization
         public Player() : base()
         {
             //initialize items worn with placeholders
@@ -50,12 +46,7 @@ namespace Runedal.GameData.Characters
             Gloves = new Armor(Armor.ArmorType.Gloves, "placeholder");
             Shoes = new Armor(Armor.ArmorType.Shoes, "placeholder");
             Weapon = new Weapon("placeholder");
-
             Effects = new List<EffectOnPlayer>();
-
-            //Level = 1;
-            //Experience = 0;
-            //NextLvlExpCap = 50;
         }
         public Player(string[] descriptive, int[] combatStats, int[] attributeStats, string[][] responses, int gold)
             : base(descriptive, combatStats, responses, gold)
@@ -83,7 +74,6 @@ namespace Runedal.GameData.Characters
         //name of player's starting location
         public string? Start { get; set; }
 
-        //counter for actions
         public override double ActionCounter
         {
             get { return _ActionCounter; }
@@ -98,7 +88,6 @@ namespace Runedal.GameData.Characters
 
         }
 
-        //real hp/mp values
         public override double Hp
         {
             get { return _Hp; }
@@ -192,19 +181,14 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //player's amount of experience
         public ulong Experience { get; set; }
 
-        //amount of experience required to lvl-up
         public ulong NextLvlExpCap { get; set; }
         
-        //player's available attribute points gained every lvl-up
         public int AttributePoints { get; set; }
 
-        //number of runes already given to player for int progression
         public int RunesAlreadyReceived { get; set; }
         
-        //player character attributes influencing other statistics
         public int Strength
         {
             get { return _Strength; }
@@ -232,7 +216,6 @@ namespace Runedal.GameData.Characters
         }
         public int Agility { get; set; }
 
-        //items worn by player
         public Armor? Torso { get; set; }
         public Armor? Pants { get; set; }
         public Armor? Helmet { get; set; }
@@ -240,7 +223,6 @@ namespace Runedal.GameData.Characters
         public Armor? Shoes { get; set; }
         public Weapon? Weapon { get; set; }
 
-        //effects currently affecting player
         public List<EffectOnPlayer>? Effects { get; set; }
 
         /// <summary>
@@ -270,7 +252,6 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //method incrementing player level by one
         public void LevelUp()
         {
             Level++;
@@ -280,13 +261,11 @@ namespace Runedal.GameData.Characters
             Intelligence += 1;
         }
 
-        //method adding attribute points to player's pool
         public void AddAttributePoints(int quantity)
         {
             AttributePoints += quantity;
         }
 
-        //method initializing Hp/Mp pools
         public override void InitializeHpMp()
         {
             Hp = GetEffectiveMaxHp();
@@ -299,7 +278,6 @@ namespace Runedal.GameData.Characters
             ActionCounter += attackDelay;
         }
 
-        //method for wearing weapon-type items
         public void WearWeapon(Weapon weapon)
         {
             Weapon weaponToWear = new Weapon(weapon);
@@ -318,7 +296,6 @@ namespace Runedal.GameData.Characters
             Weapon = weaponToWear;
         }
 
-        //method for wearing wearable armor-type items
         public void WearArmor(Armor armor)
         {
             Armor armorToWear = new Armor(armor);
@@ -354,7 +331,6 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //method for taking off weapons
         public string TakeOffWeapon()
         {
             Weapon weaponWorn = new Weapon();
@@ -389,7 +365,6 @@ namespace Runedal.GameData.Characters
             return weaponWorn.Name!;
         }
 
-        //method for taking off wearable armor-type items
         public string TakeOffArmor(Armor.ArmorType armorType)
         {
             Armor armorWorn = new Armor();
@@ -447,7 +422,6 @@ namespace Runedal.GameData.Characters
             return armorWorn.Name!;
         }
 
-        //overriden methods for adding/removing modifiers, assuring effective maxhp/mp values are updated
         public override void AddModifier(Modifier mod)
         {
             base.AddModifier(mod);
@@ -477,7 +451,6 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //methods for setting effective max hp/mp
         public override double GetEffectiveMaxHp()
         {
             double effectiveMaxHp = MaxHp + ApplyModifiers(Modifier.ModType.MaxHp);
@@ -501,7 +474,6 @@ namespace Runedal.GameData.Characters
             return effectiveMaxMp;
         }
 
-        //methods for getting effective statistics (after applying all modifiers)
         public int GetEffectiveStrength()
         {
             int effectiveStrength = Strength;
@@ -801,7 +773,6 @@ namespace Runedal.GameData.Characters
             return modifiersSumValue;
         }
 
-        //methods for setting hp/mp percentages
         private void SetHpPercentage()
         {
             HpPercentage = (Hp / EffectiveMaxHp) * 100;
@@ -811,7 +782,6 @@ namespace Runedal.GameData.Characters
             MpPercentage = (Mp / EffectiveMaxMp) * 100;
         }
 
-        //method refreshing MaxSpellsRemembered property
         public void RefreshMaxSpellsRemembered()
         {
             MaxSpellsRemembered = Convert.ToInt32(Math.Floor((MainEngine.NthRoot(GetEffectiveIntelligence(), 1.6) / 2.5)));
@@ -821,7 +791,6 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //method returning sum weight of all items carried by player
         public int GetCarryWeight()
         {
             //add all worn items weights to total carry weight
@@ -833,13 +802,11 @@ namespace Runedal.GameData.Characters
             return carryWeight;
         }
 
-        //method returning player's weight limit
         public int GetWeightLimit()
         {
             return 1600 + (GetEffectiveStrength() * StrWeightLimitMultiplier);
         }
 
-        //property changed event handler
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)

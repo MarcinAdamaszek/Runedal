@@ -8,7 +8,6 @@ namespace Runedal.GameData.Characters
 {
     public class Monster : CombatCharacter
     {
-        //default constructor for json deserialization
         public Monster() : base()
         {
 
@@ -19,7 +18,6 @@ namespace Runedal.GameData.Characters
             Aggressiveness = aggressiveness;
         }
 
-        //copy constructor
         public Monster(Monster mon) : base(mon)
         {
             Aggressiveness = mon.Aggressiveness;

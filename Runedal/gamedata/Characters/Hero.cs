@@ -16,7 +16,6 @@ namespace Runedal.GameData.Characters
 
         }
         
-        //copy constructor
         public Hero(Hero hero) : base(hero)
         {
             Aggressiveness = hero.Aggressiveness;

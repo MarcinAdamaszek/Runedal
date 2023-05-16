@@ -58,7 +58,6 @@ namespace Runedal.GameData
         public List<Character> AllCharactersTestProp { get; set;}
       
         
-        //method reading json file into json string
         private string JsonToString(string filePath)
         {
             string jsonString = string.Empty;
@@ -67,14 +66,12 @@ namespace Runedal.GameData
             return jsonString;
         }
 
-        //method loading StackingEffects array of string representing object names which effects stack on player
         public void LoadStackingEffects()
         {
             JsonString = JsonToString(JsonDirectoryPath + @"StackingEffects.json");
             StackingEffects = JsonSerializer.Deserialize<string[]>(JsonString, Options)!;
         }
 
-        //method loading player
         public void LoadPlayer(string playerName)
         {
             //load player from json file
@@ -95,7 +92,6 @@ namespace Runedal.GameData
             startingLocation.AddCharacter(Player);
         }
 
-        //method loading characters from json file
         public void LoadCharacters()
         {
 
@@ -117,7 +113,6 @@ namespace Runedal.GameData
             AddSpellsToCharacters();
         } 
 
-        //method loading locations from json file
         public void LoadLocations()
         {
             Location[] locationsArray;
@@ -141,7 +136,6 @@ namespace Runedal.GameData
             }  
         }
 
-        //method loading items from json
         public void LoadItems()
         {
             //load consumables
@@ -185,7 +179,6 @@ namespace Runedal.GameData
             //PopulateItems(rangedArray);
         }
 
-        //method loading spells from json
         public void LoadSpells()
         {
             string[] spellsFilepaths = Directory.GetFiles(JsonDirectoryPath + @"Spells\");
@@ -203,7 +196,6 @@ namespace Runedal.GameData
             }
         }
 
-        //method initializing hp/mp values
         public void InitializeHpMpValues()
         {
             //fill every combat-character's hp/mp pools accordingly to their effective max hp/mp
@@ -266,7 +258,6 @@ namespace Runedal.GameData
             });
         }
 
-        //method filling inventories of all characters with their items
         public void PopulateInventories()
         {
             Characters!.ForEach(character =>
@@ -275,7 +266,6 @@ namespace Runedal.GameData
             });
         }
 
-        //method saving game
         public void SaveGame(string savePath, Hints hints)
         {
             GameSave save = new GameSave();
@@ -364,8 +354,7 @@ namespace Runedal.GameData
 
             temp.AddCharacter(player);
         }
-        
-        //method loading gamesave
+
         public void LoadGame(string savePath, out Hints hints)
         {
             JsonString = File.ReadAllText(savePath);
@@ -436,7 +425,6 @@ namespace Runedal.GameData
             DeathScreenDelayCounter = 40;
         }
 
-        //method clearing all current game session objects
         public void ClearAllObjects()
         {
             Locations!.Clear();
@@ -447,7 +435,6 @@ namespace Runedal.GameData
 
         //==========================================HELPER METHODS========================================
 
-        //helper method for pushing loaded characters objects into Characters list
         public void AddCharactersToList(Character[] charactersArray)
         {
             if (charactersArray.GetType() == typeof(Monster[]))
@@ -489,7 +476,6 @@ namespace Runedal.GameData
             }
         }
 
-        //helper method for pushing loaded items objects into Items list
         private void AddItemsToList(Item[] itemsArray)
         {
             foreach (var item in itemsArray)
@@ -577,7 +563,6 @@ namespace Runedal.GameData
             }
         }
 
-        //method filling npc combat-characters with spells
         private void AddSpellsToCharacters()
         {
             int i;
@@ -605,7 +590,6 @@ namespace Runedal.GameData
             });
         }
 
-        //method for filling trader inventories with proper items
         private void FillInventory(Character character)
         {
             Item itemToAdd;
@@ -620,7 +604,6 @@ namespace Runedal.GameData
             }
         }
 
-        //method finding new id for a character
         private ulong GetNewId()
         {
             ulong newId = 1;

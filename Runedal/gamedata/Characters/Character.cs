@@ -8,11 +8,8 @@ using System.Windows.Documents;
 
 namespace Runedal.GameData.Characters
 {
-
-    //base class for all characters (player, npcs, creatures)
     public class Character : Entity
     {
-        //default constructor for json deserialization
         public Character() : base()
         {
             Items = new Dictionary<string, int>();
@@ -20,7 +17,6 @@ namespace Runedal.GameData.Characters
             //AssignId();
         }
         
-        //constructor for placeholder
         public Character(string placeholder) : base(placeholder)
         {
             Items = new Dictionary<string, int>();
@@ -38,10 +34,8 @@ namespace Runedal.GameData.Characters
             //AssignId();
         }
 
-        //copy constructor
         public Character(Character ch) : base(ch)
         {
-            //create deep copy of modifiers collection
             Inventory = ch.Inventory!.ConvertAll(item => new Item(item));
 
             Items = ch.Items!;
@@ -51,40 +45,30 @@ namespace Runedal.GameData.Characters
             Answers = ch.Answers;
             Gold = ch.Gold;
             WelcomePhrase = ch.WelcomePhrase;
-            //AssignId();
         }
 
 
 
         public ulong Id { get; set; }
 
-        //Amount of gold and list of items in the characters inventory
         public int Gold { get; set; }
 
         public List<Item>? Inventory { get; set; }
 
-        //reference to location, where the character is currently located
         public Location? CurrentLocation { get; set; }
 
-        //array of characters passive responses
         public string[]? PassiveResponses { get; set; }
         
-        //array of character's aggressive responses
         public string[]? AggressiveResponses { get; set; }
 
-        //array of questions player can ask character
         public string[]? Questions { get; set; }
 
-        //array of answers character will respond when asked question
         public string[]? Answers { get; set; }
 
-        //welcome phrase for talker characters
         public string WelcomePhrase { get; set; }
 
-        //set and quantity of items to load into character's inventory on game launch
         public Dictionary<string, int>? Items { get; set; }
 
-        //method for adding items into character's inventory
         public void AddItem(Item newItem, int quantity = 1)
         {
             if (quantity == 0)

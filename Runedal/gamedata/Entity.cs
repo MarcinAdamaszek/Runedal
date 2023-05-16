@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Runedal.GameData
 {
-    //base abstract class for all (almost) entities in game
     public abstract class Entity
     {
-        //default constructor for json deserialization
         public Entity() {}
 
-        //constructor for placeholder for empty Player's item slots
         public Entity(string placeholder)
         {
             Name = placeholder;
@@ -24,7 +21,6 @@ namespace Runedal.GameData
             Description = descriptiveParameters[1];
         }
 
-        //copy constructor
         public Entity(Entity en)
         {
             Name = en.Name;

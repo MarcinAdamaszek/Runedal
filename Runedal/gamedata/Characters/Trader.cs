@@ -8,7 +8,6 @@ namespace Runedal.GameData.Characters
 {
     public class Trader : Character
     {
-        //default constructor for json deserialization
         public Trader() : base()
         {
             if (Items!.Count == 0)
@@ -24,7 +23,6 @@ namespace Runedal.GameData.Characters
             }
         }
 
-        //copy constructor
         public Trader(Trader tr) : base(tr)
         {
             if (Items!.Count == 0)

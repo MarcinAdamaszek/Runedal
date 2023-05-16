@@ -12,7 +12,6 @@ namespace Runedal.GameData
 {
     public class Location : Entity
     {
-        //default constructor for json deserializer
         public Location() : base()
         {
             IsVisible = false;
@@ -61,12 +60,10 @@ namespace Runedal.GameData
             Gold = lc.Gold;
         }
 
-        //location coordinates
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
 
-        //passages to other locations
         public bool NorthPassage { get; set; }
         public bool EastPassage { get; set; }
         public bool SouthPassage { get; set; }
@@ -74,25 +71,18 @@ namespace Runedal.GameData
         public bool UpPassage { get; set; }
         public bool DownPassage { get; set; }
 
-        //bool indicating if the location is visible to player
         public bool IsVisible { get; set; }
 
-        //list of character-entities currently present in the location
         public List<Character>? Characters { get; set; }
 
-        //list of characters to load into the location at game launch
         public Dictionary<string, int>? CharsToAdd { get; set; }
 
-        //list of charcter's id numbers to load from game save
         public List<ulong>? CharsIds { get; set; }
 
-        //list of items lying on the ground
         public List<Item>? Items { get; set; }
 
-        //gold lying on the ground
         public int Gold { get; set; }
 
-        //methods for adding and removing items
         public void AddItem(Item addedItem, int quantity)
         {
             int itemIndex = Items!.FindIndex(item => item.Name!.ToLower() == addedItem.Name!.ToLower());
@@ -131,7 +121,6 @@ namespace Runedal.GameData
             return false;
         }
 
-        //methods for adding and removing characters
         public void AddCharacter(Character character)
         {
             Characters!.Add(character);

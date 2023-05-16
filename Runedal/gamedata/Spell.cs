@@ -24,8 +24,6 @@ namespace Runedal.GameData
             DefaultTarget = sp.DefaultTarget;
             Power = sp.Power;
             ManaCost = sp.ManaCost;
-
-            //create deep copy of all collections
             Modifiers = sp.Modifiers!.ConvertAll(mod => new Modifier(mod));
             SpecialEffects = sp.SpecialEffects!.ConvertAll(spec => new SpecialEffect(spec));
         }

@@ -8,11 +8,8 @@ namespace Runedal.GameData.Items
 {
     public class Armor : Item
     {
-
-        //json constructor
         public Armor() : base() { }
 
-        //constructor for placeholder for empty Player's item slots
         public Armor(ArmorType type, string placeholder) : base(placeholder)
         {
             Defense = 0;
@@ -24,14 +21,12 @@ namespace Runedal.GameData.Items
             Type = type;
         }
 
-        //copy constructor
         public Armor(Armor arm) : base(arm)
         {
             Defense = arm.Defense;
             Type = arm.Type;
         }
 
-        //enum for type of armor item, indicating it's destined body part
         public enum ArmorType
         {
             Torso,

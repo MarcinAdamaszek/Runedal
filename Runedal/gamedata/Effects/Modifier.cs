@@ -12,7 +12,6 @@ namespace Runedal.GameData.Effects
     {
         protected int _Duration;
 
-        //default constructor for json deserialization
         public Modifier()
         {
             Parent = "none";
@@ -26,7 +25,6 @@ namespace Runedal.GameData.Effects
             IsPercentage = isPercentage;
         }
 
-        //copy constructor 
         public Modifier(Modifier mod)
         {
             Type = mod.Type;
@@ -59,13 +57,10 @@ namespace Runedal.GameData.Effects
             AdditionalDmg
         }
 
-        //type of modifier 
         public Modifier.ModType Type { get; set; }
 
-        //bool indicating if value is percentage
         public bool IsPercentage { get; set; }
 
-        //value of how much is statistic going to be modified
         public int Value { get; set; }
         public int Duration
         {
@@ -81,10 +76,9 @@ namespace Runedal.GameData.Effects
         }
         public int DurationInTicks { get; set; }
 
-        //parent of a modifier, meaning the name of an item/spell etc. that caused it
+        //parent of a modifier, which is the name of a source that caused it
         public string Parent { get; set; }
 
-        //method setting DurationInTicks to full (Duration * 10)
         public void ResetDuration()
         {
             DurationInTicks = Duration * 10;

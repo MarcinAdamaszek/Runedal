@@ -1,0 +1,307 @@
+[
+
+  {
+    "z": 0,
+    "y": 27,
+    "x": 40,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 28,
+    "x": 40,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 29,
+    "x": 40,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 30,
+    "x": 40,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 31,
+    "x": 40,
+    "name": "Hebanowa_brama",
+    "description": "Toporna lecz solidna brama, wykonana z czarnego drewna i hartowanej stali.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 37,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 38,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 39,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 40,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 41,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 33,
+    "x": 37,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 33,
+    "x": 41,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 34,
+    "x": 37,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 34,
+    "x": 41,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 35,
+    "x": 37,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 35,
+    "x": 38,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 35,
+    "x": 39,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+      "daever": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 35,
+    "x": 40,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 35,
+    "x": 41,
+    "name": "Czarna_Twierdza",
+    "description": "Wysokie, chropowate ściany, wykonane z czarnej skały wulkanicznej oraz hebanowa podłoga. Panuje tutaj półmrok, rozświetlany jedynie przez niewielkie, prostokątne okna",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

@@ -1,0 +1,1106 @@
+[
+  {
+    "z": -8,
+    "y": 11,
+    "x": 36,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 11,
+    "x": 37,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 11,
+    "x": 38,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+      "Arachna": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 12,
+    "x": 36,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "Pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 12,
+    "x": 37,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+      "Tarantula": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 12,
+    "x": 38,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+      "Pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 13,
+    "x": 36,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 13,
+    "x": 37,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+      "Pająk_mutant": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -8,
+    "y": 13,
+    "x": 38,
+    "name": "Pajęcze_gniazdo",
+    "description": "Sporej wielkości grota skalna, a na ścianach, stropie i podłodze wielke i bardzo grube pajęczyny. Pod ścianami mnóstwo obrzydliwie wyglądających, bladożółtych jaj wielkości dorodnego arbuza.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -7,
+    "y": 13,
+    "x": 36,
+    "name": "Studnia",
+    "description": "Ciasny otwór w posadzce jaskini, w którym zmieści się jeden, góra dwóch ludzi na raz.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 13,
+    "x": 36,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "węgorz_jaskiniowy": 1,
+      "nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 13,
+    "x": 37,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 13,
+    "x": 38,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "węgorz_jaskiniowy": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 13,
+    "x": 39,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 13,
+    "x": 40,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 13,
+    "x": 41,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 13,
+    "x": 42,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "szczur": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 14,
+    "x": 42,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 25,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 26,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "pająk_mutant": 1,
+      "skarabeusz": 1,
+      "węgorz_jaskiniowy": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 27,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "Nietoperz_krwiopijca": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 28,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Skarabeusz": 2,
+      "węgorz_jaskiniowy": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 36,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 37,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "węgorz_jaskiniowy": 1,
+      "nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 38,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "węgorz_jaskiniowy": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 39,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 40,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "Nietoperz_krwiopijca": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 41,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 15,
+    "x": 42,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "węgorz_jaskiniowy": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 21,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 22,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 23,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 24,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 25,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami niczym niezmąconej wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Wędrowny_handlarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 28,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 29,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 32,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 1,
+      "tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 33,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "chochlik": 5
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 34,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 16,
+    "x": 36,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 1,
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 17,
+    "x": 21,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 1,
+      "skarabeusz": 1,
+      "pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 17,
+    "x": 25,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Węgorz_jaskiniowy": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 17,
+    "x": 29,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Skarabeusz": 2,
+      "Nietoperz_krwiopijca": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 17,
+    "x": 32,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 2,
+      "węgorz_jaskiniowy": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 17,
+    "x": 34,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 17,
+    "x": 35,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 17,
+    "x": 36,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 2,
+      "węgorz_jaskiniowy": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 21,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 4
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 22,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 2,
+      "pająk_mutant": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 23,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "szczur": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 25,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+
+  {
+    "z": -6,
+    "y": 18,
+    "x": 26,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 28,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "Nietoperz_krwiopijca": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 29,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Węgorz_jaskiniowy": 1,
+      "Pająk_mutant": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 30,
+    "name": "_Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "bazyliszek": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 31,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 18,
+    "x": 32,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 19,
+    "x": 23,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 19,
+    "x": 26,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Skarabeusz": 1,
+      "pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 19,
+    "x": 27,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+      "Węgorz_jaskiniowy": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 19,
+    "x": 28,
+    "name": "Podziemne_jezioro",
+    "description": "Ogromna grota skalna, której środek wypełniony jest masami wody. Słychać jedynie delikatne pluskanie pojedyncznych kropel, spadających ze stropu do jeziora.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 20,
+    "x": 20,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 20,
+    "x": 21,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 1,
+      "nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 20,
+    "x": 22,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 2,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 20,
+    "x": 23,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Tarantula": 1,
+      "nietoperz_krwiopijca": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -6,
+    "y": 20,
+    "x": 27,
+    "name": "Jaskiniowy_zaułek",
+    "description": "Bardzo krótki korytarz jaskini, zakończony zwężeniem tak ciasnym, że mógłby się przez nie przecisnąć co najwyżej szczur.",
+    "charstoadd": {
+      "chochlik": 3,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -5,
+    "y": 20,
+    "x": 20,
+    "name": "Schody",
+    "description": "Schody wykonane z kamienia, stare, wilgotne i śliskie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

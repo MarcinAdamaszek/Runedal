@@ -1,0 +1,561 @@
+[
+  {
+    "name": "Orzech",
+    "description": "Świeży orzech włoski, jeszcze w zielonej łupinie",
+    "useActivityName": "Zjadasz",
+    "weight": 2,
+    "price": 4,
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 550,
+        "duration": 20,
+        "isPercentage": false
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Jabłko",
+    "description": "Okrągły owoc, o błyszczącej, czerwonej skórce",
+    "useActivityName": "Zjadasz",
+    "weight": 5,
+    "price": 8,
+    "modifiers": [
+      {
+        "type": "hpregen",
+        "value": 800,
+        "duration": 20,
+        "isPercentage": false
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Chleb",
+    "description": "Zwyczajny, ładnie wypieczony chleb",
+    "useActivityName": "Zjadasz",
+    "weight": 10,
+    "price": 16,
+    "modifiers": [
+      {
+        "type": "hpregen",
+        "value": 1200,
+        "duration": 20,
+        "isPercentage": false
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Stek",
+    "description": "Krwisty, soczysty stek",
+    "useActivityName": "Zjadasz",
+    "weight": 10,
+    "price": 30,
+    "modifiers": [
+      {
+        "type": "hpregen",
+        "value": 2000,
+        "duration": 20,
+        "isPercentage": false
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Mikstura_życia",
+    "description": "Fiolka z czerwonym płynem",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 60,
+    "modifiers": [
+      {
+        "type": "hpregen",
+        "value": 3300,
+        "duration": 20,
+        "isPercentage": false
+      },
+      {
+        "type": "hpregen",
+        "value": 50,
+        "duration": 20,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Mikstura_many",
+    "description": "Fiolka z niebieskim płynem",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 60,
+    "modifiers": [
+      {
+        "type": "MpRegen",
+        "value": 3300,
+        "duration": 20,
+        "isPercentage": false
+      },
+      {
+        "type": "MpRegen",
+        "value": 50,
+        "duration": 20,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Piwo",
+    "description": "Słabe, prawdopodobnie rozcieńczone piwo pszeniczne",
+    "useActivityName": "Wypijasz",
+    "weight": 10,
+    "price": 17,
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 3,
+        "duration": 60,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": -3,
+        "duration": 60,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": -3,
+        "duration": 60,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": -3,
+        "duration": 180,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Derillońska",
+    "description": "Butelka lokalnej gorzałki",
+    "useActivityName": "Wypijasz",
+    "weight": 10,
+    "price": 65,
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 7,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": -7,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": -7,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": -7,
+        "duration": 180,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Diabelski_pył",
+    "description": "Szary, lekko błyszczący proszek. Zakazana, magiczna substancja, która chwilowo zwiększa zdolności cielesne i umysłowe, aby potem pozostawić użytkownika osłabionego przez jakiś czas. Gdy jesteś pod jego wpływem, ludzie nie patrzą na Ciebie przychylnym okiem.",
+    "useActivityName": "Zjadasz",
+    "weight": 2,
+    "price": 75,
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 7,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": 7,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": 7,
+        "duration": 180,
+        "isPercentage": false
+      }
+    ],
+    "additionalEffect": [
+      {
+        "type": "strength",
+        "value": -3,
+        "duration": 360,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": -3,
+        "duration": 360,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": -3,
+        "duration": 360,
+        "isPercentage": false
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Zioła_Han",
+    "description": "Zielony susz, o intensywnym, ziołowym zapachu",
+    "useActivityName": "Zjadasz",
+    "weight": 2,
+    "price": 80,
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 10,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": 10,
+        "duration": 180,
+        "isPercentage": true
+      },
+      {
+        "type": "mpRegen",
+        "value": 30,
+        "duration": 180,
+        "isPercentage": false
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Grzyby_Bers",
+    "description": "Magiczne grzyby, pod wpływem których wpadasz w szał bitewny.",
+    "useActivityName": "Zjadasz",
+    "weight": 2,
+    "price": 75,
+    "modifiers": [
+      {
+        "type": "atkSpeed",
+        "value": 10,
+        "duration": 180,
+        "isPercentage": true
+      },
+      {
+        "type": "attack",
+        "value": 20,
+        "duration": 180,
+        "isPercentage": true
+      },
+      {
+        "type": "defense",
+        "value": -10,
+        "duration": 180,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": -10,
+        "duration": 180,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": -10,
+        "duration": 180,
+        "isPercentage": true
+      }
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Smocza_krew",
+    "description": "Fiolka z gorącym płynem o pomarańczowym kolorze",
+    "useActivityName": "Wypijasz",
+    "weight": 2,
+    "price": 80,
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 20,
+        "duration": 180,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 100,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 30,
+        "duration": 180,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Osocze_wampira",
+    "description": "Fiolka z czarnym jak noc płynem, wydającym się żyć własnym życiem.",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 80,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "lifesteal",
+        "value": 15,
+        "duration": 180,
+        "isPercentage": false
+      }
+    ]
+  },
+  {
+    "name": "Eliksir_życia",
+    "description": "Fiolka z świecącym białym światłem płynem",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 150,
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 7000,
+        "duration": 20,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 100,
+        "duration": 20,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Eliksir_many",
+    "description": "Fiolka ze święcącym, srebrzysto-niebieskim płynem",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 150,
+    "modifiers": [
+      {
+        "type": "mpRegen",
+        "value": 7000,
+        "duration": 20,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 100,
+        "duration": 20,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Goryl",
+    "description": "Fiolka wypełniona oleistą cieczą o jasnożółtym kolorze",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 420,
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 50,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "strength",
+        "value": 30,
+        "duration": 180,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Kuna",
+    "description": "Fiolka wypełniona rzadkim płynem o zielonym kolorze",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 420,
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 50,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": 30,
+        "duration": 180,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Kruk",
+    "description": "Fiolka wypełniona gęstym płynem o ciemnoniebieskim kolorze",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 420,
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 50,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": 30,
+        "duration": 180,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Ambrozja",
+    "description": "Buteleczka wypełniona gorącym płynem, którego wygląd można określić jedynie jako płynne światło.",
+    "useActivityName": "Wypijasz",
+    "weight": 5,
+    "price": 1500,
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 50,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": 50,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": 50,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "defense",
+        "value": 350,
+        "duration": 180,
+        "isPercentage": false
+      },
+      {
+        "type": "magicResistance",
+        "value": 300,
+        "duration": 180,
+        "isPercentage": false
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Kula_portalowa_Derillon",
+    "description": "Okrągła, przezroczysta kula, rozmiaru ludzkiej pięści, w środku której kłębią się niebiesko-czarne smugi czegoś co wygląda jak dym. Po rozbiciu, przenosi użytkownika do miasta Derillon.",
+    "useActivityName": "Rozbijasz",
+    "weight": 5,
+    "price": 35,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "teleport",
+        "value": 0,
+        "duration": 0
+      }
+    ]
+  },
+  {
+    "name": "Kula_portalowa_Artimesia",
+    "description": "Okrągła, przezroczysta kula, rozmiaru ludzkiej pięści, w środku której kłębią się niebiesko-czarne smugi czegoś co wygląda jak dym. Po rozbiciu, przenosi użytkownika do miasta Artimesia.",
+    "useActivityName": "Rozbijasz",
+    "weight": 5,
+    "price": 80,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "teleport",
+        "value": 0,
+        "duration": 0
+      }
+    ]
+  }
+]

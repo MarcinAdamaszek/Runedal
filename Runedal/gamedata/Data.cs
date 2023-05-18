@@ -19,7 +19,7 @@ namespace Runedal.GameData
 {
     public class Data
     {
-        public const string JsonDirectoryPath = @"Json\";
+        public const string JsonDirectoryPath = @"GameData\Resources\Json\";
         public Data()
         {
             //make json deserializer ignore letter cases in property names

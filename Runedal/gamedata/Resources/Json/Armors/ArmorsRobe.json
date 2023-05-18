@@ -1,0 +1,882 @@
+[
+  {
+    "name": "Lniana_czapka",
+    "description": "Zwyczajne nakrycie głowy uszyte z lnu",
+    "modifiers": [
+
+    ],
+    "weight": 20,
+    "price": 50,
+    "type": "Helmet",
+    "defense": 20
+  },
+  {
+    "name": "Lniane_rękawiczki",
+    "description": "Zwyczajne rękawice uszyte z lnu",
+    "modifiers": [
+
+    ],
+    "weight": 20,
+    "price": 50,
+    "type": "Gloves",
+    "defense": 20
+  },
+  {
+    "name": "Lniane_buty",
+    "description": "Zwyczajne buty uszyte z lnu",
+    "modifiers": [
+
+    ],
+    "weight": 20,
+    "price": 50,
+    "type": "shoes",
+    "defense": 20
+  },
+  {
+    "name": "Lniane_spodnie",
+    "description": "Zwyczajne spodnie uszyte z lnu",
+    "modifiers": [
+
+    ],
+    "weight": 40,
+    "price": 100,
+    "type": "pants",
+    "defense": 40
+  },
+  {
+    "name": "Lniana_koszula",
+    "description": "Zwyczajna koszula uszyte z lnu",
+    "modifiers": [
+
+    ],
+    "weight": 60,
+    "price": 150,
+    "type": "torso",
+    "defense": 60
+  },
+  {
+    "name": "Konopna_czapka",
+    "description": "Zwyczajne nakrycie głowy uszyte z konopii",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 60,
+        "isPercentage": false
+      }
+    ],
+    "weight": 20,
+    "price": 75,
+    "type": "Helmet",
+    "defense": 25
+  },
+  {
+    "name": "Konopne_rękawiczki",
+    "description": "Zwyczajne rękawiczki uszyte z konopii",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 60,
+        "isPercentage": false
+      }
+    ],
+    "weight": 20,
+    "price": 75,
+    "type": "gloves",
+    "defense": 25
+  },
+  {
+    "name": "Konopne_buty",
+    "description": "Zwyczajne buty uszyte z konopii",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 60,
+        "isPercentage": false
+      }
+    ],
+    "weight": 20,
+    "price": 75,
+    "type": "Shoes",
+    "defense": 25
+  },
+  {
+    "name": "Konopne_spodnie",
+    "description": "Zwyczajne spodnie uszyte z konopii",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 120,
+        "isPercentage": false
+      }
+    ],
+    "weight": 40,
+    "price": 150,
+    "type": "pants",
+    "defense": 50
+  },
+  {
+    "name": "Konopna_koszula",
+    "description": "Zwyczajna koszula uszyta z konopii",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 180,
+        "isPercentage": false
+      }
+    ],
+    "weight": 60,
+    "price": 225,
+    "type": "torso",
+    "defense": 75
+  },
+  {
+    "name": "Czapka_szamana",
+    "description": "Niezbyt starannie uszyta czapka, nasycona śladową ilością magii",
+    "modifiers": [
+      {
+        "type": "mpRegen",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 90,
+        "isPercentage": false
+      }
+    ],
+    "weight": 25,
+    "price": 120,
+    "type": "Helmet",
+    "defense": 30
+  },
+  {
+    "name": "Rękawice_szamana",
+    "description": "Niezbyt starannie uszyte rękawice, nasycone śladową ilością magii",
+    "modifiers": [
+      {
+        "type": "mpRegen",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 90,
+        "isPercentage": false
+      }
+    ],
+    "weight": 25,
+    "price": 120,
+    "type": "gloves",
+    "defense": 30
+  },
+  {
+    "name": "Buty_szamana",
+    "description": "Niezbyt starannie uszyte buty, nasycone śladową ilością magii",
+    "modifiers": [
+      {
+        "type": "mpRegen",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 90,
+        "isPercentage": false
+      }
+    ],
+    "weight": 25,
+    "price": 120,
+    "type": "shoes",
+    "defense": 30
+  },
+  {
+    "name": "Spodnie_szamana",
+    "description": "Niezbyt starannie uszyte spodnie, nasycone śladową ilością magii",
+    "modifiers": [
+      {
+        "type": "mpRegen",
+        "value": 50,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 180,
+        "isPercentage": false
+      }
+    ],
+    "weight": 50,
+    "price": 240,
+    "type": "pants",
+    "defense": 60
+  },
+  {
+    "name": "Ponczo_szamana",
+    "description": "Niezbyt starannie uszyta kamizelka, nasycona śladową ilością magii",
+    "modifiers": [
+      {
+        "type": "mpRegen",
+        "value": 75,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 270,
+        "isPercentage": false
+      }
+    ],
+    "weight": 75,
+    "price": 360,
+    "type": "torso",
+    "defense": 60
+  },
+  {
+    "name": "Beret_adepta",
+    "description": "Całkiem schludne, proste nakrycie głowy, noszone przez młodych adeptów magii.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 30,
+    "price": 250,
+    "type": "Helmet",
+    "defense": 35
+  },
+  {
+    "name": "Rękawiczki_adepta",
+    "description": "Całkiem schludne, proste rękawiczki, noszone przez młodych adeptów magii.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 30,
+    "price": 250,
+    "type": "gloves",
+    "defense": 35
+  },
+  {
+    "name": "Buty_adepta",
+    "description": "Całkiem schludne, proste buty, noszone przez młodych adeptów magii.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 30,
+    "price": 250,
+    "type": "shoes",
+    "defense": 35
+  },
+  {
+    "name": "Spodnie_adepta",
+    "description": "Całkiem schludne, proste spodnie, noszone przez młodych adeptów magii.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 6,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 80,
+        "isPercentage": false
+      }
+    ],
+    "weight": 60,
+    "price": 500,
+    "type": "pants",
+    "defense": 70
+  },
+  {
+    "name": "Kamizelka_adepta",
+    "description": "Całkiem schludne, proste spodnie, noszone przez młodych adeptów magii.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 9,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 120,
+        "isPercentage": false
+      }
+    ],
+    "weight": 90,
+    "price": 750,
+    "type": "torso",
+    "defense": 105
+  },
+  {
+    "name": "Kapelusz_wiedźmy",
+    "description": "Brzydki, połatany i nasycony chaotyczną magią kapelusz.",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 120,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 65,
+        "isPercentage": false
+      }
+    ],
+    "weight": 50,
+    "price": 350,
+    "type": "Helmet",
+    "defense": 40
+  },
+  {
+    "name": "Rękawiczki_wiedźmy",
+    "description": "Brzydkie, połatane i nasycone chaotyczną magią rękawiczki.",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 120,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 65,
+        "isPercentage": false
+      }
+    ],
+    "weight": 50,
+    "price": 350,
+    "type": "gloves",
+    "defense": 40
+  },
+  {
+    "name": "Buty_wiedźmy",
+    "description": "Brzydke, połatane i nasycone chaotyczną magią buty.",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 120,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 65,
+        "isPercentage": false
+      }
+    ],
+    "weight": 50,
+    "price": 350,
+    "type": "shoes",
+    "defense": 40
+  },
+  {
+    "name": "Spodnie_wiedźmy",
+    "description": "Brzydke, połatane i nasycone chaotyczną magią spodnie.",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 240,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 130,
+        "isPercentage": false
+      }
+    ],
+    "weight": 100,
+    "price": 700,
+    "type": "pants",
+    "defense": 80
+  },
+  {
+    "name": "Płaszcz_wiedźmy",
+    "description": "Brzydki, połatany i nasycony chaotyczną magią płaszcz.",
+    "modifiers": [
+      {
+        "type": "maxMp",
+        "value": 300,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 195,
+        "isPercentage": false
+      }
+    ],
+    "weight": 150,
+    "price": 1050,
+    "type": "torso",
+    "defense": 120
+  },
+  {
+    "name": "Kapelusz_maga",
+    "description": "Wysokiej jakości spiczasty kapelusz, nasycony magią. Właściciele głów przyzdobionych tym nakryciem głowy darzeni są powszechnym szacunkiem.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 4,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 65,
+        "isPercentage": false
+      }
+    ],
+    "weight": 50,
+    "price": 500,
+    "type": "Helmet",
+    "defense": 45
+  },
+  {
+    "name": "Rękawiczki_maga",
+    "description": "Wysokiej jakości jedwabne rękawiczki, nasycone magią. Typowy ubiór przeciętnego maga.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 4,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 65,
+        "isPercentage": false
+      }
+    ],
+    "weight": 50,
+    "price": 500,
+    "type": "gloves",
+    "defense": 45
+  },
+  {
+    "name": "Buty_maga",
+    "description": "Wysokiej jakości skórzane buty, nasycone magią. Typowy ubiór przeciętnego maga.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 4,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 65,
+        "isPercentage": false
+      }
+    ],
+    "weight": 50,
+    "price": 500,
+    "type": "shoes",
+    "defense": 45
+  },
+  {
+    "name": "Spodnie_maga",
+    "description": "Wysokiej jakości jedwabne spodnie, nasycone magią. Typowy ubiór przeciętnego maga.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 8,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 130,
+        "isPercentage": false
+      }
+    ],
+    "weight": 100,
+    "price": 1000,
+    "type": "pants",
+    "defense": 90
+  },
+  {
+    "name": "Szata_maga",
+    "description": "Wysokiej jakości jedwabna szata, nasycona magią. Typowy ubiór przeciętnego maga.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 12,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 195,
+        "isPercentage": false
+      }
+    ],
+    "weight": 150,
+    "price": 1500,
+    "type": "torso",
+    "defense": 135
+  },
+  {
+    "name": "Tiara_arcymaga",
+    "description": "Ekstrawagancka, przyozdobiona złotą nicią tiara, zwykle noszona wyłącznie przez magów rangi arcymistrzowskiej.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 80,
+        "isPercentage": false
+      }
+    ],
+    "weight": 60,
+    "price": 1050,
+    "type": "Helmet",
+    "defense": 50
+  },
+  {
+    "name": "Rękawiczki_arcymaga",
+    "description": "Ekstrawagancke, przyozdobione złotą nicią rękawiczki, zwykle noszone wyłącznie przez magów rangi arcymistrzowskiej.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 80,
+        "isPercentage": false
+      }
+    ],
+    "weight": 60,
+    "price": 1050,
+    "type": "gloves",
+    "defense": 50
+  },
+  {
+    "name": "Buty_arcymaga",
+    "description": "Ekstrawagancke, przyozdobione złotą nicią buty, zwykle noszone wyłącznie przez magów rangi arcymistrzowskiej.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 80,
+        "isPercentage": false
+      }
+    ],
+    "weight": 60,
+    "price": 1050,
+    "type": "shoes",
+    "defense": 50
+  },
+  {
+    "name": "Spodnie_arcymaga",
+    "description": "Ekstrawagancke, przyozdobione złotą nicią spodnie, zwykle noszone wyłącznie przez magów rangi arcymistrzowskiej.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 14,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 160,
+        "isPercentage": false
+      }
+    ],
+    "weight": 120,
+    "price": 2100,
+    "type": "pants",
+    "defense": 100
+  },
+  {
+    "name": "Szata_arcymaga",
+    "description": "Ekstrawagancka, przyozdobiona złotą nicią szata, zwykle noszona wyłącznie przez magów rangi arcymistrzowskiej.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 21,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 240,
+        "isPercentage": false
+      }
+    ],
+    "weight": 180,
+    "price": 3150,
+    "type": "torso",
+    "defense": 150
+  },
+  {
+    "name": "Hełm_Vaylir",
+    "description": "Hełm \"księżniczki mrozu\", sławnej elfiej czarodziejki o imieniu Erythlin, która już jako dziatwa potrafiła siać zamęt i grozę na polu bitwy. Pewnego razu, ponoć jedną zamiecią śnieżną unieszkodliwiła półtora tysiąca wojów.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 250,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 70,
+    "price": 2300,
+    "type": "Helmet",
+    "defense": 60
+  },
+  {
+    "name": "Rękawiczki_Vaylir",
+    "description": "Rękawiczki \"księżniczki mrozu\", sławnej elfiej czarodziejki o imieniu Erythlin, która już jako dziatwa potrafiła siać zamęt i grozę na polu bitwy. Pewnego razu, ponoć jedną zamiecią śnieżną unieszkodliwiła półtora tysiąca wojów.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 250,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 70,
+    "price": 2300,
+    "type": "Gloves",
+    "defense": 60
+  },
+  {
+    "name": "Buty_Vaylir",
+    "description": "Buty \"księżniczki mrozu\", sławnej elfiej czarodziejki o imieniu Erythlin, która już jako dziatwa potrafiła siać zamęt i grozę na polu bitwy. Pewnego razu, ponoć jedną zamiecią śnieżną unieszkodliwiła półtora tysiąca wojów.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 250,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 70,
+    "price": 2300,
+    "type": "Shoes",
+    "defense": 60
+  },
+  {
+    "name": "Spodnie_Vaylir",
+    "description": "Spodnie \"księżniczki mrozu\", sławnej elfiej czarodziejki o imieniu Erythlin, która już jako dziatwa potrafiła siać zamęt i grozę na polu bitwy. Pewnego razu, ponoć jedną zamiecią śnieżną unieszkodliwiła półtora tysiąca wojów.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 30,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 500,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 200,
+        "isPercentage": false
+      }
+    ],
+    "weight": 140,
+    "price": 4600,
+    "type": "pants",
+    "defense": 120
+  },
+  {
+    "name": "Szata_Vaylir",
+    "description": "Szata \"księżniczki mrozu\", sławnej elfiej czarodziejki o imieniu Erythlin, która już jako dziatwa potrafiła siać zamęt i grozę na polu bitwy. Pewnego razu, ponoć jedną zamiecią śnieżną unieszkodliwiła półtora tysiąca wojów.",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 45,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 750,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 300,
+        "isPercentage": false
+      }
+    ],
+    "weight": 210,
+    "price": 6900,
+    "type": "torso",
+    "defense": 180
+  },
+  {
+    "name": "Hełm_Ivellura",
+    "description": "Hełm legendarnego arcymistrza magii Ivellura, dzięki któremu ludzkość zapanowała nad światem. Jedyną żyjącą istotą, która mogła mierzyć się z Ivellurem w walce jeden na jednego był sam Daever. Ponoć ich pojedynek trwał 4 dni i 7 godzin i zostawił pogorzelisko na terenie o obszarze porównywalnym do pięciu średnich miast. Po tym wydarzeniu, żywe legendy postanowiły już nigdy ze sobą nie walczyć, a pakt ten trwa po dziś dzień..",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 300,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 120,
+        "isPercentage": false
+      }
+    ],
+    "weight": 80,
+    "price": 5100,
+    "type": "Helmet",
+    "defense": 80
+  },
+  {
+    "name": "Rękawiczki_Ivellura",
+    "description": "Rękawiczki legendarnego arcymistrza magii Ivellura, dzięki któremu ludzkość zapanowała nad światem. Jedyną żyjącą istotą, która mogła mierzyć się z Ivellurem w walce jeden na jednego był sam Daever. Ponoć ich pojedynek trwał 4 dni i 7 godzin i zostawił pogorzelisko na terenie o obszarze porównywalnym do pięciu średnich miast. Po tym wydarzeniu, żywe legendy postanowiły już nigdy ze sobą nie walczyć, a pakt ten trwa po dziś dzień..",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 300,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 120,
+        "isPercentage": false
+      }
+    ],
+    "weight": 80,
+    "price": 5100,
+    "type": "gloves",
+    "defense": 80
+  },
+  {
+    "name": "Buty_Ivellura",
+    "description": "Buty legendarnego arcymistrza magii Ivellura, dzięki któremu ludzkość zapanowała nad światem. Jedyną żyjącą istotą, która mogła mierzyć się z Ivellurem w walce jeden na jednego był sam Daever. Ponoć ich pojedynek trwał 4 dni i 7 godzin i zostawił pogorzelisko na terenie o obszarze porównywalnym do pięciu średnich miast. Po tym wydarzeniu, żywe legendy postanowiły już nigdy ze sobą nie walczyć, a pakt ten trwa po dziś dzień..",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 300,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 120,
+        "isPercentage": false
+      }
+    ],
+    "weight": 80,
+    "price": 5100,
+    "type": "shoes",
+    "defense": 80
+  },
+  {
+    "name": "Spodnie_Ivellura",
+    "description": "Spodnie legendarnego arcymistrza magii Ivellura, dzięki któremu ludzkość zapanowała nad światem. Jedyną żyjącą istotą, która mogła mierzyć się z Ivellurem w walce jeden na jednego był sam Daever. Ponoć ich pojedynek trwał 4 dni i 7 godzin i zostawił pogorzelisko na terenie o obszarze porównywalnym do pięciu średnich miast. Po tym wydarzeniu, żywe legendy postanowiły już nigdy ze sobą nie walczyć, a pakt ten trwa po dziś dzień..",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 50,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 600,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 240,
+        "isPercentage": false
+      }
+    ],
+    "weight": 160,
+    "price": 10200,
+    "type": "pants",
+    "defense": 160
+  },
+  {
+    "name": "Szata_Ivellura",
+    "description": "Szata legendarnego arcymistrza magii Ivellura, dzięki któremu ludzkość zapanowała nad światem. Jedyną żyjącą istotą, która mogła mierzyć się z Ivellurem w walce jeden na jednego był sam Daever. Ponoć ich pojedynek trwał 4 dni i 7 godzin i zostawił pogorzelisko na terenie o obszarze porównywalnym do pięciu średnich miast. Po tym wydarzeniu, żywe legendy postanowiły już nigdy ze sobą nie walczyć, a pakt ten trwa po dziś dzień..",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 75,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 900,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 360,
+        "isPercentage": false
+      }
+    ],
+    "weight": 240,
+    "price": 15300,
+    "type": "torso",
+    "defense": 240
+  }
+]

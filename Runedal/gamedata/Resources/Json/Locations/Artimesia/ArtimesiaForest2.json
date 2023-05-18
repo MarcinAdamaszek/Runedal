@@ -1,0 +1,818 @@
+[
+  {
+    "z": 0,
+    "y": 65,
+    "x": 4,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 66,
+    "x": 4,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "błotny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 67,
+    "x": 3,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "skalny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 67,
+    "x": 4,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 4,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 16,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 17,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 18,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 22,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "centaur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 23,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "elficki_handlarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 24,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 25,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "driada": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 26,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 27,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "centaur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 28,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 68,
+    "x": 29,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "skalny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 4,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "błotny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 5,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 6,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "centaur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 13,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "driada": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 14,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 15,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "centaur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 16,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 17,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "naewarin": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 18,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 22,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "driada": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 69,
+    "x": 29,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 6,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 7,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "driada": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 8,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "driada": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 9,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 10,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 11,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "błotny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 12,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 13,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "skalny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 16,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 17,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 18,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 19,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 20,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "skalny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 21,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 22,
+    "name": "Pradawny_las",
+    "description": "Gigantyczne drzewa rosnące w dużych odstępach, pomiędzy którymi wiją się gęste i kolczaste chaszcze nie do przejścia. Pod stopami rośnie mech i niewysoka trawa o delikatnych źdźbłach. ",
+    "charstoadd": {
+      "błotny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 28,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "skalny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 29,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 70,
+    "x": 30,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 71,
+    "x": 28,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 71,
+    "x": 29,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chimera": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 71,
+    "x": 30,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 72,
+    "x": 28,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 72,
+    "x": 29,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 72,
+    "x": 30,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

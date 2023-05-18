@@ -1,0 +1,704 @@
+[
+  {
+    "z": -2,
+    "y": 16,
+    "x": -17,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 16,
+    "x": -16,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 16,
+    "x": -15,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+      "zjawa": 1,
+      "chochlik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 16,
+    "x": -14,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+      "chochlik": 4,
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 16,
+    "x": -13,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 16,
+    "x": -12,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 17,
+    "x": -17,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+      "Idazerel": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 17,
+    "x": -16,
+    "name": "Jaskinia",
+    "description": "Wilgoć, porosty i ciemność rozjaśniana jedynie słabym światłem dochodzącym z wejścia pieczary.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -1,
+    "y": 16,
+    "x": -12,
+    "name": "Pieczara",
+    "description": "Otwór w ziemi o średnicy mniej więcej 3 metrów. Ściany porośnięte mchem, gdzieniegdzie wystaje korzeń drzewa.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": -12,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": -12,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "zjawa": 1,
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": -12,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "dzik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": -12,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "pyton": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": -10,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": -9,
+    "name": "Polana1",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": -12,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "wilk": 1,
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": -11,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "pyton": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": -10,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "żmija": 1,
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": -9,
+    "name": "Polana1",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "dzik": 2,
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": -8,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "chochlik": 1,
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": -7,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": -6,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      "zjawa": 1,
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": -10,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "żmija": 2,
+      "dzik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": -9,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chochlik": 4,
+      "dziki_pies": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 1,
+    "y": 20,
+    "x": -6,
+    "name": "Studnia_bluszczu",
+    "description": "Mnóstwo gęsto ze sobą poplątanych, zwisających daleko w dół, pnączy bluszczu, ułożonych w okrąg, tworzących niejako \"naturalną\" studnię, po której bluszczowych ścianach z łatwością można się wspinać.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 19,
+    "x": -3,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 19,
+    "x": -2,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 19,
+    "x": -1,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      "dziki_pies": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 20,
+    "x": -6,
+    "name": "Studnia_bluszczu",
+    "description": "Mnóstwo gęsto ze sobą poplątanych, zwisających daleko w dół, pnączy bluszczu, ułożonych w okrąg, tworzących niejako \"naturalną\" studnię, po której bluszczowych ścianach z łatwością można się wspinać.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 20,
+    "x": -4,
+    "name": "Kamienny_mostek",
+    "description": "Mały, kamienny mostek, cały popękany, z brakującymi fragmentami - to cud że jeszcze się nie zawalił. Trzeba uważać gdzie się stawia stopę..",
+    "charstoadd": {
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 20,
+    "x": -3,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      "dziki_pies": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 20,
+    "x": -1,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      "dzik": 1,
+      "dziki_pies": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 21,
+    "x": -3,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      "pyton": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 21,
+    "x": -2,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      "dziki_pies": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 21,
+    "x": -1,
+    "name": "Starożytne_ruiny",
+    "description": "Wygląda to niczym opuszczone miasto pradawnej cywilizacji. Dziwne mury, stożkowe budowle i zniszczone rzeźby, wszystko szaro-białego kamienia, porośnięte bluszczem, mchem, porozsadzane korzeniami drzew.",
+    "charstoadd": {
+      "zjawa": 1,
+      "dzik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 3,
+    "y": 20,
+    "x": -6,
+    "name": "Studnia_bluszczu",
+    "description": "Mnóstwo gęsto ze sobą poplątanych, zwisających daleko w dół, pnączy bluszczu, ułożonych w okrąg, tworzących niejako \"naturalną\" studnię, po której bluszczowych ścianach z łatwością można się wspinać.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 3,
+    "y": 20,
+    "x": -1,
+    "name": "Zrujnowane_schody",
+    "description": "Popękane i porośnięte roślinnością, schody z ogromnych bloków szaro-białego kamienia.",
+    "charstoadd": {
+      "chochlik": 3,
+      "dziki_pies": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": -6,
+    "name": "Dziurawy_taras",
+    "description": "Popękane, kamienne bloki, resztki kamiennej balustrady, i rozpościerający się, całkiem niezły widok na okolicę. Na środku brakuje sporego fragmentu posadzki, a do utworzonej w ten sposób dziury wpada mnóstwo starych, solidnych pnączy bluszczu, które zdołałyby utrzymać nawet niedźwiedzia.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": -5,
+    "name": "Kamienny_mostek",
+    "description": "Mały, kamienny mostek, cały popękany, z brakującymi fragmentami - to cud że jeszcze się nie zawalił. Trzeba uważać gdzie się stawia stopę..",
+    "charstoadd": {
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": -4,
+    "name": "Kamienny_mostek",
+    "description": "Mały, kamienny mostek, cały popękany, z brakującymi fragmentami - to cud że jeszcze się nie zawalił. Trzeba uważać gdzie się stawia stopę..",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": -3,
+    "name": "Kamienny_mostek",
+    "description": "Mały, kamienny mostek, cały popękany, z brakującymi fragmentami - to cud że jeszcze się nie zawalił. Trzeba uważać gdzie się stawia stopę..",
+    "charstoadd": {
+      "chochlik": 1,
+      "pyton": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": -2,
+    "name": "Taras",
+    "description": "Popękane, kamienne bloki, resztki kamiennej balustrady, i rozpościerający się, całkiem niezły widok na okolicę",
+    "charstoadd": {
+      "zjawa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": -1,
+    "name": "Kamienny_mostek",
+    "description": "Mały, kamienny mostek, cały popękany, z brakującymi fragmentami - to cud że jeszcze się nie zawalił. Trzeba uważać gdzie się stawia stopę..",
+    "charstoadd": {
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

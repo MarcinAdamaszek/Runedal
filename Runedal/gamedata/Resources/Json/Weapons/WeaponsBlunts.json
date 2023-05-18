@@ -1,0 +1,296 @@
+[
+  {
+    "name": "Drewniana_pałka",
+    "description": "Podłużny kawałek drewna, szerszy na jednym końcu i owinięty materiałem na drugim",
+    "type": "blunt",
+    "modifiers": [
+
+    ],
+    "weight": 270,
+    "price": 50,
+    "attack": 200
+  },
+  {
+    "name": "Młot_budowniczego",
+    "description": "Ciężki, toporny młot, zwykle służący do wbijania drewnianych kołów.",
+    "type": "blunt",
+    "modifiers": [
+
+    ],
+    "weight": 310,
+    "price": 110,
+    "attack": 210
+  },
+  {
+    "name": "Cep_bojowy",
+    "description": "Typowy oręż chłopów, o prostej budowie, jednak całkiem sporej skuteczności.",
+    "type": "blunt",
+    "modifiers": [
+
+    ],
+    "weight": 360,
+    "price": 200,
+    "attack": 235
+  },
+  {
+    "name": "Buzdygan",
+    "description": "Buzdygan z żelaza, okuty stalą, ze skórzaną rękojeścią. Ulubiona broń typowego rycerstwa",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 150,
+        "isPercentage": false
+      }
+    ],
+    "weight": 430,
+    "price": 350,
+    "attack": 310
+  },
+  {
+    "name": "Maczuga_trola",
+    "description": "Bardzo ciężka i nieporęczna broń, wykonana z drewna i kamienia, potrafiąca zadać dewastujące obrażenia",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 5,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 10,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 30,
+        "isPercentage": false
+      }
+    ],
+    "weight": 520,
+    "price": 580,
+    "attack": 420
+  },
+  {
+    "name": "Kiścień",
+    "description": "nabijana kolcami, żelazna kula, zawieszona na łańcuchu, doczepionym do drewnianego trzonka.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 350,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 60,
+        "isPercentage": false
+      }
+    ],
+    "weight": 800,
+    "price": 1100,
+    "attack": 720
+  },
+  {
+    "name": "Młot_bitewny",
+    "description": "Ciężki i powolny, lecz siejący spustoszenie na polu bitwy, gdyż nie ima się go żaden pancerz",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 35,
+        "isPercentage": false
+      },
+      {
+        "type": "defense",
+        "value": 3,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 45,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 840,
+    "price": 2150,
+    "attack": 1100
+  },
+  {
+    "name": "Kropacz_arcykapłana",
+    "description": "Zrobiona z żelaza i stali, dobrze wyważona, ozdobna maczuga, z głowicą nabijaną stalowymi kolcami",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 60,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 800,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 135,
+        "isPercentage": false
+      }
+    ],
+    "weight": 1000,
+    "price": 4500,
+    "attack": 1550
+  },
+  {
+    "name": "Młot_paladyna",
+    "description": "Święty oręż, służący tym, którzy poprzysięgli stać na straży prawdy, dobra i honoru.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 90,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 300,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 115,
+        "isPercentage": false
+      },
+      {
+        "type": "defense",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 200,
+        "isPercentage": false
+      }
+    ],
+    "weight": 1100,
+    "price": 10000,
+    "attack": 2050
+  },
+  {
+    "name": "Pięść_gryfa",
+    "description": "Bogato zdobiony, ciężki ale poręczny i bardzo skuteczny młot bojowy, ze złotą rękojeścią. Należał do słynnego paladyna, księcia Werdeltha.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 120,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "defense",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 1200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 175,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 275,
+        "isPercentage": false
+      }
+    ],
+    "weight": 1210,
+    "price": 23000,
+    "attack": 2700
+  },
+  {
+    "name": "Derul'din",
+    "description": "Derul'din czyli \"Boski młot\" lub \"Młot bogów\". Dzieło najbardziej utalentowanego krasnoludzkiego kowala w historii dziejów. Na jego wykucie poświęcił całe swoje życie i wydał majątek, za który można by kupić małe królestwo. Podobno, gdy ukończył Derul'dina, na następny dzień, krasnoludzki mistrz został znaleziony martwy w łóżku, z uśmiechem na ustach. Ten młot to nie broń - to arcydzieło.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 150,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "defense",
+        "value": 20,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 1500,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 250,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 30,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 400,
+        "isPercentage": false
+      }
+    ],
+    "weight": 1300,
+    "price": 55000,
+    "attack": 3400
+  }
+
+]

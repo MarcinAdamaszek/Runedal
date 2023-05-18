@@ -1,0 +1,820 @@
+[
+
+  {
+    "z": 0,
+    "y": 22,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 22,
+    "name": "Gildia_magii",
+    "description": "To miejsce wyglądem przypomina piękną świątynię nieznanego bóstwa. Zdobione kolumny, łukowe sklepienie, obrazy na ścianach i ogromny żyrandol.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 23,
+    "name": "Gildia_magii",
+    "description": "To miejsce wyglądem przypomina piękną świątynię nieznanego bóstwa. Zdobione kolumny, łukowe sklepienie, obrazy na ścianach i ogromny żyrandol.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 24,
+    "name": "Gildia_magii",
+    "description": "To miejsce wyglądem przypomina piękną świątynię nieznanego bóstwa. Zdobione kolumny, łukowe sklepienie, obrazy na ścianach i ogromny żyrandol.",
+    "charstoadd": {
+      "xevallur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 10,
+    "name": "Księżycowa_brama",
+    "description": "Kunsztownie zdobiona brama, wykonana z metalu o niebieskawym połysku",
+    "charstoadd": {
+      "Jokalyn": 1
+    },
+    "northPassage": false,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 19,
+    "name": "Gildia_alchemii",
+    "description": "Obskurne pomieszczenie, śmierdzące mieszaniną nieznanych zapachów i spalenizny. Osmalone ściany mogą podpowiadać, że niedawno miała tu miejsce jakaś eksplozja.",
+    "charstoadd": {
+      "Alchemiczka": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 21,
+    "name": "Gildia_magii",
+    "description": "To miejsce wyglądem przypomina piękną świątynię nieznanego bóstwa. Zdobione kolumny, łukowe sklepienie, obrazy na ścianach i ogromny żyrandol.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 22,
+    "name": "Gildia_magii",
+    "description": "To miejsce wyglądem przypomina piękną świątynię nieznanego bóstwa. Zdobione kolumny, łukowe sklepienie, obrazy na ścianach i ogromny żyrandol.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 23,
+    "name": "Gildia_magii",
+    "description": "To miejsce wyglądem przypomina piękną świątynię nieznanego bóstwa. Zdobione kolumny, łukowe sklepienie, obrazy na ścianach i ogromny żyrandol.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 24,
+    "name": "Gildia_magii",
+    "description": "To miejsce wyglądem przypomina piękną świątynię nieznanego bóstwa. Zdobione kolumny, łukowe sklepienie, obrazy na ścianach i ogromny żyrandol.",
+    "charstoadd": {
+      "wyższy_mag": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 36,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 25,
+    "x": 10,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 25,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 10,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 11,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 12,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+      "bandyta": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 13,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 14,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 15,
+    "name": "Zachodnia_brama",
+    "description": "Wysoka na sześć i szeroka na cztery metry, majestatyczna brama z drewna Kar'hun', której sforsowanie wydaje się być niemożliwe.",
+    "charstoadd": {
+      "Elficki_strażnik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 16,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 17,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 18,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 19,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+      "elficki_handlarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 21,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 22,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 23,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 24,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 25,
+    "name": "Wschodnia_brama",
+    "description": "Wysoka na sześć i szeroka na cztery metry, majestatyczna brama z drewna Kar'hun', której sforsowanie wydaje się być niemożliwe.",
+    "charstoadd": {
+      "Elficki_strażnik": 2
+    },
+    "northPassage": true,
+    "eastPassage": false,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 26,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 27,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 28,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 29,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+      "bandyta": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 30,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+      "bandyta": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 31,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 32,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 33,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 34,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+      "bandyta": 4
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 35,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 36,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 27,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 28,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 29,
+    "x": 19,
+    "name": "Królewska_kuźnia",
+    "description": "Spore pomieszczenie, w którego rogu widać ogromny piec, a przy nim kowadło. Na ścianach wiszą najróżniejsze elementy uzbrojenia wykonane z metalu.",
+    "charstoadd": {
+      "arcymistrz_kowalstwa": 1,
+      "królewski_płatnerz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 29,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 29,
+    "x": 21,
+    "name": "Gildia_garbarnictwa",
+    "description": "Obszerne pomieszczenie z kamienną posadzką i drewnianymi ścianami. Na dębowych stołach leżą świeże i wyprawione skóry najróżniejszych stworzeń.",
+    "charstoadd": {
+      "mistrz_garbarnictwa": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 30,
+    "x": 20,
+    "name": "Ulica_Artimesii",
+    "description": "Ze wszystkich stron otaczają Cię piękne kamienice, wysokie budynki i wieże wykonane z marmuru. Między nimi biegnie szeroka i równa, brukowana droga.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 31,
+    "x": 20,
+    "name": "Północna_brama",
+    "description": "Wysoka na sześć i szeroka na cztery metry, majestatyczna brama z drewna Kar'hun', której sforsowanie wydaje się być niemożliwe.",
+    "charstoadd": {
+      "Elficki_strażnik": 2
+    },
+    "northPassage": false,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 20,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 33,
+    "x": 20,
+    "name": "Brukowany_trakt",
+    "description": "Szeroka na cztery metry droga, wykonana z oszlifowanych i równo ułożonych granitowych kostek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

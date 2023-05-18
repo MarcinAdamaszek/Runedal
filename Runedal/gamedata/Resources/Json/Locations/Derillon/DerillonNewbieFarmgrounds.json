@@ -1,0 +1,660 @@
+[
+  {
+    "z": -2,
+    "y": 16,
+    "x": 28,
+    "name": "Pustynna_jaskinia",
+    "description": "Wydrążony w piaskowcu, suchy i chłodny tunel, słabo oświetlony przedostającym się od strony wejścia światłem",
+    "charstoadd": {
+      "król_pustyni": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 17,
+    "x": 28,
+    "name": "Pustynna_jaskinia",
+    "description": "Wydrążony w piaskowcu, suchy i chłodny tunel, słabo oświetlony przedostającym się od strony wejścia światłem",
+    "charstoadd": {
+      "szczur": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 18,
+    "x": 28,
+    "name": "Pustynna_jaskinia",
+    "description": "Wydrążony w piaskowcu, suchy i chłodny tunel, słabo oświetlony przedostającym się od strony wejścia światłem",
+    "charstoadd": {
+      "smoczy_skorpion": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 19,
+    "x": 26,
+    "name": "Pustynna_jaskinia",
+    "description": "Wydrążony w piaskowcu, suchy i chłodny tunel, słabo oświetlony przedostającym się od strony wejścia światłem",
+    "charstoadd": {
+      "smoczy_skorpion": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 19,
+    "x": 27,
+    "name": "Pustynna_jaskinia",
+    "description": "Wydrążony w piaskowcu, suchy i chłodny tunel, słabo oświetlony przedostającym się od strony wejścia światłem",
+    "charstoadd": {
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 19,
+    "x": 28,
+    "name": "Pustynna_jaskinia",
+    "description": "Wydrążony w piaskowcu, suchy i chłodny tunel, słabo oświetlony przedostającym się od strony wejścia światłem",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -1,
+    "y": 19,
+    "x": 26,
+    "name": "Pustynna_jama",
+    "description": "Otwór w piaszczystym gruncie, do którego bez większego problemu zmieści się spory człowiek.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 12,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "żmija": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 13,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "chochlik": 1,
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 14,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "chochlik": 1,
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 15,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "żmija": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 16,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 17,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chochlik": 1,
+      "szczur": 2,
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": 15,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "żmija": 1,
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": 16,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": 17,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chochlik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": 20,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "Smoczy_skorpion": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": 21,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "żmija": 4
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": 22,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "chochlik": 2,
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 16,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "szczur": 2,
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 17,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chochlik": 1,
+      "żmija": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 18,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 19,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 20,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 21,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "szczur": 1,
+      "chochlik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 22,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "smoczy_skorpion": 1,
+      "żmija": 4
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 23,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 24,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 20,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "żmija": 1,
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 21,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "Smoczy_skorpion": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 22,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 23,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 24,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 25,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "szczur": 1,
+      "smoczy_skorpion": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 21,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 22,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "szczur": 2,
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 23,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "smoczy_skorpion": 1,
+      "szczur": 1,
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 24,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "żmija": 3,
+      "chochlik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 25,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+      "smoczy_skorpion": 1,
+      "chochlik": 1,
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 26,
+    "name": "Mała_pustynia",
+    "description": "Trochę skał, parę wyschniętych konarów drzew i mnóstwo piasku.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

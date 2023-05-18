@@ -1,0 +1,402 @@
+[
+  {
+    "z": 0,
+    "y": 19,
+    "x": 36,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 37,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 36,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 37,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 36,
+    "name": "Marmurowy_most",
+    "description": "Piękny, szeroki most, w kolorze kości słoniowej, wykonany z białego marmuru, zawieszony nad głęboką kotliną o pionowych ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 22,
+    "x": 36,
+    "name": "Marmurowy_most",
+    "description": "Piękny, szeroki most, w kolorze kości słoniowej, wykonany z białego marmuru, zawieszony nad głęboką kotliną o pionowych ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 36,
+    "name": "Marmurowy_most",
+    "description": "Piękny, szeroki most, w kolorze kości słoniowej, wykonany z białego marmuru, zawieszony nad głęboką kotliną o pionowych ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 25,
+    "x": 36,
+    "name": "Marmurowy_most",
+    "description": "Piękny, szeroki most, w kolorze kości słoniowej, wykonany z białego marmuru, zawieszony nad głęboką kotliną o pionowych ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 1,
+    "y": 19,
+    "x": 37,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 19,
+    "x": 37,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 20,
+    "x": 37,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 3,
+    "y": 20,
+    "x": 37,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": 36,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 4,
+    "y": 20,
+    "x": 37,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 5,
+    "y": 20,
+    "x": 36,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 6,
+    "y": 19,
+    "x": 36,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 6,
+    "y": 20,
+    "x": 36,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 7,
+    "y": 19,
+    "x": 36,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 8,
+    "y": 19,
+    "x": 36,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 8,
+    "y": 19,
+    "x": 37,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 9,
+    "y": 19,
+    "x": 37,
+    "name": "Marmurowe_schody",
+    "description": "Schody w kolorze kości słoniowej, oświecane blaskiem świec zatkniętych w ściennych kaldelabrach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 10,
+    "y": 19,
+    "x": 36,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 10,
+    "y": 19,
+    "x": 37,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 10,
+    "y": 20,
+    "x": 36,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+      "ivellur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 10,
+    "y": 20,
+    "x": 37,
+    "name": "Wieża_Kości_Słoniowej",
+    "description": "Podłoga, ściany, sufit, wszystko wykonane z białego marmuru, oświetlone blaskiem świec zatkniętych w ścienne kandelabry",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

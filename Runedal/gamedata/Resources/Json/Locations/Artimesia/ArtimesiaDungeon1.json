@@ -1,0 +1,754 @@
+[
+  {
+    "z": -2,
+    "y": 26,
+    "x": 22,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 26,
+    "x": 23,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 26,
+    "x": 24,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 26,
+    "x": 25,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 26,
+    "x": 26,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 27,
+    "x": 26,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 28,
+    "x": 25,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 28,
+    "x": 26,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 28,
+    "x": 27,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 28,
+    "x": 28,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 29,
+    "x": 25,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 29,
+    "x": 26,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "nekromanta": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 29,
+    "x": 27,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 30,
+    "x": 26,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 31,
+    "x": 26,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 31,
+    "x": 31,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 31,
+    "x": 32,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 31,
+    "x": 33,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 26,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 27,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 28,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 29,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 30,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 31,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "zombi": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 32,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 33,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "minotaur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 34,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 35,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 36,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 32,
+    "x": 37,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 31,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 32,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 33,
+    "name": "Grobowiec",
+    "description": "Niewielkie pomieszczenie, zbudowane z kamiennych płyt, z pochodniami na ścianach i trumnami leżącymi we wnękach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 37,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 34,
+    "x": 36,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 34,
+    "x": 37,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 35,
+    "x": 37,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 36,
+    "x": 37,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 37,
+    "x": 37,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 37,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "elficki_handlarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 38,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 39,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 40,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 41,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 42,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 43,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -1,
+    "y": 26,
+    "x": 22,
+    "name": "Studnia",
+    "description": "Stara, wyglądająca na wyschniętą studnia, z umocowaną drabiną do ściany",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

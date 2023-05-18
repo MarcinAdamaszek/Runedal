@@ -1,0 +1,258 @@
+[
+  {
+    "z": 0,
+    "y": 27,
+    "x": 32,
+    "name": "Przedpola_Aben",
+    "description": "Wybrukowana marmurem, szeroka ścieżka, prowadząca pomiędzy żywopłotami i rozległymi ogrodami z równo przystrzyżonym trawnikiem.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 28,
+    "x": 32,
+    "name": "Przedpola_Aben",
+    "description": "Wybrukowana marmurem, szeroka ścieżka, prowadząca pomiędzy żywopłotami i rozległymi ogrodami z równo przystrzyżonym trawnikiem.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 29,
+    "x": 32,
+    "name": "Przedpola_Aben",
+    "description": "Wybrukowana marmurem, szeroka ścieżka, prowadząca pomiędzy żywopłotami i rozległymi ogrodami z równo przystrzyżonym trawnikiem.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 30,
+    "x": 32,
+    "name": "Brama_Zamku_Aben",
+    "description": "Wysoka na osiem metrów i szeroka na pięć, majestateyczna, dwuskrzydłowa brama wykonana z drewna, stali i marmuru.",
+    "charstoadd": {
+      "Agrilena": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 31,
+    "x": 31,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 31,
+    "x": 32,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 31,
+    "x": 33,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 31,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 32,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 32,
+    "x": 33,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 33,
+    "x": 31,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 33,
+    "x": 32,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 33,
+    "x": 33,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 34,
+    "x": 31,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 34,
+    "x": 32,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+      "Danhir": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 34,
+    "x": 33,
+    "name": "Sala_Tronowa_Aben",
+    "description": "Ogromna, pięknie wykończona sala na planie prostokąta, ze ścianami z marmuru, wyszywanymi złotą nicią gobelinami i przepięknymi dziełami sztuki na ścianach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

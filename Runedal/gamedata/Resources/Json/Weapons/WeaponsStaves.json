@@ -1,0 +1,314 @@
+[
+  {
+    "name": "Sosnowy_drąg",
+    "description": "Długi, byle jak ociosany badyl, służący jako prowizoryczna podpora dla ubogiego starca",
+    "type": "blunt",
+    "modifiers": [
+
+    ],
+    "weight": 200,
+    "price": 50,
+    "attack": 70
+  },
+  {
+    "name": "Dębowa_laska",
+    "description": "Porzucona przez lokalnego wójta, wysłużona laska z drewna sosnowego.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 4,
+        "isPercentage": false
+      }
+    ],
+    "weight": 205,
+    "price": 110,
+    "attack": 75
+  },
+  {
+    "name": "Laska_znachora",
+    "description": "Cuchnąca rozmaitym zielskiem, leszczynowa laska, w której wyczulony umysł wyczuje śladowe ilości magii",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "mpRegen",
+        "value": 350,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 210,
+    "price": 200,
+    "attack": 80
+  },
+  {
+    "name": "Laska_pustelnika",
+    "description": "Cisowa laska, emanująca słabą magią",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 8,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 375,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 150,
+        "isPercentage": false
+      }
+    ],
+    "weight": 215,
+    "price": 350,
+    "attack": 90
+  },
+  {
+    "name": "Kostur_druida",
+    "description": "Solidna dębowa laska, z umocowanym do czubka, oszlifowanym siłami natury krzemieniem.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 10,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 810,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "defense",
+        "value": 70,
+        "isPercentage": false
+      }
+    ],
+    "weight": 220,
+    "price": 500,
+    "attack": 105
+  },
+  {
+    "name": "Laska_adepta",
+    "description": "Prosta i dobrze wykonana laska, promieniejąca delikatnym, błękitnym blaskiem.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 300,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 1000,
+        "isPercentage": false
+      },
+      {
+        "type": "magicResistance",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 225,
+    "price": 1100,
+    "attack": 120
+  },
+  {
+    "name": "Pastorał",
+    "description": "Okuta srebrem i miedzią, wąska laska ze spiralnie zawiniętym końcem u góry. Symbol władzy i mocy każdego arcykapłana",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 650,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 1500,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 200,
+        "isPercentage": false
+      }
+    ],
+    "weight": 235,
+    "price": 2600,
+    "attack": 140
+  },
+  {
+    "name": "Laska_maga",
+    "description": "Nasycona magią, świetnie wykonana, cisowa laska zakończona błękitną gałką. Podstawowe wyposażenie, każdego pełnoprawnego maga",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 70,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 700,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 1400,
+        "isPercentage": false
+      },
+      {
+        "type": "defense",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 245,
+    "price": 5000,
+    "attack": 170
+  },
+  {
+    "name": "Laska_arcymaga",
+    "description": "Silnie nasycona magią, jarząca się szkarłatnym blaskiem laska. Na jej czubku bijąca energią, płomienno-czerwona gałka, a na całej długości starannie wyryte runiczne pismo. Znak rozpoznawczy magów rangi arcymistrzowskiej.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 250,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 1000,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 1900,
+        "isPercentage": false
+      }
+    ],
+    "weight": 255,
+    "price": 12000,
+    "attack": 215
+  },
+  {
+    "name": "Eilvenys",
+    "description": "Unikatowa laska, należąca niegdyś do słynnej, elfiej czarodziejki Erythlin, zwanej \"księżniczą mrozu\". Pierwotnie, Erythlin szkolona była w magii obronnej, lecz swoją sławę zyskała po mistrzowsku wykorzystując potencjał Eilvenys, czyli \"lodowego serca\". Kostur przejawia stabilną, zimną moc, która schładza i uspokaja umysł dzierżącego ją maga, a słynnej czarodziejce pozwoliła w pełni uwolnić jej ofensywny potencjał.",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 130,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 400,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 1400,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 2400,
+        "isPercentage": false
+      },
+      {
+        "type": "magicResistance",
+        "value": 20,
+        "isPercentage": true
+      },
+      {
+        "type": "defense",
+        "value": 150,
+        "isPercentage": false
+      },
+      {
+        "type": "manaShield",
+        "value": 15,
+        "isPercentage": true
+      }
+    ],
+    "weight": 260,
+    "price": 28000,
+    "attack": 280
+  },
+  {
+    "name": "Pożoga",
+    "description": "Wykonana z mahoniu, skrywająca w sobie nieprawdopodobną moc laska, będąca orężem legendarnego maga Ivellura. Jedyną żyjącą istotą, która mogła mierzyć się z Ivellurem w walce jeden na jednego był sam Daever. Ponoć ich pojedynek trwał 4 dni i 7 godzin i zostawił pogorzelisko na terenie o obszarze porównywalnym do pięciu średnich miast. Po tym wydarzeniu, żywe legendy postanowiły już nigdy ze sobą nie walczyć, a pakt ten trwa do po dziś dzień..",
+    "type": "blunt",
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": 160,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 500,
+        "isPercentage": false
+      },
+      {
+        "type": "maxMp",
+        "value": 2000,
+        "isPercentage": false
+      },
+      {
+        "type": "mpRegen",
+        "value": 3300,
+        "isPercentage": false
+      },
+      {
+        "type": "magicResistance",
+        "value": 30,
+        "isPercentage": true
+      },
+      {
+        "type": "manaShield",
+        "value": 30,
+        "isPercentage": true
+      }
+    ],
+    "weight": 265,
+    "price": 60000,
+    "attack": 350
+  }
+
+]

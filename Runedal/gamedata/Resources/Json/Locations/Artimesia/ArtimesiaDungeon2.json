@@ -1,0 +1,867 @@
+[
+  {
+    "z": -4,
+    "y": 38,
+    "x": 55,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 39,
+    "x": 54,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 39,
+    "x": 55,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 39,
+    "x": 56,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "Szkielet_wojownik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 40,
+    "x": 53,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 40,
+    "x": 54,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 40,
+    "x": 55,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 40,
+    "x": 56,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 40,
+    "x": 57,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "kościany_smok": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 41,
+    "x": 54,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 41,
+    "x": 55,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 41,
+    "x": 56,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 42,
+    "x": 55,
+    "name": "Grota_skalna",
+    "description": "Wielka grota skalna o dosyć regularnych kształtach, rozświetlona słabym blaskiem słońca przedostającego się przez spory otwór na środku sufitu.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -3,
+    "y": 40,
+    "x": 53,
+    "name": "Wyrwa_w_posadzce",
+    "description": "Sporej wielkości dziura w kamiennej podłodze, głęboka na dobre pięć metrów, o chropowatych i bardzo nieregularnych ścianach, po których z łatwością można się wspinać.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 51,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 52,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 53,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 54,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 33,
+    "x": 55,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 34,
+    "x": 51,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 34,
+    "x": 55,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 35,
+    "x": 51,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 35,
+    "x": 55,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 35,
+    "x": 56,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 35,
+    "x": 57,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1,
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 35,
+    "x": 58,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 35,
+    "x": 59,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 36,
+    "x": 51,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 36,
+    "x": 59,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 37,
+    "x": 44,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 37,
+    "x": 45,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 37,
+    "x": 46,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 37,
+    "x": 51,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 37,
+    "x": 59,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 44,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 45,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 46,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+      "Arcynekromanta": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 47,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 48,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 49,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 50,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 51,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 38,
+    "x": 59,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 39,
+    "x": 44,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 39,
+    "x": 45,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 39,
+    "x": 46,
+    "name": "Krypta",
+    "description": "Ciemne pomieszczenie z kamienia, o nisko zawieszonym, łukowym sklepieniu podpieranym przez liczne kolumny.",
+    "charstoadd": {
+      "szkielet_wojownik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 39,
+    "x": 59,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 40,
+    "x": 53,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 40,
+    "x": 54,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "duch_rycerza": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 40,
+    "x": 55,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 40,
+    "x": 56,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "zombi": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 40,
+    "x": 57,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 40,
+    "x": 58,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+      "mięsny_golem": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 40,
+    "x": 59,
+    "name": "Loch",
+    "description": "Ciemny korytarz, zbudowany z bardzo starych, ogromnych kamiennych płyt, rozświetlony jedynie słabym światłem pochodni na ścianie.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

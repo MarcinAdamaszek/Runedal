@@ -1,0 +1,466 @@
+[
+  {
+    "z": 0,
+    "y": 19,
+    "x": 40,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 41,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+      "Kalaao": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 42,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 40,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 41,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 42,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 40,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 41,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 42,
+    "name": "Świątynia_Dede-el",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 22,
+    "x": 41,
+    "name": "Brama_świątynna",
+    "description": "Ogromne, mosiężne, dwuskrzydłowe drzwi, osadzone granitowym murze.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 41,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 24,
+    "x": 41,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 25,
+    "x": 41,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 25,
+    "x": 44,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 25,
+    "x": 45,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 25,
+    "x": 46,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 37,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 38,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+      "bandyta": 4
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 39,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 40,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 41,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 42,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 43,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 44,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 45,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 26,
+    "x": 46,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+      "czerwony_smok": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 27,
+    "x": 44,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 27,
+    "x": 45,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 27,
+    "x": 46,
+    "name": "Pustkowie",
+    "description": "Wyjałowiona ziemia, piach, kamienie i usychająca, bardzo rzadka roślinność.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

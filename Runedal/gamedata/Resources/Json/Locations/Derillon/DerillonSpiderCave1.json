@@ -1,0 +1,449 @@
+[
+  {
+    "z": -4,
+    "y": 16,
+    "x": 16,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 2,
+      "nietoperz_krwiopijca": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 16,
+    "x": 17,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "Ai'rhil": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 16,
+    "x": 18,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 16,
+    "x": 19,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 17,
+    "x": 19,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "nietoperz_krwiopijca": 1,
+      "skarabeusz": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 18,
+    "x": 19,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 19,
+    "x": 18,
+    "name": "Podziemna_komnata",
+    "description": "Posadzka, ściany i sufit ułożone z ogromnych, równo ociosanych kamieni, idealnie do siebie przylegających. Na ścianach wiszą pochodnie, całkiem dobrze oświetlające całe pomieszczenie.",
+    "charstoadd": {
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 19,
+    "x": 19,
+    "name": "Podziemna_komnata",
+    "description": "Posadzka, ściany i sufit ułożone z ogromnych, równo ociosanych kamieni, idealnie do siebie przylegających. Na ścianach wiszą pochodnie, całkiem dobrze oświetlające całe pomieszczenie.",
+    "charstoadd": {
+      "pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 19,
+    "x": 20,
+    "name": "Podziemna_komnata",
+    "description": "Posadzka, ściany i sufit ułożone z ogromnych, równo ociosanych kamieni, idealnie do siebie przylegających. Na ścianach wiszą pochodnie, całkiem dobrze oświetlające całe pomieszczenie.",
+    "charstoadd": {
+      "Pająk_mutant": 1,
+      "nietoperz_krwiopijca": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 20,
+    "x": 18,
+    "name": "Podziemna_komnata",
+    "description": "Posadzka, ściany i sufit ułożone z ogromnych, równo ociosanych kamieni, idealnie do siebie przylegających. Na ścianach wiszą pochodnie, całkiem dobrze oświetlające całe pomieszczenie.",
+    "charstoadd": {
+      "Pająk_mutant": 2,
+      "Nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 20,
+    "x": 19,
+    "name": "Podziemna_komnata",
+    "description": "Posadzka, ściany i sufit ułożone z ogromnych, równo ociosanych kamieni, idealnie do siebie przylegających. Na ścianach wiszą pochodnie, całkiem dobrze oświetlające całe pomieszczenie.",
+    "charstoadd": {
+      "skarabeusz": 1,
+      "Nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -4,
+    "y": 20,
+    "x": 20,
+    "name": "Podziemna_komnata",
+    "description": "Posadzka, ściany i sufit ułożone z ogromnych, równo ociosanych kamieni, idealnie do siebie przylegających. Na ścianach wiszą pochodnie, całkiem dobrze oświetlające całe pomieszczenie.",
+    "charstoadd": {
+      "Nietoperz_krwiopijca": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -3,
+    "y": 16,
+    "x": 16,
+    "name": "Studnia",
+    "description": "Ciasny otwór w posadzce jaskini, w którym zmieści się jeden, góra dwóch ludzi na raz.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 16,
+    "x": 16,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 17,
+    "x": 15,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "Nietoperz_krwiopijca": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 17,
+    "x": 16,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "skarabeusz": 1,
+      "pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 17,
+    "x": 17,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 18,
+    "x": 15,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "Nietoperz_krwiopijca": 2,
+      "pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 18,
+    "x": 16,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "pająk_mutant": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 18,
+    "x": 17,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "Nietoperz_krwiopijca": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 19,
+    "x": 15,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost i bardzo grube pajęczyny, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "Nietoperz_krwiopijca": 2,
+      "skarabeusz": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 19,
+    "x": 16,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "pająk_mutant": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 19,
+    "x": 17,
+    "name": "Grota",
+    "description": "Wielka, skalna grota, pełna stalaktytów, stalagmitów i stalagnatów. Jej ściany pokrywa świecący porost, a do sklepienia, na oko jest jakieś 15 metrów.",
+    "charstoadd": {
+      "pająk_mutant": 1,
+      "Nietoperz_krwiopijca": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 20,
+    "x": 16,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "szczur": 1,
+      "skarabeusz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 21,
+    "x": 16,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 1,
+      "nietoperz_krwiopijca": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 22,
+    "x": 16,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "pająk_mutant": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": -2,
+    "y": 23,
+    "x": 16,
+    "name": "Korytarz_jaskini",
+    "description": "Ciemność, wilgoć i pełno bardzo grubych pajęczyn. Ze stropu zwisa trochę stalaktytów, a z posadzki wyrastają stalagmity. Gdyby nie dziwne porosty na ścianach, wydzielające blade światło, nie dałoby się dostrzec czubka własnego nosa.",
+    "charstoadd": {
+      "skarabeusz": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

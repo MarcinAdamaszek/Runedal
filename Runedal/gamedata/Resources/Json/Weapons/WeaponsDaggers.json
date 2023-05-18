@@ -1,0 +1,255 @@
+[
+  {
+    "name": "Dębowy_kołek",
+    "description": "Mały kawałek drewna, zaostrzony na jednym końcu.",
+    "type": "dagger",
+    "modifiers": [
+
+    ],
+    "weight": 70,
+    "price": 40,
+    "attack": 50
+  },
+  {
+    "name": "Dłuto",
+    "description": "Ostro zakończone, żelazne narzędzie rzemieślnicze.",
+    "type": "dagger",
+    "modifiers": [
+
+    ],
+    "weight": 75,
+    "price": 100,
+    "attack": 55
+  },
+  {
+    "name": "Kozik",
+    "description": "Mały, składany i niezbyt ostry nożyk",
+    "type": "dagger",
+    "modifiers": [
+
+    ],
+    "weight": 80,
+    "price": 180,
+    "attack": 65
+  },
+  {
+    "name": "Nóż_rzeźnika",
+    "description": "Spory nóż do cięcia mięsa.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "critical",
+        "value": 30,
+        "isPercentage": false
+      }
+    ],
+    "weight": 85,
+    "price": 270,
+    "attack": 90
+  },
+  {
+    "name": "Stalowy_sztylet",
+    "description": "Prosta i skuteczna broń, stosowana przez lokalnych rzezimieszków.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 5,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 10,
+        "isPercentage": true
+      }
+    ],
+    "weight": 90,
+    "price": 420,
+    "attack": 125
+  },
+  {
+    "name": "Niedźwiedzia_łapa",
+    "description": "Stalowy kastet z wystającymi ostrzami.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 10,
+        "isPercentage": true
+      }
+    ],
+    "weight": 95,
+    "price": 800,
+    "attack": 180
+  },
+  {
+    "name": "Sztylet_gwardzisty",
+    "description": "Dobrze wyważony sztylet z hartowanej stali, o srebrnej rękojeści. Druga broń każdego członka gwardii pałacowej, przeznaczona do walki w małych pomieszczeniach i krótkim dystansie.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 35,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 10,
+        "isPercentage": true
+      }
+    ],
+    "weight": 100,
+    "price": 1600,
+    "attack": 260
+  },
+  {
+    "name": "Pustułka",
+    "description": "Wyśmienicie wykonany sztylet z demasceńskiej stali, o lekko zakrzywionym ostrzu. Doskonała broń, używana przez królewskich szpiegów i asasynów.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 60,
+        "isPercentage": false
+      },
+      {
+        "type": "evasion",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "speed",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 105,
+    "price": 3700,
+    "attack": 345
+  },
+  {
+    "name": "Drak'ink",
+    "description": "Drak'ink czyli \"smoczy kieł\". Niezwykle rzadka i drogocenna broń wykonana z doskonale zaostrzonego smoczego zęba i rękojeści owiniętej czarnym jedwabiem. Bardzo śmiercionośna w rękach wprawnego zabójcy.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 90,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 15,
+        "isPercentage": true
+      }
+    ],
+    "weight": 110,
+    "price": 9000,
+    "attack": 445
+  },
+  {
+    "name": "Draculus",
+    "description": "Okryty złą sławą, mithrilowy sztylet, należący niegdyś do sławnego skrytobójcy Arithiusa. Nikt nie jest w stanie podać liczby serc przebitych przez to ostrze, lecz ponoć pochłonęło ono tak wiele krwi, że magiczny metal \"polubił\" jej smak.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 120,
+        "isPercentage": false
+      },
+      {
+        "type": "evasion",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 20,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "lifesteal",
+        "value": 7,
+        "isPercentage": true
+      }
+    ],
+    "weight": 115,
+    "price": 22000,
+    "attack": 550
+  },
+  {
+    "name": "Akarenah",
+    "description": "Niesławny \"Demoniczny\" sztylet, druga broń Daevera. Pierwotnie służył jako rytualne narzędzie demona Akarenaha (ktoś się nie wysilił z nazwą) do uśmiercania ofiar składanych mu przez jego wiernych wyznawców. W jaki sposób legendarny wojownik wszedł w jego posiadanie - pozostaje tajmnicą. Wiadomo jedynie, że dzięki temu ostrzu, Daever był w stanie samotnie stawić czoła całej armii, jako że ostrze przesiąknięte jest mroczną, demoniczną magią, która pochłaniając krew wrogów, leczy swojego posiadacza.",
+    "type": "dagger",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 150,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 20,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 25,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 20,
+        "isPercentage": true
+      },
+      {
+        "type": "lifesteal",
+        "value": 15,
+        "isPercentage": true
+      }
+    ],
+    "weight": 120,
+    "price": 50000,
+    "attack": 680
+  }
+]

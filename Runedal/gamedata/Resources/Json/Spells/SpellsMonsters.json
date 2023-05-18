@@ -1,0 +1,496 @@
+[
+  {
+    "name": "Ognisty_podmuch",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 110,
+    "manacost": 200,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Pajęcza_sieć",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 20,
+    "manacost": 200,
+    "modifiers": [
+      {
+        "type": "attack",
+        "value": -20,
+        "isPercentage": true,
+        "duration": 10
+      },
+      {
+        "type": "atkSpeed",
+        "value": -20,
+        "isPercentage": true,
+        "duration": 10
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Terror",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 30,
+    "manacost": 100,
+    "modifiers": [
+      {
+        "type": "attack",
+        "value": -10,
+        "isPercentage": true,
+        "duration": 15
+      },
+      {
+        "type": "accuracy",
+        "value": -10,
+        "isPercentage": true,
+        "duration": 15
+      },
+      {
+        "type": "evasion",
+        "value": -10,
+        "isPercentage": true,
+        "duration": 15
+      },
+      {
+        "type": "magicResistance",
+        "value": -30,
+        "isPercentage": true,
+        "duration": 15
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "stun",
+        "value": 0,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "name": "Porażenie",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 60,
+    "manacost": 200,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "stun",
+        "value": 0,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "name": "Skamienienie",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 20,
+    "manacost": 200,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "stun",
+        "value": 0,
+        "duration": 6
+      }
+    ]
+  },
+  {
+    "name": "Neurotoksyna",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 30,
+    "manacost": 200,
+    "modifiers": [
+      {
+        "type": "intelligence",
+        "value": -15,
+        "duration": 15
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Dotyk_śmierci",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 65,
+    "manacost": 200,
+    "modifiers": [
+      {
+        "type": "defense",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": -10,
+        "duration": 10,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Mroczny_wybuch",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 95,
+    "manacost": 300,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Opętanie",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 50,
+    "manacost": 300,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "stun",
+        "value": 0,
+        "duration": 5
+      }
+    ]
+  },
+  {
+    "name": "Trupie_zionięcie",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 90,
+    "manacost": 200,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Spętanie_korzeniami",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 75,
+    "manacost": 200,
+    "modifiers": [
+      {
+        "type": "evasion",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "speed",
+        "value": -40,
+        "duration": 10,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Osłabienie",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 75,
+    "manacost": 200,
+    "modifiers": [
+      {
+        "type": "attack",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "intelligence",
+        "value": -10,
+        "duration": 10,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Miażdżenie",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 120,
+    "manacost": 200,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Wrastające_pnącza",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 115,
+    "manacost": 200,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Śpiew_lasu",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 70,
+    "manacost": 220,
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": -10,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "agility",
+        "value": -10,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "intelligence",
+        "value": -10,
+        "duration": 10,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Kula_energii",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 120,
+    "manacost": 200,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Zionięcie_ogniem",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 150,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Pieśń_destrukcji",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 150,
+    "manacost": 350,
+    "modifiers": [
+      {
+        "type": "defense",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Huragan",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 200,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Wietrzny_wir",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 230,
+    "manacost": 350,
+    "modifiers": [
+      {
+        "type": "magicResistance",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "intelligence",
+        "value": -15,
+        "duration": 10,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Meteoryt",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 250,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Pocisk_ognia",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 200,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Błyskawica",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 200,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Kula_mrozu",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 150,
+    "manacost": 350,
+    "modifiers": [
+      {
+        "type": "atkSpeed",
+        "value": -20,
+        "duration": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "speed",
+        "value": -20,
+        "duration": 10,
+        "isPercentage": true
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Masywne_zionięcie_ogniem",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 300,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Pocisk_chaosu",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 250,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Piorun",
+    "description": "",
+    "defaulttarget": "enemy",
+    "power": 200,
+    "manacost": 350,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  }
+]

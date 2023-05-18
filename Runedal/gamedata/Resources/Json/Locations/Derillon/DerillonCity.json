@@ -1,0 +1,792 @@
+[
+  {
+    "z": -1,
+    "y": 23,
+    "x": 16,
+    "name": "Pieczara",
+    "description": "Otwór w ziemi o średnicy mniej więcej 3 metrów. Ściany porośnięte mchem, gdzieniegdzie wystaje korzeń drzewa.",
+    "charstoadd": {
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 8,
+    "x": 9,
+    "name": "Korytarz_uniwersytetu",
+    "description": "Marmurowa podłoga, i kamienne ściany oświetlone blaskiem świec, zatkniętych w zwisających z sufitu żyrandolach.",
+    "charstoadd": {
+      "Adept_magii": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 8,
+    "x": 10,
+    "name": "Korytarz_uniwersytetu",
+    "description": "Marmurowa podłoga, i kamienne ściany oświetlone blaskiem świec, zatkniętych w zwisających z sufitu żyrandolach.",
+    "charstoadd": {
+      "krawiec": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 8,
+    "x": 11,
+    "name": "Korytarz_uniwersytetu",
+    "description": "Marmurowa podłoga, i kamienne ściany oświetlone blaskiem świec, zatkniętych w zwisających z sufitu żyrandolach.",
+    "charstoadd": {
+      "Adept_magii": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 9,
+    "x": 10,
+    "name": "Brama_uniwersytetu",
+    "description": "Wielkie, dwuskrzydłowe drzwi, okute złotem i żelazem, osadzone w łukowo sklepionym, kamiennym murze. Na drzwiach, złotymi literami wyryty jest napis \"NOS IENS AD CERVISIAM\"",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 10,
+    "x": 9,
+    "name": "Karczma_Pod_Wilczym_Kłem",
+    "description": "Drewniane ściany, stoliki i krzesła. Zapach piwa i smażonego bekonu. Na wprost widzisz kontuar i karczmarza przecierającego szmatą brudną szklanicę",
+    "charstoadd": {
+      "karczmarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 10,
+    "x": 10,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 10,
+    "x": 11,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 11,
+    "x": 8,
+    "name": "Targowisko",
+    "description": "W około wszędzie stragany, tłum i ciasnota. Hałas krzątających się ludzi, krzyków handlarzy zachwalających produkty, gdakanie kur i gęsi. Czujesz mieszaninę zapachów różnych przypraw, ziół, jedzenia i ptasich odchodów.",
+    "charstoadd": {
+      "handlarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 11,
+    "x": 9,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+      "szczur": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 11,
+    "x": 10,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 11,
+    "x": 11,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+      "Mędrzec": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 11,
+    "x": 12,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+      "szczur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 11,
+    "x": 13,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 11,
+    "x": 14,
+    "name": "Zaułek",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 12,
+    "x": 8,
+    "name": "Kuźnia",
+    "description": "Gorąc i hałas miechów oraz stali uderzanej o stal. Na przeciwko, jarzące się pomarańczowym blaskiem palenisko, a pod ścianą mnóstwo rozmaitego oręża i innych metalowych wyrobów.",
+    "charstoadd": {
+      "kowal": 1,
+      "płatnerz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 12,
+    "x": 9,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 12,
+    "x": 10,
+    "name": "Ulica_Derillon",
+    "description": "Pod stopami ubita ziemia z gdzieniegdzie powbijanymi kamieniami. Po bokach widzisz kamienne i drewniane budynki różnych rozmiarów, a w nozdrzach czujesz smród końskich odchodów i ludzkich szczyn.",
+    "charstoadd": {
+      "szczur": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 12,
+    "x": 11,
+    "name": "Garbarnia",
+    "description": "Pomieszczenie wielkości sporej, domowej izby, czuć dziwny smród, zapewne środków do impregnacji skór. Na ścianach i blatach rozmaite, zwierzęce skóry, wyprawione, świeże i w formie gotowych ubrań czy pancerzy",
+    "charstoadd": {
+      "garbarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 13,
+    "x": 10,
+    "name": "Brama_północna",
+    "description": "Wyjście z miasta. Drewniana, okuta żelazem brama, osadzona w łukowo sklepionym otworze w murach.",
+    "charstoadd": {
+      "strażnik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 14,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      "pustelnik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 15,
+    "x": 11,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 16,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 17,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      "chochlik": 1,
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      "strażnik_ruin": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 19,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      "dziki_pies": 1,
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 13,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "dzik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 20,
+    "x": 14,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "żmija": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+      "dziki_pies": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 11,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "żmija": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 12,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "dziki_pies": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 13,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chochlik": 2
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 14,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "wędrowny_handlarz": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 15,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 21,
+    "x": 16,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "żmija": 1,
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 22,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 22,
+    "x": 13,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 22,
+    "x": 14,
+    "name": "Polana",
+    "description": "Wysoka trawa, chwasty i polne kwiaty. Słyszysz cykanie świerszczy i delikatny szum wiatru",
+    "charstoadd": {
+      "chochlik": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 22,
+    "x": 16,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "wilk": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 8,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "żmija": 1,
+      "dziki_pies": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 18,
+    "x": 9,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+      "żmija": 1,
+      "chochlik": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 10,
+    "name": "Droga",
+    "description": "Ledwo uklepana ziemia, piach, kamienie i koleiny. Po bokach gęsty las.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 0,
+    "y": 23,
+    "x": 16,
+    "name": "Leśna_ścieżka",
+    "description": "Wąski pas wydeptanego runa leśnego, biegnący pomiędzy mchem, paprociami, krzewami i drzewami.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 1,
+    "y": 8,
+    "x": 11,
+    "name": "Marmurowe_schody",
+    "description": "Zwyczaje schody tyle, że z marmuru",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 8,
+    "x": 9,
+    "name": "Korytarz_uniwersytetu",
+    "description": "Marmurowa podłoga, i kamienne ściany oświetlone blaskiem świec, zatkniętych w zwisających z sufitu żyrandolach.",
+    "charstoadd": {
+      "adept_magii": 3
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 8,
+    "x": 10,
+    "name": "Korytarz_uniwersytetu",
+    "description": "Marmurowa podłoga, i kamienne ściany oświetlone blaskiem świec, zatkniętych w zwisających z sufitu żyrandolach.",
+    "charstoadd": {
+      "mistrz_magii": 1
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  },
+  {
+    "z": 2,
+    "y": 8,
+    "x": 11,
+    "name": "Korytarz_uniwersytetu",
+    "description": "Marmurowa podłoga, i kamienne ściany oświetlone blaskiem świec, zatkniętych w zwisających z sufitu żyrandolach.",
+    "charstoadd": {
+
+    },
+    "northPassage": true,
+    "eastPassage": true,
+    "southPassage": true,
+    "westPassage": true,
+    "upPassage": true,
+    "downPassage": true
+  }
+]

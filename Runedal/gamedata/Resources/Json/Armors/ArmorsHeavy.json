@@ -1,0 +1,837 @@
+[
+  {
+    "name": "Zardzewiały_szyszak",
+    "description": "Stary, mocno skorodowany, żelazny hełm typu szyszak.",
+    "modifiers": [
+
+    ],
+    "weight": 250,
+    "price": 65,
+    "type": "helmet",
+    "defense": 70
+  },
+  {
+    "name": "Zardzewiałe_rękawice",
+    "description": "Stare, mocno skorodowane, żelazne rękawice",
+    "modifiers": [
+
+    ],
+    "weight": 250,
+    "price": 65,
+    "type": "gloves",
+    "defense": 70
+  },
+  {
+    "name": "Zardzewiałe_buty",
+    "description": "Stare, mocno skorodowane, żelazne buty",
+    "modifiers": [
+
+    ],
+    "weight": 250,
+    "price": 65,
+    "type": "shoes",
+    "defense": 70
+  },
+  {
+    "name": "Zardzewiałe_bigwanty",
+    "description": "Stare, mocno skorodowane, żelazne bigwanty",
+    "modifiers": [
+
+    ],
+    "weight": 500,
+    "price": 130,
+    "type": "pants",
+    "defense": 140
+  },
+  {
+    "name": "Zardzewiała_zbroja",
+    "description": "Stara, mocno skorodowana, żelazna zbroja",
+    "modifiers": [
+
+    ],
+    "weight": 750,
+    "price": 195,
+    "type": "torso",
+    "defense": 210
+  },
+  {
+    "name": "Kaptur_kolczy",
+    "description": "Żelazny kaptur, wykonany z plecionki kolczej",
+    "modifiers": [
+
+    ],
+    "weight": 265,
+    "price": 95,
+    "type": "helmet",
+    "defense": 80
+  },
+  {
+    "name": "Rękawice_kolcze",
+    "description": "Żelazne rękawice, wykonane z plecionki kolczej",
+    "modifiers": [
+
+    ],
+    "weight": 265,
+    "price": 95,
+    "type": "gloves",
+    "defense": 80
+  },
+  {
+    "name": "Buty_kolcze",
+    "description": "Żelazne buty, wykonane z plecionki kolczej",
+    "modifiers": [
+
+    ],
+    "weight": 265,
+    "price": 95,
+    "type": "shoes",
+    "defense": 80
+  },
+  {
+    "name": "Spodnie_kolcze",
+    "description": "Żelazne spodnie, wykonane z plecionki kolczej",
+    "modifiers": [
+
+    ],
+    "weight": 530,
+    "price": 190,
+    "type": "pants",
+    "defense": 160
+  },
+  {
+    "name": "Kolczuga",
+    "description": "Żelazna koszula, wykonana z plecionki kolczej",
+    "modifiers": [
+
+    ],
+    "weight": 795,
+    "price": 285,
+    "type": "torso",
+    "defense": 240
+  },
+  {
+    "name": "Hełm_łuskowy",
+    "description": "Hełm wykonany z wytrzymałego materiału, gęsto obszytego stalowymi płytkami",
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 3,
+        "isPercentage": false
+      }
+    ],
+    "weight": 280,
+    "price": 140,
+    "type": "helmet",
+    "defense": 95
+  },
+  {
+    "name": "Rękawice_łuskowe",
+    "description": "Rękawice wykonane z wytrzymałego materiału, gęsto obszytego stalowymi płytkami",
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 3,
+        "isPercentage": false
+      }
+    ],
+    "weight": 280,
+    "price": 140,
+    "type": "gloves",
+    "defense": 95
+  },
+  {
+    "name": "Buty_łuskowe",
+    "description": "Buty wykonane z wytrzymałego materiału, gęsto obszytego małymi, stalowymi płytkami",
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 3,
+        "isPercentage": false
+      }
+    ],
+    "weight": 280,
+    "price": 140,
+    "type": "shoes",
+    "defense": 95
+  },
+  {
+    "name": "Spodnie_łuskowe",
+    "description": "Spodnie wykonane z wytrzymałego materiału, gęsto obszytego stalowymi płytkami",
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 6,
+        "isPercentage": false
+      }
+    ],
+    "weight": 560,
+    "price": 280,
+    "type": "pants",
+    "defense": 190
+  },
+  {
+    "name": "Zbroja_łuskowa",
+    "description": "Zbroja wykonana z wytrzymałego materiału, gęsto obszytego stalowymi płytkami",
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 9,
+        "isPercentage": false
+      }
+    ],
+    "weight": 840,
+    "price": 420,
+    "type": "torso",
+    "defense": 285
+  },
+  {
+    "name": "Hełm_płytowy",
+    "description": "Hełm wykonany ze stalowej, hartowanej blachy.",
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 5,
+        "isPercentage": false
+      }
+    ],
+    "weight": 295,
+    "price": 265,
+    "type": "helmet",
+    "defense": 120
+  },
+  {
+    "name": "Rękawice_płytowe",
+    "description": "Rękawice wykonane ze stalowej, hartowanej blachy.",
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 5,
+        "isPercentage": false
+      }
+    ],
+    "weight": 295,
+    "price": 265,
+    "type": "gloves",
+    "defense": 120
+  },
+  {
+    "name": "Buty_płytowe",
+    "description": "Buty wykonane ze stalowej, hartowanej blachy.",
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 5,
+        "isPercentage": false
+      }
+    ],
+    "weight": 295,
+    "price": 265,
+    "type": "shoes",
+    "defense": 120
+  },
+  {
+    "name": "Bigwanty_płytowe",
+    "description": "Płytowe bigwanty wykonane ze stalowej, hartowanej blachy.",
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 590,
+    "price": 530,
+    "type": "pants",
+    "defense": 240
+  },
+  {
+    "name": "Zbroja_płytowa",
+    "description": "Zbroja płytowa, wykonana ze stalowej, hartowanej blachy.",
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 300,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 15,
+        "isPercentage": false
+      }
+    ],
+    "weight": 885,
+    "price": 795,
+    "type": "torso",
+    "defense": 360
+  },
+  {
+    "name": "Hełm_saracenów",
+    "description": "Solidny hełm, wykonany z bardzo wytrzymałej stali demasceńskiej",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 1,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 315,
+    "price": 520,
+    "type": "helmet",
+    "defense": 170
+  },
+  {
+    "name": "Rękawice_saracenów",
+    "description": "Solidne rękawice, wykonane z bardzo wytrzymałej stali demasceńskiej",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 1,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 315,
+    "price": 520,
+    "type": "gloves",
+    "defense": 170
+  },
+  {
+    "name": "Buty_saracenów",
+    "description": "Solidne buty, wykonane z bardzo wytrzymałej stali demasceńskiej",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 1,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 315,
+    "price": 520,
+    "type": "shoes",
+    "defense": 170
+  },
+  {
+    "name": "Bigwanty_saracenów",
+    "description": "Solidne bigwanty, wykonane z bardzo wytrzymałej stali demasceńskiej",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 6,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 2,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 630,
+    "price": 1040,
+    "type": "pants",
+    "defense": 340
+  },
+  {
+    "name": "Zbroja_saracenów",
+    "description": "Solidna zbroja, wykonana z bardzo wytrzymałej stali demasceńskiej",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 9,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 3,
+        "isPercentage": true
+      },
+      {
+        "type": "hpRegen",
+        "value": 30,
+        "isPercentage": false
+      }
+    ],
+    "weight": 945,
+    "price": 1560,
+    "type": "torso",
+    "defense": 510
+  },
+  {
+    "name": "Hełm_królów",
+    "description": "Bogato zdobiony, najwyższej jakości hełm, wykonany z hartowanej mieszanki stali i mithrilu. Zazwyczaj na wyposażeniu królewskiej straży.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 350,
+    "price": 1130,
+    "type": "helmet",
+    "defense": 210
+  },
+  {
+    "name": "Rękawice_królów",
+    "description": "Bogato zdobione, najwyższej jakości rękawice, wykonane z hartowanej mieszanki stali i mithrilu. Zazwyczaj na wyposażeniu królewskiej straży.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 350,
+    "price": 1130,
+    "type": "gloves",
+    "defense": 210
+  },
+  {
+    "name": "Buty_królów",
+    "description": "Bogato zdobione, najwyższej jakości buty, wykonane z hartowanej mieszanki stali i mithrilu. Zazwyczaj na wyposażeniu królewskiej straży.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 350,
+    "price": 1130,
+    "type": "shoes",
+    "defense": 210
+  },
+  {
+    "name": "Bigwanty_królów",
+    "description": "Bogato zdobione, najwyższej jakości bigwanty, wykonane z hartowanej mieszanki stali i mithrilu. Zazwyczaj na wyposażeniu królewskiej straży.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 14,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 400,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 700,
+    "price": 2260,
+    "type": "pants",
+    "defense": 420
+  },
+  {
+    "name": "Zbroja_królów",
+    "description": "Bogato zdobiona, najwyższej jakości zbroja, wykonana z hartowanej mieszanki stali i mithrilu. Zazwyczaj na wyposażeniu królewskiej straży.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 21,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 600,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 60,
+        "isPercentage": false
+      }
+    ],
+    "weight": 1050,
+    "price": 3390,
+    "type": "torso",
+    "defense": 630
+  },
+  {
+    "name": "Hełm_Varedlen",
+    "description": "Hełm z kory świętego drzewa Kar'hun, wykonany przez najznamienitszych elfickich płatnerzy, za pomocą tylko im znanej magii.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 30,
+        "isPercentage": false
+      }
+    ],
+    "weight": 370,
+    "price": 2450,
+    "type": "helmet",
+    "defense": 240
+  },
+  {
+    "name": "Rękawice_Varedlen",
+    "description": "Rękawice z kory świętego drzewa Kar'hun, wykonane przez najznamienitszych elfickich płatnerzy, za pomocą tylko im znanej magii.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 30,
+        "isPercentage": false
+      }
+    ],
+    "weight": 370,
+    "price": 2450,
+    "type": "gloves",
+    "defense": 240
+  },
+  {
+    "name": "Buty_Varedlen",
+    "description": "Buty z kory świętego drzewa Kar'hun, wykonane przez najznamienitszych elfickich płatnerzy, za pomocą tylko im znanej magii.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 200,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 30,
+        "isPercentage": false
+      }
+    ],
+    "weight": 370,
+    "price": 2450,
+    "type": "shoes",
+    "defense": 240
+  },
+  {
+    "name": "Bigwanty_Varedlen",
+    "description": "Bigwanty z kory świętego drzewa Kar'hun, wykonane przez najznamienitszych elfickich płatnerzy, za pomocą tylko im znanej magii.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 30,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 400,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 60,
+        "isPercentage": false
+      }
+    ],
+    "weight": 740,
+    "price": 4900,
+    "type": "pants",
+    "defense": 480
+  },
+  {
+    "name": "Zbroja_Varedlen",
+    "description": "Zbroja z kory świętego drzewa Kar'hun, wykonana przez najznamienitszych elfickich płatnerzy, za pomocą tylko im znanej magii.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 45,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 550,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 90,
+        "isPercentage": false
+      }
+    ],
+    "weight": 1110,
+    "price": 7350,
+    "type": "torso",
+    "defense": 720
+  },
+  {
+    "name": "Hełm_Drak'zelt",
+    "description": "Bajecznie piękny i niezwykle wytrzymały hełm wykonany ze skóry złotego smoka. Te majestatyczne kreatury wyginęły dawno temu, gdyż ze względu na swój ciężar, nie były w stanie latać i stały się względnie łatwym celem dla łowców skarbów. Ich skóra w kolorze złota, była nieprawdopodobnie wytrzymałym, magicznym materiałem, twardszym od jakichkolwiek metali znanych wszystkim rasom.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 500,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 270,
+    "price": 5600,
+    "type": "helmet",
+    "defense": 270
+  },
+  {
+    "name": "Rękawice_Drak'zelt",
+    "description": "Bajecznie piękne i niezwykle wytrzymałe rękawice, wykonane ze skóry złotego smoka. Te majestatyczne kreatury wyginęły dawno temu, gdyż ze względu na swój ciężar, nie były w stanie latać i stały się względnie łatwym celem dla łowców skarbów. Ich skóra w kolorze złota, była nieprawdopodobnie wytrzymałym, magicznym materiałem, twardszym od jakichkolwiek metali znanych wszystkim rasom.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 500,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 270,
+    "price": 5600,
+    "type": "gloves",
+    "defense": 270
+  },
+  {
+    "name": "Buty_Drak'zelt",
+    "description": "Bajecznie piękne i niezwykle wytrzymałe buty wykonane ze skóry złotego smoka. Te majestatyczne kreatury wyginęły dawno temu, gdyż ze względu na swój ciężar, nie były w stanie latać i stały się względnie łatwym celem dla łowców skarbów. Ich skóra w kolorze złota, była nieprawdopodobnie wytrzymałym, magicznym materiałem, twardszym od jakichkolwiek metali znanych wszystkim rasom.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 500,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 270,
+    "price": 5600,
+    "type": "shoes",
+    "defense": 270
+  },
+  {
+    "name": "Bigwanty_Drak'zelt",
+    "description": "Bajecznie piękne i niezwykle wytrzymałe bigwanty, wykonane ze skóry złotego smoka. Te majestatyczne kreatury wyginęły dawno temu, gdyż ze względu na swój ciężar, nie były w stanie latać i stały się względnie łatwym celem dla łowców skarbów. Ich skóra w kolorze złota, była nieprawdopodobnie wytrzymałym, magicznym materiałem, twardszym od jakichkolwiek metali znanych wszystkim rasom.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 50,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 20,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 1000,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 80,
+        "isPercentage": false
+      }
+    ],
+    "weight": 780,
+    "price": 11200,
+    "type": "pants",
+    "defense": 540
+  },
+  {
+    "name": "Zbroja_Drak'zelt",
+    "description": "Bajecznie piękna i niezwykle wytrzymała zbroja, wykonana ze skóry złotego smoka. Te majestatyczne kreatury wyginęły dawno temu, gdyż ze względu na swój ciężar, nie były w stanie latać i stały się względnie łatwym celem dla łowców skarbów. Ich skóra w kolorze złota, jest nieprawdopodobnie wytrzymałym, magicznym materiałem, twardszym od jakichkolwiek metali znanych wszystkim rasom.",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 75,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 30,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 1400,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 120,
+        "isPercentage": false
+      }
+    ],
+    "weight": 1170,
+    "price": 16800,
+    "type": "torso",
+    "defense": 810
+  }
+]

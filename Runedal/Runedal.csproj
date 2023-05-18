@@ -27,6 +27,108 @@
     <Folder Include="GameData\Resources\Json\SavedGames\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="GameData\Resources\Json\Armors\ArmorsHeavy.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Armors\ArmorsLight.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Armors\ArmorsRobe.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Characters\Heroes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Characters\Monsters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Characters\Player.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Characters\Traders.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Consumables.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaAbenCastle.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaCity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaDungeon1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaDungeon2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaForest1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaForest2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaForest3.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaIvoryTower.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\ArtimesiaWastelands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Artimesia\BlackFortress.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Derillon\DerillonCity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Derillon\DerillonNewbieFarmgrounds.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Derillon\DerillonRuins1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Derillon\DerillonRuins2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Derillon\DerillonSpiderCave1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Locations\Derillon\DerillonSpiderCave2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\NewGame.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Runes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Spells\SpellsMonsters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Spells\SpellsPlayer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\StackingEffects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Weapons\WeaponsBlades.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Weapons\WeaponsBlunts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Weapons\WeaponsDaggers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\Weapons\WeaponsStaves.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties gamedata_4resources_4json_4locations_4derillon_4derillonspidercave2_1json__JsonSchema="d" /></VisualStudio></ProjectExtensions>
 
 </Project>

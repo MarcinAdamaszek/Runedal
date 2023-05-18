@@ -1,0 +1,271 @@
+[
+  {
+    "name": "Stara_siekierka",
+    "description": "Ledwo nadająca się do rąbania drwa, pordzewiała i tępa siekiera.",
+    "type": "blade",
+    "modifiers": [
+
+    ],
+    "weight": 150,
+    "price": 50,
+    "attack": 70
+  },
+  {
+    "name": "Szczerbiec",
+    "description": "Bardzo wysłużony, krótki miecz z żelaza. Gdzieniegdzie widać plamy rdzy",
+    "type": "blade",
+    "modifiers": [
+
+    ],
+    "weight": 170,
+    "price": 110,
+    "attack": 75
+  },
+  {
+    "name": "Lekka_szabla",
+    "description": "Lekko zagięte, jednosieczne ostrze. Mieszanka różnych stopów metali czyni szablę niepewną co do wytrzymałości a jej mały ciężar nie zapewnia dużych obrażeń",
+    "type": "blade",
+    "modifiers": [
+
+    ],
+    "weight": 190,
+    "price": 200,
+    "attack": 85
+  },
+  {
+    "name": "Siekacz",
+    "description": "Poręczny i całkiem ostry toporek jednoręczny.",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "critical",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 210,
+    "price": 350,
+    "attack": 115
+  },
+  {
+    "name": "Miecz_dozorcy",
+    "description": "Dobrze wyważony, żelazny, półtoraręczny miecz. Na wyposażeniu większości strażników.",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 15,
+        "isPercentage": false
+      }
+    ],
+    "weight": 230,
+    "price": 500,
+    "attack": 160
+  },
+  {
+    "name": "Topór_krasnoluda",
+    "description": "Solidny, dwuręczny topór, wykonany z dobrej stali.",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "maxHp",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "critical",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 250,
+    "price": 1000,
+    "attack": 215
+  },
+  {
+    "name": "Espadon",
+    "description": "Najlepszej jakości stalowy, dwuręczny miecz gwardii pałacowej, z okrągłą głowicą i jelcem w kształcie skrzydeł orła",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 10,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 7,
+        "isPercentage": true
+      },
+      {
+        "type": "defense",
+        "value": 50,
+        "isPercentage": false
+      },
+      {
+        "type": "maxHp",
+        "value": 350,
+        "isPercentage": false
+      }
+    ],
+    "weight": 270,
+    "price": 2200,
+    "attack": 300
+  },
+  {
+    "name": "Sejmitar",
+    "description": "Bardzo dobrze wyważone, jednosieczne, zakrzywione ostrze, rozszerzające się ku podwójnie zaostrzonemu czubkowi. Wykonany z demasceńskiej stali, często używany przez zamożnych Saracenów",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 5,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 20,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 290,
+    "price": 4500,
+    "attack": 400
+  },
+  {
+    "name": "Książęcy_rapier",
+    "description": "Świetnie wykonana, i niezwykle śmiercionośna broń wykonana ze stopu stali i mithrilu.",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 30,
+        "isPercentage": false
+      },
+      {
+        "type": "strength",
+        "value": 5,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 50,
+        "isPercentage": false
+      },
+      {
+        "type": "critical",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "mpRegen",
+        "value": 100,
+        "isPercentage": false
+      }
+    ],
+    "weight": 310,
+    "price": 10000,
+    "attack": 520
+  },
+  {
+    "name": "Ostrze_Derillonu",
+    "description": "Unikatowy, dwuręczny miecz, nasycony magią. Ostrze od jelca do połowy głowni ukształtowane w ząbki skierowane ku górze, a w głowicy tkwi oszlifowany szmaragd.",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 40,
+        "isPercentage": false
+      },
+      {
+        "type": "intelligence",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "defense",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 100,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 600,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 330,
+    "price": 23000,
+    "attack": 660
+  },
+  {
+    "name": "Morgarth",
+    "description": "Legendarny, obosieczny topór Daevera. Ostrze zostało zdobyte przez jego ojca, który później przekazał je synowi. Ponoć tylko ten, w którym płynie krew demona może skutecznie posługiwać się tą bronią.",
+    "type": "blade",
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 40,
+        "isPercentage": false
+      },
+      {
+        "type": "agility",
+        "value": 30,
+        "isPercentage": false
+      },
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 30,
+        "isPercentage": true
+      },
+      {
+        "type": "maxHp",
+        "value": 800,
+        "isPercentage": false
+      },
+      {
+        "type": "hpRegen",
+        "value": 20,
+        "isPercentage": true
+      }
+    ],
+    "weight": 350,
+    "price": 50000,
+    "attack": 830
+  }
+]

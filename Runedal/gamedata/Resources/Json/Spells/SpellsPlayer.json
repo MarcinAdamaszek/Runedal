@@ -1,0 +1,363 @@
+[
+  {
+    "name": "Kula_ognia",
+    "description": "Kula skondensowanych płomieni, która uderzając w przeciwnika zadaje mu znaczne obrażenia",
+    "defaulttarget": "enemy",
+    "power": 90,
+    "manacost": 210,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Fala_mrozu",
+    "description": "Fala mroźnej energii, zadająca obrażenia i spowalniająca cel",
+    "defaulttarget": "enemy",
+    "power": 55,
+    "manacost": 200,
+    "modifiers": [
+      {
+        "type": "speed",
+        "value": -30,
+        "isPercentage": true,
+        "duration": 20
+      },
+      {
+        "type": "atkSpeed",
+        "value": -30,
+        "isPercentage": true,
+        "duration": 20
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Zdrewniała_skóra",
+    "description": "Użyteczny czar, powodujący, że Twoja skóra staje się znacznie twardsza i bardziej odporna na obrażenia",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 150,
+    "modifiers": [
+      {
+        "type": "defense",
+        "value": 200,
+        "isPercentage": false,
+        "duration": 60
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Rozbicie",
+    "description": "Energia natury atakuje ciało i umysł przeciwnika, zadając mu obrażenia i czyniąc bardziej podatnym na ataki",
+    "defaulttarget": "enemy",
+    "power": 55,
+    "manacost": 200,
+    "modifiers": [
+      {
+        "type": "magicResistance",
+        "value": -30,
+        "isPercentage": true,
+        "duration": 20
+      },
+      {
+        "type": "defense",
+        "value": -30,
+        "isPercentage": true,
+        "duration": 20
+      }
+    ],
+    "specialEffects": [
+    ]
+  },
+  {
+    "name": "Dotyk_niebios",
+    "description": "Uzdrawiająca światłość, która spływając na cel, leczy jego rany i dodaje sił",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 400,
+    "modifiers": [
+      {
+        "type": "hpRegen",
+        "value": 1000,
+        "isPercentage": false,
+        "duration": 3
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "heal",
+        "value": 200,
+        "duration": 0
+      },
+      {
+        "type": "healPercent",
+        "value": 10,
+        "duration": 0
+      }
+    ]
+  },
+  {
+    "name": "Eksplozja",
+    "description": "Wiązka skompresowanej energii uderzając w przeciwnika wybucha, zadając mu obrażenia i ogłuszając go na krótką chwilę",
+    "defaulttarget": "enemy",
+    "power": 60,
+    "manacost": 215,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "stun",
+        "value": 0,
+        "duration": 1
+      }
+    ]
+  },
+  {
+    "name": "Amok",
+    "description": "Opętuje Cię duch szalonego wojownika, zwiększając Twoje zdolności ofensywne kosztem defensywnych",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 170,
+    "modifiers": [
+      {
+        "type": "attack",
+        "value": 20,
+        "isPercentage": true,
+        "duration": 60
+      },
+      {
+        "type": "atkspeed",
+        "value": 10,
+        "isPercentage": true,
+        "duration": 60
+      },
+      {
+        "type": "defense",
+        "value": -10,
+        "isPercentage": true,
+        "duration": 60
+      },
+      {
+        "type": "magicResistance",
+        "value": -10,
+        "isPercentage": true,
+        "duration": 60
+      },
+      {
+        "type": "evasion",
+        "value": -10,
+        "isPercentage": true,
+        "duration": 60
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Kula_chaosu",
+    "description": "Kula niestabilnej energii uderza w przeciwnika, zadając dewastujące obrażenia. Zaklęcie kosztuje użytkownika wiele sił.",
+    "defaulttarget": "enemy",
+    "power": 130,
+    "manacost": 420,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Dusza_paladyna",
+    "description": "Dusza świętego wojownika wstępuje w Twoje ciało, dodając Ci sił i zwiększając Twoje zdolności bojowe",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 240,
+    "modifiers": [
+      {
+        "type": "strength",
+        "value": 25,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "attack",
+        "value": 15,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "defense",
+        "value": 20,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "hpRegen",
+        "value": 30,
+        "isPercentage": true,
+        "duration": 90
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Wcielenie_zabójcy",
+    "description": "Duch wprawionego zabójcy opanowywuje Twój umysł, sprawiając, że Twoje ruchy stają się szybsze, precyzyjniejsze i zwinniejsze.",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 240,
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 25,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "speed",
+        "value": 10,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "atkSpeed",
+        "value": 10,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "accuracy",
+        "value": 25,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "evasion",
+        "value": 20,
+        "isPercentage": true,
+        "duration": 90
+      },
+      {
+        "type": "critical",
+        "value": 25,
+        "isPercentage": true,
+        "duration": 90
+      }
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Szpon_zaświatów",
+    "description": "Potężne zaklęcie ofensywne, wykorzystujące nadprzyrodzone siły nie do końca znanego pochodzenia..",
+    "defaulttarget": "enemy",
+    "power": 110,
+    "manacost": 330,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Powłoka_nur'zhel",
+    "description": "Zaklęcie sprawia, że Twoje ciało przepuszcza wszelkie światło nie zniekształcając go, dzięki czemu stajesz się niewidzialny. Możesz zakraść się do przeciwnika, zadać groźny cios w plecy (przy okazji plamiąc swój honor) i przez krótką chwilę korzystać z elementu zaskoczenia, zadając zwiększone obrażenia. Jakiekolwiek zaangażowanie się w walkę powoduje, że zaklęcie natychmiast przestaje działać",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 130,
+    "modifiers": [
+      {
+        "type": "speed",
+        "value": 25,
+        "isPercentage": false,
+        "duration": 60
+      }
+    ],
+    "specialEffects": [
+      {
+        "type": "invisibility",
+        "value": 0,
+        "duration": 60
+      }
+    ]
+  },
+  {
+    "name": "Wampirze_ostrze",
+    "description": "Duch krwiożerczej istoty wnika w Twoją broń, dodajac Ci sił witalnych za każdym razem, gdy dajesz mu posmakować krwi",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 190,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "lifesteal",
+        "value": 15,
+        "duration": 60
+      }
+    ]
+  },
+  {
+    "name": "Błogosławieństwo",
+    "description": "Zyskujesz przychylność niebios, co zwiększa Twoje zdolności ofensywne, defensywne i regenerację.",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 150,
+    "modifiers": [
+      {
+        "type": "attack",
+        "value": 10,
+        "isPercentage": true,
+        "duration": 60
+      },
+      {
+        "type": "defense",
+        "value": 10,
+        "isPercentage": true,
+        "duration": 60
+      },
+      {
+        "type": "hpRegen",
+        "value": 10,
+        "isPercentage": true,
+        "duration": 60
+      }
+    ],
+    "specialEffects": [
+
+    ]
+  },
+  {
+    "name": "Tarcza_mentalna",
+    "description": "Tarcza magicznej energii, pochłaniająca część obrażen kosztem sił mentalnych",
+    "defaulttarget": "self",
+    "power": 0,
+    "manacost": 260,
+    "modifiers": [
+
+    ],
+    "specialEffects": [
+      {
+        "type": "manaShield",
+        "value": 50,
+        "duration": 90
+      }
+    ]
+  }
+]

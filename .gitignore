@@ -397,14 +397,3 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-#json files
-*.json
-
-#word files
-*.docx
-
-#other
-RunedalNotatki.txt
-
-#saved games
-SavedGames/

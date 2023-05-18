@@ -1,0 +1,953 @@
+[
+  {
+    "name": "Skórzana_czapa",
+    "description": "Zwyczajna czapka z bawolej skóry",
+    "modifiers": [],
+    "weight": 110,
+    "price": 60,
+    "type": "helmet",
+    "defense": 40
+  },
+  {
+    "name": "Skórzane_rękawice",
+    "description": "Zwyczajne rękawiczki z bawolej skóry",
+    "modifiers": [],
+    "weight": 110,
+    "price": 60,
+    "type": "gloves",
+    "defense": 40
+  },
+  {
+    "name": "Skórzane_buty",
+    "description": "Zwyczajne buty z bawolej skóry",
+    "modifiers": [],
+    "weight": 110,
+    "price": 60,
+    "type": "shoes",
+    "defense": 40
+  },
+  {
+    "name": "Skórzane_spodnie",
+    "description": "Zwyczajne rękawice z bawolej skóry",
+    "modifiers": [],
+    "weight": 220,
+    "price": 120,
+    "type": "pants",
+    "defense": 80
+  },
+
+  {
+    "name": "Skórzana_kurtka",
+    "description": "Zwyczajna kurtka z bawolej skóry",
+    "modifiers": [],
+    "weight": 330,
+    "price": 180,
+    "type": "Torso",
+    "defense": 120
+  },
+  {
+    "name": "Wzmocniona_skórzana_czapa",
+    "description": "Czapa z kilku warstw gotowanej w oleju bawolej skóry",
+    "modifiers": [],
+    "weight": 130,
+    "price": 90,
+    "type": "helmet",
+    "defense": 50
+  },
+  {
+    "name": "Wzmocnione_skórzane_rękawice",
+    "description": "Rękawice z kilku warstw gotowanej w oleju bawolej skóry",
+    "modifiers": [],
+    "weight": 130,
+    "price": 90,
+    "type": "gloves",
+    "defense": 50
+  },
+  {
+    "name": "Wzmocnione_skórzane_buty",
+    "description": "Buty z kilku warstw gotowanej w oleju bawolej skóry",
+    "modifiers": [],
+    "weight": 130,
+    "price": 90,
+    "type": "shoes",
+    "defense": 50
+  },
+  {
+    "name": "Wzmocnione_skórzane_spodnie",
+    "description": "spodnie z kilku warstw gotowanej w oleju bawolej skóry",
+    "modifiers": [],
+    "weight": 260,
+    "price": 180,
+    "type": "pants",
+    "defense": 100
+  },
+  {
+    "name": "Wzmocniona_skórzana_kurtka",
+    "description": "Kurtka z kilku warstw gotowanej w oleju bawolej skóry",
+    "modifiers": [],
+    "weight": 390,
+    "price": 270,
+    "type": "Torso",
+    "defense": 150
+  },
+  {
+    "name": "Ćwiekowany_czepek",
+    "description": "Czepek wykonany ze wzmocnionej bawolej skóry nabijanej ćwiekami",
+    "modifiers": [
+      {
+        "type": "accuracy",
+        "value": 3,
+        "isPercentage": true
+      }
+    ],
+    "weight": 140,
+    "price": 130,
+    "type": "helmet",
+    "defense": 60
+  },
+  {
+    "name": "Ćwiekowane_rękawice",
+    "description": "Rękawice wykonane ze wzmocnionej bawolej skóry nabijanej ćwiekami",
+    "modifiers": [
+      {
+        "type": "accuracy",
+        "value": 3,
+        "isPercentage": true
+      }
+    ],
+    "weight": 140,
+    "price": 130,
+    "type": "gloves",
+    "defense": 60
+  },
+  {
+    "name": "Ćwiekowane_buty",
+    "description": "Buty wykonane ze wzmocnionej bawolej skóry nabijanej ćwiekami",
+    "modifiers": [
+      {
+        "type": "accuracy",
+        "value": 3,
+        "isPercentage": true
+      }
+    ],
+    "weight": 140,
+    "price": 130,
+    "type": "shoes",
+    "defense": 60
+  },
+  {
+    "name": "Ćwiekowane_spodnie",
+    "description": "spodnie wykonane ze wzmocnionej bawolej skóry nabijanej ćwiekami",
+    "modifiers": [
+      {
+        "type": "accuracy",
+        "value": 6,
+        "isPercentage": true
+      }
+    ],
+    "weight": 280,
+    "price": 260,
+    "type": "pants",
+    "defense": 120
+  },
+  {
+    "name": "Ćwiekowana_kurtka",
+    "description": "Kurtka wykonane ze wzmocnionej bawolej skóry nabijanej ćwiekami",
+    "modifiers": [
+      {
+        "type": "accuracy",
+        "value": 9,
+        "isPercentage": true
+      }
+    ],
+    "weight": 420,
+    "price": 390,
+    "type": "Torso",
+    "defense": 180
+  },
+  {
+    "name": "Czepek_łowcy",
+    "description": "Czepek wykonany ze skóry niedźwiedzia skalnego. Bardzo wytrzymały, dodatkowo zapewnia ochronę przed zimnem",
+    "modifiers": [
+      {
+        "type": "evasion",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 5,
+        "isPercentage": false
+      }
+    ],
+    "weight": 160,
+    "price": 250,
+    "type": "helmet",
+    "defense": 70
+  },
+  {
+    "name": "Rękawice_łowcy",
+    "description": "Rękawice wykonane ze skóry niedźwiedzia skalnego. Bardzo wytrzymałe, dodatkowo zapewniają ochronę przed zimnem",
+    "modifiers": [
+      {
+        "type": "evasion",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 5,
+        "isPercentage": false
+      }
+    ],
+    "weight": 160,
+    "price": 250,
+    "type": "gloves",
+    "defense": 70
+  },
+  {
+    "name": "Buty_łowcy",
+    "description": "Buty wykonane ze skóry niedźwiedzia skalnego. Bardzo wytrzymałe, dodatkowo zapewniają ochronę przed zimnem",
+    "modifiers": [
+      {
+        "type": "evasion",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 5,
+        "isPercentage": false
+      }
+    ],
+    "weight": 160,
+    "price": 250,
+    "type": "shoes",
+    "defense": 70
+  },
+  {
+    "name": "Spodnie_łowcy",
+    "description": "Spodnie wykonane ze skóry niedźwiedzia skalnego. Bardzo wytrzymałe, dodatkowo zapewniają ochronę przed zimnem",
+    "modifiers": [
+      {
+        "type": "evasion",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 320,
+    "price": 500,
+    "type": "pants",
+    "defense": 140
+  },
+  {
+    "name": "Kurtka_łowcy",
+    "description": "Kurtka wykonana ze skóry niedźwiedzia skalnego. Bardzo wytrzymała, dodatkowo zapewnia ochronę przed zimnem",
+    "modifiers": [
+      {
+        "type": "evasion",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 15,
+        "isPercentage": false
+      }
+    ],
+    "weight": 450,
+    "price": 750,
+    "type": "torso",
+    "defense": 210
+  },
+  {
+    "name": "Hełm_salamandry",
+    "description": "Trwały hełm, wykonany ze skóry Salamandry kolczastej. Ulubiony pancerz zamożnych skrytobójców",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 170,
+    "price": 500,
+    "type": "helmet",
+    "defense": 80
+  },
+  {
+    "name": "Rękawice_salamandry",
+    "description": "Trwałe rękawice, wykonane ze skóry Salamandry kolczastej. Ulubiony pancerz zamożnych skrytobójców",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 170,
+    "price": 500,
+    "type": "Gloves",
+    "defense": 80
+  },
+  {
+    "name": "Buty_salamandry",
+    "description": "Trwałe buty, wykonane ze skóry Salamandry kolczastej. Ulubiony pancerz zamożnych skrytobójców",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 3,
+        "isPercentage": false
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 10,
+        "isPercentage": false
+      }
+    ],
+    "weight": 170,
+    "price": 500,
+    "type": "Shoes",
+    "defense": 80
+  },
+  {
+    "name": "Spodnie_salamandry",
+    "description": "Trwałe spodnie, wykonane ze skóry Salamandry kolczastej. Ulubiony pancerz zamożnych skrytobójców",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 6,
+        "isPercentage": false
+      },
+      {
+        "type": "critical",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 340,
+    "price": 1000,
+    "type": "pants",
+    "defense": 160
+  },
+  {
+    "name": "Korpus_salamandry",
+    "description": "Trwały korpus, wykonany ze skóry Salamandry kolczastej. Ulubiony pancerz zamożnych skrytobójców",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 9,
+        "isPercentage": false
+      },
+      {
+        "type": "critical",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 30,
+        "isPercentage": false
+      }
+    ],
+    "weight": 460,
+    "price": 1500,
+    "type": "torso",
+    "defense": 240
+  },
+  {
+    "name": "Hełm_Drak'verd",
+    "description": "Znakomicie wykonany hełm ze skóry zielonego smoka. Noszony zwykle przez najbardziej elitarnych skrytobójców. Te magiczne stworzenia, chociaż nieco mniej okazałe od swych czerwonych kuzynów, są niezwykle szybkimi i zwinnymi łowcami, i potrzeba nielada refleksu i doświadczenia aby skutecznie zapolować na jednego z nich.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "speed",
+        "value": 5,
+        "isPercentage": false
+      },
+      {
+        "type": "evasion",
+        "value": 2,
+        "isPercentage": true
+      },
+      {
+        "type": "atkSpeed",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 190,
+    "price": 1100,
+    "type": "helmet",
+    "defense": 90
+  },
+  {
+    "name": "Rękawice_Drak'verd",
+    "description": "Znakomicie wykonane rękawice ze skóry zielonego smoka. Noszone zwykle przez najbardziej elitarnych skrytobójców. Te magiczne stworzenia, chociaż nieco mniej okazałe od swych czerwonych kuzynów, są niezwykle szybkimi i zwinnymi łowcami, i potrzeba nielada refleksu i doświadczenia aby skutecznie zapolować na jednego z nich.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "speed",
+        "value": 5,
+        "isPercentage": false
+      },
+      {
+        "type": "evasion",
+        "value": 2,
+        "isPercentage": true
+      },
+      {
+        "type": "atkSpeed",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 190,
+    "price": 1100,
+    "type": "gloves",
+    "defense": 90
+  },
+  {
+    "name": "Buty_Drak'verd",
+    "description": "Znakomicie wykonane buty ze skóry zielonego smoka. Noszone zwykle przez najbardziej elitarnych skrytobójców. Te magiczne stworzenia, chociaż nieco mniej okazałe od swych czerwonych kuzynów, są niezwykle szybkimi i zwinnymi łowcami, i potrzeba nielada refleksu i doświadczenia aby skutecznie zapolować na jednego z nich.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 7,
+        "isPercentage": false
+      },
+      {
+        "type": "speed",
+        "value": 5,
+        "isPercentage": false
+      },
+      {
+        "type": "evasion",
+        "value": 2,
+        "isPercentage": true
+      },
+      {
+        "type": "atkSpeed",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 20,
+        "isPercentage": false
+      }
+    ],
+    "weight": 190,
+    "price": 1100,
+    "type": "shoes",
+    "defense": 90
+  },
+  {
+    "name": "Spodnie_Drak'verd",
+    "description": "Znakomicie wykonane spodnie ze skóry zielonego smoka. Noszone zwykle przez najbardziej elitarnych skrytobójców. Te magiczne stworzenia, chociaż nieco mniej okazałe od swych czerwonych kuzynów, są niezwykle szybkimi i zwinnymi łowcami, i potrzeba nielada refleksu i doświadczenia aby skutecznie zapolować na jednego z nich.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 14,
+        "isPercentage": false
+      },
+      {
+        "type": "speed",
+        "value": 10,
+        "isPercentage": false
+      },
+      {
+        "type": "evasion",
+        "value": 4,
+        "isPercentage": true
+      },
+      {
+        "type": "atkSpeed",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 40,
+        "isPercentage": false
+      }
+    ],
+    "weight": 380,
+    "price": 2200,
+    "type": "pants",
+    "defense": 180
+  },
+  {
+    "name": "Korpus_Drak'verd",
+    "description": "Znakomicie wykonany korpus ze skóry zielonego smoka. Noszony zwykle przez najbardziej elitarnych skrytobójców. Te magiczne stworzenia, chociaż nieco mniej okazałe od swych czerwonych kuzynów, są niezwykle szybkimi i zwinnymi łowcami, i potrzeba nielada refleksu i doświadczenia aby skutecznie zapolować na jednego z nich.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 21,
+        "isPercentage": false
+      },
+      {
+        "type": "speed",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "evasion",
+        "value": 6,
+        "isPercentage": true
+      },
+      {
+        "type": "atkSpeed",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 60,
+        "isPercentage": false
+      }
+    ],
+    "weight": 470,
+    "price": 3300,
+    "type": "torso",
+    "defense": 270
+  },
+  {
+    "name": "Hełm_Drak'skar",
+    "description": "Prawdziwe arcydzieło rzemieślnicze, hełm wykonany ze skóry czerwonego smoka. Te szkarłatne potwory są niezwykle odporne zarówno na obrażenia fizyczne, jak i magiczne, co sprawia że upolowanie jednego z nich wiąże się z ogromnym ryzykiem i rzadko kiedy kończy się powodzeniem. Z tego powodu, wszystkie istniejące pancerze wykonane z tego materiału można policzyć na palcach jednej ręki niezdarnego rzeźnika.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 3,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 30,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 200,
+    "price": 2400,
+    "type": "helmet",
+    "defense": 100
+  },
+  {
+    "name": "Rękawice_Drak'skar",
+    "description": "Prawdziwe arcydzieło rzemieślnicze, rękawice wykonane ze skóry czerwonego smoka. Te szkarłatne potwory są niezwykle odporne zarówno na obrażenia fizyczne, jak i magiczne, co sprawia że upolowanie jednego z nich wiąże się z ogromnym ryzykiem i rzadko kiedy kończy się powodzeniem. Z tego powodu, wszystkie istniejące pancerze wykonane z tego materiału można policzyć na palcach jednej ręki niezdarnego rzeźnika.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 3,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 30,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 200,
+    "price": 2400,
+    "type": "gloves",
+    "defense": 100
+  },
+  {
+    "name": "Buty_Drak'skar",
+    "description": "Prawdziwe arcydzieło rzemieślnicze, buty wykonane ze skóry czerwonego smoka. Te szkarłatne potwory są niezwykle odporne zarówno na obrażenia fizyczne, jak i magiczne, co sprawia że upolowanie jednego z nich wiąże się z ogromnym ryzykiem i rzadko kiedy kończy się powodzeniem. Z tego powodu, wszystkie istniejące pancerze wykonane z tego materiału można policzyć na palcach jednej ręki niezdarnego rzeźnika.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 15,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 3,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 30,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 200,
+    "price": 2400,
+    "type": "shoes",
+    "defense": 100
+  },
+  {
+    "name": "Spodnie_Drak'skar",
+    "description": "Prawdziwe arcydzieło rzemieślnicze, spodnie wykonane ze skóry czerwonego smoka. Te szkarłatne potwory są niezwykle odporne zarówno na obrażenia fizyczne, jak i magiczne, co sprawia że upolowanie jednego z nich wiąże się z ogromnym ryzykiem i rzadko kiedy kończy się powodzeniem. Z tego powodu, wszystkie istniejące pancerze wykonane z tego materiału można policzyć na palcach jednej ręki niezdarnego rzeźnika.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 30,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 6,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 60,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 380,
+    "price": 4800,
+    "type": "pants",
+    "defense": 200
+  },
+  {
+    "name": "Korpus_Drak'skar",
+    "description": "Prawdziwe arcydzieło rzemieślnicze, korpus wykonany ze skóry czerwonego smoka. Te szkarłatne potwory są niezwykle odporne zarówno na obrażenia fizyczne, jak i magiczne, co sprawia że upolowanie jednego z nich wiąże się z ogromnym ryzykiem i rzadko kiedy kończy się powodzeniem. Z tego powodu, wszystkie istniejące pancerze wykonane z tego materiału można policzyć na palcach jednej ręki niezdarnego rzeźnika.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 45,
+        "isPercentage": false
+      },
+      {
+        "type": "accuracy",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 9,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 90,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 480,
+    "price": 7200,
+    "type": "torso",
+    "defense": 300
+  },
+  {
+    "name": "Hełm_Drak'nah",
+    "description": "Arcymistrzowsko wykonany hełm ze smoczej skóry, należący do legendarnego wojownika Daevera. Ponoć Daever był w stanie w ciągu kilku sekund wyrżnąć 2 tuziny wprawionych wojaków. Jedni mówią że hełm został wykonany ze skóry mitycznego czarnego smoka, która wchłoneła tak dużo przelanej krwi przeciwników Daevera, że zyskała czerwoną barwę. Inni twierdzą, że to bzdura, czarne smoki nie istnieją, a hełm to po prostu skóra wyjątkowo dorodnego czerwonego smoka. Jaka jest prawda, wie tylko sam oryginalny właściciel.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 50,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 210,
+    "price": 5500,
+    "type": "helmet",
+    "defense": 110
+  },
+  {
+    "name": "Rękawice_Drak'nah",
+    "description": "Arcymistrzowsko wykonane rękawice ze smoczej skóry, należące do legendarnego wojownika Daevera. Ponoć Daever był w stanie w ciągu kilku sekund wyrżnąć 2 tuziny wprawionych wojaków. Jedni mówią że rękawice zostały wykonane ze skóry mitycznego czarnego smoka, która wchłoneła tak dużo przelanej krwi przeciwników Daevera, że zyskała czerwoną barwę. Inni twierdzą, że to bzdura, czarne smoki nie istnieją, a rękawice to po prostu skóra wyjątkowo dorodnego czerwonego smoka. Jaka jest prawda, wie tylko sam oryginalny właściciel.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 50,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 210,
+    "price": 5500,
+    "type": "gloves",
+    "defense": 110
+  },
+  {
+    "name": "Buty_Drak'nah",
+    "description": "Arcymistrzowsko wykonane buty ze smoczej skóry, należące do legendarnego wojownika Daevera. Ponoć Daever był w stanie w ciągu kilku sekund wyrżnąć 2 tuziny wprawionych wojaków. Jedni mówią że buty zostały wykonane ze skóry mitycznego czarnego smoka, która wchłoneła tak dużo przelanej krwi przeciwników Daevera, że zyskała czerwoną barwę. Inni twierdzą, że to bzdura, czarne smoki nie istnieją, a buty to po prostu skóra wyjątkowo dorodnego czerwonego smoka. Jaka jest prawda, wie tylko sam oryginalny właściciel.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 25,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 5,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 50,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 210,
+    "price": 5500,
+    "type": "shoes",
+    "defense": 110
+  },
+  {
+    "name": "Spodnie_Drak'nah",
+    "description": "Arcymistrzowsko wykonane spodnie ze smoczej skóry, należące do legendarnego wojownika Daevera. Ponoć Daever był w stanie w ciągu kilku sekund wyrżnąć 2 tuziny wprawionych wojaków. Jedni mówią że spodnie zostały wykonane ze skóry mitycznego czarnego smoka, która wchłoneła tak dużo przelanej krwi przeciwników Daevera, że zyskała czerwoną barwę. Inni twierdzą, że to bzdura, czarne smoki nie istnieją, a spodnie to po prostu skóra wyjątkowo dorodnego czerwonego smoka. Jaka jest prawda, wie tylko sam oryginalny właściciel.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 50,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 10,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 100,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 390,
+    "price": 11000,
+    "type": "pants",
+    "defense": 220
+  },
+  {
+    "name": "Korpus_Drak'nah",
+    "description": "Arcymistrzowsko wykonany korpus ze smoczej skóry, należący do legendarnego wojownika Daevera. Ponoć Daever był w stanie w ciągu kilku sekund wyrżnąć 2 tuziny wprawionych wojaków. Jedni mówią że korpus został wykonany ze skóry mitycznego czarnego smoka, która wchłoneła tak dużo przelanej krwi przeciwników Daevera, że zyskała czerwoną barwę. Inni twierdzą, że to bzdura, czarne smoki nie istnieją, a korpus to po prostu skóra wyjątkowo dorodnego czerwonego smoka. Jaka jest prawda, wie tylko sam oryginalny właściciel.",
+    "modifiers": [
+      {
+        "type": "agility",
+        "value": 75,
+        "isPercentage": false
+      },
+      {
+        "type": "atkSpeed",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "accuracy",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "evasion",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "critical",
+        "value": 15,
+        "isPercentage": true
+      },
+      {
+        "type": "magicResistance",
+        "value": 150,
+        "isPercentage": false
+      }
+
+    ],
+    "weight": 490,
+    "price": 16500,
+    "type": "torso",
+    "defense": 330
+  }
+]

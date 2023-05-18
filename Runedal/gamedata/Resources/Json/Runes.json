@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Iskarr",
+    "description": "Runa jarząca się czerwono-pomarańczowym blaskiem. Wiecznie gorąca, jakby leżała na słońcu",
+    "weight": 10,
+    "price": 450,
+    "modifiers": []
+  },
+  {
+    "name": "Akull",
+    "description": "Runa pokryta szronem, otoczona blado-niebieską poświatą.",
+    "weight": 10,
+    "price": 450,
+    "modifiers": []
+  },
+  {
+    "name": "Verde",
+    "description": "Runa o łagodnym, zielonym blasku, lekko porośnięta mchem.",
+    "weight": 10,
+    "price": 450,
+    "modifiers": []
+  },
+  {
+    "name": "Xitan",
+    "description": "Bardzo mroczna runa, pochłaniająca praktycznie każde światło jakie na nią pada",
+    "weight": 10,
+    "price": 450,
+    "modifiers": []
+  },
+  {
+    "name": "Dara",
+    "description": "Niezwykle jasna runa, emanująca białym światłem, co sprawia, że trudno na nią patrzeć",
+    "weight": 10,
+    "price": 450,
+    "modifiers": []
+  }
+]

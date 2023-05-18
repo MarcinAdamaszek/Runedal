@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Grzegorz",
+    "description": "Tak to ja..",
+    "passiveresponses": [ "Rozmawiasz sam ze sobą? Źle z Tobą.." ],
+    "aggressiveresponses": [],
+    "questions": [],
+    "answers": [],
+    "maxHp": 600,
+    "maxMp": 400,
+    "hpRegen": 50,
+    "mpRegen": 50,
+    "speed": 100,
+    "attack": 100,
+    "atkspeed": 100,
+    "accuracy": 100,
+    "critical": 100,
+    "defense": 100,
+    "evasion": 20,
+    "magicresistance": 100,
+    "startingSpells": [],
+    "gold": 0,
+    "strength": 10,
+    "agility": 10,
+    "intelligence": 10,
+    "level": 1,
+    "experience": 0,
+    "nextlvlexpcap": 60,
+    "runesAlreadyReceived": 0,
+    "start": "zaułek",
+    "items": {
+      "jabłko": 1,
+      "orzech": 2
+    },
+    "modifiers": [
+      
+    ],
+    "AttributePoints": 0
+  }
+]

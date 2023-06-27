@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GameData\Resources\Json\SavedGames\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="GameData\Resources\Json\Armors\ArmorsHeavy.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -104,6 +100,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="GameData\Resources\Json\Runes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="GameData\Resources\Json\SavedGames\Placeholder\Placeholder.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="GameData\Resources\Json\Spells\SpellsMonsters.json">

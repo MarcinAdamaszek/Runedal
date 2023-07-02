@@ -33,7 +33,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\RunedalRPG.msi"
+        "OutputFilename" = "8:Debug\\Runedal.1.0.0.Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -65,7 +65,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\RunedalRPG.msi"
+        "OutputFilename" = "8:Release\\Runedal.1.0.0.Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -82,6 +82,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -191,7 +199,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Runedal"
         "ProductCode" = "8:{F88EC25C-0ED0-43DD-B938-122B3C9D647F}"
-        "PackageCode" = "8:{E92F5010-9A92-4525-B34F-418BE0A3530D}"
+        "PackageCode" = "8:{AA9C6F0D-32C1-474F-A2A3-AAD4861F3717}"
         "UpgradeCode" = "8:{38E13634-EE79-437D-9753-C794EF760760}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

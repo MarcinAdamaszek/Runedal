@@ -4,8 +4,8 @@ Text-based RPG game created using WPF and C#
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Features] (#features)
-* [Flaws/Bugs] (#flaws/bugs)
+* [Features](#features)
+* [Flaws/Bugs](#flawsissues)
 * [Setup](#setup)
 
 ## General info
@@ -17,9 +17,9 @@ explore the world, slay enemies, gather items, talk
 and trade with NPCs and develop your character in an unique way.
 
 ## Technologies
-Windows Presentation Foundation (WPF)
-.NET 6.0
-C# 10
+- Windows Presentation Foundation (WPF)
+- .NET 6.0
+- C# 10
 
 ## Features
 - Large world to explore, with two different towns, many locations, enemies

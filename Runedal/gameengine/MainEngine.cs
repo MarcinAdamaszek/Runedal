@@ -2525,10 +2525,13 @@ namespace Runedal.GameEngine
                 return;
             }
 
+            Location playerCurrentLocation = Data.Player!.CurrentLocation!;
+
             //if no direction is specified, pick random direction from all
             //possible directions
             if (direction == String.Empty)
             {
+                
                 Location temp = new Location();
                 List<string> randomDirections = new List<string>();
                 string[] directionLetters = new string[6];
@@ -2542,7 +2545,7 @@ namespace Runedal.GameEngine
 
                 foreach (string letter in directionLetters)
                 {
-                    if (GetNextLocation(letter, out temp))
+                    if (GetNextLocation(letter, out temp) && playerCurrentLocation.GetPassage(letter))
                     {
                         randomDirections.Add(letter);
                     }
@@ -2588,7 +2591,8 @@ namespace Runedal.GameEngine
 
             Location escapeDestination;
 
-            if (GetNextLocation(directionToFlee, out escapeDestination))
+            if (GetNextLocation(directionToFlee, out escapeDestination) && 
+                playerCurrentLocation.GetPassage(directionToFlee))
             {
                 FleeAttempt fleeAttempt = new FleeAttempt(Data.Player!, escapeDestination, 30);
                 AddAction(fleeAttempt);

@@ -30,10 +30,12 @@ and bosses, providing at least 3-6 hours of gameplay
 - Balanced stats and attributes system allowing for an unique character development
 - Save/load system
 - An option to pause the game and speed up/slow down the game clock
+- Command history (up to 10 last typed commands)
 - Entire game content in a form of easily editable JSON files
 
 ## Flaws/Issues
 - poor game content - no lore, no quests, just exploring and slaying enemies.
 - only one language option (polish)
+- the game won't launch when installed in 'program files' directory
 	
 ## Setup

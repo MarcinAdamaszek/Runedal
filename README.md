@@ -38,7 +38,7 @@ and trade with NPCs and develop your character in an unique way.
 ## Setup
 Download the installer [here](https://github.com/MarcinAdamaszek/Runedal/releases/latest/download/Runedal.1.0.0.Setup.zip)
 
-After download, extract the package and run the 'Runedal.1.0.0.Setup.msi' file.
+After download, extract the package and run the [Runedal.1.0.0.Setup.msi] file.
 Later you can launch the game using shortcuts on your desktop or in programs menu.
 
 Note: DO NOT install into 'Program Files' or 'Program Files (x86)' directory

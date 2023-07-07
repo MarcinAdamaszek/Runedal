@@ -709,7 +709,7 @@
         "isPercentage": false
       }
     ],
-    "weight": 270,
+    "weight": 390,
     "price": 5600,
     "type": "helmet",
     "defense": 270
@@ -739,7 +739,7 @@
         "isPercentage": false
       }
     ],
-    "weight": 270,
+    "weight": 390,
     "price": 5600,
     "type": "gloves",
     "defense": 270
@@ -769,7 +769,7 @@
         "isPercentage": false
       }
     ],
-    "weight": 270,
+    "weight": 390,
     "price": 5600,
     "type": "shoes",
     "defense": 270
